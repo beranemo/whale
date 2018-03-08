@@ -1,4 +1,4 @@
-<h2>加入會員</h2>
+<h2>新增會員</h2>
 <%= form_for @member do |f|%>
   <div class="form-group">
     
@@ -36,7 +36,10 @@
     <%= f.label :avatar, "個人照片" %>
     <%= f.file_field :avatar %>
     <br>
-
-    <%= f.submit "確定新增會員",class: "btn btn-primary" %>
+    
+    <%= f.label :remark, "備註" %>
+    <%= f.file_field :remark %>
+    <br>
+    <%= f.submit "確定加入會員",class: "btn btn-primary" %>
   </div>
 <% end %>           
