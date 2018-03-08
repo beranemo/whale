@@ -18,6 +18,10 @@ class Cashier::MembersController < ApplicationController
     end
   end
 
+  def search
+    
+  end
+
   private
 
   def member_params

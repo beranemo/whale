@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   namespace :cashier do
     root "members#index"
-    resources :members
+    resources :members do
+      collection do
+        get :search
+      end
+    end
   end
 
   root "members#index"
