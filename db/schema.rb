@@ -10,6 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180308090121) do
+
+  create_table "countries", force: :cascade do |t|
+    t.string "nat"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "guests", force: :cascade do |t|
+    t.string "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "country_id"
+    t.integer "sex_id"
+    t.integer "info_way_id"
+  end
+
+  create_table "info_ways", force: :cascade do |t|
+    t.string "news_channel"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sexes", force: :cascade do |t|
+    t.string "gender"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

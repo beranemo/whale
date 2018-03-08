@@ -1,0 +1,2 @@
+class InfoWay < ApplicationRecord
+end
