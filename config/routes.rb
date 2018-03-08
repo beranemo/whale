@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         post :search_outcome
       end
     end
+
+    resources :guest ,only:[:index,:new,:create]
   end
 
   root "members#index"
