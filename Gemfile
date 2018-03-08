@@ -37,6 +37,8 @@ gem 'jbuilder', '~> 2.5'
 gem "devise"
 # Use juery to generate ajax
 gem 'jquery-rails'
+# Use ffaker generate fake data
+gem 'ffaker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
