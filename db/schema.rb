@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308112952) do
+ActiveRecord::Schema.define(version: 20180308132358) do
 
   create_table "countries", force: :cascade do |t|
     t.string "nat"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20180308112952) do
     t.integer "country_id"
     t.integer "info_way_id"
     t.string "gender", default: "", null: false
+    t.string "payment"
+    t.string "guest_type", default: "", null: false
   end
 
   create_table "info_ways", force: :cascade do |t|
