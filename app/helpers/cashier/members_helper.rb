@@ -1,0 +1,2 @@
+module Cashier::MembersHelper
+end
