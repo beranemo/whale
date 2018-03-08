@@ -1,0 +1,2 @@
+module Cashier::GuestsHelper
+end

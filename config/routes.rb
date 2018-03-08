@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :guest ,only:[:index,:new,:create]
+    resources :guests ,only:[:index,:new,:create]
   end
 
   root "members#index"
