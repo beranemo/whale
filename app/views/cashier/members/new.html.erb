@@ -33,13 +33,15 @@
     <%= f.text_field :skin , class: "form-control"%>
     <br>
 
+    <%= f.label :remark, "備註" %>
+    <%= f.text_area :remark %>
+    <br>
+
     <%= f.label :avatar, "個人照片" %>
     <%= f.file_field :avatar %>
     <br>
     
-    <%= f.label :remark, "備註" %>
-    <%= f.file_field :remark %>
-    <br>
-    <%= f.submit "確定加入會員",class: "btn btn-primary" %>
+    
+    <%= f.submit "確定新增會員",class: "btn btn-primary" %>
   </div>
 <% end %>           
