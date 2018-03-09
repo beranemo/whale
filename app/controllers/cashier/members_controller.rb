@@ -27,14 +27,16 @@ class Cashier::MembersController < ApplicationController
   def search_outcome
     puts params[:phone]
    
-    if params[:phone] != ""
+    if params[:phone] != nil
       @member = Member.find_by(phone: params[:phone])
       render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :email => @member.email, :birthday => @member.birthday}
-    elsif params[:email] != ""
+    elsif params[:email] != nil
       @member = Member.find_by(email: params[:email])
       render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :email => @member.email, :birthday => @member.birthday}
     else
-      render :search
+      month = Date.current.month 
+      @members = Member.where("cast(strftime('%m', birthday) as int) = ?", month)
+      render :json => @members
     end
 
     
