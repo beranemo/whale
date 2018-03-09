@@ -29,10 +29,10 @@ class Cashier::MembersController < ApplicationController
    
     if params[:phone] != ""
       @member = Member.find_by(phone: params[:phone])
-      render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :birthday => @member.birthday}
+      render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :email => @member.email, :birthday => @member.birthday}
     elsif params[:email] != ""
       @member = Member.find_by(email: params[:email])
-      render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :birthday => @member.birthday}
+      render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :email => @member.email, :birthday => @member.birthday}
     else
       render :search
     end

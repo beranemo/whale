@@ -1,18 +1,26 @@
 <div class="container">
   <h2>茶籽堂</h2>
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#">後台首頁</a></li>
+    <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
     <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
     <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_members_path%></li>
-    <li role="presentation" ><%= link_to "搜尋會員",search_cashier_members_path%></li>
+    <li role="presentation" class="active"><a href="#">搜尋會員</a></li>
   </ul>
- 
-
   
+  <br>
+  <form id="search-form">
+    <label>手機號碼</label>
+    <input type="text" id="phone">
+    <br>
+    <label>電子信箱</label>
+    <input type="text" id="email">
+    <br>
 
-
+     <button id="search">搜尋</button>
+  </form>
+ 
   <table class="table">
-    <tbody id="origin-list">
+    <tbody id="search-list">
       <tr>
         <th>姓名</th>
         <th>手機號碼</th>
@@ -21,27 +29,10 @@
         <th>生日</th>
         <th>#</th>
       </tr>
-      <% @members.each do |member| %>
-        <tr>
-          <td><%= member.name%></td>
-          <td><%= member.phone%></td>
-          <td><%= member.gender%></td>
-          <td><%= member.email%></td>
-          <td><%= member.birthday%></td>
-          <td><button><%= link_to "Checkout",checkout_cashier_members_path(member)%></button></td>
-        </tr>
-      <% end %>
+      
     </tbody>
   </table>  
-
-
-    
 </div>
-
-  
-
-
-
 
 <script type="text/javascript">
   
