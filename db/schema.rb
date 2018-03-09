@@ -12,13 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20180309064017) do
 
-
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
 
   create_table "countries", force: :cascade do |t|
     t.string "country_type"
