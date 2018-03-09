@@ -9,8 +9,12 @@ Rails.application.routes.draw do
         get :search
         post :search_outcome
       end
+      collection do 
+        get :checkout
+      end
+      
     end
-
+    
     resources :guest ,only:[:index,:new,:create]
   end
 

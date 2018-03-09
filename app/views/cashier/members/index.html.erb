@@ -1,4 +1,107 @@
 <h2>茶籽堂</h2>
 
 <%= link_to "新增會員",new_cashier_member_path%>
-<%= link_to "查詢會員",search_cashier_members_path%>
+<%= link_to "成立訂單",checkout_cashier_members_path%>
+
+<form id="search-form">
+  <label>手機號碼</label>
+  <input type="text" id="phone">
+  <br>
+  <label>電子信箱</label>
+  <input type="text" id="email">
+  <br>
+
+  <button id="search">搜尋</button>
+</form>
+
+<table >
+  <tbody id="search-list">
+    <tr>
+      <th>姓名</th>
+      <th>手機號碼</th>
+      <th>性別</th>
+      <th>生日</th>
+      <th>#</th>
+    </tr>
+    <% @members.each do |member| %>
+      <tr>
+        <td><%= member.name%></td>
+        <td><%= member.phone%></td>
+        <td><%= member.gender%></td>
+        <td><%= member.birthday%></td>
+        <td><button><%= link_to "Checkout",checkout_cashier_members_path(member)%></button></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>  
+
+
+
+
+<script type="text/javascript">
+  
+  $("#search-form").on("click","#search",function(event){
+    event.preventDefault();
+    var phone = $("#phone").val();
+    var email = $("#email").val();
+    console.log(phone);
+    console.log(email);
+    $.ajax({
+      url: "/cashier/members/search_outcome" ,
+      method: "POST",
+      dataType: "json",
+      data: {
+        phone: phone,
+        email: email
+      },
+      success: function(data){
+        
+        var member = document.createElement("tr");
+        
+        if(data["id"]==""){
+          $(member).html("No data fund");
+        }
+        else{
+          member.id = data["id"];
+          <% id = %>
+          $(member).html($("#member-template").html());
+          $(member).find(".name").html(data["name"]);
+          $(member).find(".phone").html(data["phone"]);
+          $(member).find(".gender").html(data["gender"]);
+          $(member).find(".birthday").html(data["birthday"]);
+        
+          var url = document.createElement("a");
+          url.href = "/cashier/members/checkout/" +member.id;
+          $(url).html("Checkout");
+          $(member).find(".checkout").html(url);
+        }
+        
+          
+        $("#search-list").append(member);
+        console.log(data["name"]);
+      }
+    });
+  });
+
+  /*$("#search-list").on("click",".checkout",function(event){
+    var id = event.target.parentNode.parentNode.id;
+    console.log(id)
+    $.ajax({
+      url: "/cashier/members/"+ id+ "/checkout",
+      method: "GET",   
+      dataType: "html",   
+      success: function(data){
+        location.reload();
+      }
+    });
+  });*/
+</script>
+
+<script type="text/template" id="member-template">
+  
+  <td class="name"></td>
+  <td class="phone"></td>
+  <td class="gender"></td>
+  <td class="birthday"></td>
+  <td ><button class="checkout"></button></td>
+</script>
