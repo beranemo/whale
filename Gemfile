@@ -40,6 +40,8 @@ gem "devise"
 gem 'jquery-rails'
 # Use ffaker generate fake data
 gem 'ffaker'
+# Use bootstrap-sass beautify view
+gem 'bootstrap-sass', '~> 3.3.7'
 
 gem 'annotate'
 
