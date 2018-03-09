@@ -1,3 +1,37 @@
+<div class="container">
 <h2>客情資料</h2>
-
+  <div class="row">
 <%= link_to "新增客情" , new_cashier_guest_path %>
+    <div class="col-md-12">
+
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>編號</th>
+            <th>時間截記</th>
+            <th>性別</th>
+            <th>客戶類型</th>
+            <th>國籍</th>
+            <th>年齡結構</th>
+            <th>如何得知茶籽堂</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @guests.each do |guest| %>
+          <tr>
+            <th scope="row"><%= guest.id %></th>
+            <td><%= guest.created_at.localtime.to_s(:db) %></td>
+            <td><%= guest.gender %></td>
+            <td><%= guest.guest_type.guest_type %></td>
+            <td><%= guest.country.country_type %></td>
+            <td><%= guest.age.age_type %></td>
+            <td><%= guest.info_way.news_channel %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
