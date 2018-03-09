@@ -12,19 +12,35 @@
 
 ActiveRecord::Schema.define(version: 20180309064017) do
 
+
+  create_table "ages", force: :cascade do |t|
+    t.string "age_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+
   create_table "countries", force: :cascade do |t|
-    t.string "nat"
+    t.string "country_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "guest_types", force: :cascade do |t|
+    t.string "guest_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "guests", force: :cascade do |t|
-    t.string "age"
+    t.string "age_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "country_id"
-    t.integer "sex_id"
     t.integer "info_way_id"
+    t.string "gender", default: "", null: false
+    t.string "payment"
+    t.string "guest_type_id", default: "", null: false
   end
 
   create_table "info_ways", force: :cascade do |t|
@@ -52,12 +68,6 @@ ActiveRecord::Schema.define(version: 20180309064017) do
     t.string "county"
     t.string "address"
     t.integer "bonus", default: 0
-  end
-
-  create_table "sexes", force: :cascade do |t|
-    t.string "gender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
