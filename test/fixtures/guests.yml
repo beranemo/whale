@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: guests
+#
+#  id          :integer          not null, primary key
+#  age         :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  country_id  :integer
+#  sex_id      :integer
+#  info_way_id :integer
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the
