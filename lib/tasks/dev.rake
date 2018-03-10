@@ -43,19 +43,19 @@ namespace :dev do
     for i in 2..data.last_row
       product = Product.new(
         category: data.row(i)[0],
-        zh_name: data.row(i)[2],
-        en_name: data.row(i)[3],
-        capacity: data.row(i)[4],
-        price: data.row(i)[5].slice!("$").to_i,
-        upc: data.row(i)[6],
-        use_for: data.row(i)[7],
-        directions: data.row(i)[8],
-        zh_m_ingredients: data.row(i)[9],
-        zh_ingredients: data.row(i)[10],
-        en_ingredients: data.row(i)[11]
+        zh_name: data.row(i)[1],
+        en_name: data.row(i)[2],
+        capacity: data.row(i)[3],
+        price: data.row(i)[4],
+        upc: data.row(i)[5],
+        use_for: data.row(i)[6],
+        directions: data.row(i)[7],
+        zh_m_ingredients: data.row(i)[8],
+        zh_ingredients: data.row(i)[9],
+        en_ingredients: data.row(i)[10]
         )
       product.save!
-      puts "create prdouct #{product.zh_name}"
+      puts "create product #{product.zh_name}"
     end
   end
 end

@@ -44,8 +44,8 @@ class Cashier::MembersController < ApplicationController
 
 
   def checkout
-    
-    render :checkout
+    @products = Product.all
+        
   end
   private
 

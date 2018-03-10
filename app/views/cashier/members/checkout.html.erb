@@ -10,9 +10,31 @@
   
   <br>
   <h2>結帳頁面</h2>
-
-  <table>
+  
+  <table class="table">
+    <tbody id="product-list">
+      
+      <tr>
+        <th>類型</th>
+        <th>商品名稱</th>
+        <th>定價</th>
+        <th>國際條碼</th>        
+      
+        <th>#</th>
+      </tr>
     <h2>商品列表</h2>
-  </table> 
+    <% @products.each do |product| %>
+      <tr>
+        <th><%=product.category%></th>
+        <th><%=product.zh_name%></th>
+        <th><%=product.price%></th>
+        <th><%=product.upc%></th>   
+      </tr>
+    <% end %>  
+        
+      
+    </tbody>
+  </table>  
+
 </div>
   

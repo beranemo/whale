@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         get :search
         post :search_outcome
       end
-      collection do 
+      member do 
         get :checkout
       end
       
