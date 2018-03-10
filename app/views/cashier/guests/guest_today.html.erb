@@ -33,7 +33,9 @@
           </tr>
         </thead>
         <tbody>
+
           <% @guests.each do |guest| %>
+          <% if guest.created_at.localtime.today? %>
           <tr>
             <th scope="row"><%= guest.id %></th>
             <td><%= guest.created_at.localtime.to_s(:db) %></td>
@@ -44,6 +46,7 @@
             <td><%= guest.age.age_type %></td>
             <td><%= guest.info_way.news_channel %></td>
           </tr>
+          <% end %>
           <% end %>
         </tbody>
       </table>
