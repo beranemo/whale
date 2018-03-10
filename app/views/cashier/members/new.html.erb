@@ -36,7 +36,7 @@
       <br>
 
       <%= f.label :hair_id, "髮質" %>
-      <%= f.text_field :hair_id , class: "form-control"%>
+      <%= f.collection_select :hair_code, HairType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :skin_id, "膚質" %>

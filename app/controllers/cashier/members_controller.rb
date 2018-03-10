@@ -57,7 +57,7 @@ class Cashier::MembersController < ApplicationController
       :phone,
       :email,
       :skin_type_id,
-      :hair_id,
+      :hair_code,
       :avatar,
       :remark
       )

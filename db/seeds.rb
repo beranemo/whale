@@ -39,6 +39,23 @@ skin_type_list.each do |skin_type|
 end
 puts "Skin_type created!"
 
+# =======================  HairType  =======================
+HairType.destroy_all
+
+hair_type_list =[
+  { code: "A", system_flag: "Y", value: "中性髮質" },
+  { code: "B", system_flag: "Y", value: "油性髮質" },
+  { code: "C", system_flag: "Y", value: "染燙受損髮質" },
+  { code: "D", system_flag: "Y", value: "乾性髮質" },
+  { code: "E", system_flag: "Y", value: "毛躁髮質" },
+  { code: "F", system_flag: "Y", value: "有頭皮屑困擾" }
+]
+
+hair_type_list.each do |hair_type|
+  HairType.create( value: hair_type[:value], code: hair_type[:code], system_flag: hair_type[:system_flag] )
+end
+puts "Hair_type created!"
+
 # =======================  Country  =======================
 Country.destroy_all
 

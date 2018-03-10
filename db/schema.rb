@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310185012) do
+ActiveRecord::Schema.define(version: 20180310190917) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20180310185012) do
     t.string "county"
     t.string "address"
     t.integer "bonus", default: 0
+    t.string "hair_code"
   end
 
   create_table "skin_types", force: :cascade do |t|
