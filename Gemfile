@@ -19,7 +19,7 @@ gem 'ffaker'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'annotate'
 gem 'carrierwave'
-
+gem "roo", "~> 2.7.0" #讀取excel資料
 group :production do
   gem 'pg', '~> 0.11'
 end

@@ -1,3 +1,4 @@
+
 namespace :dev do
   task fake_members: :environment do
     Member.destroy_all
@@ -31,5 +32,30 @@ namespace :dev do
     end
     puts "create fake guests"
     puts "have #{Guest.count} guests data"
+  end
+
+  task fake_products: :environment do
+    
+    Product.destroy_all
+    data = Roo::Spreadsheet.open('./public/test.xlsx')
+    data.default_sheet = data.sheets[3] 
+
+    for i in 2..data.last_row
+      product = Product.new(
+        category: data.row(i)[0],
+        zh_name: data.row(i)[2],
+        en_name: data.row(i)[3],
+        capacity: data.row(i)[4],
+        price: data.row(i)[5].slice!("$").to_i,
+        upc: data.row(i)[6],
+        use_for: data.row(i)[7],
+        directions: data.row(i)[8],
+        zh_m_ingredients: data.row(i)[9],
+        zh_ingredients: data.row(i)[10],
+        en_ingredients: data.row(i)[11]
+        )
+      product.save!
+      puts "create prdouct #{product.zh_name}"
+    end
   end
 end
