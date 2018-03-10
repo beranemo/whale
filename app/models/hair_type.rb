@@ -1,0 +1,2 @@
+class HairType < ApplicationRecord
+end
