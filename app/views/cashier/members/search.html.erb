@@ -1,30 +1,53 @@
-<form id="search-form">
-  <label>手機號碼</label>
-  <input type="text" id="phone">
+<div class="container">
+  <h2>茶籽堂</h2>
+  <ul class="nav nav-tabs">
+    <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
+    <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
+    <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_members_path%></li>
+    <li role="presentation" class="active"><a href="#">搜尋會員</a></li>
+  </ul>
+  
   <br>
-  <label>電子信箱</label>
-  <input type="text" id="email">
-  <br>
+  <form id="search-form">
+    <button id="birthday-search">當月壽星搜尋</button>
+    <button id="clear-search">清除搜尋</button>
+    <br>
+    <label>手機號碼</label>
+    <input type="text" id="phone">
+    <button id="phone-search">手機搜尋</button>
+    <br>
+    <label>電子信箱</label>
+    <input type="text" id="email">
+    <button id="email-search">信箱搜尋</button>
+    <br>
 
-  <button id="search">搜尋</button>
-</form>
-
-<table >
-  <tbody class="search-list">
-    <tr>
-      <th>編號</th>
-      <th>姓名</th>
-      <th>手機號碼</th>
-    </tr>
-  </tbody>
-</table>  
-
-
+    
+    
+  </form>
+ 
+  <table class="table">
+    <tbody id="search-list">
+      
+      <tr>
+        <th>姓名</th>
+        <th>手機號碼</th>
+        <th>性別</th>
+        <th>信箱</th>
+        <th>生日</th>
+        <th>#</th>
+      </tr>
+      
+        
+      
+    </tbody>
+  </table>  
+</div>
 
 <script type="text/javascript">
   
-  $("#search-form").on("click","#search",function(event){
+  $("#search-form").on("click","#phone-search",function(event){
     event.preventDefault();
+    $(".search-item").remove();//刪除原先的搜尋結果
     var phone = $("#phone").val();
     var email = $("#email").val();
     console.log(phone);
@@ -35,30 +58,135 @@
       dataType: "json",
       data: {
         phone: phone,
-        email: email
       },
       success: function(data){
+        
         var member = document.createElement("tr");
+        
         if(data["id"]==""){
           $(member).html("No data fund");
         }
         else{
+          member.id = data["id"];
+          $(member).attr("class","search-item");
           $(member).html($("#member-template").html());
-          $(member).find(".id").html(data["id"]);
           $(member).find(".name").html(data["name"]);
           $(member).find(".phone").html(data["phone"]);
+          $(member).find(".gender").html(data["gender"]);
+          $(member).find(".email").html(data["email"]);
+          $(member).find(".birthday").html(data["birthday"]);
+        
+          var url = document.createElement("a");
+          url.href = "/cashier/members/checkout/" +member.id;
+          $(url).html("Checkout");
+          $(member).find(".checkout").html(url);
         }
         
           
-        $(".search-list").append(member);
+        $("#search-list").append(member);
         console.log(data["name"]);
       }
     });
   });
+
+  $("#search-form").on("click","#email-search",function(event){
+    event.preventDefault();
+    $(".search-item").remove();//刪除原先的搜尋結果
+    var phone = $("#phone").val();
+    var email = $("#email").val();
+    console.log(phone);
+    console.log(email);
+    $.ajax({
+      url: "/cashier/members/search_outcome" ,
+      method: "POST",
+      dataType: "json",
+      data: {
+        email: email
+      },
+      success: function(data){
+        
+        var member = document.createElement("tr");
+        
+        if(data["id"]==""){
+          $(member).html("No data fund");
+        }
+        else{
+          member.id = data["id"];
+          $(member).attr("class","search-item");
+          $(member).html($("#member-template").html());
+          $(member).find(".name").html(data["name"]);
+          $(member).find(".phone").html(data["phone"]);
+          $(member).find(".gender").html(data["gender"]);
+          $(member).find(".email").html(data["email"]);
+          $(member).find(".birthday").html(data["birthday"]);
+        
+          var url = document.createElement("a");
+          url.href = "/cashier/members/checkout/" +member.id;
+          $(url).html("Checkout");
+          $(member).find(".checkout").html(url);
+        }
+        
+          
+        $("#search-list").append(member);
+        console.log(data["name"]);
+      }
+    });
+  });
+
+  $("#search-form").on("click","#birthday-search",function(event){
+    event.preventDefault();
+    $(".search-item").remove();//刪除原先的搜尋結果
+    $.ajax({
+      url: "/cashier/members/search_outcome" ,
+      method: "POST",
+      dataType: "json",
+      success: function(datas){
+        for(var i=0; i <datas.length;i++){
+          var data = datas[i];
+          var member = document.createElement("tr");
+          
+          if(data["id"]==""){
+            $(member).html("No data fund");
+          }
+          else{
+            member.id = data["id"];
+            $(member).attr("class","search-item");
+            <% id = %>
+            $(member).html($("#member-template").html());
+            $(member).find(".name").html(data["name"]);
+            $(member).find(".phone").html(data["phone"]);
+            $(member).find(".gender").html(data["gender"]);
+            $(member).find(".email").html(data["email"]);
+            $(member).find(".birthday").html(data["birthday"]);
+          
+            var url = document.createElement("a");
+            url.href = "/cashier/members/checkout/" +member.id;
+            $(url).html("Checkout");
+            $(member).find(".checkout").html(url);
+          }
+          
+            
+          $("#search-list").append(member);
+          console.log(data["name"]);
+        }
+          
+      }
+    });  
+  });
+  
+
+  $("#search-form").on("click","#clear-search",function(event){
+    event.preventDefault();
+    $(".search-item").remove();
+  });
 </script>
 
 <script type="text/template" id="member-template">
-  <td class="id"></td>
+  
   <td class="name"></td>
   <td class="phone"></td>
+  <td class="gender"></td>
+  <td class="email"></td>
+  <td class="birthday"></td>
+  <td ><button class="checkout"></button></td>
 </script>

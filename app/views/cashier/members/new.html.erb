@@ -1,47 +1,57 @@
-<h2>新增會員</h2>
-<%= form_for @member do |f|%>
-  <div class="form-group">
-    
-    <%= f.label :name, "Name" %>
-    <%= f.text_field :name , class: "form-control"%>
-    <br>
+<div class="container">
+  <h2>茶籽堂</h2>
+  <ul class="nav nav-tabs">
+    <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
+    <li role="presentation" class="active"><a href="#">新增會員</a></li>
+    <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_members_path%></li>
+    <li role="presentation" ><%= link_to "搜尋會員",search_cashier_members_path%></li>
+  </ul>
+  
+  <br>
+  <h4>新增會員</h4>
+  <%= form_for @member do |f|%>
+    <div class="form-group">
+      <%= f.label :name, "姓名" %>
+      <%= f.text_field :name , class: "form-control"%>
+      <br>
 
-    <%= f.label :gender, "性別" %>
-    <%= f.radio_button :gender ,"male"%>
-    <%= f.label :gender, "男" %>
-    <%= f.radio_button :gender ,"female"%>
-    <%= f.label :gender, "女" %>
-    <br>
+      <%= f.label :gender, "性別" %>
+      <%= f.radio_button :gender ,"male"%>
+      <%= f.label :gender, "男" %>
+      <%= f.radio_button :gender ,"female"%>
+      <%= f.label :gender, "女" %>
+      <br>
 
-    <%= f.label :birthday, "生日" %>
-    <%= f.text_field :birthday , class: "form-control"%>
-    <br>
+      <%= f.label :birthday, "生日" %>
+      <%= f.text_field :birthday , class: "form-control"%>
+      <br>
 
-    <%= f.label :phone, "手機號碼" %>
-    <%= f.text_field :phone , class: "form-control"%>
-    <br>
-    
-    <%= f.label :email, "電子信箱" %>
-    <%= f.email_field :email , class: "form-control"%>
-    <br>
+      <%= f.label :phone, "手機號碼" %>
+      <%= f.text_field :phone , class: "form-control"%>
+      <br>
+      
+      <%= f.label :email, "電子信箱" %>
+      <%= f.email_field :email , class: "form-control"%>
+      <br>
 
-    <%= f.label :hair, "髮質" %>
-    <%= f.text_field :hair , class: "form-control"%>
-    <br>
+      <%= f.label :hair_id, "髮質" %>
+      <%= f.text_field :hair_id , class: "form-control"%>
+      <br>
 
-    <%= f.label :skin, "膚質" %>
-    <%= f.text_field :skin , class: "form-control"%>
-    <br>
+      <%= f.label :skin_id, "膚質" %>
+      <%= f.text_field :skin_id , class: "form-control"%>
+      <br>
 
-    <%= f.label :remark, "備註" %>
-    <%= f.text_area :remark %>
-    <br>
+      <%= f.label :remark, "備註" %>
+      <%= f.text_area :remark %>
+      <br>
 
-    <%= f.label :avatar, "個人照片" %>
-    <%= f.file_field :avatar %>
-    <br>
-    
-    
-    <%= f.submit "確定新增會員",class: "btn btn-primary" %>
-  </div>
-<% end %>           
+      <%= f.label :avatar, "個人照片" %>
+      <%= f.file_field :avatar %>
+      <br>
+      
+      
+      <%= f.submit "確定新增會員",class: "btn btn-primary" %>
+    </div>
+  <% end %>           
+</div>
