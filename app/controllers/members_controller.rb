@@ -22,6 +22,6 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name,:gender,:birthday,:phone,:email,:skin,:hair,:avatar)
+    params.require(:member).permit(:name,:gender,:birthday,:phone,:email,:skin_type_id,:hair,:avatar)
   end
 end

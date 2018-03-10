@@ -50,8 +50,16 @@ class Cashier::MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name,:gender,:birthday,
-                                  :phone,:email,:skin,:hair,
-                                  :avatar,:remark)
+    params.require(:member).permit(
+      :name,
+      :gender,
+      :birthday,
+      :phone,
+      :email,
+      :skin_type_id,
+      :hair_id,
+      :avatar,
+      :remark
+      )
   end
 end

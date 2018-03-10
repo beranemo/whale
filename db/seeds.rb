@@ -23,6 +23,22 @@ guest_type_list.each do |guest_type|
 end
 puts "Guest_type created!"
 
+# =======================  SkinType  =======================
+SkinType.destroy_all
+
+skin_type_list =[
+  { skin_type: "中性膚質（一般膚質）" },
+  { skin_type: "油性膚質" },
+  { skin_type: "乾性膚質" },
+  { skin_type: "混合性膚質" },
+  { skin_type: "敏感膚質" }
+]
+
+skin_type_list.each do |skin_type|
+  SkinType.create( skin_type: skin_type[:skin_type] )
+end
+puts "Skin_type created!"
+
 # =======================  Country  =======================
 Country.destroy_all
 
