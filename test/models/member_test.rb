@@ -7,13 +7,20 @@
 #  birthday   :date             not null
 #  gender     :string           default(""), not null
 #  phone      :string           default(""), not null
-#  skin       :string
-#  hair       :string
+#  skin_id    :integer
+#  hair_id    :integer
 #  avatar     :string
 #  remark     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  email      :string           default(""), not null
+#  fax        :string
+#  password   :string
+#  group      :string
+#  zip        :string
+#  county     :string
+#  address    :string
+#  bonus      :integer          default(0)
 #
 
 require 'test_helper'
