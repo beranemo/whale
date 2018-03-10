@@ -15,4 +15,21 @@ namespace :dev do
     end
 
   end
+
+  task fake_guest: :environment do
+    Guest.destroy_all
+
+    30.times do |i|
+      Guest.create!(
+        payment: FFaker::PhoneNumber.area_code,
+        gender: FFaker::Gender.sample,
+        guest_type: GuestType.all.sample,
+        country: Country.all.sample,
+        age: Age.all.sample,
+        info_way: InfoWay.all.sample
+      )
+    end
+    puts "create fake guests"
+    puts "have #{Guest.count} guests data"
+  end
 end

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       
     end
     
-    resources :guest ,only:[:index,:new,:create]
+    resources :guests ,only:[:index,:new,:create]
 
   end
 
