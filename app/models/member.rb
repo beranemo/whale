@@ -21,6 +21,7 @@
 #  county       :string
 #  address      :string
 #  bonus        :integer          default(0)
+#  hair_code    :string
 #
 
 class Member < ApplicationRecord
