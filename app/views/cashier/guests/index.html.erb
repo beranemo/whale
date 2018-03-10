@@ -1,7 +1,16 @@
 <div class="container">
-<h2>客情資料</h2>
-  <div class="row">
-<%= link_to "新增客情" , new_cashier_guest_path %>
+  <h2>客情資料</h2>
+    <ul class="nav nav-tabs">
+      <li role="presentation" ><a href="#">後台首頁</a></li>
+      <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
+      <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_members_path%></li>
+      <li role="presentation" ><%= link_to "搜尋會員",search_cashier_members_path%></li>
+      <li role="presentation" class="active" ><%= link_to "客情資料",cashier_guests_path%></li>
+    </ul>
+
+    <br>
+    <%= link_to "新增客情" , new_cashier_guest_path , class: "btn btn-primary center-block" %>
+    <br>
     <div class="col-md-12">
 
       <table class="table table-striped table-bordered">
@@ -32,8 +41,6 @@
           <% end %>
         </tbody>
       </table>
-
-    </div>
 
   </div>
 </div>
