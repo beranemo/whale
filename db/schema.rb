@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309064017) do
+ActiveRecord::Schema.define(version: 20180310051552) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -66,6 +66,22 @@ ActiveRecord::Schema.define(version: 20180309064017) do
     t.string "county"
     t.string "address"
     t.integer "bonus", default: 0
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "category"
+    t.string "zh_name"
+    t.string "en_name"
+    t.string "capacity"
+    t.integer "price"
+    t.string "upc"
+    t.string "use_for"
+    t.string "directions"
+    t.string "zh_m_ingredients"
+    t.string "zh_ingredients"
+    t.string "en_ingredients"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
