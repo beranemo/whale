@@ -8,7 +8,8 @@ namespace :dev do
         gender: FFaker::Gender::sample,
         phone: FFaker::PhoneNumber::imei,
         birthday: FFaker::IdentificationESCO::expedition_date,
-        email: FFaker::Internet::email
+        email: FFaker::Internet::email,
+        skin_type: SkinType.all.sample
         )
       member.save!
       puts "create member #{i}"
@@ -16,13 +17,19 @@ namespace :dev do
 
   end
 
-  task fake_guest: :environment do
+  task fake_guests: :environment do
     Guest.destroy_all
 
     30.times do |i|
+      gendar = ''
+      if rand(2) == 0
+        gendar = '男'
+      else
+        gendar = '女'
+      end
       Guest.create!(
         payment: FFaker::PhoneNumber.area_code,
-        gender: FFaker::Gender.sample,
+        gender: gendar,
         guest_type: GuestType.all.sample,
         country: Country.all.sample,
         age: Age.all.sample,
