@@ -70,4 +70,12 @@ namespace :dev do
     puts "Product created!"
   end
   
+  task fake_all: :environment do
+    Rake::Task['db:migrate'].execute
+    Rake::Task['db:seed'].execute
+    Rake::Task['dev:fake_members'].execute
+    Rake::Task['dev:fake_guests'].execute
+    Rake::Task['dev:fake_products'].execute
+  end
+  
 end
