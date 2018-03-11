@@ -98,3 +98,39 @@ info_way_list.each do |info_way|
   InfoWay.create( news_channel: info_way[:news_channel] )
 end
 puts "Info_way created!"
+
+
+# =======================  Product  =======================
+
+
+Product.destroy_all
+
+5.times do |i|
+Product.create(
+  category: '髮',
+  zh_name: '錦葵豐盈洗髮露#{i}',
+  en_name: 'Mallow Volumizing Shampoo',
+  capacity: '330mL',
+  price: '550',
+  upc: '4711223665946',
+  use_for: '一般髮質',
+  directions: '建議洗髮兩次：第一次為清潔頭皮(泡沫較少)，取適量洗髮露以指腹於頭皮揉洗5~10秒，讓胺基酸潔淨成分包覆油汙後沖淨；第二次為深層滋養(泡沫細且多)，按摩揉洗30~60秒後以清水沖淨即可。',
+  zh_m_ingredients: '錦葵萃取液、茶皂素(苦茶苷)、胺基酸、松精油、雪松精油、尤加利精油',
+  zh_ingredients: '純水、甜菜鹼、十六酸異丙酯、甘油、胺基酸、卵磷脂、絲蘭、皂樹皮、硬脂醯胺丙基二甲基胺、丙二醇、檸檬酸、茶皂素(苦茶苷)、錦葵萃取液、蕁麻萃取液、精油(松、雪松、尤加利、檜木、廣藿香)',
+  en_ingredients: 'Aqua(Water)')
+end
+=begin
+Product.create(
+  category: '',
+  zh_name: '',
+  en_name: '',
+  capacity: '',
+  price: '',
+  upc: '',
+  use_for: '',
+  directions: '',
+  zh_m_ingredients: '',
+  zh_ingredients: '',
+  en_ingredients: '')
+=end
+puts "Product created!"
