@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  
-   devise_scope :user do
-    root to: "devise/sessions#new"
+    
+  devise_scope :user do
+    
+    authenticated :user do
+      root 'cashier/members#index'
+    end
+    unauthenticated do
+      root 'devise/sessions#new'
+    end
   end
   
   namespace :cashier do
@@ -26,6 +32,6 @@ Rails.application.routes.draw do
 
   end
 
-  root "members#index"
+#  root "members#index"
   resources :members, only: [:index,:new,:create]
 end
