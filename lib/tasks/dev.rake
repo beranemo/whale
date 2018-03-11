@@ -1,41 +1,30 @@
 namespace :dev do
   task fake_members: :environment do
     Member.destroy_all
-
+    
     50.times do |i|
-      gender = ''
-      if rand(2) == 0
-        gender = '男'
-      else
-        gender = '女'
-      end
       member = Member.new(
         name: FFaker::Name::first_name,
-        gender: gender,
+        gender: FFaker::GenderCN.random,
         phone: FFaker::PhoneNumber::imei,
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
         skin_type: SkinType.all.sample
         )
       member.save!
-      puts "create member #{i}"
+      # puts "create member #{i}"
     end
-
+    puts "create fake members"
+    puts "have #{Member.count} guests data"
   end
-
+  
   task fake_guests: :environment do
     Guest.destroy_all
-
+    
     30.times do |i|
-      gender = ''
-      if rand(2) == 0
-        gender = '男'
-      else
-        gender = '女'
-      end
       Guest.create!(
-        payment: FFaker::PhoneNumber.area_code,
-        gender: gender,
+        payment: 100+rand(50000),
+        gender: FFaker::GenderCN.random,
         guest_type: GuestType.all.sample,
         country: Country.all.sample,
         age: Age.all.sample,
