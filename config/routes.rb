@@ -15,7 +15,11 @@ Rails.application.routes.draw do
       
     end
     
-    resources :guests ,only:[:index,:new,:create]
+    resources :guests ,only:[:index,:new,:create] do
+      collection do
+        get :guest_today
+      end
+    end
 
   end
 

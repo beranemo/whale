@@ -1,7 +1,7 @@
 class Cashier::GuestsController < ApplicationController
 
   def index
-    @guests = Guest.all
+    @guests = Guest.all.order(created_at: :desc)
   end
 
   def new
@@ -17,6 +17,10 @@ class Cashier::GuestsController < ApplicationController
       flash.now[:alert] = @guest.errors.full_messages.to_sentence
       render :new
     end
+  end
+
+  def guest_today
+    @guests = Guest.all.order(created_at: :desc)
   end 
 
   private
