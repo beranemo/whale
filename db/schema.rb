@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180311084918) do
+ActiveRecord::Schema.define(version: 20180311161343) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -110,6 +116,7 @@ ActiveRecord::Schema.define(version: 20180311084918) do
     t.string "en_ingredients"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "category_id"
   end
 
   create_table "skin_types", force: :cascade do |t|
