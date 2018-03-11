@@ -52,8 +52,9 @@ class Cashier::MembersController < ApplicationController
 
 
   def checkout
-    
-    render :checkout
+    @products = Product.all 
+    @order_items = current_order.order_items.all
+
   end
   private
 

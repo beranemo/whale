@@ -1,3 +1,4 @@
+
 namespace :dev do
   task fake_members: :environment do
     Member.destroy_all
@@ -34,6 +35,7 @@ namespace :dev do
     puts "create fake guests"
     puts "have #{Guest.count} guests data"
   end
+
   
   
   task fake_products: :environment do

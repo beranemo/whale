@@ -2,6 +2,7 @@
 #
 # Table name: members
 #
+
 #  id           :integer          not null, primary key
 #  name         :string           default(""), not null
 #  birthday     :date             not null
@@ -22,7 +23,7 @@
 #  address      :string
 #  bonus        :integer          default(0)
 #  hair_code    :string
-#
+
 
 require 'test_helper'
 

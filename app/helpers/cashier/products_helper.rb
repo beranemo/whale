@@ -1,0 +1,2 @@
+module Cashier::ProductsHelper
+end

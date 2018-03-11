@@ -10,7 +10,7 @@
 #  price            :integer
 #  upc              :string
 #  use_for          :string
-#  directions       :text
+#  directions       :string
 #  zh_m_ingredients :string
 #  zh_ingredients   :string
 #  en_ingredients   :string
@@ -18,6 +18,10 @@
 #  updated_at       :datetime         not null
 #
 
-class Product < ApplicationRecord
-  has_many :order_items
+require 'test_helper'
+
+class ProductTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end
