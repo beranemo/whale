@@ -19,7 +19,7 @@ namespace :dev do
   end
   
   task fake_guests: :environment do
-    Guest.destroy_all
+    #Guest.destroy_all
     
     30.times do |i|
       Guest.create!(
