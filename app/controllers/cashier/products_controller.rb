@@ -6,9 +6,14 @@ class Cashier::ProductsController < ApplicationController
     @order_item.quantity = 1
     @order_item.price = @product.price
 
-
     @order_item.save!
 
     render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name, :price => @product.price, :upc => @product.upc}
   end
+  
+  
+  def index
+    @products = Product.all
+  end
+  
 end

@@ -44,7 +44,7 @@ namespace :dev do
     5.times do |i|
     Product.create(
       category: '髮',
-      zh_name: '錦葵豐盈洗髮露#{i}',
+      zh_name: '錦葵豐盈洗髮露',
       en_name: 'Mallow Volumizing Shampoo',
       capacity: '330mL',
       price: '550',

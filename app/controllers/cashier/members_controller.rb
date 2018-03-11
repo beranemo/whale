@@ -2,7 +2,7 @@ class Cashier::MembersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @members = Member.all.limit(10)
+    @members = Member.all
   end
 
   def new

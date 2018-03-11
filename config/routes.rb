@@ -22,21 +22,20 @@ Rails.application.routes.draw do
         get :checkout
       end  
     end
-    resources :products, only:[:new] do
+    resources :products, only: [:new, :index, :edit, :update] do
       member do
         post :add_to_order
       end
     end
 
-    resources :order_items, only:[:destroy] do
+    resources :order_items, only: [:destroy] do
       member do
         post :plus_quantity
         post :minus_quantity
       end
     end
-
     
-    resources :guests ,only:[:index,:new,:create] do
+    resources :guests ,only: [:index,:new,:create] do
       collection do
         get :guest_today
       end
