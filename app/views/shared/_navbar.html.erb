@@ -32,9 +32,11 @@
                    <li>
                      <%= link_to("個人設定", edit_user_registration_path) %>
                    </li>
+                   <!--
                    <li>
                      <%= link_to("跳到會員申請頁面", new_member_path) %>
-                   </li>  
+                   </li>
+                   -->  
                  <% end %>
                 </ul>
               </li>  
@@ -53,6 +55,7 @@
               <li><%= link_to('註冊', new_user_registration_path) %></li>
               <li><%= link_to('登入', new_user_session_path) %></li>
             -->
+            <li><%= link_to('會員申請', new_member_path) %></li>
             <% end %>
           </ul>
         </div><!-- /.navbar-collapse -->
