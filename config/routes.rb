@@ -11,10 +11,20 @@ Rails.application.routes.draw do
       end
       member do 
         get :checkout
-      end
-      
+      end  
     end
-    
+    resources :products, only:[:new] do
+      member do
+        post :add_to_order
+      end
+    end
+
+    resources :order_items, only:[:destroy] do
+      member do
+        post :plus_quantity
+        post :minus_quantity
+      end
+    end
     resources :guests ,only:[:index,:new,:create]
 
   end

@@ -45,6 +45,7 @@ class Cashier::MembersController < ApplicationController
 
   def checkout
     @products = Product.all
+    @order = Order.new
         
   end
   private
