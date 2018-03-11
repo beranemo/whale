@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id               :integer          not null, primary key
+#  category         :string
+#  zh_name          :string
+#  en_name          :string
+#  capacity         :string
+#  price            :integer
+#  upc              :string
+#  use_for          :string
+#  directions       :string
+#  zh_m_ingredients :string
+#  zh_ingredients   :string
+#  en_ingredients   :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the
