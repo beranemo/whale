@@ -11,13 +11,11 @@ class ApplicationController < ActionController::Base
     @order || set_order(-1)
   end
 
-  def set_order(id)
-    
-    
-    
+  def set_order(id)       
     if session[:order_id]
+      puts session[:order_id]
       @order = Order.find_by(id: session[:order_id])
-      @order.member_id = id
+      @order.member_id = id      
     else
       @order = current_user.orders.create(member_id: id)
     end

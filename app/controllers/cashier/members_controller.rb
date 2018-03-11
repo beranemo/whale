@@ -21,12 +21,15 @@ class Cashier::MembersController < ApplicationController
   end
 
   def search
-    
+    @order = Order.find_by(id: session[:order_id])
+    @order.destroy
+    session[:order_id] = nil
   end
 
  
   def search_outcome
     puts params[:phone]
+    
     key_word = ''
     if params[:phone] != nil
       key_word = params[:phone]
@@ -52,6 +55,7 @@ class Cashier::MembersController < ApplicationController
 
 
   def checkout
+    
     @products = Product.all 
     @order_items = current_order.order_items.all
 
