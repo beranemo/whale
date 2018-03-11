@@ -3,9 +3,15 @@ namespace :dev do
     Member.destroy_all
 
     50.times do |i|
+      gender = ''
+      if rand(2) == 0
+        gender = '男'
+      else
+        gender = '女'
+      end
       member = Member.new(
         name: FFaker::Name::first_name,
-        gender: FFaker::Gender::sample,
+        gender: gender,
         phone: FFaker::PhoneNumber::imei,
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
@@ -21,15 +27,15 @@ namespace :dev do
     Guest.destroy_all
 
     30.times do |i|
-      gendar = ''
+      gender = ''
       if rand(2) == 0
-        gendar = '男'
+        gender = '男'
       else
-        gendar = '女'
+        gender = '女'
       end
       Guest.create!(
         payment: FFaker::PhoneNumber.area_code,
-        gender: gendar,
+        gender: gender,
         guest_type: GuestType.all.sample,
         country: Country.all.sample,
         age: Age.all.sample,
