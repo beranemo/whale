@@ -1,6 +1,6 @@
 <div class="container">
-  <h2>茶籽堂</h2>
-  <ul class="nav nav-tabs">
+
+     <ul class="nav nav-tabs">
     <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
     <li role="presentation" class="active"><a href="#">新增會員</a></li>
     <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_member_path(-1)%></li>
@@ -10,7 +10,7 @@
   
   <br>
   <h4>新增會員</h4>
-  <%= form_for @member do |f|%>
+  <%= form_for [:cashier, @member] do |f|%>
     <div class="form-group">
       <%= f.label :name, "姓名" %>
       <%= f.text_field :name , class: "form-control"%>
@@ -36,15 +36,15 @@
       <br>
 
       <%= f.label :hair_id, "髮質" %>
-      <%= f.text_field :hair_id , class: "form-control"%>
+      <%= f.collection_select :hair_code, HairType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :skin_id, "膚質" %>
-      <%= f.text_field :skin_id , class: "form-control"%>
+      <%= f.collection_select :skin_type_id, SkinType.all, :id, :skin_type, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :remark, "備註" %>
-      <%= f.text_area :remark %>
+      <%= f.text_area :remark, class: "form-control" %>
       <br>
 
       <%= f.label :avatar, "個人照片" %>

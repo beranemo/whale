@@ -1,5 +1,4 @@
 <div class="container">
-<h2>客情資料</h2>
   <ul class="nav nav-tabs">
     <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
     <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
@@ -18,9 +17,9 @@
       <br>
 
       <%= f.label :gender, "性別" %>
-      <%= f.radio_button :gender ,"male"%>
+      <%= f.radio_button :gender ,"男"%>
       <%= f.label :gender, "男" %>
-      <%= f.radio_button :gender ,"female"%>
+      <%= f.radio_button :gender ,"女"%>
       <%= f.label :gender, "女" %>
       <br>
 

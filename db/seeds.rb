@@ -23,6 +23,39 @@ guest_type_list.each do |guest_type|
 end
 puts "Guest_type created!"
 
+# =======================  SkinType  =======================
+SkinType.destroy_all
+
+skin_type_list =[
+  { skin_type: "中性膚質（一般膚質）" },
+  { skin_type: "油性膚質" },
+  { skin_type: "乾性膚質" },
+  { skin_type: "混合性膚質" },
+  { skin_type: "敏感膚質" }
+]
+
+skin_type_list.each do |skin_type|
+  SkinType.create( skin_type: skin_type[:skin_type] )
+end
+puts "Skin_type created!"
+
+# =======================  HairType  =======================
+HairType.destroy_all
+
+hair_type_list =[
+  { code: "A", system_flag: "Y", value: "中性髮質" },
+  { code: "B", system_flag: "Y", value: "油性髮質" },
+  { code: "C", system_flag: "Y", value: "染燙受損髮質" },
+  { code: "D", system_flag: "Y", value: "乾性髮質" },
+  { code: "E", system_flag: "Y", value: "毛躁髮質" },
+  { code: "F", system_flag: "Y", value: "有頭皮屑困擾" }
+]
+
+hair_type_list.each do |hair_type|
+  HairType.create( value: hair_type[:value], code: hair_type[:code], system_flag: hair_type[:system_flag] )
+end
+puts "Hair_type created!"
+
 # =======================  Country  =======================
 Country.destroy_all
 
@@ -65,3 +98,19 @@ info_way_list.each do |info_way|
   InfoWay.create( news_channel: info_way[:news_channel] )
 end
 puts "Info_way created!"
+
+
+=begin
+Product.create(
+  category: '',
+  zh_name: '',
+  en_name: '',
+  capacity: '',
+  price: '',
+  upc: '',
+  use_for: '',
+  directions: '',
+  zh_m_ingredients: '',
+  zh_ingredients: '',
+  en_ingredients: '')
+=end

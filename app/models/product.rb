@@ -10,7 +10,7 @@
 #  price            :integer
 #  upc              :string
 #  use_for          :string
-#  directions       :string
+#  directions       :text
 #  zh_m_ingredients :string
 #  zh_ingredients   :string
 #  en_ingredients   :string
