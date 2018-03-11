@@ -7,13 +7,18 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # =======================  Default cashier  =======================
-User.create(email: "cash@123",password: "123456",role: "cashier")
+User.destroy_all
+
+User.create(email: "cash@123", password: "123456", role: "cashier", name: "小魚")
+User.create(email: "cash@456", password: "123456", role: "cashier", name: "小鯨")
+User.create(email: "cash@789", password: "123456", role: "cashier", name: "小蘋果")
+
 puts "Default cashier created!"
 
 # =======================  GuestType  =======================
 GuestType.destroy_all
 
-guest_type_list =[
+guest_type_list = [
   { guest_type: "新客" },
   { guest_type: "舊客" }
 ]
@@ -26,7 +31,7 @@ puts "Guest_type created!"
 # =======================  SkinType  =======================
 SkinType.destroy_all
 
-skin_type_list =[
+skin_type_list = [
   { skin_type: "中性膚質（一般膚質）" },
   { skin_type: "油性膚質" },
   { skin_type: "乾性膚質" },
@@ -42,7 +47,7 @@ puts "Skin_type created!"
 # =======================  HairType  =======================
 HairType.destroy_all
 
-hair_type_list =[
+hair_type_list = [
   { code: "A", system_flag: "Y", value: "中性髮質" },
   { code: "B", system_flag: "Y", value: "油性髮質" },
   { code: "C", system_flag: "Y", value: "染燙受損髮質" },
@@ -59,7 +64,7 @@ puts "Hair_type created!"
 # =======================  Country  =======================
 Country.destroy_all
 
-country_list =[
+country_list = [
   { country_type: "台灣" },
   { country_type: "日本" },
   { country_type: "港澳"}
@@ -73,7 +78,7 @@ puts "Country created!"
 # =======================  Age  =======================
 Age.destroy_all
 
-age_list =[
+age_list = [
   { age_type: "25 ~ 35歲" },
   { age_type: "35 ~ 45歲" },
   { age_type: "45 歲以上"}
@@ -87,7 +92,7 @@ puts "Age created!"
 # =======================  InfoWay  =======================
 InfoWay.destroy_all
 
-info_way_list =[
+info_way_list = [
   { news_channel: "路過逛到" },
   { news_channel: "EXPO或其他通路買過" },
   { news_channel: "親友推薦"},
@@ -100,7 +105,6 @@ end
 puts "Info_way created!"
 
 # =======================  Category  =======================
-
 Category.destroy_all
 
 category_list = [
