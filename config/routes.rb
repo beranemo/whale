@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+    
+  devise_scope :user do
+    
+    authenticated :user do
+      root 'cashier/members#index'
+    end
+    unauthenticated do
+      root 'devise/sessions#new'
+    end
+  end
+  
   namespace :cashier do
     root "members#index"
     resources :members do
@@ -23,6 +32,6 @@ Rails.application.routes.draw do
 
   end
 
-  root "members#index"
+#  root "members#index"
   resources :members, only: [:index,:new,:create]
 end
