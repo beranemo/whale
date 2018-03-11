@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20180311084918) do
 
   create_table "ages", force: :cascade do |t|
@@ -78,28 +77,6 @@ ActiveRecord::Schema.define(version: 20180311084918) do
     t.string "hair_code"
   end
 
-  create_table "products", force: :cascade do |t|
-    t.string "category"
-    t.string "zh_name"
-    t.string "en_name"
-    t.string "capacity"
-    t.integer "price"
-    t.string "upc"
-    t.string "use_for"
-    t.text "directions"
-    t.string "zh_m_ingredients"
-    t.string "zh_ingredients"
-    t.string "en_ingredients"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "skin_types", force: :cascade do |t|
-    t.string "skin_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "order_items", force: :cascade do |t|
     t.integer "product_id"
     t.integer "order_id"
@@ -127,10 +104,16 @@ ActiveRecord::Schema.define(version: 20180311084918) do
     t.integer "price"
     t.string "upc"
     t.string "use_for"
-    t.string "directions"
+    t.text "directions"
     t.string "zh_m_ingredients"
     t.string "zh_ingredients"
     t.string "en_ingredients"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "skin_types", force: :cascade do |t|
+    t.string "skin_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
