@@ -99,6 +99,19 @@ info_way_list.each do |info_way|
 end
 puts "Info_way created!"
 
+# =======================  Category  =======================
+
+Category.destroy_all
+
+category_list = [
+  { name: "家" },
+  { name: "髮" }
+]
+
+category_list.each do |category|
+  Category.create( name: category[:name] )
+end
+puts "Category created!"
 
 =begin
 Product.create(
