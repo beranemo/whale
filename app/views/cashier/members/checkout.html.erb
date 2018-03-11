@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>茶籽堂</h2>
+  <h2>茶籽堂-結帳頁面</h2>
   <ul class="nav nav-tabs">
     <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
     <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
@@ -9,26 +9,30 @@
   </ul>
   
   <br>
-  <h2>結帳頁面</h2>
-  
+
+  <h2>商品列表</h2>
   <table class="table">
     <tbody id="product-list">
-      
       <tr>
         <th>類型</th>
         <th>商品名稱</th>
         <th>定價</th>
         <th>國際條碼</th>        
-      
+        <th>購買數量</th>
         <th>#</th>
       </tr>
-    <h2>商品列表</h2>
+    
     <% @products.each do |product| %>
       <tr>
         <th><%=product.category%></th>
         <th><%=product.zh_name%></th>
         <th><%=product.price%></th>
-        <th><%=product.upc%></th>   
+        <th><%=product.upc%></th> 
+        <th>
+          <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+          <input type="text" name="" size="2" value="0" class="text-center">
+          <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+        </th>  
       </tr>
     <% end %>  
         
@@ -37,4 +41,4 @@
   </table>  
 
 </div>
-  
+
