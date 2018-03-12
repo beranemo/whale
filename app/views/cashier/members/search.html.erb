@@ -44,44 +44,48 @@
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果
     var phone = $("#phone").val();
-    var email = $("#email").val();
-    console.log(phone);
-    console.log(email);
-    $.ajax({
-      url: "/cashier/members/search_outcome" ,
-      method: "POST",
-      dataType: "json",
-      data: {
-        phone: phone,
-      },
-      success: function(data){
-        
-        var member = document.createElement("tr");
-        
-        if(data["id"]==""){
-          $(member).html("No data fund");
+    if(phone.length <3)
+    {
+      alert("錯誤!輸入長度不足3碼");
+    }
+    else{
+      $.ajax({
+        url: "/cashier/members/search_outcome" ,
+        method: "POST",
+        dataType: "json",
+        data: {
+          phone: phone,
+        },
+        success: function(datas){
+          for(var i=0; i <datas.length;i++){
+            var member = document.createElement("tr");
+            var data = datas[i];
+            if(data["id"]==""){
+              $(member).html("No data fund");
+            }
+            else{
+              member.id = data["id"];
+              $(member).attr("class","search-item");
+              $(member).html($("#member-template").html());
+              $(member).find(".name").html(data["name"]);
+              $(member).find(".phone").html(data["phone"]);
+              $(member).find(".gender").html(data["gender"]);
+              $(member).find(".email").html(data["email"]);
+              $(member).find(".birthday").html(data["birthday"]);
+            
+              var url = document.createElement("a");
+              url.href = "/cashier/members/checkout/" +member.id;
+              $(url).html("Checkout");
+              $(member).find(".checkout").html(url);
+            }
+            
+              
+            $("#search-list").append(member);
+            console.log(data["name"]);
+          }
         }
-        else{
-          member.id = data["id"];
-          $(member).attr("class","search-item");
-          $(member).html($("#member-template").html());
-          $(member).find(".name").html(data["name"]);
-          $(member).find(".phone").html(data["phone"]);
-          $(member).find(".gender").html(data["gender"]);
-          $(member).find(".email").html(data["email"]);
-          $(member).find(".birthday").html(data["birthday"]);
-        
-          var url = document.createElement("a");
-          url.href = "/cashier/members/checkout/" +member.id;
-          $(url).html("Checkout");
-          $(member).find(".checkout").html(url);
-        }
-        
-          
-        $("#search-list").append(member);
-        console.log(data["name"]);
-      }
-    });
+      });
+    }
   });
 
   $("#search-form").on("click","#email-search",function(event){
