@@ -44,7 +44,10 @@
             <td class="alncenter"><%= guest.country.country_type %></td>
             <td><%= guest.age.age_type %></td>
             <td><%= guest.info_way.news_channel %></td>
-            <td>#</td><!--修改單筆記錄功能-->
+            <td>
+              <%= link_to '編輯', edit_cashier_guest_path(guest) %> ｜
+              <%= link_to '刪除', cashier_guest_path(guest), method: :delete, data: {confirm:"確定刪除?"} %>
+            </td>
             <td>TBD</td>
           </tr>
           <% end %>

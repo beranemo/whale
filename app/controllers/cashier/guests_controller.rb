@@ -1,5 +1,7 @@
 class Cashier::GuestsController < ApplicationController
 
+  before_action :set_guest, only:  [:edit, :update, :destroy]
+
   def index
     @guests = Guest.all.order(created_at: :desc)
   end
@@ -19,6 +21,25 @@ class Cashier::GuestsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @guest.update(guest_params)
+      flash[:notice] = "成功上傳客情紀錄"
+      redirect_to cashier_guests_path(@guest)
+    else
+      flash.now[:alert] = @guest.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
+  def destroy
+    @guest.destroy
+    redirect_to cashier_guests_path
+    flash[:alert] = "客情紀錄已刪除"
+  end
+
   def guest_today
     @guests = Guest.all.order(created_at: :desc)
   end 
@@ -27,6 +48,10 @@ class Cashier::GuestsController < ApplicationController
 
   def guest_params
     params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id)
+  end
+
+  def set_guest
+    @guest = Guest.find(params[:id])
   end
 
 end
