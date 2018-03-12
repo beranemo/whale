@@ -19,4 +19,10 @@ class Cashier::ProductsController < ApplicationController
   def new
     
   end
+
+  def import
+    Product.update_by_file(params[:file])
+    flash[:notice] = "成功匯入商品資訊"
+    redirect_to cashier_products_path
+  end
 end
