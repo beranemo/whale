@@ -49,7 +49,9 @@ class Cashier::MembersController < ApplicationController
     
     @products = Product.all 
     @order_items = current_order.order_items.all
-
+    if params[:id] != -1
+      set_order(params[:id])
+    end
   end
   private
 

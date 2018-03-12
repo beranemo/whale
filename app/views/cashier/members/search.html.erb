@@ -75,7 +75,7 @@
               $(member).find(".birthday").html(data["birthday"]);
             
               var url = document.createElement("a");
-              url.href = "/cashier/members/checkout/" +member.id;
+              url.href = "/cashier/members/" +member.id+"/checkout";
               $(url).html("Checkout");
               $(member).find(".checkout").html(url);
           
@@ -120,7 +120,7 @@
             $(member).find(".birthday").html(data["birthday"]);
           
             var url = document.createElement("a");
-            url.href = "/cashier/members/checkout/" +member.id;
+            url.href = "/cashier/members/" +member.id+"/checkout";
             $(url).html("Checkout");
             $(member).find(".checkout").html(url);         
             $("#search-list").append(member);
@@ -157,7 +157,7 @@
             $(member).find(".birthday").html(data["birthday"]);
           
             var url = document.createElement("a");
-            url.href = "/cashier/members/checkout/" +member.id;
+            url.href = "/cashier/members/" +member.id+"/checkout";
             $(url).html("Checkout");
             $(member).find(".checkout").html(url);
           }
