@@ -1,0 +1,14 @@
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#">所有商品</a></li>
+    <li role="presentation" class="active"><%= link_to "更新商品", new_cashier_product_path%></li>
+  </ul>
+  
+  <br>
+  <%= form_tag import_cashier_products_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "更新" %>
+  <% end %>
+</div>
+
+  
