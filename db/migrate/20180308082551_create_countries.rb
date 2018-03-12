@@ -4,8 +4,7 @@ class CreateCountries < ActiveRecord::Migration[5.1]
       t.string :nat
 
       t.timestamps
-
-      add_column :guests, :country_id, :integer
     end
+    add_column :guests, :country_id, :integer
   end
 end

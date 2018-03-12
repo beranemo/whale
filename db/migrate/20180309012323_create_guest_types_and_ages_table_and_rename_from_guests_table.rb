@@ -8,11 +8,9 @@ class CreateGuestTypesAndAgesTableAndRenameFromGuestsTable < ActiveRecord::Migra
     create_table :guest_types do |t|
       t.string :guest_type
       t.timestamps
-
+    end
     rename_column :guests, :age, :age_id
     rename_column :guests, :guest_type, :guest_type_id
     rename_column :countries, :nat, :country_type
-
-    end
   end
 end
