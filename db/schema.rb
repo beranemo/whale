@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20180311170001) do
     t.date "birthday", null: false
     t.string "gender", default: "", null: false
     t.string "phone", default: "", null: false
-    t.integer "skin_type_id"
-    t.integer "hair_id"
+    t.string "skin"
+    t.string "hair"
     t.string "avatar"
     t.string "remark"
     t.datetime "created_at", null: false
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 20180311170001) do
     t.string "county"
     t.string "address"
     t.integer "bonus", default: 0
+    t.integer "skin_type_id"
+    t.integer "hair_id"
     t.string "hair_code"
   end
 
