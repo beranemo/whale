@@ -29,27 +29,26 @@
     </tbody>
   </table>  
   <br>
-  <% if @order ==nil%>
+  <% if current_order ==nil%>
     <button><%= link_to "新增訂單", cashier_orders_path, method: :post%></button>
   <% else %>
-    <h2>訂單內容#<%= current_order.id%></h2>
-    
+    <h2>訂單內容<%= current_order.id%></h2>
     <table class="table">
       <tbody class="order-item-list">
         <tr>
           <th>類型</th>
-          <th>商品名稱</th>
-          <th>定價</th>
+          <th>商品名稱</th>          
           <th>國際條碼</th>        
           <th>購買數量</th>
+          <th>定價</th>
           <th>#</th>
-        </tr>
+        </tr>        
         <% @order_items.each do |item|%>
-           <tr>
+          <tr>
             <td><%=item.product.category%></td>
-            <td><%=item.product.zh_name%></td>
-            <td><%=item.price%></td>
-            <td><%=item.product.upc%></td>        
+            <td><%=item.product.zh_name%></td>            
+            <td><%=item.product.upc%></td>    
+            <td><%=item.price%></td>    
             <td>
               <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
               <input type="text" name="" size="3" class="text-center" value="<%=item.quantity%>">
@@ -61,7 +60,22 @@
             </td>
           </tr>
         <% end %>
+
+          
+        <tr>
+          <td>總金額</td>
+          <td></td>
+          <td></td>
+          <td></td>        
+          <td><%= current_order.amount%></td>
+          <td><%= link_to "結帳完成並成立新訂單",cashier_orders_path,method: :post,class:"btn btn-success"%></td>
+        </tr>
       <% end %>
+    </tbody>
+  </table>
+  <table>
+    <tbody>
+      
     </tbody>
   </table>  
   <br>
@@ -112,7 +126,7 @@
         $(order_item).find(".zh_name").html(data["zh_name"]);
         $(order_item).find(".price").html(data["price"]);
         $(order_item).find(".upc").html(data["upc"]);
-        $(".order-item-list").append(order_item);
+        $(".order-item-list").find(".order_items").append(order_item);
       }
     });
   }); 
@@ -138,9 +152,9 @@
 
 <script type="text/template" id="order-item-template">
   <td class="category"></td>
-  <td class="zh_name"></td>
-  <td class="price"></td>
+  <td class="zh_name"></td>  
   <td class="upc"></td> 
+  <td class="price"></td>
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="text-center" value="1">

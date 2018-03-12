@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   private
 
   
-  
-  def current_order
+
+  def current_order()
     @order || set_order(-1)
   end
 
@@ -25,5 +25,4 @@ class ApplicationController < ActionController::Base
     session[:order_id] = @order.id
     @order
   end
-
 end
