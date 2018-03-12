@@ -2,7 +2,7 @@
   <ul class="nav nav-tabs">
     <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
     <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
-    <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_member_path(-1)%></li>
+    <li role="presentation" ><%= link_to "成立訂單",new_cashier_order_path(id: -1)%></li>
     <li role="presentation" class="active"><a href="#">搜尋會員</a></li>
     <li role="presentation" ><%= link_to "客情資料",cashier_guests_path%></li>
   </ul>
@@ -75,8 +75,8 @@
               $(member).find(".birthday").html(data["birthday"]);
             
               var url = document.createElement("a");
-              url.href = "/cashier/members/" +member.id+"/checkout";
-              $(url).html("Checkout");
+              url.href = "/cashier/orders/new?id=" +member.id;
+              $(url).html("成立訂單");
               $(member).find(".checkout").html(url);
           
               $("#search-list").append(member);
@@ -120,8 +120,8 @@
             $(member).find(".birthday").html(data["birthday"]);
           
             var url = document.createElement("a");
-            url.href = "/cashier/members/" +member.id+"/checkout";
-            $(url).html("Checkout");
+            url.href = "/cashier/orders/new?id=" +member.id;
+            $(url).html("成立訂單");
             $(member).find(".checkout").html(url);         
             $("#search-list").append(member);
           }
@@ -157,8 +157,8 @@
             $(member).find(".birthday").html(data["birthday"]);
           
             var url = document.createElement("a");
-            url.href = "/cashier/members/" +member.id+"/checkout";
-            $(url).html("Checkout");
+            url.href = "/cashier/orders/new?id=" +member.id;
+            $(url).html("成立訂單");
             $(member).find(".checkout").html(url);
           }
           

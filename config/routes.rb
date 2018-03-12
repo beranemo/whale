@@ -18,9 +18,7 @@ Rails.application.routes.draw do
         get :search
         post :search_outcome
       end
-      member do 
-        get :checkout
-      end  
+      
     end
     resources :products, only: [:new, :index, :edit, :update] do
       member do
@@ -30,6 +28,8 @@ Rails.application.routes.draw do
         post :import
       end
     end
+
+    resources :orders, only: [:index, :new, :create, :update]
 
     resources :order_items, only: [:destroy] do
       member do
