@@ -45,10 +45,12 @@
             <td><%= guest.age.age_type %></td>
             <td><%= guest.info_way.news_channel %></td>
             <td>
-              <%= link_to '編輯', edit_cashier_guest_path(guest) %> ｜
-              <%= link_to '刪除', cashier_guest_path(guest), method: :delete, data: {confirm:"確定刪除?"} %>
+              <% if guest.user == current_user  %>
+                <%= link_to '編輯', edit_cashier_guest_path(guest) %> ｜
+                <%= link_to '刪除', cashier_guest_path(guest), method: :delete, data: {confirm:"確定刪除?"} %>
+              <% end %>
             </td>
-            <td>TBD</td>
+            <td><%= guest.user.name %></td>
           </tr>
           <% end %>
         </tbody>

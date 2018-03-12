@@ -12,6 +12,7 @@ class Cashier::GuestsController < ApplicationController
 
   def create
     @guest = Guest.new(guest_params)
+    @guest.user_id = current_user.id
     if @guest.save
       flash[:notice] = "成功新增客情紀錄"
       redirect_to cashier_guests_path
@@ -47,7 +48,7 @@ class Cashier::GuestsController < ApplicationController
   private
 
   def guest_params
-    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id)
+    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id)
   end
 
   def set_guest

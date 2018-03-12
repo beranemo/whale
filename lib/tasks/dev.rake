@@ -29,7 +29,8 @@ namespace :dev do
         guest_type: GuestType.all.sample,
         country: Country.all.sample,
         age: Age.all.sample,
-        info_way: InfoWay.all.sample
+        info_way: InfoWay.all.sample,
+        user: User.all.sample
       )
     end
     puts "create fake guests"
