@@ -31,23 +31,16 @@ class Cashier::MembersController < ApplicationController
     key_word = ''
     if params[:phone] != nil
       key_word = params[:phone]
-      @members = Member.where("phone like ?", "%"+key_word+"%")
-      puts @members
-      # 當@member 回傳有多筆資料時，前端介面資料承接方式要改一下
-      # FIXME
-      render :json => @members
+      @members = Member.where("phone like ?", "%"+key_word+"%")      
     elsif params[:email] != nil
       key_word = params[:email]
-      # find_by 只會找出一筆資料，用 where 才能找出多筆，這裡還未改成 where 方便與 phone 的 where 辨異
-      # FIXME
-      @member = Member.find_by("email like ?", "%"+key_word+"%")
-      render :json => {:id => @member.id, :name => @member.name, :phone =>@member.phone, :gender => @member.gender, :email => @member.email, :birthday => @member.birthday}
+      @members = Member.where("email like ?", "%"+key_word+"%")
+      puts @members
     else
       month = Date.current.month 
       @members = Member.where("cast(strftime('%m', birthday) as int) = ?", month)
-      render :json => @members
     end
-
+    render :json => @members
     
   end
 
