@@ -35,7 +35,8 @@
             </td>
             <td><%= bulletin.content %></td>
             <td><%= bulletin.user.name %></td>
-            <td><%= link_to "編輯", edit_cashier_bulletin_path(bulletin)%></td>
+            <td><%= link_to "編輯", edit_cashier_bulletin_path(bulletin)%>  <%= link_to '刪除', cashier_bulletin_path(bulletin), method: :delete, data: {confirm:"是否確認刪除?"} %>
+            </td>
           </tr>
         <% end %>
       </tbody>

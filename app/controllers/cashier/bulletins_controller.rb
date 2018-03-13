@@ -40,6 +40,13 @@ class Cashier::BulletinsController < ApplicationController
     end
   end
 
+  def destroy
+    @bulletin = Bulletin.find(params[:id])
+    @bulletin.destroy
+    redirect_to cashier_bulletins_path
+    flash[:alert] = "bulletin was deleted"
+  end
+
 
   private
 
