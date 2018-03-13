@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :bulletins, only: [:new, :index, :edit, :update]
+    resources :bulletins
     
   end
 
