@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
   
   namespace :cashier do
-    root "members#index"
+    root "guests#index"
     resources :members do
       collection do
         get :search

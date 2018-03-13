@@ -11,6 +11,7 @@
 #  gender        :string           default(""), not null
 #  payment       :string
 #  guest_type_id :string           default(""), not null
+#  user_id       :integer
 #
 
 class Guest < ApplicationRecord
