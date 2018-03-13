@@ -36,11 +36,12 @@
           </tr>
         </thead>
         <tbody>
-
+        <% i = 1 %>
           <% @guests.each do |guest| %>
           <% if guest.created_at.localtime.today? %>
+          
           <tr>
-            <th scope="row"><%= guest.id %></th>
+            <th scope="row"><%= i %></th>
             <td><%= guest.created_at.localtime.to_s(:db) %></td>
             <td><%= guest.payment %></td>
             <td><%= guest.gender %></td>
@@ -56,6 +57,7 @@
             </td>
             <td><%= guest.user.name %></td>
           </tr>
+          <% i = i + 1 %>
           <% end %>
           <% end %>
         </tbody>
