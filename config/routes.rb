@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     
     authenticated :user do
-      root 'cashier/members#index'
+      root 'cashier/guests#guest_today'
     end
     unauthenticated do
       root 'devise/sessions#new'
