@@ -91,6 +91,7 @@ namespace :dev do
     Rake::Task['db:seed'].execute
     Rake::Task['dev:fake_members'].execute
     Rake::Task['dev:fake_guests'].execute
+    Rake::Task['dev:fake_bulletins'].execute
     # Rake::Task['dev:fake_products'].execute
   end
   
