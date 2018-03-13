@@ -13,10 +13,12 @@ namespace :dev do
     Member.destroy_all
     
     50.times do |i|
+      phone_number = 10000000 + rand(80000000)
+      phone_string = '09' + phone_number.to_s
       member = Member.new(
         name: FFaker::Name::first_name,
         gender: FFaker::GenderCN.random,
-        phone: FFaker::PhoneNumber::imei,
+        phone: phone_string,
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
         skin_type: SkinType.all.sample
