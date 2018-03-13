@@ -45,17 +45,6 @@ class Cashier::MembersController < ApplicationController
   end
 
 
-  def checkout
-    
-    @products = Product.all 
-    @order_items = current_order.order_items.all
-    if params[:id] != "-1"
-      set_order(params[:id])
-      @member = Member.find(params[:id])
-    else
-      @member = Member.new
-    end
-  end
   private
 
   def member_params

@@ -1,28 +1,23 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  helper_method :current_order
+  helper_method :current_cart
 
   private
 
-  
-
-  def current_order()
-    @order || set_order(-1)
+  def current_cart
+    @cart || set_cart
   end
 
-  def set_order(id)       
-    if session[:order_id]
-      puts session[:order_id]
-      @order = Order.find_by(id: session[:order_id])
-      @order.member_id = id      
-    else
-      @order = current_user.orders.create(member_id: id)
+  def set_cart
+
+    if session[:cart_id]
+      @cart = Cart.find_by(id: session[:cart_id])
     end
 
- 
-    @order.save!
-    session[:order_id] = @order.id
-    @order
+    @cart ||= Cart.create
+
+    session[:cart_id] = @cart.id
+    @cart
   end
 end

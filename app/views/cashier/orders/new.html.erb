@@ -10,7 +10,7 @@
   
   <br>
   
-  <h2>消費者訊息</h2>
+  <h2>會員訊息</h2>
   <table class="table">
     <tbody class="customer-info">
       <tr>
@@ -29,41 +29,52 @@
     </tbody>
   </table>  
   <br>
-  <% if @order ==nil%>
-    <button><%= link_to "新增訂單", cashier_orders_path, method: :post%></button>
-  <% else %>
-    <h2>訂單內容#<%= current_order.id%></h2>
-    <
-    <table class="table">
-      <tbody class="order-item-list">
-        <tr>
-          <th>類型</th>
-          <th>商品名稱</th>
-          <th>定價</th>
-          <th>國際條碼</th>        
-          <th>購買數量</th>
-          <th>#</th>
+  
+  
+  <h2>購買內容#<%= current_cart.id%></h2>
+  <table class="table">
+    <tbody class="cart-item-list">
+      <tr>
+        <th>類型</th>
+        <th>商品名稱</th>          
+        <th>國際條碼</th>
+        <th>定價</th>        
+        <th>購買數量</th>
+        <th>#</th>
+      </tr>        
+      <% @cart_items.each do |item|%>
+        <tr id="<%= item.product.id%>">
+          <td><%=item.product.category%></td>
+          <td><%=item.product.zh_name%></td>            
+          <td><%=item.product.upc%></td>
+          <td><%=item.product.price%></td>                  
+          <td>
+            <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+            <input type="text" name="" size="3" class="text-center" value="<%=item.quantity%>">
+            <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+          </td>          
+          <td>
+            <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+          </td>
+          <% @order.amount+= item.product.price*item.quantity%>
         </tr>
-        <% @order_items.each do |item|%>
-           <tr>
-            <td><%=item.product.category%></td>
-            <td><%=item.product.zh_name%></td>
-            <td><%=item.price%></td>
-            <td><%=item.product.upc%></td>        
-            <td>
-              <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
-              <input type="text" name="" size="3" class="text-center" value="<%=item.quantity%>">
-              <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
-            </td>
-
-            <td>
-              <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
-            </td>
-          </tr>
-        <% end %>
       <% end %>
     </tbody>
-  </table>  
+  </table>
+  <hr>
+  <div class="row">
+    <div class="col-md-3">
+      <h5>總金額</h5>
+    </div>  
+    <div class="col-md-2 col-md-offset-5 text-right">
+      <h5 id="total">$ <%= @order.amount%></h5>
+      
+    </div>  
+  </div>
+  <br>
+  <div class="text-right">
+    <%= link_to "結帳完成並成立訂單",cashier_orders_path(member_id: @member.id),method: :post,class:"btn btn-success"%>
+  </div>  
   <br>
   <h2>商品列表</h2>
   <table class="table">
@@ -84,7 +95,7 @@
         <td><%=product.price%></td>
         <td><%=product.upc%></td> 
     
-        <td><button class="add_to_order">加入訂單</button></td>
+        <td><button class="add_to_cart">購買</button></td>
       </tr>
     <% end %>  
         
@@ -95,15 +106,19 @@
 </div>
 
 <script type="text/javascript">
-  $(".product-list").on("click", ".add_to_order", function(event){
+  $(".product-list").on("click", ".add_to_cart", function(event){
     var id  = event.target.parentNode.parentNode.id;
     console.log(id);
     $.ajax({
-      url: "/cashier/products/" + id+"/add_to_order",
+      url: "/cashier/products/" + id+"/add_to_cart",
       method: "POST",
       dataType: "json",      
       success: function(data){        
         var order_item = document.createElement("tr");
+        var total_price = $("#total");
+        var total_price_value = Number(total_price.html().replace('$ ',''));
+        $(total_price).html("$ "+(total_price_value+Number(data["price"])));
+
         console.log(data["id"]);
         $(".product-list").find("#" + data["id"]).remove();
         order_item.id = data["id"];
@@ -112,25 +127,26 @@
         $(order_item).find(".zh_name").html(data["zh_name"]);
         $(order_item).find(".price").html(data["price"]);
         $(order_item).find(".upc").html(data["upc"]);
-        $(".order-item-list").append(order_item);
+        $(".cart-item-list").append(order_item);
       }
     });
   }); 
 
 
-  $(".order-item-list").on("click",".delete-item",function(event){
+  $(".cart-item-list").on("click",".delete-item",function(event){
     var id = event.target.parentNode.parentNode.id;
 
     $.ajax({
-      url: "/cashier/order_items/" + id,
+      url: "/cashier/cart_items/" + id,
       method: "DELETE",
       dataType: "json",
 
       success: function(data){
-        
+        var total_price = $("#total");
+        var total_price_value = Number(total_price.html().replace('$ ',''));
+        $(total_price).html("$ "+(total_price_value-Number(data["price"])));
        
-
-        $(".order-item-list").find("#"+data["id"]).remove();
+        $(".cart-item-list").find("#"+data["id"]).remove();
       }
     })
   });
@@ -138,14 +154,14 @@
 
 <script type="text/template" id="order-item-template">
   <td class="category"></td>
-  <td class="zh_name"></td>
-  <td class="price"></td>
-  <td class="upc"></td> 
+  <td class="zh_name"></td>  
+  <td class="upc"></td>
+  <td class="price"></td>   
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
-  </td>
+  </td>  
   <td>
     <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
   </td>

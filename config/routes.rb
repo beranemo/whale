@@ -18,20 +18,20 @@ Rails.application.routes.draw do
         get :search
         post :search_outcome
       end
-      member do 
-        get :checkout
-      end  
+      
     end
     resources :products, only: [:new, :index, :edit, :update] do
       member do
-        post :add_to_order
+        post :add_to_cart
       end
       collection do
         post :import
       end
     end
 
-    resources :order_items, only: [:destroy] do
+    resources :orders, only: [:index, :new, :create, :update]
+
+    resources :cart_items, only: [:destroy] do
       member do
         post :plus_quantity
         post :minus_quantity
