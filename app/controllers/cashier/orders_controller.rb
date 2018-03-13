@@ -1,7 +1,7 @@
 class Cashier::OrdersController < ApplicationController
 
   def new
-    
+    @amount = 0
     @products = Product.all 
     @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"
