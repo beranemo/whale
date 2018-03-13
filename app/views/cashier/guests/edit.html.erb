@@ -2,12 +2,12 @@
   <ul class="nav nav-tabs">
     <li role="presentation" ><%= link_to "後台首頁",cashier_root_path%></li>
     <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
-    <li role="presentation" ><%= link_to "成立訂單",new_cashier_order_path(id: -1)%></li>
+    <li role="presentation" ><%= link_to "成立訂單",checkout_cashier_member_path(-1)%></li>
     <li role="presentation" ><%= link_to "搜尋會員",search_cashier_members_path%></li>
     <li role="presentation" class="active"><a href="#">客情資料</a></li>
   </ul>
   
   <br>
-  <h4>新增客情</h4>
+  <h4>編輯客情</h4>
   <%= render partial: "form" %>
 </div>

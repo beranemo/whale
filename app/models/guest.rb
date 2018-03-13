@@ -14,7 +14,7 @@
 #
 
 class Guest < ApplicationRecord
-
+  belongs_to :user
   belongs_to :country
   belongs_to :info_way
   belongs_to :guest_type
