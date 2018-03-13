@@ -31,7 +31,7 @@
   <br>
   
   
-  <h2>購買內容<%= current_cart.id%></h2>
+  <h2>購買內容#<%= current_cart.id%></h2>
   <table class="table">
     <tbody class="cart-item-list">
       <tr>
@@ -56,7 +56,7 @@
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
-          <% @amount+= item.product.price*item.quantity%>
+          <% @order.amount+= item.product.price*item.quantity%>
         </tr>
       <% end %>
     </tbody>
@@ -67,13 +67,13 @@
       <h5>總金額</h5>
     </div>  
     <div class="col-md-2 col-md-offset-5 text-right">
-      <h5 id="total">$ <%= @amount%></h5>
+      <h5 id="total">$ <%= @order.amount%></h5>
       
     </div>  
   </div>
   <br>
   <div class="text-right">
-    <%= link_to "結帳完成並成立訂單",cashier_orders_path,method: :post,class:"btn btn-success"%>
+    <%= link_to "結帳完成並成立訂單",cashier_orders_path(member_id: @member.id),method: :post,class:"btn btn-success"%>
   </div>  
   <br>
   <h2>商品列表</h2>
