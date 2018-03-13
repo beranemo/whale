@@ -63,9 +63,10 @@
           </tr>
         </thead>
         <tbody>
+          <% i = 1 %>
           <% @guests.each do |guest| %>
           <tr>
-            <th class="alncenter"><%= guest.id %></th>
+            <th class="alncenter"><%= i %></th>
             <td class="alncenter"><%= guest.created_at.localtime.to_s(:db)[0..15] %></td>
             <td class="alnright"><%= number_to_currency(guest.payment, precision: 0) %></td>
             <td class="alncenter"><%= guest.gender %></td>
@@ -81,6 +82,7 @@
             </td>
             <td><%= guest.user.name %></td>
           </tr>
+          <% i = i + 1 %>
           <% end %>
         </tbody>
       </table>
