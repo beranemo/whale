@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       end
     end
     
-    resources :guests ,only: [:index,:new,:create] do
+    resources :guests do
       collection do
         get :guest_today
       end
