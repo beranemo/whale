@@ -1,7 +1,7 @@
 class Cashier::BulletinsController < ApplicationController
   
   def index
-    @bulletins = Bulletin.all
+    @bulletins = Bulletin.all.order(created_at: :desc)
   end
   
   def new
