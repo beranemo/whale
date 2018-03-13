@@ -1,0 +1,2 @@
+class Bulletin < ApplicationRecord
+end
