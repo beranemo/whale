@@ -1,5 +1,14 @@
 
 namespace :dev do
+  
+  def rand_in_range(from, to)
+    rand * (to - from) + from
+  end
+  
+  def rand_time(from, to=Time.now)
+    Time.at(rand_in_range(from.to_f, to.to_f))
+  end
+  
   task fake_members: :environment do
     Member.destroy_all
     
@@ -33,6 +42,14 @@ namespace :dev do
         user: User.all.sample
       )
     end
+    
+    guests = Guest.all
+    
+    guests.each do |g|
+      g.created_at = rand_time(7.days.ago)
+      g.save
+    end
+    
     puts "create fake guests"
     puts "have #{Guest.count} guests data"
   end
