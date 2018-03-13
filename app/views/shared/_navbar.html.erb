@@ -26,12 +26,14 @@
                 </a>
                 <ul class="dropdown-menu">
                  <% if current_user.cashier? %>
-                   <li>
-                     <%= link_to("編輯個人資料", edit_user_registration_path) %>
-                   </li>
-                   <li>
-                     <%= link_to("個人設定", edit_user_registration_path) %>
-                   </li>
+                   <li><%= link_to("編輯個人資料", edit_user_registration_path) %></li>
+                   <li><%= link_to("個人設定", edit_user_registration_path) %></li>
+                   <li><%= link_to("這是功能線1", edit_user_registration_path) %></li>
+                   <li><%= link_to("這是功能線2", edit_user_registration_path) %></li>
+                   <li><%= link_to("這是功能線3", edit_user_registration_path) %></li>
+                   <li><%= link_to("這是功能線4", edit_user_registration_path) %></li>
+                   <li><%= link_to("這是功能線5", edit_user_registration_path) %></li>
+                   <li><%= link_to("這是功能線6", edit_user_registration_path) %></li>
                    <!--
                    <li>
                      <%= link_to("跳到會員申請頁面", new_member_path) %>
