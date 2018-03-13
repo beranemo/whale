@@ -33,7 +33,7 @@ namespace :dev do
   task fake_guests: :environment do
     Guest.destroy_all
     
-    30.times do |i|
+    60.times do |i|
       Guest.create!(
         payment: 100+rand(50000),
         gender: FFaker::GenderCN.random,
