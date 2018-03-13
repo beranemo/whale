@@ -23,15 +23,19 @@
           <th>標題</th>
           <th>內容</th>
           <th>發布者</th>
+          <th>功能</th>
         </tr>
       </thead>
       <tbody>
         <% @bulletins.each do |bulletin| %>
           <tr>
             <td><%= bulletin.created_at.localtime.to_s(:db)[0..9] %></td>
-            <td><%= bulletin.title %></td>
+            <td>
+              <%= link_to cashier_bulletin_path(bulletin) do %><%= bulletin.title %><% end %>
+            </td>
             <td><%= bulletin.content %></td>
             <td><%= bulletin.user.name %></td>
+            <td><%= link_to "編輯", edit_cashier_bulletin_path(bulletin)%></td>
           </tr>
         <% end %>
       </tbody>

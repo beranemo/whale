@@ -21,8 +21,25 @@ class Cashier::BulletinsController < ApplicationController
     end
   end
   
-  def edit
+  def show
+    @bulletin = Bulletin.find(params[:id])
   end
+  
+  def edit
+    @bulletin = Bulletin.find(params[:id])
+  end
+  
+  def update
+    @bulletin = Bulletin.find(params[:id])
+    if @bulletin.update(bulletin_params)
+      flash[:notice] = "bulletin was successfully updated"
+      redirect_to cashier_bulletins_path
+    else
+      flash.now[:alert] = "bulletin was failed to update"
+      render :edit
+    end
+  end
+
 
   private
 
