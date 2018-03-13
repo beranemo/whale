@@ -37,7 +37,20 @@ namespace :dev do
     puts "have #{Guest.count} guests data"
   end
 
-  
+  task fake_bulletins: :environment do
+    Bulletin.destroy_all
+    
+    5.times do |i|
+      Bulletin.create!(
+        title: "這是標題",
+        content: "這是內容",
+        user: User.all.sample
+      )
+    end
+    puts "create fake bulletins"
+    puts "have #{Bulletin.count} bulletins data"
+  end  
+
   
   task fake_products: :environment do
     Product.destroy_all

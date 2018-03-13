@@ -1,0 +1,18 @@
+<div class="container">  
+
+<div class="form-group">
+
+  <%= form_for [:cashier, @bulletin] do |f| %>
+    <%= f.label :title, "標題" %>
+    <%= f.text_field :title, class: "form-control" %>
+    <br>
+
+    <%= f.label :content, "內容" %>
+    <%= f.text_area :content, class: "form-control", rows: "6" %>
+    <br>
+
+    <%= f.submit "發布消息" %>
+  <% end %>
+  
+</div>
+</div>

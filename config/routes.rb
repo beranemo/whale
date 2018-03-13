@@ -45,6 +45,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :bulletins
+    
   end
 
 #  root "members#index"
