@@ -3,9 +3,9 @@ class Cashier::OrdersController < ApplicationController
   def new
     
     @products = Product.all 
-    @order_items = current_order.order_items.all
+    @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"
-      set_order(params[:id])
+      
       @member = Member.find(params[:id])
     else
       @member = Member.new

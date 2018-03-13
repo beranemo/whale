@@ -1,12 +1,12 @@
 class Cashier::ProductsController < ApplicationController
-  def add_to_order
+  def add_to_cart
     @product = Product.find(params[:id])
     
-    @order_item = current_order.order_items.build(product_id: params[:id])
-    @order_item.quantity = 1
-    @order_item.price = @product.price
+    @cart_item = current_cart.cart_items.build(product_id: params[:id])
+    @cart_item.save
+    
 
-    @order_item.save!
+    
 
     render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name, :price => @product.price, :upc => @product.upc}
   end

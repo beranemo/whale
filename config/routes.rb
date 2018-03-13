@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
     resources :products, only: [:new, :index, :edit, :update] do
       member do
-        post :add_to_order
+        post :add_to_cart
       end
       collection do
         post :import
