@@ -27,6 +27,7 @@ class User < ApplicationRecord
 
   has_many :guests
   has_many :orders
+  has_many :bulletins
 
   def cashier?
     self.role == "cashier"
