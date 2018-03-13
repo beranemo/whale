@@ -50,7 +50,7 @@
           <td><%=item.product.price%></td>                  
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
-            <input type="text" name="" size="3" class="text-center" value="<%=item.quantity%>">
+            <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>          
           <td>
@@ -133,20 +133,41 @@
   }); 
 
 
-  $(".cart-item-list").on("click",".delete-item",function(event){
+  
+
+
+  $(".cart-item-list").on("click",".plus-item",function(event){
     var id = event.target.parentNode.parentNode.id;
 
     $.ajax({
-      url: "/cashier/cart_items/" + id,
-      method: "DELETE",
+      url: "/cashier/cart_items/" + id +"/plus_quantity",
+      method: "POST",
       dataType: "json",
+      success: function(data){
+        var total_price = $("#total");
+        var total_price_value = Number(total_price.html().replace('$ ',''));
+        $(total_price).html("$ "+(total_price_value+Number(data["price"])));
 
+        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        $(cart_item).find(".quantity").val(data["quantity"]);
+      }
+    })
+  });
+
+  $(".cart-item-list").on("click",".minus-item",function(event){
+    var id = event.target.parentNode.parentNode.id;
+
+    $.ajax({
+      url: "/cashier/cart_items/" + id +"/minus_quantity",
+      method: "POST",
+      dataType: "json",
       success: function(data){
         var total_price = $("#total");
         var total_price_value = Number(total_price.html().replace('$ ',''));
         $(total_price).html("$ "+(total_price_value-Number(data["price"])));
-       
-        $(".cart-item-list").find("#"+data["id"]).remove();
+
+        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        $(cart_item).find(".quantity").val(data["quantity"]);
       }
     })
   });
@@ -159,7 +180,7 @@
   <td class="price"></td>   
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
-    <input type="text" name="" size="3" class="text-center" value="1">
+    <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>  
   <td>
