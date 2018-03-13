@@ -19,77 +19,7 @@
     <form id="search-form">
       <input type="text" id="datepicker">
       <button id="date-search">日期搜尋</button>
-    </form>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script>
-      $(function() {
-        $( "#datepicker" ).datepicker();
-      });
-
-     $("#search-form").on("click","#date-search",function(event){
-        event.preventDefault();
-        $(".search-item").remove();//刪除原先的搜尋結果
-          var date = $("#datepicker").val();
-          console.log(date);
-        $.ajax({
-          url: "/cashier/guests/search_outcome" ,
-          method: "POST",
-          dataType: "json",
-          data: {
-            created_at: date,
-          },
-          success: function(datas){
-            for(var i=0; i <datas.length;i++){
-              var data = datas[i];
-              var guest = document.createElement("tr");
-              
-              if(data["id"]==""){
-                $(guest).html("No data fund");
-              }
-              else{
-                guest.id = data["id"];
-                $(guest).attr("class","search-item");
-                <% id = %>
-                $(guest).html($("#guest-template").html());
-                $(guest).find(".id").html(data["id"]);
-                $(guest).find(".created_at").html(data["time"]);
-                $(guest).find(".payment").html(data["payment"]);
-                $(guest).find(".gender").html(data["gender"]);
-                $(guest).find(".guest_type").html(data["guest_type"]);
-                $(guest).find(".country").html(data["country"]);
-                $(guest).find(".age").html(data["age"]);
-                $(guest).find(".info_way").html(data["info_way"]);
-              
-
-              }
-              
-              $("#search-list").append(guest);
-              console.log(data["id"]);
-            }
-              
-          }
-        });  
-      });
-
-      </script>
-
-
-      <script type="text/template" id="guest-template">
-        
-        <td class="id"></td>
-        <td class="time"></td>
-        <td class="payment"></td>
-        <td class="gender"></td>
-        <td class="guest_type"></td>
-        <td class="country"></td>
-        <td class="age"></td>
-        <td class="info_way"></td>
-
-        <td ><button class="edit"></button></td>
-      </script>
-
+    </form>       
       <table class="table">
         <tbody id="search-list">
           
@@ -157,3 +87,79 @@
 
   </div>
 </div>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(function() {
+  $( "#datepicker" ).datepicker();
+  $.ajaxSetup({
+    headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+  });
+});
+
+$("#search-form").on("click","#date-search",function(event){
+  event.preventDefault();
+  $(".search-item").remove();//刪除原先的搜尋結果
+    var date = $("#datepicker").val();
+    console.log(date);
+  $.ajax({
+    url: "/cashier/guests/search_outcome" ,
+    method: "POST",
+    dataType: "json",
+    data: {
+      created_at: date,
+    },
+    success: function(datas){
+      if(datas.length == 0){
+            alert("No data fund");
+      }
+      else{
+        for(var i=0; i <datas.length;i++){
+          var data = datas[i];
+          var guest = document.createElement("tr");
+          
+          
+          
+            guest.id = data["id"];
+            $(guest).attr("class","search-item");
+            <% id = %>
+            $(guest).html($("#guest-template").html());
+            $(guest).find(".id").html(data["id"]);
+            $(guest).find(".created_at").html(data["time"]);
+            $(guest).find(".payment").html(data["payment"]);
+            $(guest).find(".gender").html(data["gender"]);
+            $(guest).find(".guest_type").html(data["guest_type"]);
+            $(guest).find(".country").html(data["country"]);
+            $(guest).find(".age").html(data["age"]);
+            $(guest).find(".info_way").html(data["info_way"]);
+          
+
+          
+          
+          $("#search-list").append(guest);
+          console.log(data["id"]);
+        }
+      }
+    }
+  });  
+});
+
+</script>
+
+
+<script type="text/template" id="guest-template">
+  
+  <td class="id"></td>
+  <td class="time"></td>
+  <td class="payment"></td>
+  <td class="gender"></td>
+  <td class="guest_type"></td>
+  <td class="country"></td>
+  <td class="age"></td>
+  <td class="info_way"></td>
+
+  <td ><button class="edit"></button></td>
+</script>
