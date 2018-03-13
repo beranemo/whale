@@ -43,7 +43,7 @@
         <th>#</th>
       </tr>        
       <% @cart_items.each do |item|%>
-        <tr>
+        <tr id="<%= item.product.id%>">
           <td><%=item.product.category%></td>
           <td><%=item.product.zh_name%></td>            
           <td><%=item.product.upc%></td>    
@@ -120,7 +120,7 @@
   }); 
 
 
-  $(".order-item-list").on("click",".delete-item",function(event){
+  $(".cart-item-list").on("click",".delete-item",function(event){
     var id = event.target.parentNode.parentNode.id;
 
     $.ajax({

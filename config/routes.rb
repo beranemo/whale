@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
     resources :orders, only: [:index, :new, :create, :update]
 
-    resources :order_items, only: [:destroy] do
+    resources :cart_items, only: [:destroy] do
       member do
         post :plus_quantity
         post :minus_quantity
