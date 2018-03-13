@@ -119,15 +119,23 @@
         var total_price_value = Number(total_price.html().replace('$ ',''));
         $(total_price).html("$ "+(total_price_value+Number(data["price"])));
 
-        console.log(data["id"]);
-        $(".product-list").find("#" + data["id"]).remove();
-        order_item.id = data["id"];
-        $(order_item).html($("#order-item-template").html());
-        $(order_item).find(".category").html(data["category"]);
-        $(order_item).find(".zh_name").html(data["zh_name"]);
-        $(order_item).find(".price").html(data["price"]);
-        $(order_item).find(".upc").html(data["upc"]);
-        $(".cart-item-list").append(order_item);
+        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        if(cart_item.length){
+          console.log(data["quantity"]);
+          $(cart_item).find(".quantity").val(data["quantity"]);
+        }
+        else{
+          console.log(data["id"]);
+          $(".product-list").find("#" + data["id"]).remove();
+          order_item.id = data["id"];
+          $(order_item).html($("#order-item-template").html());
+          $(order_item).find(".category").html(data["category"]);
+          $(order_item).find(".zh_name").html(data["zh_name"]);
+          $(order_item).find(".price").html(data["price"]);
+          $(order_item).find(".upc").html(data["upc"]);
+          $(".cart-item-list").append(order_item);
+        }
+          
       }
     });
   }); 
