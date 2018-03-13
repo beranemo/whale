@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resources :guests do
       collection do
         get :guest_today
+        post :search_outcome
       end
     end
 

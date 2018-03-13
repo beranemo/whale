@@ -45,6 +45,13 @@ class Cashier::GuestsController < ApplicationController
     @guests = Guest.all.order(created_at: :desc)
   end 
 
+  def search_outcome
+
+    date = params[:created_at]
+    @guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
+    render :json => @guests
+  end
+
   private
 
   def guest_params
