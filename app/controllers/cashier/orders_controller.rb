@@ -5,8 +5,13 @@ class Cashier::OrdersController < ApplicationController
   end
 
   def edit
-    @order = Order.find(params[:id])
     
+    @order = Order.find(params[:id])
+    if current_user.id != @order.user_id
+      flash[:alert] = "結帳人員不符"
+      redirect_to cashier_orders_path
+
+    end
   end
 
   def new
