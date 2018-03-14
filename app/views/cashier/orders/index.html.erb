@@ -1,0 +1,43 @@
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li role="presentation" ><%= link_to "客情資料",guest_today_cashier_guests_path%></li>
+    <li role="presentation" ><%= link_to "成立訂單",new_cashier_order_path(id: -1)%></li>
+    <li role="presentation" ><%= link_to "訂單資訊",cashier_orders_path%></li>
+    <li role="presentation" ><%= link_to "最新消息",cashier_bulletins_path%></li>
+    <li role="presentation" ><%= link_to "搜尋會員",search_cashier_members_path%></li>
+    <li role="presentation" ><%= link_to "新增會員",new_cashier_member_path%></li>
+    <li role="presentation" ><%= link_to "會員資料(測試用，暫時)", cashier_members_path %></li>
+  </ul>
+      
+  <br>
+  <h2>訂單資訊</h2>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>編號</th>
+        <th>結帳人員</th>
+        <th>顧客編號</th>
+        <th>付款方式</th>
+        <th>總金額</th>
+        <th>功能</th>
+      </tr>
+      <% @orders.each do |order|%>
+      <tr>
+        <td><%= order.id%></td>
+        <td><%= order.user.name%></td>
+        <td>
+          <% if order.member_id == -1%>
+            非會員
+          <% else%>
+            <%= order.member_id%>
+          <% end%>
+        </td>
+        <td><%= order.payment_method%></td>
+        <td><%= order.amount%></td>
+        <td><%= link_to "編輯",edit_cashier_order_path(order.id)%></td>
+      </tr>
+      
+      <% end %>
+    </tbody>
+  </table>
+</div>
