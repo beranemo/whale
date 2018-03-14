@@ -42,7 +42,21 @@ class Cashier::GuestsController < ApplicationController
   end
 
   def guest_today
-    @guests = Guest.all.order(created_at: :desc)
+    @guests = Guest.where("Date(created_at) = ?", Date.today).order(created_at: :desc)
+    @old_guests = @guests.where(guest_type_id: 10)
+    @new_guests = @guests.where(guest_type_id: 9)
+    @boy_guests = @guests.where(gender: "男")
+    @girl_guests = @guests.where(gender: "女")
+    @tw_guests = @guests.where(country_id: 1)
+    @jp_guests = @guests.where(country_id: 2)
+    @hk_guests = @guests.where(country_id: 3)
+    @twenty_guests = @guests.where(age_id: 13)
+    @thirty_guests = @guests.where(age_id: 14)
+    @forty_guests = @guests.where(age_id: 15)
+    @pass_guests = @guests.where(info_way_id: 17)
+    @expo_guests = @guests.where(info_way_id: 18)
+    @family_guests = @guests.where(info_way_id: 19)
+    @toilet_guests = @guests.where(info_way_id: 20)
   end 
 
   def search_outcome
