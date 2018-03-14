@@ -9,36 +9,34 @@
     <li role="presentation" ><%= link_to "新增會員", new_cashier_member_path%></li> 
     <li role="presentation" class="active"><%= link_to "會員資料(測試用，暫時)", cashier_members_path %></li>
   </ul> 
+  <br>
+  <div class="col-md-4">
+    <img src="">
+  </div>
+  <div class="col-md-8">
+    <label>姓名:</label>
+    <%= @member.name%><br>
+    <label>生日:</label>
+    <%= @member.birthday%><br>
+    <label>性別:</label>
+    <%= @member.gender%><br>
+    <label>髮質:</label>
+    <br>
+    <label>膚質:</label>
+    <%= @member.skin_type.skin_type%><br>
+    <label>信箱:</label>
+    <%= @member.email%><br>
+    <label>傳真:</label>
+    <%= @member.fax%><br>
+    <label>地址:</label>
+    <%= @member.county%>
+    <%= @member.address%><br>
+    <label>紅利點數:</label>
+    <%= @member.bonus%><br>
+    <label>備註:</label>
+    <%= @member.remark%><br>
+  </div>
   
-  
-  <table class="table">
-    <tbody id="origin-list">
-      <tr>
-        <th>姓名</th>
-        <th>手機號碼</th>
-        <th>性別</th>
-        <th>信箱</th>
-        <th>生日</th>
-        <th>#</th>
-      </tr>
-     
-      <% @members.each do |member| %>
-         
-        <tr>
-          
-          <td><%= member.name%></td>
-
-          <td><%= member.phone%></td>
-          <td><%= member.gender%></td>
-          <td><%= member.email%></td>
-          <td><%= member.birthday%></td>
-          <td><button><%= link_to "成立訂單", new_cashier_order_path(id: member)%></button></td>
-          <td><button><%= link_to "詳細資料", cashier_member_path(id: member.id)  %></button></td>
-        </tr>
-      
-      <% end %>
-    </tbody>
-  </table>  
     
 </div>
 
