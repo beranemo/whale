@@ -17,6 +17,7 @@
         <th>編號</th>
         <th>結帳人員</th>
         <th>顧客編號</th>
+        <th>付款方式</th>
         <th>總金額</th>
       </tr>
       <% @orders.each do |order|%>
@@ -30,6 +31,7 @@
             <%= order.member_id%>
           <% end%>
         </td>
+        <td><%= order.payment_method%></td>
         <td><%= order.amount%></td>
       </tr>
 

@@ -75,7 +75,17 @@
   </div>
   <br>
   <div class="text-right">
-    <%= link_to "結帳完成並成立訂單",cashier_orders_path(member_id: @member.id),method: :post,class:"btn btn-success"%>
+    
+    <%= form_for [:cashier, @order] do |f|%>
+      <%= f.label :payment_method, "付款方式" %>
+      <%= f.radio_button :payment_method ,"付現"%>
+      <%= f.label :payment_method, "付現" %>
+      <%= f.radio_button :payment_method ,"刷卡"%>
+      <%= f.label :payment_method, "刷卡" %>
+      <%= f.hidden_field :member_id, :value => @member.id %>
+      <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
+    <% end %>
+    
   </div>  
   <br>
   <h2>商品列表</h2>
