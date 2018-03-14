@@ -1,4 +1,8 @@
 class Cashier::OrdersController < ApplicationController
+  def index
+    @orders = Order.all
+    
+  end
 
   def new
     @order =Order.new(member_id: params[:id])
