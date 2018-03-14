@@ -4,6 +4,11 @@ class Cashier::OrdersController < ApplicationController
 
   end
 
+  def edit
+    @order = Order.find(params[:id])
+    
+  end
+
   def new
     @order =Order.new(member_id: params[:id])
     @order.amount = 0

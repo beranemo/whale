@@ -10,7 +10,7 @@
   </ul>
       
   <br>
-  <h2>訂單資訊</h2>
+  <h2>訂單列表</h2>
   <table class="table">
     <tbody>
       <tr>
@@ -19,25 +19,30 @@
         <th>顧客編號</th>
         <th>付款方式</th>
         <th>總金額</th>
-        <th>功能</th>
+
       </tr>
-      <% @orders.each do |order|%>
+
       <tr>
-        <td><%= order.id%></td>
-        <td><%= order.user.name%></td>
+        <td><%= @order.id%></td>
+        <td><%= @order.user.name%></td>
         <td>
-          <% if order.member_id == -1%>
+          <% if @order.member_id == -1%>
             非會員
           <% else%>
-            <%= order.member_id%>
+            <%= @order.member_id%>
           <% end%>
         </td>
-        <td><%= order.payment_method%></td>
-        <td><%= order.amount%></td>
-        <td><%= link_to "編輯",edit_cashier_order_path(order.id)%></td>
+        <td><%= @order.payment_method%></td>
+        <td><%= @order.amount%></td>
       </tr>
-      
-      <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><%= link_to "綁定會員"%></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
 </div>
