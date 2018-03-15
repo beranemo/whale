@@ -1,0 +1,2 @@
+class MemberType < ApplicationRecord
+end
