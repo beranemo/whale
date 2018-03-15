@@ -30,6 +30,10 @@
       <%= f.email_field :email , class: "form-control"%>
       <br>
 
+      <%= f.label :fax, "傳真" %>
+      <%= f.text_field :fax , class: "form-control"%>
+      <br>
+
       <%= f.label :hair_id, "髮質" %>
       <%= f.collection_select :hair_code, HairType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
       <br>
