@@ -123,6 +123,9 @@ ActiveRecord::Schema.define(version: 20180315080301) do
     t.integer "amount"
     t.string "address"
     t.string "payment_method"
+    t.string "name"
+    t.string "phone"
+    t.string "remark"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -139,6 +142,8 @@ ActiveRecord::Schema.define(version: 20180315080301) do
     t.string "zh_m_ingredients"
     t.string "zh_ingredients"
     t.string "en_ingredients"
+    t.integer "quantity", default: 0
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"

@@ -12,6 +12,7 @@
 #  payment       :string
 #  guest_type_id :string           default(""), not null
 #  user_id       :integer
+#  remark        :string
 #
 
 require 'test_helper'

@@ -12,6 +12,8 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.string      :zh_m_ingredients
       t.string      :zh_ingredients
       t.string      :en_ingredients
+      t.integer     :quantity, default: 0
+      t.string      :status
 
       t.timestamps
     end

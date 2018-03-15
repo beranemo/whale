@@ -14,6 +14,8 @@
 #  zh_m_ingredients :string
 #  zh_ingredients   :string
 #  en_ingredients   :string
+#  quantity         :integer          default(0)
+#  status           :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  category_id      :integer

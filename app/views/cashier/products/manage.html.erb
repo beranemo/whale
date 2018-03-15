@@ -1,9 +1,9 @@
 <div class="container">
  
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><%= link_to "所有商品", cashier_products_path%></li>
+    <li role="presentation" ><%= link_to "所有商品", cashier_products_path%></li>
     <li role="presentation" ><%= link_to "上傳商品", new_cashier_product_path%></li>
-    <li role="presentation" ><%= link_to "商品管理", manage_cashier_products_path%></li>
+    <li role="presentation" class="active"><%= link_to "商品管理", manage_cashier_products_path%></li>
   </ul>
 
   <table class="table">
@@ -15,13 +15,8 @@
         <th>規格</th>
         <th>價錢</th>
         <th>國際通用碼</th>
-        <th>適用對像</th>
-        <th>使用方法</th>
-        <!--
-        <th>中文主成份</th>
-        <th>中文全成份</th>
-        <th>英文全成份</th>
-        -->
+        <th>數量</th>
+        <th>功能</th>
       </tr>
       <% @products.each do |product| %>
         <tr>
@@ -35,13 +30,8 @@
           <td><%= product.capacity %></td>
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
-          <td><%= product.use_for %></td>
-          <td><%= product.directions %></td>
-          <!--
-          <td><%= product.zh_m_ingredients %></td>
-          <td><%= product.zh_ingredients %></td>
-          <td><%= product.en_ingredients %></td>
-          -->
+          <td><%= product.quantity %></td>
+          <td><%= link_to "編輯數量", edit_cashier_product_path(product) %></td>
         </tr>
       <% end %>
     </tbody>
