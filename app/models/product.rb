@@ -36,7 +36,8 @@ class Product < ApplicationRecord
                     "使用方法"=>"directions",
                     "中文主成分"=>"zh_m_ingredients",
                     "中文全成分"=>"zh_ingredients",
-                    "英文全成分"=>"en_ingredients"
+                    "英文全成分"=>"en_ingredients",
+                    "數量"=>"quantity"                    
                     ]
     sheet = Roo::Spreadsheet.open(file.path)
     header = sheet.row(1)
@@ -47,7 +48,10 @@ class Product < ApplicationRecord
     for i in 2..sheet.last_row()
       row = Hash[[header,sheet.row(i)].transpose]
       product = find_by(upc: row["upc"]) || new
+      o_quantity = product.quantity
       product.attributes = row.to_hash
+      product.stock_records.build(quantity: product.quantity)
+      product.quantity += o_quantity 
       product.save!
     end
   end
