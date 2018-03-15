@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       collection do
         get :guest_today
         post :search_outcome
+        get :guest_analysis
       end
     end
 

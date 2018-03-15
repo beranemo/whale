@@ -46,6 +46,11 @@ class Cashier::GuestsController < ApplicationController
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
     # @guests = Guest.all
     puts @guests
+
+  end 
+
+  def guest_analysis
+    @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
     @old_guests = @guests.where(guest_type_id: 10)
     @new_guests = @guests.where(guest_type_id: 9)
     @boy_guests = @guests.where(gender: "男")
@@ -60,7 +65,7 @@ class Cashier::GuestsController < ApplicationController
     @expo_guests = @guests.where(info_way_id: 18)
     @family_guests = @guests.where(info_way_id: 19)
     @toilet_guests = @guests.where(info_way_id: 20)
-  end 
+  end
 
   def search_outcome
     date = params[:created_at]
