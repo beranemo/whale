@@ -24,6 +24,7 @@
 class Product < ApplicationRecord
   has_many :order_items
   has_many :cart_items
+  has_many :stock_record
   def self.update_by_file(file)
     attribute = Hash["類型" => "category" ,
                     "中文品名"=> "zh_name",
