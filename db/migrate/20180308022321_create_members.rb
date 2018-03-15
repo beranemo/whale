@@ -9,6 +9,7 @@ class CreateMembers < ActiveRecord::Migration[5.1]
       t.string :hair
       t.string :avatar
       t.string :remark
+      t.string :member_code
       t.timestamps
     end
   end
