@@ -180,7 +180,24 @@
   }); 
 
 
-  
+  $(".cart-item-list").on("click",".delete-item",function(event){
+    var id = event.target.parentNode.parentNode.id;
+
+    $.ajax({
+      url: "/cashier/cart_items/" + id,
+      method: "DELETE",
+      dataType: "json",
+
+      success: function(data){
+        var total_price = $("#total");
+        var total_price_value = Number(total_price.html().replace('$ ',''));
+        $(total_price).html("$ "+(total_price_value-Number(data["minus_price"])));
+
+        $(".cart-item-list").find("#"+data["id"]).remove();
+
+      }
+    })
+  });
 
 
   $(".cart-item-list").on("click",".plus-item",function(event){

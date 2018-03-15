@@ -22,8 +22,8 @@ class Cashier::CartItemsController < ApplicationController
 
   def destroy
     @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
-    @price = @cart_item.product.price
+    @price = @cart_item.product.price * @cart_item.quantity
     @cart_item.destroy
-    render :json => {:id =>params[:id], :price => @price}
+    render :json => {:id =>params[:id], :minus_price => @price}
   end
 end

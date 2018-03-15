@@ -129,7 +129,7 @@
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果
     $.ajax({
-      url: "/cashier/members/search_outcome" ,
+      url: "/cashier/members/birthday_search" ,
       method: "POST",
       dataType: "json",
       success: function(datas){

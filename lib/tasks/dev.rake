@@ -60,13 +60,26 @@ namespace :dev do
   task fake_bulletins: :environment do
     Bulletin.destroy_all
     
-    5.times do |i|
+    3.times do |i|
       Bulletin.create!(
-        title: "這是標題",
-        content: "這是內容",
+        start_date: FFaker::Time.date,
+        end_date: FFaker::Time.date,
+        title: "洗手露半價活動",
+        content: "髮身系列任兩件，享洗手露(330mL)半價優惠",
         user: User.all.sample
       )
     end
+    
+    3.times do |i|
+      Bulletin.create!(
+        start_date: FFaker::Time.date,
+        end_date: FFaker::Time.date,
+        title: "青蜜乳液活動",
+        content: "330mL青蜜滋養乳液＋髮或身系列330mL任選，贈50mL荷葉沐浴露（價值130元）",
+        user: User.all.sample
+      )
+    end
+    
     puts "create fake bulletins"
     puts "have #{Bulletin.count} bulletins data"
   end  

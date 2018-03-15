@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315154003) do
+
+ActiveRecord::Schema.define(version: 20180315151515) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -22,6 +23,8 @@ ActiveRecord::Schema.define(version: 20180315154003) do
     t.string "title"
     t.text "content"
     t.integer "user_id"
+    t.date "start_date"
+    t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -84,6 +87,14 @@ ActiveRecord::Schema.define(version: 20180315154003) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "member_types", force: :cascade do |t|
+    t.string "code"
+    t.string "value"
+    t.string "system_flag", default: "N"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "members", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.date "birthday", null: false
@@ -93,6 +104,7 @@ ActiveRecord::Schema.define(version: 20180315154003) do
     t.string "hair"
     t.string "avatar"
     t.string "remark"
+    t.string "member_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
