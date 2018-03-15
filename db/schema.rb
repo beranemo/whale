@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180315080301) do
   create_table "hair_types", force: :cascade do |t|
     t.string "code"
     t.string "value"
-    t.string "system_flag", default: "N"
+    t.string "system_flag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -146,9 +146,6 @@ ActiveRecord::Schema.define(version: 20180315080301) do
 
   create_table "skin_types", force: :cascade do |t|
     t.string "skin_type"
-    t.string "code"
-    t.string "value"
-    t.string "system_flag", default: "N"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
