@@ -155,7 +155,7 @@
                 </tr>
                 <tr>
                   <td class="alncenter"><%= @guests.count %></td>
-                  <td class="alncenter"><%= number_to_currency(@guests.sum(:payment), precision: 0) %></td>
+                  <td class="alncenter"><%= number_to_currency(@total_payment, precision: 0) %></td>
                 </tr>
               </tbody>
             </table>

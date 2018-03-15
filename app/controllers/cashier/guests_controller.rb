@@ -43,7 +43,7 @@ class Cashier::GuestsController < ApplicationController
 
   def guest_today
     # @guests = Guest.where("Date(created_at) = ?", Date.today).order(created_at: :desc)
-    @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
+    @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day).order(created_at: :desc)
     # @guests = Guest.all
     puts @guests
 
@@ -65,6 +65,7 @@ class Cashier::GuestsController < ApplicationController
     @expo_guests = @guests.where(info_way_id: 2)
     @family_guests = @guests.where(info_way_id: 3)
     @toilet_guests = @guests.where(info_way_id: 4)
+    @total_payment = @guests.sum(:payment)
   end
 
   def search_outcome
