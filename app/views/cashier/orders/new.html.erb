@@ -18,7 +18,7 @@
         <td><%= @member.name%></td>
         <td><%= @member.phone%></td>
         <td><%= @member.email%></td>
-        <td><%= @member.address%></td>        
+        <td class="address"><%= @member.address%></td>        
       </tr>
     </tbody>
   </table>  
@@ -66,19 +66,33 @@
     </div>  
   </div>
   <br>
-  <div class="text-right">
+  <div class="row">
+    <div class="ship-address col-md-4">
+      
+    </div>
+    <div class="text-right col-md-8">
+      
+      <%= form_for [:cashier, @order] do |f|%>
+        <%= f.label :payment_method, "付款方式:" %>
+        <%= f.radio_button :payment_method ,"付現"%>
+        <%= f.label :payment_method, "付現" %>
+        <%= f.radio_button :payment_method ,"刷卡"%>
+        <%= f.label :payment_method, "刷卡" %>
+        <br>
+        <%= f.label :payment_method, "取貨方式" %>
+        
+        <%= f.radio_button :address ,"local"%>
+        <%= f.label :address, "自取" %>
+        <%= f.radio_button :address ,"ship",class:"ship-radio"%>
+        <%= f.label :address, "宅配" %>
+        <%= f.hidden_field :member_id, :value => @member.id %>
+        <br>
+        <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
+      <% end %>
+      
+    </div>  
+  </div>
     
-    <%= form_for [:cashier, @order] do |f|%>
-      <%= f.label :payment_method, "付款方式" %>
-      <%= f.radio_button :payment_method ,"付現"%>
-      <%= f.label :payment_method, "付現" %>
-      <%= f.radio_button :payment_method ,"刷卡"%>
-      <%= f.label :payment_method, "刷卡" %>
-      <%= f.hidden_field :member_id, :value => @member.id %>
-      <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
-    <% end %>
-    
-  </div>  
   <br>
   <h2>商品列表</h2>
   <table class="table">
@@ -110,6 +124,14 @@
 </div>
 
 <script type="text/javascript">
+  $(".ship-radio").on("click", function(event){
+    $(".ship-address").html($("#ship-address-template").html());
+  });
+
+  $("#order_address_local").on("click", function(event){
+    $(".ship-address").find("#address-input").remove();
+  });
+
   $(".product-list").on("click", ".add_to_cart", function(event){
     var id  = event.target.parentNode.parentNode.id;
     console.log(id);
@@ -198,4 +220,11 @@
   <td>
     <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
   </td>
+</script>
+
+<script type="text/template" id="ship-address-template">
+  <div id="address-input">
+    <label>宅配地址:</label>
+    <input type="text" name="">
+  </div>  
 </script>
