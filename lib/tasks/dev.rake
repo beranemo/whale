@@ -71,6 +71,8 @@ namespace :dev do
   end  
   
   task fake_all: :environment do
+    Rake::Task['db:drop'].execute
+    Rake::Task['db:create'].execute
     Rake::Task['db:migrate'].execute
     Rake::Task['db:seed'].execute
     Rake::Task['dev:fake_members'].execute
