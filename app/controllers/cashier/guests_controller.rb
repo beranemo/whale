@@ -51,20 +51,20 @@ class Cashier::GuestsController < ApplicationController
 
   def guest_analysis
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
-    @old_guests = @guests.where(guest_type_id: 10)
-    @new_guests = @guests.where(guest_type_id: 9)
+    @old_guests = @guests.where(guest_type_id: 2)
+    @new_guests = @guests.where(guest_type_id: 1)
     @boy_guests = @guests.where(gender: "男")
     @girl_guests = @guests.where(gender: "女")
     @tw_guests = @guests.where(country_id: 1)
     @jp_guests = @guests.where(country_id: 2)
     @hk_guests = @guests.where(country_id: 3)
-    @twenty_guests = @guests.where(age_id: 13)
-    @thirty_guests = @guests.where(age_id: 14)
-    @forty_guests = @guests.where(age_id: 15)
-    @pass_guests = @guests.where(info_way_id: 17)
-    @expo_guests = @guests.where(info_way_id: 18)
-    @family_guests = @guests.where(info_way_id: 19)
-    @toilet_guests = @guests.where(info_way_id: 20)
+    @twenty_guests = @guests.where(age_id: 1)
+    @thirty_guests = @guests.where(age_id: 2)
+    @forty_guests = @guests.where(age_id: 3)
+    @pass_guests = @guests.where(info_way_id: 1)
+    @expo_guests = @guests.where(info_way_id: 2)
+    @family_guests = @guests.where(info_way_id: 3)
+    @toilet_guests = @guests.where(info_way_id: 4)
   end
 
   def search_outcome
