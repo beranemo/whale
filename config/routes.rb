@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     resources :bulletins
     
   end
+  
+  resources :users, only: [:edit, :update]
 
 #  root "members#index"
   resources :members, only: [:index,:new,:create]
