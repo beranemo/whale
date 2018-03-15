@@ -32,8 +32,10 @@ class Cashier::OrdersController < ApplicationController
       flash[:alert] = "訂單內容不能是空的"
       @products = Product.all 
       @cart_items = current_cart.cart_items.all
-      @member =  Member.find(order_params[:member_id])
-      render :new
+      @member =  order_params[:member_id]=="-1" ? Member.new(id: -1) : Member.find(order_params[:member_id])
+      @order =Order.new(member_id: params[:id])
+      @order.amount = 0
+      redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
   
@@ -43,9 +45,16 @@ class Cashier::OrdersController < ApplicationController
         @order.amount += item.product.price * item.quantity
         order_item.save!
       end
-      @order.save!
-      session[:cart_id] = nil
-      redirect_to new_cashier_order_path(id: -1)
+      if @order.save
+        session[:cart_id] = nil
+        redirect_to new_cashier_order_path(id: -1)
+        flash[:notice] = "成功成立訂單"
+      else
+        flash[:alert] = @order.errors.full_messages.to_sentence
+        redirect_to new_cashier_order_path(id: order_params[:member_id])
+      end
+
+      
     end
     
   end

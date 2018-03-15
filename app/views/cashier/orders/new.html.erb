@@ -81,9 +81,9 @@
         <br>
         <%= f.label :payment_method, "取貨方式" %>
         
-        <%= f.radio_button :address ,"local"%>
+        <%= f.radio_button :address ,"local",class:"local-radio"%>
         <%= f.label :address, "自取" %>
-        <%= f.radio_button :address ,"",class:"ship-radio"%>
+        <%= f.radio_button :address ," ",class:"ship-radio"%>
         <%= f.label :address, "宅配" %>
         <%= f.hidden_field :member_id, :value => @member.id %>
         <br>
@@ -132,6 +132,7 @@
     }
     else{
       $(".ship-address").find("#input-address").removeAttr('disabled');
+      $(".ship-radio").attr('value','');
     }
     
   });
