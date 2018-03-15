@@ -21,7 +21,8 @@ namespace :dev do
         phone: phone_string,
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
-        skin_type: SkinType.all.sample
+        skin_type: SkinType.all.sample,
+        hair_code: HairType.all.sample.code
         )
       member.save!
       # puts "create member #{i}"
