@@ -19,8 +19,8 @@ puts "Default cashier created!"
 GuestType.destroy_all
 
 guest_type_list = [
-  { guest_type: "新客" },
-  { guest_type: "舊客" }
+  { code: "N", system_flag: "Y", value: "新客", guest_type: "新客" },
+  { code: "O", system_flag: "Y", value: "新客", guest_type: "舊客" }
 ]
 
 guest_type_list.each do |guest_type|
@@ -32,11 +32,11 @@ puts "Guest_type created!"
 SkinType.destroy_all
 
 skin_type_list = [
-  { skin_type: "中性膚質（一般膚質）" },
-  { skin_type: "油性膚質" },
-  { skin_type: "乾性膚質" },
-  { skin_type: "混合性膚質" },
-  { skin_type: "敏感膚質" }
+  { code: "A", system_flag: "Y", value: "中性膚質（一般膚質）", skin_type: "中性膚質（一般膚質）" },
+  { code: "B", system_flag: "Y", value: "油性膚質", skin_type: "油性膚質" },
+  { code: "C", system_flag: "Y", value: "乾性膚質", skin_type: "乾性膚質" },
+  { code: "D", system_flag: "Y", value: "混合性膚質", skin_type: "混合性膚質" },
+  { code: "E", system_flag: "Y", value: "敏感膚質", skin_type: "敏感膚質" }
 ]
 
 skin_type_list.each do |skin_type|
@@ -65,9 +65,9 @@ puts "Hair_type created!"
 Country.destroy_all
 
 country_list = [
-  { country_type: "台灣" },
-  { country_type: "日本" },
-  { country_type: "港澳"}
+  { code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣" },
+  { code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
+  { code: "HK_MA", system_flag: "Y", value: "港澳", country_type: "港澳"}
 ]
 
 country_list.each do |country|
@@ -79,9 +79,9 @@ puts "Country created!"
 Age.destroy_all
 
 age_list = [
-  { age_type: "25 ~ 35歲" },
-  { age_type: "35 ~ 45歲" },
-  { age_type: "45 歲以上"}
+  { code: "25_35", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
+  { code: "35_45", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
+  { code: "45_up", system_flag: "Y", value: "", age_type: "45 歲以上" }
 ]
 
 age_list.each do |age|
@@ -93,10 +93,10 @@ puts "Age created!"
 InfoWay.destroy_all
 
 info_way_list = [
-  { news_channel: "路過逛到" },
-  { news_channel: "EXPO或其他通路買過" },
-  { news_channel: "親友推薦"},
-  { news_channel: "廁所洗手露來客"}
+  { code: "A", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
+  { code: "B", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
+  { code: "C", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
+  { code: "D", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
 ]
 
 info_way_list.each do |info_way|
@@ -108,8 +108,8 @@ puts "Info_way created!"
 Category.destroy_all
 
 category_list = [
-  { name: "家" },
-  { name: "髮" }
+  { code: "HOME", system_flag: "Y", value: "家", name: "家" },
+  { code: "HAIR", system_flag: "Y", value: "髮", name: "髮" }
 ]
 
 category_list.each do |category|
