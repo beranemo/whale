@@ -48,6 +48,8 @@ class Cashier::OrdersController < ApplicationController
           flash[:alert] = "#{product.zh_name}數量不足"
           return 
         end
+        stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
+        stock_record.save!
         order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
              
         @order.amount += item.product.price * item.quantity
@@ -55,6 +57,7 @@ class Cashier::OrdersController < ApplicationController
         product.save!
       end
       if @order.save
+        
         session[:cart_id] = nil
         redirect_to new_cashier_order_path(id: -1)
         flash[:notice] = "成功成立訂單"
