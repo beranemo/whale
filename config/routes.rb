@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       end
       collection do
         post :import
+        get :manage
       end
     end
 

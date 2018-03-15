@@ -8,6 +8,9 @@
 #  amount         :integer
 #  address        :string
 #  payment_method :string
+#  name           :string
+#  phone          :string
+#  remark         :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
