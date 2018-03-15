@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       collection do
         get :search
         post :search_outcome
+        post :birthday_search
       end
       
     end

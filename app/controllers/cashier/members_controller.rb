@@ -28,6 +28,11 @@ class Cashier::MembersController < ApplicationController
     
   end
 
+  def birthday_search
+    month = Date.current.month 
+    @members = Member.where("cast(strftime('%m', birthday) as int) = ?", month)
+    render :json => @members
+  end
  
   def search_outcome
     puts params[:phone]
@@ -41,8 +46,7 @@ class Cashier::MembersController < ApplicationController
       @members = Member.where("email like ?", "%"+key_word+"%")
       puts @members
     else
-      month = Date.current.month 
-      @members = Member.where("cast(strftime('%m', birthday) as int) = ?", month)
+      
     end
     render :json => @members
     
