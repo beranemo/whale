@@ -61,6 +61,19 @@ hair_type_list.each do |hair_type|
 end
 puts "Hair_type created!"
 
+# =======================  MemberType  =======================
+MemberType.destroy_all
+
+member_type_list = [
+  { code: "GENERAL", system_flag: "Y", value: "一般會員" },
+  { code: "VIP", system_flag: "Y", value: "VIP會員" }
+]
+
+member_type_list.each do |member_type|
+  MemberType.create( value: member_type[:value], code: member_type[:code], system_flag: member_type[:system_flag] )
+end
+puts "Member_type created!"
+
 # =======================  Country  =======================
 Country.destroy_all
 
