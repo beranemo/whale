@@ -26,6 +26,7 @@
                 </a>
                 <ul class="dropdown-menu">
                  <% if current_user.cashier? %>
+                   <li><%= link_to("新增公告", new_cashier_bulletin_path) %></li>
                    <li><%= link_to("密碼變更", edit_user_registration_path) %></li>
                    <li><%= link_to("個人設定", edit_user_registration_path) %></li>
                    <li><%= link_to("這是功能線1", edit_user_registration_path) %></li>
