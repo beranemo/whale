@@ -5,7 +5,8 @@
     <br>
     <div style="text-align: center">
       <%= link_to '客情紀錄', cashier_guests_path %> |
-      <%= link_to '今日客情', guest_today_cashier_guests_path %>
+      <%= link_to '今日客情', guest_today_cashier_guests_path %> ｜
+      <%= link_to '今日客情分析', guest_analysis_cashier_guests_path %>
     </div>
     
 <!--============== need your help ===================-->
@@ -25,6 +26,7 @@
                 <th>國籍</th>
                 <th>年齡結構</th>
                 <th>如何得知茶籽堂</th>
+                <th>備註</th>
                 <th>功能</th>
                 <th>記錄人員</th>
           </tr>     
@@ -51,6 +53,7 @@
             <th class="alncenter">國籍</th>
             <th class="alncenter">年齡結構</th>
             <th class="alncenter">如何得知茶籽堂</th>
+            <th class="alncenter">備註</th>
             <th class="alncenter">功能</th>
             <th class="alncenter">記錄人員</th>
           </tr>
@@ -67,6 +70,7 @@
             <td class="alncenter"><%= guest.country.country_type %></td>
             <td><%= guest.age.age_type %></td>
             <td><%= guest.info_way.news_channel %></td>
+            <td><%= guest.remark %></td> 
             <td>
               <% if guest.user == current_user  %>
                 <%= link_to '編輯', edit_cashier_guest_path(guest) %> ｜
