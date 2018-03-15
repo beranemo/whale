@@ -41,9 +41,18 @@ class Cashier::OrdersController < ApplicationController
   
       @order.amount =0
       current_cart.cart_items.each do |item|
+        product = item.product
+        product.quantity -= item.quantity
+        if product.quantity < 0
+          redirect_to new_cashier_order_path(id: -1)
+          flash[:alert] = "#{product.zh_name}數量不足"
+          return 
+        end
         order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
+             
         @order.amount += item.product.price * item.quantity
         order_item.save!
+        product.save!
       end
       if @order.save
         session[:cart_id] = nil
