@@ -38,9 +38,7 @@
         </thead>
         <tbody>
         <% i = 1 %>
-          <% @guests.each do |guest| %>
-          <% if guest.created_at.localtime.today? %>
-          
+          <% @guests.each do |guest| %>       
           <tr>
             <th scope="row" class="alncenter"><%= i %></th>
             <td class="alncenter"><%= guest.created_at.localtime.to_s(:db)[0..15] %></td>
@@ -59,10 +57,145 @@
             <td><%= guest.user.name %></td>
           </tr>
           <% i = i + 1 %>
-          <% end %>
+
           <% end %>
         </tbody>
       </table>
+    <hr>
+    <h3 class="alncenter">客情分析</h3>
+    <div class="col-xs-6 col-sm-4">
+    <blockquote>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" style="width: <%= number_to_percentage( Float(@boy_guests.count)/(@guests.count)*100 , precision: 0) %>">
+          <span class="sr-only"></span>
+          <p><%= @boy_guests.count %></p>
+        </div>
+        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= number_to_percentage( Float(@girl_guests.count)/(@guests.count)*100 , precision: 0) %>">
+          <span class="sr-only"></span>
+          <p><%= @girl_guests.count %></p>
+        </div>
+      </div>
 
+      <p style="font-size: 16px">
+        男生：<%= @boy_guests.count %><br>
+        女生：<%= @girl_guests.count %>
+      </p>
+    </blockquote>
+
+
+      </div>
+
+      <div class="col-xs-6 col-sm-4">
+        <blockquote>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: <%= number_to_percentage( Float(@old_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @old_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= number_to_percentage( Float(@new_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @new_guests.count %></p>
+            </div>
+          </div>
+          <p style="font-size: 16px">
+            舊客：<%= @old_guests.count %><br>
+            新客：<%= @new_guests.count %>
+          </p>
+        </blockquote>
+      </div>
+
+      <div class="col-xs-6 col-sm-4">
+        <blockquote>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: <%= number_to_percentage( Float(@tw_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @tw_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= number_to_percentage( Float(@jp_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @jp_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: <%= number_to_percentage( Float(@hk_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @hk_guests.count %></p>
+            </div>
+          </div>
+          <p style="font-size: 16px">
+            台灣：<%= @tw_guests.count %><br>
+            日本：<%= @jp_guests.count %><br>
+            香港：<%= @hk_guests.count %>
+          </p>
+        </blockquote>
+      </div>
+
+      <div class="col-xs-6 col-sm-4">
+        <blockquote>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: <%= number_to_percentage( Float(@twenty_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @twenty_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= number_to_percentage( Float(@thirty_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @thirty_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: <%= number_to_percentage( Float(@forty_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @forty_guests.count %></p>
+            </div>
+          </div>
+          <p style="font-size: 16px">
+            25 ~ 35歲：<%= @tw_guests.count %><br>
+            35 ~ 45歲：<%= @jp_guests.count %><br>
+            45 歲以上：<%= @hk_guests.count %>
+          </p>
+        </blockquote>
+      </div>
+
+      <div class="col-xs-6 col-sm-4">
+        <blockquote>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: <%= number_to_percentage( Float(@pass_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @pass_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= number_to_percentage( Float(@expo_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @expo_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: <%= number_to_percentage( Float(@family_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @family_guests.count %></p>
+            </div>
+            <div class="progress-bar progress-bar-info progress-bar-striped" style="width: <%= number_to_percentage( Float(@toilet_guests.count)/(@guests.count)*100 , precision: 0) %>">
+              <span class="sr-only"></span>
+              <p><%= @toilet_guests.count %></p>
+            </div>
+          </div>
+          <p style="font-size: 16px">
+            路過逛到：<%= @pass_guests.count %><br>
+            EXPO或其他通路買過：<%= @expo_guests.count %><br>
+            親友推薦：<%= @family_guests.count %><br>
+            廁所洗手露來客：<%= @toilet_guests.count %>
+          </p>
+        </blockquote>
+      </div>
+
+      <div class="col-xs-6 col-sm-4">
+        <blockquote>
+          <table class="table">
+            <tbody class="customer-info">
+              <tr>
+                <th>總客數</th>
+                <th>總銷售</th>
+              </tr>
+              <tr>
+                <td class="alncenter"><%= @guests.count %></td>
+                <td class="alncenter"><%= number_to_currency(@guests.sum(:payment), precision: 0) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </blockquote>
+      </div>
   </div>
 </div>
