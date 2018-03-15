@@ -1,14 +1,6 @@
 <div class="container">
 
-  <ul class="nav nav-tabs">
-    <li role="presentation" ><%= link_to "客情資料", guest_today_cashier_guests_path%></li>
-    <li role="presentation" ><%= link_to "成立訂單", new_cashier_order_path(id: -1)%></li>
-    <li role="presentation" ><%= link_to "訂單資訊",cashier_orders_path%></li>
-    <li role="presentation" ><%= link_to "最新消息",cashier_bulletins_path%></li>
-    <li role="presentation" class="active"><%= link_to "搜尋會員", search_cashier_members_path%></li>
-    <li role="presentation" ><%= link_to "新增會員", new_cashier_member_path%></li> 
-    <li role="presentation" ><%= link_to "會員資料(測試用，暫時)", cashier_members_path %></li>
-  </ul> 
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '搜尋會員' } %>
   
   <br>
   <form id="search-form">

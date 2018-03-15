@@ -42,7 +42,10 @@ class Cashier::GuestsController < ApplicationController
   end
 
   def guest_today
-    @guests = Guest.where("Date(created_at) = ?", Date.today).order(created_at: :desc)
+    # @guests = Guest.where("Date(created_at) = ?", Date.today).order(created_at: :desc)
+    @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
+    # @guests = Guest.all
+    puts @guests
     @old_guests = @guests.where(guest_type_id: 10)
     @new_guests = @guests.where(guest_type_id: 9)
     @boy_guests = @guests.where(gender: "男")
@@ -60,7 +63,6 @@ class Cashier::GuestsController < ApplicationController
   end 
 
   def search_outcome
-
     date = params[:created_at]
     @guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
     render :json => @guests
