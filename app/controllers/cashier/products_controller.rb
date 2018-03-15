@@ -19,6 +19,10 @@ class Cashier::ProductsController < ApplicationController
   def new
     
   end
+  
+  def manage
+    @products = Product.all
+  end
 
   def import
     Product.update_by_file(params[:file])
