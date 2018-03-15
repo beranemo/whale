@@ -83,7 +83,7 @@
         
         <%= f.radio_button :address ,"local"%>
         <%= f.label :address, "自取" %>
-        <%= f.radio_button :address ,"ship",class:"ship-radio"%>
+        <%= f.radio_button :address ,"",class:"ship-radio"%>
         <%= f.label :address, "宅配" %>
         <%= f.hidden_field :member_id, :value => @member.id %>
         <br>
@@ -124,6 +124,18 @@
 </div>
 
 <script type="text/javascript">
+  $(".ship-address").on("click","#check-address", function(event){
+    var checked = document.getElementById("check-address").checked;
+    if(checked){
+      $(".ship-address").find("#input-address").attr('disabled','disabled');
+      $(".ship-radio").attr('value', $(".ship-address").find("#input-address").val());
+    }
+    else{
+      $(".ship-address").find("#input-address").removeAttr('disabled');
+    }
+    
+  });
+
   $(".ship-radio").on("click", function(event){
     $(".ship-address").html($("#ship-address-template").html());
   });
@@ -225,6 +237,8 @@
 <script type="text/template" id="ship-address-template">
   <div id="address-input">
     <label>宅配地址:</label>
-    <input type="text" name="">
+    <input type="text" name="" id="input-address">
+    <input type="checkbox" name="" id="check-address">
+    <label>請勾選確認</label>
   </div>  
 </script>

@@ -35,7 +35,7 @@ class Cashier::OrdersController < ApplicationController
       @member =  Member.find(order_params[:member_id])
       render :new
     else
-      @order = current_user.orders.build(member_id: order_params[:member_id], payment_method: order_params[:payment_method])
+      @order = current_user.orders.build(order_params)
   
       @order.amount =0
       current_cart.cart_items.each do |item|
