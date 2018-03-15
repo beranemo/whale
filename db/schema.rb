@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20180315080301) do
     t.string "title"
     t.text "content"
     t.integer "user_id"
+    t.date "start_date"
+    t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
