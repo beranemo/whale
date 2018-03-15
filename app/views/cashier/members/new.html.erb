@@ -6,6 +6,10 @@
   <h4>新增會員</h4>
   <%= form_for [:cashier, @member] do |f|%>
     <div class="form-group">
+      <%= f.label :member_code, "會員群組" %>
+      <%= f.collection_select :member_code, MemberType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
+      <br>
+
       <%= f.label :name, "姓名" %>
       <%= f.text_field :name , class: "form-control"%>
       <br>
