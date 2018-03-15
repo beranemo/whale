@@ -11,4 +11,5 @@
 #
 
 class HairType < ApplicationRecord
+  has_many :members, foreign_key: "hair_code", primary_key: "code"
 end
