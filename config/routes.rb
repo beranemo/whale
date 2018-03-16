@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       member do
         post :plus_quantity
         post :minus_quantity
+        post :add_discount
       end
     end
     

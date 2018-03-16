@@ -20,7 +20,6 @@ class Cashier::OrdersController < ApplicationController
     @products = Product.all 
     @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"
-      
       @member = Member.find(params[:id])
       @order.name = @member.name
       @order.phone = @member.phone
@@ -28,6 +27,7 @@ class Cashier::OrdersController < ApplicationController
     else
       @member = Member.new(id: -1)
     end
+
   end
 
   def create

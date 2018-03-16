@@ -50,12 +50,13 @@
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>  
           <td>
-            <%=item.product.discount.bulletin.title%>
-            
+            <% if item.product.discount%>
+              <%=item.product.discount.bulletin.title%>
+            <% end %>
           </td>
           <td>
-            <%= form_for [:cashier, item.product.discount] do |f| %>
-            <%= f.collection_select  :discount_method_id,DiscountMethod.all, :id, :content, {prompt: true}, {class: "form-control"} %>
+            <%= form_for [:cashier, item] do |f| %>
+            <%= f.collection_select  :discount_method_id,DiscountMethod.all, :id, :content, {prompt: true}, {class: "discount-list form-control"} %>
             <% end%>
           </td>        
           <td>
@@ -189,6 +190,7 @@
           $(order_item).find(".category").html(data["category"]);
           $(order_item).find(".zh_name").html(data["zh_name"]);
           $(order_item).find(".price").html(data["price"]);
+          $(order_item).find(".bulletin").html(data["bulletin"]);
           $(order_item).find(".upc").html(data["upc"]);
           $(".cart-item-list").append(order_item);
         }
@@ -209,7 +211,8 @@
       success: function(data){
         var total_price = $("#total");
         var total_price_value = Number(total_price.html().replace('$ ',''));
-        $(total_price).html("$ "+(total_price_value-Number(data["minus_price"])));
+        var price = Number(data["price"]);
+        $(total_price).html("$ "+(total_price_value-price));
 
         $(".cart-item-list").find("#"+data["id"]).remove();
 
@@ -258,6 +261,27 @@
       }
     })
   });
+
+
+  $(".cart-item-list").on("change",".discount-list",function(event){
+    
+    var id = event.target.parentNode.parentNode.parentNode.id;
+    var method_id = $(".cart-item-list").find("#"+id).find(":selected").val();
+    console.log(id);
+    console.log(method_id);
+    $.ajax({
+      url: "/cashier/cart_items/"+ id +"/add_discount?method_id="+method_id,
+      method: "post",
+      dataType: "json",
+      success: function(data){
+        var total_price = $("#total");
+        var total_price_value = Number(total_price.html().replace('$ ',''));
+        var price = Number(data["price"]);
+        console.log(price);
+        $(total_price).html("$ "+(total_price_value+price));
+      } 
+    });
+  });
 </script>
 
 <script type="text/template" id="order-item-template">
@@ -269,6 +293,20 @@
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+  </td>
+  <td class="bulletin"></td>
+  <td class="discount_method">
+    <form class="edit_cart_item" id="edit_cart_item_19" action="/cashier/cart_items/19" accept-charset="UTF-8" method="post">
+      <select class="discount-list form-control" name="cart_item[discount_method_id]" id="cart_item_discount_method_id">
+        <option value="7">第二件半價</option>
+        <option value="8">九折</option>
+        <option value="9">八折</option>
+        <option value="10">七折</option>
+        <option value="11">六折</option>
+        <option value="12">五折</option>
+        <option selected="selected" value="13">無</option>
+      </select>
+    </form>
   </td>  
   <td>
     <span class="delete-item text-danger glyphicon glyphicon-trash"></span>

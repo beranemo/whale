@@ -28,11 +28,22 @@ class Cashier::CartItemsController < ApplicationController
     end
   end
 
+  def add_discount
+    @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
+    @o_price = @cart_item.calculate.round
+    @cart_item.discount_method_id = params[:method_id]
+    @price = @cart_item.calculate.round
+    @cart_item.save!
+    puts @cart_item.discount_method.content
+    puts @o_price
+    puts @price
+    render :json => {:price => @price -@o_price }
+  end
 
   def destroy
     @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
-    @price = @cart_item.product.price * @cart_item.quantity
+    @price = @cart_item.calculate.round
     @cart_item.destroy
-    render :json => {:id =>params[:id], :minus_price => @price}
+    render :json => {:id =>params[:id], :price => @price}
   end
 end
