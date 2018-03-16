@@ -22,6 +22,9 @@ class Cashier::OrdersController < ApplicationController
     if params[:id] != "-1"
       
       @member = Member.find(params[:id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      @order.address = @member.address
     else
       @member = Member.new(id: -1)
     end
