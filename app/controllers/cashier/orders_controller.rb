@@ -74,7 +74,7 @@ class Cashier::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:member_id, :payment_method, :address)
+    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark)
   end
   
 end
