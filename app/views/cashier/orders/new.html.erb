@@ -67,7 +67,7 @@
   </div>
   <br>
   <div class="row">
-    <div class="ship-info col-md-6">
+    <div class="ship-info col-md-8">
       <%= form_for [:cashier, @order] do |f|%>
         
         
@@ -83,7 +83,7 @@
         <%= f.text_field :phone %><br>
         
         <%= f.label :address, "地址:" %>
-        <%= f.text_field :address ,class:"input-address"%><br>
+        <%= f.text_field :address ,class:"input-address form-control"%><br>
 
         <%= f.label :payment_method, "付款方式:" %>
         <%= f.radio_button :payment_method ,"付現"%>
@@ -93,16 +93,16 @@
         <br>
         
         
+        <%= f.label :remark ,"備註"%>
+        <%= f.text_area :remark, class:"form-control"%>
+        <br>
+
         <%= f.hidden_field :member_id, :value => @member.id %>
         
         <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
       <% end %>
     </div>
-    <div class="col-md-6">
-      <div class="ship-info">
-        
-      </div>
-    </div>
+    
       
       
 
