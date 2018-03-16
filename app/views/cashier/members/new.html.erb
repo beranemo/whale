@@ -4,11 +4,8 @@
   
   <br>
   <h4>新增會員</h4>
-  <%= form_for [:cashier, @member] do |f|%>
+  <%= form_for [:cashier, @member] do |f| %>
     <div class="form-group">
-      <%= f.label :member_code, "會員群組" %>
-      <%= f.collection_select :member_code, MemberType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
-      <br>
 
       <%= f.label :name, "姓名" %>
       <%= f.text_field :name , class: "form-control"%>
@@ -20,9 +17,11 @@
       <%= f.radio_button :gender ,"female"%>
       <%= f.label :gender, "女" %>
       <br>
+      <br>
 
       <%= f.label :birthday, "生日" %>
-      <%= f.text_field :birthday , class: "form-control"%>
+      <%= f.date_select :birthday, class: "form-control" %>
+      <br>
       <br>
 
       <%= f.label :phone, "手機號碼" %>
@@ -43,6 +42,10 @@
 
       <%= f.label :skin_id, "膚質" %>
       <%= f.collection_select :skin_type_id, SkinType.all, :id, :skin_type, {prompt: true}, {class: "form-control"} %>
+      <br>
+      
+      <%= f.label :member_code, "會員群組" %>
+      <%= f.collection_select :member_code, MemberType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :remark, "備註" %>

@@ -7,7 +7,7 @@
   <%= form_for @member do |f|%>
     <div class="form-group">
 
-      <%= f.label :name, "Name" %>
+      <%= f.label :name, "姓名" %>
       <%= f.text_field :name , class: "form-control"%>
       <br>
 
@@ -17,9 +17,11 @@
       <%= f.radio_button :gender ,"female"%>
       <%= f.label :gender, "女" %>
       <br>
+      <br>
 
       <%= f.label :birthday, "生日" %>
-      <%= f.text_field :birthday , class: "form-control"%>
+      <%= f.date_select :birthday, class: "form-control" %>
+      <br>
       <br>
 
       <%= f.label :phone, "手機號碼" %>
