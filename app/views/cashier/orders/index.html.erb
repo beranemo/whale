@@ -11,6 +11,7 @@
         <th>結帳人員</th>
         <th>顧客編號</th>
         <th>付款方式</th>
+        <th>取貨方式</th>
         <th>總金額</th>
         <th>功能</th>
       </tr>
@@ -26,6 +27,7 @@
           <% end%>
         </td>
         <td><%= order.payment_method%></td>
+        <td><%= order.address%></td>
         <td><%= order.amount%></td>
         <td><%= link_to "編輯",edit_cashier_order_path(order.id)%></td>
       </tr>

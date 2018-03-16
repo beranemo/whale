@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315154003) do
+ActiveRecord::Schema.define(version: 20180316111529) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20180315154003) do
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "discount_method_id"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -51,6 +52,21 @@ ActiveRecord::Schema.define(version: 20180315154003) do
     t.string "country_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "discount_methods", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "bulletin_id"
+    t.string "discount_method"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "discount_method_id"
   end
 
   create_table "guest_types", force: :cascade do |t|

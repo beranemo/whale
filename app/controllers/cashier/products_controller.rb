@@ -2,13 +2,16 @@ class Cashier::ProductsController < ApplicationController
   def add_to_cart
     @product = Product.find(params[:id])
     @cart_item = current_cart.add_cart_item(@product)
+    discount_method = DiscountMethod.find_by(content: "無")
+    @cart_item.discount_method_id = discount_method.id
+    @cart_item.save!
     
-    @cart_item.save
-    
-
-    
-
-    render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name, :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity}
+    if @cart_item.product.discount !=nil
+      @bulletin = @cart_item.product.discount.bulletin
+    else
+      @bulletin = Bulletin.new
+    end
+    render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name, :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,:bulletin => @bulletin.title}
   end
   
   

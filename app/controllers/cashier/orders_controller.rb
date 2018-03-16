@@ -20,11 +20,14 @@ class Cashier::OrdersController < ApplicationController
     @products = Product.all 
     @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"
-      
       @member = Member.find(params[:id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      @order.address = @member.address
     else
       @member = Member.new(id: -1)
     end
+
   end
 
   def create
@@ -52,7 +55,7 @@ class Cashier::OrdersController < ApplicationController
         stock_record.save!
         order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
              
-        @order.amount += item.product.price * item.quantity
+        @order.amount += item.calculate
         order_item.save!
         product.save!
       end
@@ -74,7 +77,7 @@ class Cashier::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:member_id, :payment_method, :address)
+    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark)
   end
   
 end
