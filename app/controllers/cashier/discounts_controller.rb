@@ -16,6 +16,6 @@ class Cashier::DiscountsController < ApplicationController
   private
 
   def discount_params
-    params.require(:discount).permit(:bulletin_id, :dicount_method, :product_id)
+    params.require(:discount).permit(:bulletin_id, :discount_method, :product_id)
   end
 end

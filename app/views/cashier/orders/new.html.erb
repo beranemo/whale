@@ -34,6 +34,8 @@
         <th>國際條碼</th>
         <th>定價</th>        
         <th>購買數量</th>
+        <th>商品活動</th>
+        <th>打折方式</th>
         <th>#</th>
       </tr>        
       <% @cart_items.each do |item|%>
@@ -46,10 +48,18 @@
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
-          </td>          
+          </td>  
+          <td>
+            <%=item.product.discount.bulletin.title%>
+            
+          </td>
+          <td>
+            <%=item.product.discount.discount_method%>
+          </td>        
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
+
           <% @order.amount+= item.product.price*item.quantity%>
         </tr>
       <% end %>
