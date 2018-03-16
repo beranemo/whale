@@ -130,6 +130,16 @@ category_list.each do |category|
 end
 puts "Category created!"
 
+# =======================  Discount_Method  =======================
+DiscountMethod.destroy_all
+
+discount_method_list =[
+  "第二件半價","九折","八折","七折","六折","五折"
+]
+
+discount_method_list.each do |method|
+  DiscountMethod.create(content: method)
+end
 =begin
 Product.create(
   category: '',
