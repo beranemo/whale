@@ -55,7 +55,7 @@ class Cashier::OrdersController < ApplicationController
         stock_record.save!
         order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
              
-        @order.amount += item.product.price * item.quantity
+        @order.amount += item.calculate
         order_item.save!
         product.save!
       end
