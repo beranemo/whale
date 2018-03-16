@@ -163,4 +163,78 @@
         </div>
       </div>
     </div>
-  </div>
+
+<!-- ======================= 今日客流量 ===============================-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+<div class="container">
+<% @guests.each do |g| %>
+
+  <% if g.created_at.localtime.hour.to_s == '10'
+      @arr_y[0] += 1
+    elsif g.created_at.localtime.hour.to_s == '11'
+      @arr_y[1] += 1
+    elsif g.created_at.localtime.hour.to_s == '12'
+      @arr_y[2] += 1    
+    elsif g.created_at.localtime.hour.to_s == '13'
+      @arr_y[3] += 1 
+    elsif g.created_at.localtime.hour.to_s == '14'
+      @arr_y[4] += 1
+    elsif g.created_at.localtime.hour.to_s == '15'
+      @arr_y[5] += 1
+    elsif g.created_at.localtime.hour.to_s == '16'
+      @arr_y[6] += 1
+    elsif g.created_at.localtime.hour.to_s == '17'
+      @arr_y[7] += 1
+    elsif g.created_at.localtime.hour.to_s == '18'
+      @arr_y[8] += 1
+    elsif g.created_at.localtime.hour.to_s == '19'
+      @arr_y[9] += 1
+    elsif g.created_at.localtime.hour.to_s == '20'
+      @arr_y[10] += 1
+    elsif g.created_at.localtime.hour.to_s == '21'
+      @arr_y[11] += 1
+    else g.created_at.localtime.hour.to_s == '22'
+      @arr_y[12] += 1
+     end %>  
+
+<% end %> 
+<br>
+
+<canvas id="hourChart" width="200" height="50"></canvas>
+
+<script>
+var yAxis= <%= @arr_y.inspect.html_safe %>;
+var datas = <%= @arr_x.inspect.html_safe %>;                                  
+var ctx = document.getElementById("hourChart").getContext('2d');
+var hourChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: datas,
+        datasets: [{
+            label: '今日客情流量',
+            data: yAxis,
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: { 
+
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+</div>

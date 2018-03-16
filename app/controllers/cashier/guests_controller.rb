@@ -66,6 +66,10 @@ class Cashier::GuestsController < ApplicationController
     @family_guests = @guests.where(info_way_id: 3)
     @toilet_guests = @guests.where(info_way_id: 4)
     @total_payment = @guests.sum(:payment)
+
+    @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
+    @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+
   end
 
   def search_outcome
