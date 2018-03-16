@@ -48,7 +48,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :bulletins
+    resources :bulletins 
+
+    resources :discounts
     
   end
   
