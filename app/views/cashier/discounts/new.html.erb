@@ -10,7 +10,7 @@
       <%= f.label :product_id, "商品" %>
       <%= f.collection_select :product_id, Product.all, :id, :zh_name, {prompt: true}, {class: "form-control"} %>
       <br>
-
+      <%= f.hidden_field :bulletin_id, :value => params[:bulletin_id] %>
       <%= f.submit "新增紀錄",class: "btn btn-primary" %>
 
     </div>
