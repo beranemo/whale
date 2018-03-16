@@ -60,7 +60,7 @@
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
 
-          <% @order.amount+= item.product.price*item.quantity%>
+          <% @order.amount+= item.calculate%>
         </tr>
       <% end %>
     </tbody>
@@ -226,7 +226,11 @@
       success: function(data){
         var total_price = $("#total");
         var total_price_value = Number(total_price.html().replace('$ ',''));
-        $(total_price).html("$ "+(total_price_value+Number(data["price"])));
+      
+        var price = Number(data["price"]);
+
+        console.log(price);
+        $(total_price).html("$ "+(total_price_value+price));
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         $(cart_item).find(".quantity").val(data["quantity"]);
@@ -244,7 +248,8 @@
       success: function(data){
         var total_price = $("#total");
         var total_price_value = Number(total_price.html().replace('$ ',''));
-        $(total_price).html("$ "+(total_price_value-Number(data["price"])));
+        var price = Number(data["price"]);
+        $(total_price).html("$ "+(total_price_value+price));
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         $(cart_item).find(".quantity").val(data["quantity"]);

@@ -13,4 +13,12 @@
 class CartItem < ApplicationRecord
   belongs_to :cart
   belongs_to :product 
+
+  def calculate
+    if product.discount.discount_method == "第二件半價"
+      product.price*(quantity/2)*1.5+product.price*(quantity%2)
+    else
+      product.price*quantity
+    end
+  end
 end
