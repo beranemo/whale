@@ -67,30 +67,45 @@
   </div>
   <br>
   <div class="row">
-    <div class="ship-address col-md-4">
-      
-    </div>
-    <div class="text-right col-md-8">
-      
+    <div class="ship-info col-md-6">
       <%= form_for [:cashier, @order] do |f|%>
+        
+        
+        <%= f.label :payment_method, "取貨方式" %>
+        <%= f.radio_button :address ,"local",class:"local-radio"%>
+        <%= f.label :address, "自取" %>
+        <%= f.radio_button :address ," ",class:"ship-radio"%>
+        <%= f.label :address, "宅配" %><br>
+        <%= f.label :name, "姓名:" %>
+        <%= f.text_field :name %><br>
+        
+        <%= f.label :phone, "電話:" %>
+        <%= f.text_field :phone %><br>
+        
+        <%= f.label :address, "地址:" %>
+        <%= f.text_field :address ,class:"input-address"%><br>
+
         <%= f.label :payment_method, "付款方式:" %>
         <%= f.radio_button :payment_method ,"付現"%>
         <%= f.label :payment_method, "付現" %>
         <%= f.radio_button :payment_method ,"刷卡"%>
         <%= f.label :payment_method, "刷卡" %>
         <br>
-        <%= f.label :payment_method, "取貨方式" %>
         
-        <%= f.radio_button :address ,"local",class:"local-radio"%>
-        <%= f.label :address, "自取" %>
-        <%= f.radio_button :address ," ",class:"ship-radio"%>
-        <%= f.label :address, "宅配" %>
+        
         <%= f.hidden_field :member_id, :value => @member.id %>
-        <br>
+        
         <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
       <% end %>
+    </div>
+    <div class="col-md-6">
+      <div class="ship-info">
+        
+      </div>
+    </div>
       
-    </div>  
+      
+
   </div>
     
   <br>
@@ -124,25 +139,16 @@
 </div>
 
 <script type="text/javascript">
-  $(".ship-address").on("click","#check-address", function(event){
-    var checked = document.getElementById("check-address").checked;
-    if(checked){
-      $(".ship-address").find("#input-address").attr('disabled','disabled');
-      $(".ship-radio").attr('value', $(".ship-address").find("#input-address").val());
-    }
-    else{
-      $(".ship-address").find("#input-address").removeAttr('disabled');
-      $(".ship-radio").attr('value','');
-    }
-    
-  });
+  
 
   $(".ship-radio").on("click", function(event){
-    $(".ship-address").html($("#ship-address-template").html());
+    
+    $(".ship-info").find(".input-address").removeAttr('disabled');
   });
 
   $("#order_address_local").on("click", function(event){
-    $(".ship-address").find("#address-input").remove();
+    
+    $(".ship-info").find(".input-address").attr('disabled','disabled');
   });
 
   $(".product-list").on("click", ".add_to_cart", function(event){
@@ -252,11 +258,3 @@
   </td>
 </script>
 
-<script type="text/template" id="ship-address-template">
-  <div id="address-input">
-    <label>宅配地址:</label>
-    <input type="text" name="" id="input-address">
-    <input type="checkbox" name="" id="check-address">
-    <label>請勾選確認</label>
-  </div>  
-</script>
