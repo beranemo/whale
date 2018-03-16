@@ -3,8 +3,8 @@
   <%= form_for [:cashier, @discount] do |f| %>
     <div class="form-group">
 
-      <%= f.label :discount_method, "打折方式" %>
-      <%= f.text_field :discount_method, class: "form-control"%>
+      <%= f.label :discount_method_id, "打折方式" %>
+      <%= f.collection_select :discount_method_id, DiscountMethod.all, :id, :content, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :product_id, "商品" %>

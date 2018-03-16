@@ -54,7 +54,9 @@
             
           </td>
           <td>
-            <%=item.product.discount.discount_method%>
+            <%= form_for [:cashier, item.product.discount] do |f| %>
+            <%= f.collection_select  :discount_method_id,DiscountMethod.all, :id, :content, {prompt: true}, {class: "form-control"} %>
+            <% end%>
           </td>        
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>

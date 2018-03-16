@@ -134,7 +134,7 @@ puts "Category created!"
 DiscountMethod.destroy_all
 
 discount_method_list =[
-  "第二件半價","九折","八折","七折","六折","五折"
+  "第二件半價","九折","八折","七折","六折","五折","無"
 ]
 
 discount_method_list.each do |method|
