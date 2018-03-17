@@ -7,7 +7,14 @@
     <img src="">
   </div>
   <div class="col-md-8">
-    <label>會員群組</label>
+   
+    <% if Date.today.month == @member.birthday.month %>
+      *～當月壽星～*
+      <br>
+    <% end %>
+    <br>
+   
+    <label>會員群組</label>    
     <% if @member.member_type == nil %>
       (尚未分群組)
     <% else %>
