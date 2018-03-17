@@ -8,7 +8,12 @@
   </div>
   <div class="col-md-8">
     <label>會員群組</label>
-    <%= @member.member_type.value%><br>
+    <% if @member.member_type == nil %>
+      (尚未分群組)
+    <% else %>
+      <%= @member.member_type.value%>
+    <% end %>
+    <br>
     <label>姓名:</label>
     <%= @member.name%><br>
     <label>生日:</label>
