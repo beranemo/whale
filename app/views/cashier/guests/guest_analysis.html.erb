@@ -3,11 +3,7 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
 
   <br>
-  <div style="text-align: center">
-    <%= link_to '客情紀錄', cashier_guests_path %> | 
-    <%= link_to '今日客情', guest_today_cashier_guests_path %> ｜
-    <%= link_to '今日客情分析', guest_analysis_cashier_guests_path %>
-  </div>
+  <%= render :partial => "shared/tabs_guest" %>
 
     <br>
     <h3 class="alncenter">今日客情分析</h3>
