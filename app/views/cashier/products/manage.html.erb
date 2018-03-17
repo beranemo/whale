@@ -1,10 +1,6 @@
 <div class="container">
  
-  <ul class="nav nav-tabs">
-    <li role="presentation" ><%= link_to "所有商品", cashier_products_path%></li>
-    <li role="presentation" ><%= link_to "上傳商品", new_cashier_product_path%></li>
-    <li role="presentation" class="active"><%= link_to "商品管理", manage_cashier_products_path%></li>
-  </ul>
+  <%= render :partial => "shared/tabs2", :locals => { :selected_item => '商品管理' } %>
 
   <table class="table">
     <tbody >
