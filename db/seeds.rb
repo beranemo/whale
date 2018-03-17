@@ -80,7 +80,9 @@ Country.destroy_all
 country_list = [
   { code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣" },
   { code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
-  { code: "HK_MA", system_flag: "Y", value: "港澳", country_type: "港澳"}
+  { code: "HK", system_flag: "Y", value: "香港", country_type: "香港"},
+  { code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸"},
+  { code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門"}
 ]
 
 country_list.each do |country|
