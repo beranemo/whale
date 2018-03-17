@@ -52,11 +52,12 @@ Rails.application.routes.draw do
     resources :bulletins 
     resources :discounts
     resources :hair_types
+    resources :skin_types
     
   end
   
   resources :users, only: [:edit, :update]
 
 #  root "members#index"
-  resources :members, only: [:index, :new, :create]
+  resources :members, only: [:index, :new, :create, :show]
 end

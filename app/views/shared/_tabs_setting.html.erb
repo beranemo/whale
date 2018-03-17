@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs">
+ 
+  <li role="presentation" class="<%= 'active' if selected_item == '髮質設定' %>">
+    <%= link_to "髮質設定", cashier_hair_types_path %>
+  </li>
+  
+  <li role="presentation" class="<%= 'active' if selected_item == '膚質設定' %>">
+    <%= link_to "膚質設定", cashier_skin_types_path %>
+  </li>
+  
+  <li role="presentation" class="<%= 'active' if selected_item == '' %>">
+    <%= link_to "", guest_today_cashier_guests_path %>
+  </li>
+  
+  <li role="presentation" class="<%= 'active' if selected_item == '' %>">
+    <%= link_to "", guest_today_cashier_guests_path %>
+  </li>
+  
+  <li role="presentation" class="<%= 'active' if selected_item == '' %>">
+    <%= link_to "", guest_today_cashier_guests_path %>
+  </li>
+  
+</ul>

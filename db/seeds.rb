@@ -40,7 +40,11 @@ skin_type_list = [
 ]
 
 skin_type_list.each do |skin_type|
-  SkinType.create( skin_type: skin_type[:skin_type] )
+  SkinType.create( 
+    code: skin_type[:code],
+    value: skin_type[:value],
+    system_flag: skin_type[:system_flag]
+    )
 end
 puts "Skin_type created!"
 
@@ -57,7 +61,11 @@ hair_type_list = [
 ]
 
 hair_type_list.each do |hair_type|
-  HairType.create( value: hair_type[:value], code: hair_type[:code], system_flag: hair_type[:system_flag] )
+  HairType.create( 
+    code: hair_type[:code],
+    value: hair_type[:value], 
+    system_flag: hair_type[:system_flag] 
+    )
 end
 puts "Hair_type created!"
 

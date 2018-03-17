@@ -10,8 +10,8 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(member_params)
     if @member.save!
-      flash[:notice] = "成功加入會員"
-      redirect_to root_path
+      flash[:notice] = "已成功建立會員資料"
+      redirect_to member_path(@member)
     else
       flash[:alert] = @member.errors.full_messages.to_sentence
       render :new
@@ -22,6 +22,15 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name,:gender,:birthday,:phone,:email,:skin_type_id,:hair,:avatar)
+    params.require(:member).permit(
+      :name,
+      :gender,
+      :birthday,
+      :fax,
+      :phone,
+      :email,
+      :hair_code,
+      :skin_type_id,
+      :avatar)
   end
 end

@@ -27,13 +27,13 @@
       <%= f.label :phone, "手機號碼" %>
       <%= f.text_field :phone , class: "form-control"%>
       <br>
-      
-      <%= f.label :email, "電子信箱" %>
-      <%= f.email_field :email , class: "form-control"%>
-      <br>
 
       <%= f.label :fax, "傳真" %>
       <%= f.text_field :fax , class: "form-control"%>
+      <br>           
+            
+      <%= f.label :email, "電子信箱" %>
+      <%= f.email_field :email , class: "form-control"%>
       <br>
 
       <%= f.label :hair_id, "髮質" %>
@@ -41,7 +41,7 @@
       <br>
 
       <%= f.label :skin_id, "膚質" %>
-      <%= f.collection_select :skin_type_id, SkinType.all, :id, :skin_type, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
       
       <%= f.label :member_code, "會員群組" %>

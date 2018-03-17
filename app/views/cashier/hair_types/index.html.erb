@@ -1,7 +1,23 @@
 <div class="container">
- 
-  <%= link_to "新增髮質內容", new_cashier_hair_type_path, class: "btn btn-primary" %> 
+
+  <%= render :partial => "shared/tabs_setting", :locals => { :selected_item => '髮質設定' } %>
   <br>
+ 
+  <div class="form-inline" >
+    <%= form_for [:cashier, @hair] do |f| %>
+      <div class="form-group">
+        <%= f.text_field :value, placeholder: "請輸入欲新增髮質內容", class: "form-control" %>
+      </div>
+      <%= f.submit "新增", class: "btn btn-primary" %>
+      
+      <% if @hair.errors.any? %>
+        <%= @hair.errors.full_messages.to_sentence %>
+      <% end %>
+      
+    <% end %>
+  </div> 
+ 
+  <%#= link_to "新增髮質內容", new_cashier_hair_type_path, class: "btn btn-primary" %> 
   <br>
   <table class="table table-striped table-bordered">
     <thead>
@@ -18,7 +34,7 @@
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alnleft"><%= hair.value %></td>
         <td>
-          <%= link_to '編輯', edit_cashier_hair_type_path(hair) %> ｜
+          <%= link_to '編輯', cashier_hair_type_path(id: hair.id) %> ｜
           <%= link_to '刪除', cashier_hair_type_path(hair), method: :delete, data: {confirm:"確定刪除?"} %>
         </td>
       </tr>

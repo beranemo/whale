@@ -2,7 +2,7 @@ class Cashier::MembersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @members = Member.all
+    @members = Member.all.order(created_at: :desc)
   end
 
   def show
@@ -61,6 +61,8 @@ class Cashier::MembersController < ApplicationController
       :gender,
       :birthday,
       :phone,
+      :fax,
+      :member_code,
       :email,
       :skin_type_id,
       :hair_code,

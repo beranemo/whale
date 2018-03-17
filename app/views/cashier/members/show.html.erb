@@ -8,26 +8,45 @@
   </div>
   <div class="col-md-8">
     <label>會員群組</label>
-    <%= @member.member_type.value%><br>
+    <% if @member.member_type == nil %>
+      (尚未分群組)
+    <% else %>
+      <%= @member.member_type.value%>
+    <% end %>
+    <br>
     <label>姓名:</label>
     <%= @member.name%><br>
-    <label>生日:</label>
-    <%= @member.birthday%><br>
+    
     <label>性別:</label>
     <%= @member.gender%><br>
+    
+    <label>生日:</label>
+    <%= @member.birthday%><br>
+    
+    <label>手機:</label>
+    <%= @member.phone%><br>
+    
+    <label>傳真:</label>
+    <%= @member.fax%><br>    
+    
+    <label>信箱:</label>
+    <%= @member.email%><br>    
+    
     <label>髮質:</label>
     <%= @member.hair_type.value%><br>
+    
     <label>膚質:</label>
-    <%= @member.skin_type.skin_type%><br>
-    <label>信箱:</label>
-    <%= @member.email%><br>
-    <label>傳真:</label>
-    <%= @member.fax%><br>
+    <%= @member.skin_type.value%><br>
+    
+    <!--
     <label>地址:</label>
     <%= @member.county%>
     <%= @member.address%><br>
+    
     <label>紅利點數:</label>
     <%= @member.bonus%><br>
+    -->
+    
     <label>備註:</label>
     <%= @member.remark%><br>
   </div>
