@@ -14,7 +14,8 @@
 class CartItem < ApplicationRecord
   belongs_to :cart
   belongs_to :product 
-  belongs_to :discount_method, :optional => true
+  belongs_to :discount_method, foreign_key: "discount_method_code", primary_key: "code", :optional => true
+
   def calculate
     if discount_method.content == "第二件半價"
       product.price*(quantity/2)*1.5+product.price*(quantity%2)
