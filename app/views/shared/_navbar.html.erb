@@ -46,8 +46,9 @@
               </li>  
              
               <% if current_user.cashier? %>
-                <li><%= link_to('一般功能', cashier_root_path) %></li>
+                <li><%= link_to('一般功能', guest_today_cashier_guests_path) %></li>
                 <li><%= link_to('進階功能', cashier_products_path) %></li>
+                <li><%= link_to('資料設定', cashier_products_path) %></li>
               <% end %>
             
               <li><%= link_to('<i class = "glyphicon glyphicon-log-out" aria-hidden="true"></i> Log out'.html_safe, destroy_user_session_path,:method => :delete)%></li>
