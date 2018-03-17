@@ -2,7 +2,7 @@ class Cashier::MembersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @members = Member.all
+    @members = Member.all.order(created_at: :desc)
   end
 
   def show
