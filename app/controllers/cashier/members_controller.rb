@@ -40,12 +40,12 @@ class Cashier::MembersController < ApplicationController
     key_word = ''
     if params[:phone] != nil
       key_word = params[:phone]
-      @members = Member.where("phone like ?", "%"+key_word+"%")      
-    elsif params[:email] != nil
-      key_word = params[:email]
-      @members = Member.where("email like ?", "%"+key_word+"%")
-      puts @members
-    else
+      @members = Member.where("phone like ? OR email LIKE ?", "%"+key_word+"%", "%"+key_word+"%")      
+#    elsif params[:email] != nil
+#      key_word = params[:email]
+#      @members = Member.where("email like ?", "%"+key_word+"%")
+#      puts @members
+#    else
       
     end
     render :json => @members
