@@ -29,27 +29,31 @@
             女生：<%= @girl_guests.count %>
           </p>
         </blockquote>
-
-
         </div>
 
         <div class="col-xs-6 col-sm-4">
-          <blockquote>
+          <blockquote>         
             <div class="progress">
-              <div class="progress-bar progress-bar-success" style="width: <%= 
-              number_to_percentage( Float(@old_guests.count)/(@guests.count)*100 , precision: 0) %>">
-                <span class="sr-only"></span>
-                <p><%= @old_guests.count %></p>
-              </div>
-              <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= 
-              number_to_percentage( Float(@new_guests.count)/(@guests.count)*100 , precision: 0) %>">
-                <span class="sr-only"></span>
-                <p><%= @new_guests.count %></p>
-              </div>
+              <% i = 0 %>
+              <% GuestType.all.each do |guest_type| %>
+                <% color = '' %>
+                <% color = 'success' if i % 3 == 0 %>
+                <% color = 'warning progress-bar-striped' if i % 3 == 1 %>
+                <% color = 'danger progress-bar-striped' if i % 3 == 2 %>
+                <div 
+                  class="progress-bar progress-bar-<%= color %>" 
+                  style="width: <%= number_to_percentage(Float(@guests.where(guest_type_id: guest_type.id).count)/(@guests.count)*100 , precision: 0) %>">
+                  <span class="sr-only"></span>
+                  <p><%= @guests.where(guest_type_id: guest_type.id).count %></p>
+                </div>
+              <% i += 1 %>
+              <% end %>  
             </div>
+
             <p style="font-size: 16px">
-              舊客：<%= @old_guests.count %><br>
-              新客：<%= @new_guests.count %>
+              <% GuestType.all.each do |guest_type| %>
+                <%= GuestType.find(guest_type.id).guest_type %>：<%= @guests.where(guest_type_id: guest_type.id).count %><br>
+              <% end %>
             </p>
           </blockquote>
         </div>
@@ -133,7 +137,8 @@
               </div>
             </div>
             <p style="font-size: 16px">
-              路過逛到：<%= @pass_guests.count %><br>
+             <span>路過逛到：</span>
+              <%= @pass_guests.count %><br>
               EXPO或其他通路買過：<%= @expo_guests.count %><br>
               親友推薦：<%= @family_guests.count %><br>
               廁所洗手露來客：<%= @toilet_guests.count %>
