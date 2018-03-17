@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     resources :bulletins 
     resources :discounts
     resources :hair_types
+    resources :skin_types
     
   end
   

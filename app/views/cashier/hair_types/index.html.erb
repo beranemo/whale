@@ -1,9 +1,12 @@
 <div class="container">
+
+  <%= render :partial => "shared/tabs_setting", :locals => { :selected_item => '髮質設定' } %>
+  <br>
  
   <div class="form-inline" >
     <%= form_for [:cashier, @hair] do |f| %>
       <div class="form-group">
-        <%= f.text_field :value, placeholder: "請輸入欲新增髮質內容",  class: "form-control" %>
+        <%= f.text_field :value, placeholder: "請輸入欲新增髮質內容", class: "form-control" %>
       </div>
       <%= f.submit "新增", class: "btn btn-primary" %>
       
