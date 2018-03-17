@@ -4,9 +4,10 @@
       
   <br>
   <h2>訂單資訊</h2>
-  <table class="table">
+  <table class="table table-hover">
     <tbody>
       <tr>
+        <th>訂購日期</th>
         <th>編號</th>
         <th>結帳人員</th>
         <th>顧客編號</th>
@@ -17,7 +18,8 @@
       </tr>
       <% @orders.each do |order|%>
       <tr>
-        <td><%= order.id%></td>
+        <td><%= order.created_at.localtime.to_s(:db)%></td>
+        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.id%><% end %></td>
         <td><%= order.user.name%></td>
         <td>
           <% if order.member_id == -1%>
