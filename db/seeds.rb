@@ -143,27 +143,18 @@ puts "Category created!"
 # =======================  Discount_Method  =======================
 DiscountMethod.destroy_all
 
-discount_method_list =[
-  { content: "第二件半價", code: "A"},{ content: "九折", code: "B"},
-  { content: "八折", code: "C"},{ content: "七折", code: "D"},
-  { content: "六折", code: "E"},{ content: "五折", code: "F"},
-  { content: "贈品", code: "G"},{ content: "無", code: "H"}
+discount_method_list = [
+  { content: "第二件半價", code: "A"},
+  { content: "九折", code: "B"},
+  { content: "八折", code: "C"},
+  { content: "七折", code: "D"},
+  { content: "六折", code: "E"},
+  { content: "五折", code: "F"},
+  { content: "贈品", code: "G"},
+  { content: "無", code: "H"}
 ]
 
 discount_method_list.each do |d_method|
   DiscountMethod.create(content: d_method[:content], code: d_method[:code])
 end
-=begin
-Product.create(
-  category: '',
-  zh_name: '',
-  en_name: '',
-  capacity: '',
-  price: '',
-  upc: '',
-  use_for: '',
-  directions: '',
-  zh_m_ingredients: '',
-  zh_ingredients: '',
-  en_ingredients: '')
-=end
+puts "Discount_Method created!"
