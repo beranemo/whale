@@ -56,7 +56,7 @@
           </td>
           <td>
             <%= form_for [:cashier, item] do |f| %>
-            <%= f.collection_select  :discount_method_id,DiscountMethod.all, :id, :content, {prompt: true}, {class: "discount-list form-control"} %>
+            <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
             <% end%>
           </td>        
           <td>
@@ -266,11 +266,11 @@
   $(".cart-item-list").on("change",".discount-list",function(event){
     
     var id = event.target.parentNode.parentNode.parentNode.id;
-    var method_id = $(".cart-item-list").find("#"+id).find(":selected").val();
+    var method_code = $(".cart-item-list").find("#"+id).find(":selected").val();
     console.log(id);
-    console.log(method_id);
+    console.log(method_code);
     $.ajax({
-      url: "/cashier/cart_items/"+ id +"/add_discount?method_id="+method_id,
+      url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
       method: "post",
       dataType: "json",
       success: function(data){
@@ -296,15 +296,20 @@
   </td>
   <td class="bulletin"></td>
   <td class="discount_method">
-    <form class="edit_cart_item" id="edit_cart_item_19" action="/cashier/cart_items/19" accept-charset="UTF-8" method="post">
-      <select class="discount-list form-control" name="cart_item[discount_method_id]" id="cart_item_discount_method_id">
-        <option value="7">第二件半價</option>
-        <option value="8">九折</option>
-        <option value="9">八折</option>
-        <option value="10">七折</option>
-        <option value="11">六折</option>
-        <option value="12">五折</option>
-        <option selected="selected" value="13">無</option>
+    <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
+      <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
+        <option value="">Please select</option>
+        <option value="A">第二件半價</option>
+        <option value="B">九折</option>
+        <option value="C">八折</option>
+        <option value="D">七折</option>
+        <option value="E">六折</option>
+        <option value="F">五折</option>
+        <option value="G">贈品</option>
+        <option value="H">無</option>
       </select>
     </form>
   </td>  

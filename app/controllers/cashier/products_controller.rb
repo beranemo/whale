@@ -3,7 +3,7 @@ class Cashier::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @cart_item = current_cart.add_cart_item(@product)
     discount_method = DiscountMethod.find_by(content: "無")
-    @cart_item.discount_method_id = discount_method.id
+    @cart_item.discount_method_code = discount_method.code
     @cart_item.save!
     
     if @cart_item.product.discount !=nil
