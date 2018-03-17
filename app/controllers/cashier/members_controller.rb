@@ -27,6 +27,15 @@ class Cashier::MembersController < ApplicationController
   def search
     
   end
+  
+  def birthday_this_month
+    temp = Member.all    
+    @members = temp.group_by{ |t| t.birthday.month == DateTime.now.month }
+  end
+  
+  def birthday_next_month
+    @members = Member.all.order(created_at: :desc)
+  end
 
   def birthday_search
     month = Date.current.month 

@@ -1,0 +1,29 @@
+<div class="container">
+
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '搜尋會員' } %>
+  <br>
+  
+  <%= render :partial => "shared/tabs_query_members" %>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th class="alncenter">編號</th>
+        <th class="alncenter">姓名</th>
+        <th class="alncenter">生日</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% i = 1 %>
+    <% @members[true].each do |member| %>       
+      <tr>
+        <th scope="row" class="alncenter"><%= i %></th>
+        <td class="alnleft"><%= member.name %></td>
+        <td class="alnleft"><%= member.birthday %></td>
+      </tr>
+      <% i = i + 1 %>
+    <% end %>
+    </tbody>
+  </table>  
+
+</div>

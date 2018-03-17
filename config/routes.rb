@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :members do
       collection do
         get :search
+        get :birthday_this_month
+        get :birthday_next_month
         post :search_outcome
         post :birthday_search
       end
