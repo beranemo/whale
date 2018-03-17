@@ -26,6 +26,7 @@ class MembersController < ApplicationController
       :name,
       :gender,
       :birthday,
+      :fax,
       :phone,
       :email,
       :hair_code,
