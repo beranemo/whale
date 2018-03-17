@@ -202,36 +202,43 @@
 <canvas id="hourChart" width="200" height="50"></canvas>
 
 <script>
-var yAxis= <%= @arr_y.inspect.html_safe %>;
-var datas = <%= @arr_x.inspect.html_safe %>;                                  
-var ctx = document.getElementById("hourChart").getContext('2d');
-var hourChart = new Chart(ctx, {
+  
+window.setTimeout(display, 2000);  
+ 
+function display() {
+  var yAxis= <%= @arr_y.inspect.html_safe %>;
+  var datas = <%= @arr_x.inspect.html_safe %>;                                  
+  var ctx = document.getElementById("hourChart").getContext('2d');
+  var hourChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: datas,
-        datasets: [{
-            label: '今日客情流量',
-            data: yAxis,
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-            ],
-            borderWidth: 1
-        }]
+      labels: datas,
+      datasets: [{
+        label: '今日客情流量',
+        data: yAxis,
+        backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+            'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 1
+      }]
     },
     options: { 
-
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
+      scales: {
+        yAxes: [{
+          ticks: {
+            min: 0,
+            beginAtZero: true,
+            stepSize: 1
+          }
+        }]
+      }
     }
-});
+  });
+}
+  
 </script>
 </div>
 
