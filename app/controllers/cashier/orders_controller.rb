@@ -4,6 +4,10 @@ class Cashier::OrdersController < ApplicationController
 
   end
 
+  def show
+    @order = Order.find(params[:id])
+  end
+
   def edit
     
     @order = Order.find(params[:id])
