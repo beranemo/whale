@@ -1,16 +1,12 @@
 <div class="container">
   
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
+  
+  <br>
+  <%= render :partial => "shared/tabs_guest" %>
 
   <br>
-  <div style="text-align: center">
-    <%= link_to '客情紀錄', cashier_guests_path %> |
-    <%= link_to '今日客情', guest_today_cashier_guests_path %> ｜
-    <%= link_to '今日客情分析', guest_analysis_cashier_guests_path %>
-  </div>
-
-  <br>
-  <%= link_to "新增客情" , new_cashier_guest_path , class: "btn btn-primary center-block" %>
+  <%= link_to "新增客情", new_cashier_guest_path, class: "btn btn-primary center-block" %>
   <br>
   <div class="col-md-12">
 
@@ -32,7 +28,7 @@
       </thead>
       <tbody>
       <% i = 1 %>
-        <% @guests.each do |guest| %>       
+      <% @guests.each do |guest| %>       
         <tr>
           <th scope="row" class="alncenter"><%= i %></th>
           <td class="alncenter"><%= guest.created_at.localtime.to_s(:db)[0..15] %></td>

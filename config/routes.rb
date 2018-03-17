@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :new, :create, :edit,:update]
+    resources :orders, only: [:index, :new, :create, :edit, :update]
 
     resources :cart_items, only: [:destroy] do
       member do
@@ -50,13 +50,13 @@ Rails.application.routes.draw do
     end
 
     resources :bulletins 
-
     resources :discounts
+    resources :hair_types
     
   end
   
   resources :users, only: [:edit, :update]
 
 #  root "members#index"
-  resources :members, only: [:index,:new,:create]
+  resources :members, only: [:index, :new, :create]
 end

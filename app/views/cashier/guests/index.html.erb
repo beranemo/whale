@@ -2,40 +2,38 @@
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
   
-    <br>
-    <div style="text-align: center">
-      <%= link_to '客情紀錄', cashier_guests_path %> |
-      <%= link_to '今日客情', guest_today_cashier_guests_path %> ｜
-      <%= link_to '今日客情分析', guest_analysis_cashier_guests_path %>
-    </div>
+  <br>
+  <%= render :partial => "shared/tabs_guest" %>
     
 <!--============== need your help ===================-->
-    <form id="search-form">
-      <input type="text" id="datepicker">
-      <button id="date-search">日期搜尋</button>
-    </form>       
-      <table class="table">
-        <tbody id="search-list">
-          
-          <tr>
-                <th>編號</th>
-                <th>時間截記</th>
-                <th>購買金額</th>
-                <th>性別</th>
-                <th>客戶類型</th>
-                <th>國籍</th>
-                <th>年齡結構</th>
-                <th>如何得知茶籽堂</th>
-                <th>備註</th>
-                <th>功能</th>
-                <th>記錄人員</th>
-          </tr>     
-            
-        </tbody>
-      </table>  
+  <form id="search-form">
+    <input type="text" id="datepicker">
+    <button id="date-search">日期搜尋</button>
+  </form>
+
+  <br>
+  
+  <table class="table">
+    <tbody id="search-list">
+
+      <tr>
+        <th>編號</th>
+        <th>時間截記</th>
+        <th>購買金額</th>
+        <th>性別</th>
+        <th>客戶類型</th>
+        <th>國籍</th>
+        <th>年齡結構</th>
+        <th>如何得知茶籽堂</th>
+        <th>備註</th>
+        <th>功能</th>
+        <th>記錄人員</th>
+      </tr>     
+
+    </tbody>
+  </table>  
 
 <!--============== need your help ===================--> 
-
 
     <br>
     <%= link_to "新增客情" , new_cashier_guest_path , class: "btn btn-primary center-block" %>

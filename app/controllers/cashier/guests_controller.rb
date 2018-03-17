@@ -51,8 +51,8 @@ class Cashier::GuestsController < ApplicationController
 
   def guest_analysis
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
-    @old_guests = @guests.where(guest_type_id: 2)
-    @new_guests = @guests.where(guest_type_id: 1)
+#    @old_guests = @guests.where(guest_type_id: 2)
+#    @new_guests = @guests.where(guest_type_id: 1)
     @boy_guests = @guests.where(gender: "男")
     @girl_guests = @guests.where(gender: "女")
     @tw_guests = @guests.where(country_id: 1)
