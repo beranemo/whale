@@ -59,5 +59,5 @@ Rails.application.routes.draw do
   resources :users, only: [:edit, :update]
 
 #  root "members#index"
-  resources :members, only: [:index, :new, :create]
+  resources :members, only: [:index, :new, :create, :show]
 end
