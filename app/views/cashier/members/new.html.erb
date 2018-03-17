@@ -41,7 +41,7 @@
       <br>
 
       <%= f.label :skin_id, "膚質" %>
-      <%= f.collection_select :skin_type_id, SkinType.all, :id, :skin_type, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
       
       <%= f.label :member_code, "會員群組" %>

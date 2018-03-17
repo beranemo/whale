@@ -61,6 +61,8 @@ class Cashier::MembersController < ApplicationController
       :gender,
       :birthday,
       :phone,
+      :fax,
+      :member_code,
       :email,
       :skin_type_id,
       :hair_code,
