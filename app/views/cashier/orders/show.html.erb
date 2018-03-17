@@ -1,0 +1,74 @@
+<div class="container">
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+      
+  <br>
+  <h4>訂單編號：<%= @order.id%></h4>
+  <% if @order.member_id == -1%>
+    顧客編號：非會員
+  <% else%>
+    顧客編號：<%= @order.member_id%>
+  <% end%>
+  <h5>門市經手人員：<%= @order.user.name%></h5>
+  <br>
+
+  <table class="table">
+    <tbody>
+
+      <tr>
+        <th>商品名稱</th>
+        <th>國際條碼</th>
+        <th>規格</th>
+        <th>數量</th>
+        <th>單價</th>
+        <th>折扣價</th>
+        <th>小記</th>
+      </tr>
+      <% @order.order_products.each do |p| %>
+      <tr>
+        <td><%= p.zh_name%></td>
+        <td><%= p.upc%></td>
+        <td><%= p.capacity%></td>
+        <td><%= @order.amount%></td>
+        <td><%= p.price%></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+ 
+  <div class="row">
+    <div class="col-md-3 col-md-offset-3"></div>
+    <div class="col-md-3 col-md-offset-3">
+    <hr>
+    <strong><p class="text-right">應付總金額： <%= number_to_currency(@order.amount, precision: 0)%></p></strong>
+    </div>
+  </div>
+  <br> 
+  <h4>訂購資料</h4>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>訂購日期</th>
+        <th>購買人</th>
+        <th>付款方式</th>
+        <th>取貨方式</th>
+        <th>備註</th>
+      </tr>
+
+      <tr>
+        <td><%= @order.created_at.localtime.to_s(:db)%></td>
+        <td>
+          <% if @order.member_id == -1%>
+            路人 <%= @order.name%>
+          <% else%>
+           會員 <%= @order.name%>
+          <% end%>
+        </td>
+        <td><%= @order.payment_method %></td>
+        <td><%= @order.address%></td>
+        <td><%= @order.remark%></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
