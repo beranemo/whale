@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :new, :create, :edit, :update]
+    resources :orders, only: [:index, :new, :create, :edit, :update , :show]
 
     resources :cart_items, only: [:destroy] do
       member do

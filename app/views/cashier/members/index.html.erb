@@ -22,7 +22,10 @@
           <td><%= member.phone%></td>
           <td><%= member.gender%></td>
           <td><%= member.email%></td>
-          <td><%= member.birthday%></td>
+          <td><%= member.birthday%>
+          <% if member.birthday.month == Date.current.month %>
+            <span class="label label-warning">當月壽星</span>
+          <% end %></td>
           <td><button><%= link_to "成立訂單", new_cashier_order_path(id: member)%></button></td>
           <td><button><%= link_to "詳細資料", cashier_member_path(id: member.id)  %></button></td>
         </tr>

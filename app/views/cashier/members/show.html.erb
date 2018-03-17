@@ -28,7 +28,11 @@
     <%= @member.gender%><br>
     
     <label>生日:</label>
-    <%= @member.birthday%><br>
+    <%= @member.birthday%>
+    <% if @member.birthday.month == Date.current.month %>
+      <span class="label label-warning">當月壽星</span>
+    <% end %>
+    <br>
     
     <label>手機:</label>
     <%= @member.phone%><br>
