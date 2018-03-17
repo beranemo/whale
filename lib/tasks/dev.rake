@@ -26,10 +26,8 @@ namespace :dev do
         member_code: MemberType.all.sample.code
         )
       member.save!
-      # puts "create member #{i}"
     end
-    puts "create fake members"
-    puts "have #{Member.count} guests data"
+    puts "create fake members, have #{Member.count} guests data"
   end
   
   task fake_guests: :environment do
@@ -50,12 +48,17 @@ namespace :dev do
     guests = Guest.all
     
     guests.each do |g|
-      g.created_at = rand_time(7.days.ago)
+      dat = rand_time(7.days.ago).to_s
+      first = dat[0..10]
+      middle = 10 + rand(11)
+      last = dat[13..-1]
+      rand_date = first + middle.to_s + last
+      
+      g.created_at = rand_date
       g.save
     end
     
-    puts "create fake guests"
-    puts "have #{Guest.count} guests data"
+    puts "create fake guests, have #{Guest.count} guests data"
   end
 
   task fake_bulletins: :environment do
@@ -81,8 +84,7 @@ namespace :dev do
       )
     end
     
-    puts "create fake bulletins"
-    puts "have #{Bulletin.count} bulletins data"
+    puts "create fake bulletins, have #{Bulletin.count} bulletins data"
   end  
   
   task fake_all: :environment do
