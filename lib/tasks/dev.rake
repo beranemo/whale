@@ -98,4 +98,12 @@ namespace :dev do
     # Rake::Task['dev:fake_products'].execute
   end
   
+  task fake_all_2: :environment do
+    Rake::Task['db:migrate'].execute
+    Rake::Task['db:seed'].execute
+    Rake::Task['dev:fake_members'].execute
+    Rake::Task['dev:fake_guests'].execute
+    Rake::Task['dev:fake_bulletins'].execute
+  end
+  
 end
