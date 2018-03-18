@@ -8,6 +8,8 @@
       <tr>
         <th class="alncenter">編號</th>
         <th class="alncenter">姓名</th>
+        <th class="alncenter">性別</th>
+        <th class="alncenter">電話</th>
         <th class="alncenter">生日</th>
       </tr>
     </thead>
@@ -16,8 +18,10 @@
     <% @members[true].each do |member| %>       
       <tr>
         <th scope="row" class="alncenter"><%= i %></th>
-        <td class="alnleft"><%= member.name %></td>
-        <td class="alnleft"><%= member.birthday %></td>
+        <td class="alncenter"><%= member.name %></td>
+        <td class="alncenter"><%= member.gender%></td>
+        <td class="alncenter"><%= member.phone %></td>
+        <td class="alncenter"><%= member.birthday %></td>
       </tr>
       <% i = i + 1 %>
     <% end %>

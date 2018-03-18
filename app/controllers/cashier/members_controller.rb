@@ -29,7 +29,7 @@ class Cashier::MembersController < ApplicationController
   end
   
   def birthday_this_month
-    temp = Member.all    
+    temp = Member.all
     @members = temp.group_by{ |t| t.birthday.month == DateTime.now.month }
   end
   
