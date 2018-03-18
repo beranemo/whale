@@ -5,17 +5,21 @@
     
 <!--============== need your help ===================-->
   <form id="search-form">
+    <!--
     <input type="text" id="datepicker">
     <button id="date-search">日期搜尋</button>
+    -->
+    
+    <input type="date" id="date1">
+    <button id="btn1">日期搜尋</button>
   </form>
 
   <br>
   
-  <table class="table">
+  <table class="table" style="display: none;">
     <tbody id="search-list">
 
       <tr>
-        <th>編號</th>
         <th>時間截記</th>
         <th>購買金額</th>
         <th>性別</th>
@@ -24,7 +28,6 @@
         <th>年齡結構</th>
         <th>如何得知茶籽堂</th>
         <th>備註</th>
-        <th>功能</th>
         <th>記錄人員</th>
       </tr>     
 
@@ -33,54 +36,7 @@
 
 <!--============== need your help ===================--> 
 
-    <br>
-    <%= link_to "新增客情" , new_cashier_guest_path , class: "btn btn-primary center-block" %>
-    <br>
-    <div class="col-md-12">
 
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th class="alncenter">編號</th>
-            <th class="alncenter">時間截記</th>
-            <th class="alncenter">購買金額</th>
-            <th class="alncenter">性別</th>
-            <th class="alncenter">客戶類型</th>
-            <th class="alncenter">國籍</th>
-            <th class="alncenter">年齡結構</th>
-            <th class="alncenter">如何得知茶籽堂</th>
-            <th class="alncenter">備註</th>
-            <th class="alncenter">功能</th>
-            <th class="alncenter">記錄人員</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% i = 1 %>
-          <% @guests.each do |guest| %>
-          <tr>
-            <th class="alncenter"><%= i %></th>
-            <td class="alncenter"><%= guest.created_at.localtime.to_s(:db)[0..15] %></td>
-            <td class="alnright"><%= number_to_currency(guest.payment, precision: 0) %></td>
-            <td class="alncenter"><%= guest.gender %></td>
-            <td class="alncenter"><%= guest.guest_type.guest_type %></td>
-            <td class="alncenter"><%= guest.country.country_type %></td>
-            <td><%= guest.age.age_type %></td>
-            <td><%= guest.info_way.news_channel %></td>
-            <td><%= guest.remark %></td> 
-            <td>
-              <% if guest.user == current_user  %>
-                <%= link_to '編輯', edit_cashier_guest_path(guest) %> ｜
-                <%= link_to '刪除', cashier_guest_path(guest), method: :delete, data: {confirm:"確定刪除?"} %>
-              <% end %>
-            </td>
-            <td><%= guest.user.name %></td>
-          </tr>
-          <% i = i + 1 %>
-          <% end %>
-        </tbody>
-      </table>
-
-  </div>
 </div>
 
 
@@ -130,6 +86,7 @@ $("#search-form").on("click","#date-search",function(event){
             $(guest).find(".country").html(data["country"]);
             $(guest).find(".age").html(data["age"]);
             $(guest).find(".info_way").html(data["info_way"]);
+           
           
 
           
@@ -141,13 +98,60 @@ $("#search-form").on("click","#date-search",function(event){
     }
   });  
 });
+  
+  
+  
+$("#btn1").click(function(){
+  event.preventDefault();
+  $(".search-item").remove();//刪除原先的搜尋結果
+  var date = $("#date1").val();
+  console.log(date);
+  $.ajax({
+    url: "/cashier/guests/search_outcome" ,
+    method: "POST",
+    dataType: "json",
+    data: {
+      created_at: date,
+    },
+    success: function(datas){
+      if(datas.length == 0){
+            alert("No data found");
+      }
+      else{
+        $(".table").show();
+
+        for(var i=0; i <datas.length;i++){
+          var data = datas[i];
+          var guest = document.createElement("tr");
+           // console.log(datas);
+            guest.id = data["id"];
+            $(guest).attr("class","search-item");
+            $(guest).html($("#guest-template").html());
+            $(guest).find(".time").html(data["created_at"].substring(0, 10));
+            $(guest).find(".payment").html(data["payment"]);
+            $(guest).find(".gender").html(data["gender"]);
+            $(guest).find(".guest_type").html(data["guest_type"]["guest_type"]);
+            $(guest).find(".country").html(data["country"]["country_type"]);
+            $(guest).find(".age").html(data["age"]["age_type"]);
+            $(guest).find(".info_way").html(data["info_way"]["news_channel"]);
+            $(guest).find(".remark").html(data["remark"]);
+            $(guest).find(".user").html(data["user"]["name"]);
+            
+            $("#search-list").append(guest);
+          //console.log(data["id"]);
+        }
+      }
+    }
+  });  
+ 
+});  
+  
 
 </script>
 
 
 <script type="text/template" id="guest-template">
   
-  <td class="id"></td>
   <td class="time"></td>
   <td class="payment"></td>
   <td class="gender"></td>
@@ -155,6 +159,7 @@ $("#search-form").on("click","#date-search",function(event){
   <td class="country"></td>
   <td class="age"></td>
   <td class="info_way"></td>
-
-  <td ><button class="edit"></button></td>
+  <td class="remark"></td>
+  <td class="user"></td>
+  
 </script>
