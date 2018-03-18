@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     resources :member_types
     resources :guest_types
     resources :countries
+    resources :ages
     
   end
   
