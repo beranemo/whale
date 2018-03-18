@@ -3,7 +3,7 @@ class Cashier::GuestsController < ApplicationController
   before_action :set_guest, only:  [:edit, :update, :destroy]
 
   def index
-    @guests = Guest.all.order(created_at: :desc)
+    # @guests = Guest.all.order(created_at: :desc)
   end
 
   def new
@@ -74,8 +74,10 @@ class Cashier::GuestsController < ApplicationController
 
   def search_outcome
     date = params[:created_at]
-    @guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
-    render :json => @guests
+    #@guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
+    
+    @guests = Guest.where("Date(created_at) = ?", date)
+    render :json => @guests.to_json(:include => [:age, :country, :guest_type, :info_way, :user])
   end
 
   private
