@@ -1,0 +1,49 @@
+    <header id="header">
+      <% if current_user%>
+      <div class="container">
+        <h1>
+          <a href="/">
+            <%= image_tag("header-title.png")  %>
+          </a>
+        </h1>  
+        <ul id="user-box">
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Hi, <%= current_user.name %>
+            <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+             <% if current_user.cashier? %>
+               <li><%= link_to("新增公告", new_cashier_bulletin_path) %></li>
+               <li><%= link_to("更改名稱", edit_user_path(current_user)) %></li>
+               <li><%= link_to("密碼變更", edit_user_registration_path) %></li>
+               <li><%= link_to("個人設定", edit_user_registration_path) %></li>
+               <li><%= link_to("這是功能線1", edit_user_registration_path) %></li>
+               <li><%= link_to("這是功能線2", edit_user_registration_path) %></li>
+               <li><%= link_to('<i class = "glyphicon glyphicon-log-out" aria-hidden="true"></i> Log out'.html_safe, destroy_user_session_path,:method => :delete)%></li>
+             <% end %>
+            </ul>
+          </li>  
+        </ul>
+        <ul id="function-box">
+          <li>
+            <%= link_to('<i class = "glyphicon glyphicon-tag" aria-hidden="true"></i> 一般功能'.html_safe, guest_today_cashier_guests_path)%>
+          </li>
+          <li>
+            <%= link_to('<i class = "glyphicon glyphicon-open" aria-hidden="true"></i> 進階功能'.html_safe, cashier_products_path)%>
+          </li>
+          <li>
+            <%= link_to('<i class = "glyphicon glyphicon-cog" aria-hidden="true"></i> 資料設定'.html_safe, cashier_hair_types_path)%>
+          </li>
+        </ul>
+        <form class="form-inline search-form">
+          <div class="search" id="search">
+            <input type="text" id="phone" placeholder="手機號碼或 email" class="form-control">
+            <button id="phone-search" class="btn btn-default btn-sm">
+              <i class = "glyphicon glyphicon-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <% end %>
+    </header>
