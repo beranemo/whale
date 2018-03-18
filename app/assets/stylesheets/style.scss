@@ -164,3 +164,33 @@ header {
   border-bottom: 1px solid;
   border-color: #C0C0C0;
 } 
+
+/* ============================== 05. tab-advanced =========================*/
+.advanced-tab{
+  margin: 15px 0;
+  text-align: center;
+}
+
+.advanced-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.advanced-tab li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color: #FAF0E6;
+  color: #696969;
+}
+
+.advanced-tab > li.active > a,
+.advanced-tab > li.active > a:hover,
+.advanced-tab > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color: tan;
+  font-weight: bold;
+} 
