@@ -11,14 +11,12 @@
   <body>
    
     <div class="content">
-      <%= render :partial => "shared/navbar" %>
       
-      
-      <%= render :partial => "shared/header" %><!-- header -->
-     
       <%= render :partial => "shared/flash_notice" %>
       
       <%= render :partial => "shared/flash_alert" %>
+            
+      <%= render :partial => "shared/header" %><!-- header -->
        
       <%= yield %>
       

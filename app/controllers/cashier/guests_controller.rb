@@ -15,7 +15,7 @@ class Cashier::GuestsController < ApplicationController
     @guest.user_id = current_user.id
     if @guest.save
       flash[:notice] = "成功新增客情紀錄"
-      redirect_to cashier_guests_path
+      redirect_to guest_today_cashier_guests_path
     else
       flash.now[:alert] = @guest.errors.full_messages.to_sentence
       render :new
@@ -27,8 +27,8 @@ class Cashier::GuestsController < ApplicationController
 
   def update
     if @guest.update(guest_params)
-      flash[:notice] = "成功上傳客情紀錄"
-      redirect_to cashier_guests_path(@guest)
+      flash[:notice] = "成功更新客情紀錄"
+      redirect_to guest_today_cashier_guests_path
     else
       flash.now[:alert] = @guest.errors.full_messages.to_sentence
       render :edit
@@ -37,7 +37,7 @@ class Cashier::GuestsController < ApplicationController
 
   def destroy
     @guest.destroy
-    redirect_to cashier_guests_path
+    redirect_to guest_today_cashier_guests_path
     flash[:alert] = "客情紀錄已刪除"
   end
 
