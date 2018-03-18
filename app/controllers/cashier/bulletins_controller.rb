@@ -51,7 +51,12 @@ class Cashier::BulletinsController < ApplicationController
   private
 
   def bulletin_params
-    params.require(:bulletin).permit(:title, :content, :user_id)
+    params.require(:bulletin).permit(
+      :title, 
+      :content, 
+      :user_id,
+      :start_date,
+      :end_date)
   end
 
   

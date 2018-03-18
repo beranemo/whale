@@ -15,14 +15,12 @@
      
       <% @members.each do |member| %>
          
-        <tr>
-          
+        <tr>         
           <td><%= member.name%></td>
-
           <td><%= member.phone%></td>
           <td><%= member.gender%></td>
           <td><%= member.email%></td>
-          <td><%= member.birthday%>
+          <td class="alnleft"><%= member.birthday%>
           <% if member.birthday.month == Date.current.month %>
             <span class="label label-warning">當月壽星</span>
           <% end %></td>

@@ -4,13 +4,19 @@
   <%= render :partial => "shared/tabs_query_members", :locals => { :selected_item => '快速搜尋' }  %>
   
   <form id="search-form">
+    <!--
     <button id="birthday-search">當月壽星搜尋</button>
     <button id="clear-search">清除搜尋</button>
     <br>
     <br>
+    -->
     <label>快速搜尋</label>
-    <input type="text" id="phone" placeholder="請輸入手機號碼或 email ">
+    <!--
+    <input type="text" id="phone" placeholder="請輸入手機號碼或 email "/>
     <button id="phone-search" class="btn btn-primary btn-sm">搜尋</button>
+    -->
+    <input type="text" id="phone2" placeholder="請輸入手機號碼或 email "/>
+    <button id="phone-search2" class="btn btn-primary btn-sm">搜尋</button>
     <br>
     <br>
   </form>
@@ -32,12 +38,67 @@
 </div>
 
 <script type="text/javascript">
+ 
   
+  $("#phone-search2").click(function(){
+    
+    event.preventDefault();
+    $(".search-item").remove();//刪除原先的搜尋結果
+    
+    var search_word = $("#phone2").val();
+    if(search_word.length < 3)//至少要輸入3碼才能搜尋
+    {
+      //alert(phone2);
+      //alert(phone2.length);
+      alert("錯誤!輸入長度不足3碼");
+    }else{
+      $.ajax({
+        url: "/cashier/members/search_outcome" ,
+        method: "POST",
+        dataType: "json",
+        data: {
+          phone: search_word,
+        },
+        success: function(datas){
+          if(datas.length == 0){
+            alert("No data found");
+          }
+          else{
+            for( var i = 0 ; i < datas.length ; i++ ){
+              var member = document.createElement("tr");
+              var data = datas[i];
+              
+              member.id = data["id"];
+              $(member).attr("class","search-item");
+              $(member).html($("#member-template").html());
+              $(member).find(".name").html(data["name"]);
+              $(member).find(".phone").html(data["phone"]);
+              $(member).find(".gender").html(data["gender"]);
+              $(member).find(".email").html(data["email"]);
+              $(member).find(".birthday").html(data["birthday"]);
+            
+              var url = document.createElement("a");
+              url.href = "/cashier/orders/new?id=" +member.id;
+              $(url).html("成立訂單");
+              $(member).find(".checkout").html(url);
+          
+              $("#search-list").append(member);
+              console.log(data["name"]);
+            }
+          }
+        }
+      });
+    }
+  });
+  
+  
+  // 我這邊在測試有錯找不出原因，改了一下寫法
   $("#search-form").on("click","#phone-search",function(event){
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果
+    
     var phone = $("#phone").val();
-    if(phone.length <3)//至少要輸入3碼才能搜尋
+    if(phone.length < 3)//至少要輸入3碼才能搜尋
     {
       alert("錯誤!輸入長度不足3碼");
     }
