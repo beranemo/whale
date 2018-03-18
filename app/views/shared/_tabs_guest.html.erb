@@ -1,5 +1,5 @@
-<div class="alncenter">
-  <%= link_to '客情紀錄', cashier_guests_path %> ｜ 
-  <%= link_to '今日客情', guest_today_cashier_guests_path %> ｜ 
-  <%= link_to '今日客情分析', guest_analysis_cashier_guests_path %>
-</div>
+<ul class="guest-tab clearfix">
+  <li role="presentation" class="<%= 'active' if selected_item == '客情紀錄' %>"><%= link_to '客情紀錄', cashier_guests_path %></li>
+  <li role="presentation" class="<%= 'active' if selected_item == '今日客情' %>"><%= link_to '今日客情', guest_today_cashier_guests_path %></li>
+  <li role="presentation" class="<%= 'active' if selected_item == '今日客情分析' %>"><%= link_to '今日客情分析', guest_analysis_cashier_guests_path %></li>
+</ul>

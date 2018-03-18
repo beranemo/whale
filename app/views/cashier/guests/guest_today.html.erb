@@ -1,11 +1,8 @@
 <div class="container">
   
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
-  
-  <br>
-  <%= render :partial => "shared/tabs_guest" %>
+  <%= render :partial => "shared/tabs_guest", :locals => { :selected_item => '今日客情' } %>
 
-  <br>
   <%= link_to "新增客情", new_cashier_guest_path, class: "btn btn-primary center-block" %>
   <br>
   <div class="col-md-12">

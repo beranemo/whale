@@ -1,11 +1,11 @@
-  <ul class="nav nav-tabs">
-    <li role="presentation" class="<%= 'active' if selected_item == '所有商品' %>">
-      <%= link_to "所有商品", cashier_products_path %>
-    </li>
-    <li role="presentation" class="<%= 'active' if selected_item == '上傳商品' %>">
-      <%= link_to "上傳商品", new_cashier_product_path %>
-    </li>
-    <li role="presentation" class="<%= 'active' if selected_item == '商品管理' %>">
-      <%= link_to "商品管理", manage_cashier_products_path %>
-    </li>
-  </ul>
+<ul class="advanced-tab">
+  <li role="presentation" class="<%= 'active' if selected_item == '所有商品' %>">
+    <%= link_to "所有商品", cashier_products_path %>
+  </li>
+  <li role="presentation" class="<%= 'active' if selected_item == '上傳商品' %>">
+    <%= link_to "上傳商品", new_cashier_product_path %>
+  </li>
+  <li role="presentation" class="<%= 'active' if selected_item == '商品管理' %>">
+    <%= link_to "商品管理", manage_cashier_products_path %>
+  </li>
+</ul>

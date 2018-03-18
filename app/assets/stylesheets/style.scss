@@ -17,3 +17,210 @@ th {
 td {
   text-align: center; 
 }
+
+a {
+  text-decoration: none !important;
+  display: inline-block;
+  color:#696969;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+/* ============================== 01. footer - bottom method =========================*/
+html {
+height: 100%;
+}
+
+body {
+min-height: 100%;
+display: flex;
+flex-direction: column;
+}
+
+.content {
+flex: 1;
+}
+/* ============================== 01. footer =========================*/
+footer {
+  padding: 40px 0;
+  background-color: #f4f4f4;
+  color: #000;
+  text-align: center;
+}
+
+.footer-content p {
+  line-height: 22px;
+}
+
+.footer-content img {
+  width:235px;
+  height:31px;
+  margin-bottom:10px;
+}
+
+.footer-social-icon img {
+  width:40px;
+  height:40px;
+  margin:0 5px;
+}
+
+/* ============================== 02. header =========================*/
+header {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+#header #function-box {
+  position: absolute;
+  right: 0;
+  top: 140px;
+  margin-right:150px;
+}
+
+#function-box li{
+  display: inline-block;
+  margin:0 8px;
+}
+
+#header #user-box {
+  position: absolute;
+  right: 0;
+  top: 110px;
+  margin-right:150px;
+}
+
+#header #search {
+  position: absolute;
+  top: 180px;
+  display: block;
+  overflow: hidden;
+  right: 0px;
+  margin-right:150px;
+}
+
+/* ============================== 03. tab =========================*/
+.nav-pills{
+  margin: 15px 0;
+  text-align: center;
+}
+
+.nav-pills li{
+  float: none;
+  display: inline-block;
+}
+
+.nav-pills li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color:#f5f5f5;
+  color: #696969;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color:#708090;
+  font-weight: bold;
+} 
+
+/* ============================== 04. guest-tab =========================*/
+.guest-tab{
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.guest-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.guest-tab li a{
+  margin: 0;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: 1px solid;
+  border-color: #C0C0C0;
+  color: #696969;
+}
+
+.guest-tab > li.active > a,
+.guest-tab > li.active > a:hover,
+.guest-tab > li.active > a:focus{
+  color: white;
+  background-color: #C0C0C0;  
+  border-bottom: 1px solid;
+  border-color: #C0C0C0;
+} 
+
+/* ============================== 05. tab-advanced =========================*/
+.advanced-tab{
+  margin: 15px 0;
+  text-align: center;
+}
+
+.advanced-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.advanced-tab li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color: #FAF0E6;
+  color: #696969;
+}
+
+.advanced-tab > li.active > a,
+.advanced-tab > li.active > a:hover,
+.advanced-tab > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color: tan;
+  font-weight: bold;
+} 
+
+/* ============================== 06. tab-setting =========================*/
+.setting-tab{
+  margin: 15px 0;
+  text-align: center;
+}
+
+.setting-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.setting-tab li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color:   #d1e9e9;
+  color: #696969;
+}
+
+.setting-tab > li.active > a,
+.setting-tab > li.active > a:hover,
+.setting-tab > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color: darkcyan;
+  font-weight: bold;
+}
