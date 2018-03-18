@@ -194,3 +194,33 @@ header {
   border-color: tan;
   font-weight: bold;
 } 
+
+/* ============================== 06. tab-setting =========================*/
+.setting-tab{
+  margin: 15px 0;
+  text-align: center;
+}
+
+.setting-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.setting-tab li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color:   #d1e9e9;
+  color: #696969;
+}
+
+.setting-tab > li.active > a,
+.setting-tab > li.active > a:hover,
+.setting-tab > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color: darkcyan;
+  font-weight: bold;
+}
