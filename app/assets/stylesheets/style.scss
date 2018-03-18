@@ -21,6 +21,17 @@ td {
 a {
   text-decoration: none !important;
   display: inline-block;
+  color:#696969;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
 }
 /* ============================== 01. footer - bottom method =========================*/
 html {
@@ -60,6 +71,37 @@ footer {
   margin:0 5px;
 }
 
-.footer-social-icon ul {
-  list-style: none;
+/* ============================== 02. header =========================*/
+header {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+#header #function-box {
+  position: absolute;
+  right: 0;
+  top: 140px;
+  margin-right:150px;
+}
+
+#function-box li{
+  display: inline-block;
+  margin:0 8px;
+}
+
+#header #user-box {
+  position: absolute;
+  right: 0;
+  top: 110px;
+  margin-right:150px;
+}
+
+#header #search {
+  position: absolute;
+  top: 180px;
+  display: block;
+  overflow: hidden;
+  right: 0px;
+  margin-right:150px;
 }
