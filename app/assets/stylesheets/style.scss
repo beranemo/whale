@@ -135,3 +135,32 @@ header {
   border-color:#708090;
   font-weight: bold;
 } 
+
+/* ============================== 04. guest-tab =========================*/
+.guest-tab{
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.guest-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.guest-tab li a{
+  margin: 0;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: 1px solid;
+  border-color: #C0C0C0;
+  color: #696969;
+}
+
+.guest-tab > li.active > a,
+.guest-tab > li.active > a:hover,
+.guest-tab > li.active > a:focus{
+  color: white;
+  background-color: #C0C0C0;  
+  border-bottom: 1px solid;
+  border-color: #C0C0C0;
+} 

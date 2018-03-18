@@ -1,13 +1,7 @@
 <div class="container">
   
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
-
-  <br>
-  <%= render :partial => "shared/tabs_guest" %>
-
-    <br>
-    <h3 class="alncenter">今日客情分析</h3>
-    <hr>
+  <%= render :partial => "shared/tabs_guest", :locals => { :selected_item => '今日客情分析' } %>
     <div>
       <div class="col-xs-6 col-sm-4">
         <blockquote>

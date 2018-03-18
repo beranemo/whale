@@ -1,9 +1,7 @@
 <div class="container">
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
-  
-  <br>
-  <%= render :partial => "shared/tabs_guest" %>
+  <%= render :partial => "shared/tabs_guest", :locals => { :selected_item => '客情紀錄' } %>
     
 <!--============== need your help ===================-->
   <form id="search-form">
