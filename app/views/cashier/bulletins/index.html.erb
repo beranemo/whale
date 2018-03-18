@@ -1,10 +1,10 @@
 <div class="container">
 
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '最新消息' } %>
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '最新活動' } %>
   
   <br />
   
-  <%= link_to "新增最新消息" , new_cashier_bulletin_path , class: "btn btn-primary center-block" %>
+  <%= link_to "新增活動內容" , new_cashier_bulletin_path , class: "btn btn-primary center-block" %>
     
   <br />
   
@@ -12,7 +12,8 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>時間</th>
+          <th>起始日期</th>
+          <th>結束日期</th>
           <th>標題</th>
           <th>內容</th>
           <th>發布者</th>
@@ -22,11 +23,10 @@
       <tbody>
         <% @bulletins.each do |bulletin| %>
           <tr>
-            <td><%= bulletin.created_at.localtime.to_s(:db)[0..9] %></td>
-            <td>
-              <%= link_to cashier_bulletin_path(bulletin) do %><%= bulletin.title %><% end %>
-            </td>
-            <td><%= bulletin.content %></td>
+            <td><%= bulletin.start_date %></td>
+            <td><%= bulletin.end_date %></td>
+            <td><%= bulletin.title %></td>
+            <td class="alnleft"><%= bulletin.content %></td>
             <td><%= bulletin.user.name %></td>
             <td>
               <%= link_to "編輯", edit_cashier_bulletin_path(bulletin)%>  
