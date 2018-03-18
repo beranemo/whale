@@ -1,11 +1,8 @@
 <div class="container">
 
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '搜尋會員' } %>
-  <br>
+  <%= render :partial => "shared/tabs_query_members", :locals => { :selected_item => '快速搜尋' }  %>
   
-  <%= render :partial => "shared/tabs_query_members" %>
-
-  <br>
   <form id="search-form">
     <button id="birthday-search">當月壽星搜尋</button>
     <button id="clear-search">清除搜尋</button>

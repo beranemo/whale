@@ -1,5 +1,5 @@
-<div class="alncenter">
-  <%= link_to '快速搜尋', search_cashier_members_path %> ｜ 
-  <%= link_to '當月壽星清單', birthday_this_month_cashier_members_path %> ｜ 
-  <%= link_to '下月壽星清單', birthday_next_month_cashier_members_path %>
-</div>
+<ul class="guest-tab clearfix">
+  <li role="presentation" class="<%= 'active' if selected_item == '快速搜尋' %>"><%= link_to '快速搜尋', search_cashier_members_path %></li>
+  <li role="presentation" class="<%= 'active' if selected_item == '當月壽星清單' %>"><%= link_to '當月壽星清單', birthday_this_month_cashier_members_path %></li>
+  <li role="presentation" class="<%= 'active' if selected_item == '下月壽星清單' %>"><%= link_to '下月壽星清單', birthday_next_month_cashier_members_path %></li>
+</ul>
