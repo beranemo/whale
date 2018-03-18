@@ -105,3 +105,33 @@ header {
   right: 0px;
   margin-right:150px;
 }
+
+/* ============================== 03. tab =========================*/
+.nav-pills{
+  margin: 15px 0;
+  text-align: center;
+}
+
+.nav-pills li{
+  float: none;
+  display: inline-block;
+}
+
+.nav-pills li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color:#f5f5f5;
+  color: #696969;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color:#708090;
+  font-weight: bold;
+} 
