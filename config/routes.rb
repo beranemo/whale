@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :skin_types
     resources :member_types
     resources :guest_types
+    resources :countries
     
   end
   
