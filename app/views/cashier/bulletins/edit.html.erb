@@ -3,6 +3,14 @@
 <div class="form-group">
 
   <%= form_for [:cashier, @bulletin] do |f| %>
+    <%= f.label :start_date, "起始日期" %>
+    <%= f.date_select :start_date, class: "form-control" %>
+    <br>
+
+    <%= f.label :end_date, "結束日期" %>
+    <%= f.date_select :end_date, class: "form-control" %>
+    <br>
+
     <%= f.label :title, "標題" %>
     <%= f.text_field :title, class: "form-control" %>
     <br>
