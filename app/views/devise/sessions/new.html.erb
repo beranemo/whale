@@ -1,7 +1,8 @@
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 <div class="container col-md-4 col-md-offset-4">
-  <div class="panel panel-default">
+  <div class="login-form">
     <div class="panel-heading">
-    <h3 class="panel-title text-center">歡迎使用CRM平台</h3>
+    <h2 class="panel-title text-center">歡迎使用CRM平台</h2>
     </div>
     <div class="panel-body">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -29,6 +30,5 @@
 
     </div>
   </div>
-  
-  <%= link_to "前往會員申請頁面", new_member_path %>
+    <%= link_to '<i class = "glyphicon glyphicon-play" aria-hidden="true"></i> 前往會員申請畫面'.html_safe,new_member_path %>
 </div>

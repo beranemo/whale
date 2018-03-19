@@ -79,17 +79,17 @@ class Cashier::GuestsController < ApplicationController
   end
 
   def search_outcome
-    date = params[:created_at]
+    date = Date.parse(params[:created_at]).to_time
     #@guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
     
-    @guests = Guest.where("Date(created_at) = ?", date)
+    @guests = Guest.where("DateTime(created_at) BETWEEN ? AND ?", date.beginning_of_day, date.end_of_day)
     render :json => @guests.to_json(:include => [:age, :country, :guest_type, :info_way, :user])
   end
 
   private
 
   def guest_params
-    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id)
+    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id, :remark)
   end
 
   def set_guest
