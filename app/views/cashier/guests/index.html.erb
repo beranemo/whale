@@ -128,7 +128,7 @@ $("#btn1").click(function(){
             $(guest).attr("class","search-item");
             $(guest).html($("#guest-template").html());
             $(guest).find(".time").html(data["created_at"].substring(0, 10));
-            $(guest).find(".payment").html(data["payment"]);
+            $(guest).find(".payment").html(data["payment"].replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $(guest).find(".gender").html(data["gender"]);
             $(guest).find(".guest_type").html(data["guest_type"]["guest_type"]);
             $(guest).find(".country").html(data["country"]["country_type"]);
@@ -153,7 +153,7 @@ $("#btn1").click(function(){
 <script type="text/template" id="guest-template">
   
   <td class="time"></td>
-  <td class="payment"></td>
+  <td class="payment" style="text-align: right"></td>
   <td class="gender"></td>
   <td class="guest_type"></td>
   <td class="country"></td>
