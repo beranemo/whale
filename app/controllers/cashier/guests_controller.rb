@@ -83,7 +83,7 @@ class Cashier::GuestsController < ApplicationController
   private
 
   def guest_params
-    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id)
+    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id, :remark)
   end
 
   def set_guest
