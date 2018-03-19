@@ -123,17 +123,17 @@
     
   <br>
   <h2>商品列表</h2>
-  <table class="table">
-    <tbody class="product-list">
+  <table class="table" data-search="true" data-toggle="table">
+    <thead>
       <tr>
         <th>類型</th>
         <th>商品名稱</th>
-        <th>定價</th>
-        <th>國際條碼</th>        
-       
+        <th data-sortable="true" data-field="price">定價</th>
+        <th>國際條碼</th>       
         <th>#</th>
       </tr>
-    
+    </thead>
+    <tbody class="product-list">    
     <% @products.each do |product| %>
       <tr id="<%= product.id%>">
         <td><%=product.category%></td>
@@ -150,6 +150,15 @@
   </table>  
 
 </div>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
 
 <script type="text/javascript">
   
