@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       collection do
         post :import
         get :manage
+        get :removed_list
       end
     end
 

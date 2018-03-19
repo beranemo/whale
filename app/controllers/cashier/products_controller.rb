@@ -23,6 +23,9 @@ class Cashier::ProductsController < ApplicationController
     
   end
   
+  def removed_list
+  end
+  
   def manage
     @products = Product.all
   end
