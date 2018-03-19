@@ -4,18 +4,21 @@
       
   <br>
   <h2>訂單資訊</h2>
-  <table class="table table-hover">
-    <tbody>
+  <table class="table table-hover" data-search="true" data-toggle="table" id="table" >
+    <thead>
       <tr>
-        <th>訂購日期</th>
-        <th>編號</th>
+        <th data-sortable="true" data-field="created_at">訂購日期</th>
+        <th data-sortable="true" data-field="id">編號</th>
         <th>結帳人員</th>
         <th>顧客編號</th>
         <th>付款方式</th>
         <th>取貨方式</th>
-        <th>總金額</th>
+        <th data-sortable="true" data-field="amount">總金額</th>
         <th>功能</th>
       </tr>
+    </thead>
+    <tbody>
+      
       <% @orders.each do |order|%>
       <tr>
         <td><%= order.created_at.localtime.to_s(:db)%></td>
@@ -38,3 +41,16 @@
     </tbody>
   </table>
 </div>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+  
+</script>
