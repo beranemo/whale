@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     resources :products, only: [:new, :index, :edit, :update] do
       member do
         post :add_to_cart
+        post :remove
+        post :listing
       end
       collection do
         post :barcode_to_cart

@@ -2,7 +2,42 @@
   <%= render :partial => "shared/tabs2", :locals => { :selected_item => '停用管理' } %>
 
 
-<h1>這是可以編輯商品是否停用的頁面</h1>
-
+  <table class="table">
+    <tbody >
+      <tr>
+        <th>分類</th>
+        <th>中文名稱</th>
+        <th>英文名稱</th>
+        <th>規格</th>
+        <th>價錢</th>
+        <th>國際通用碼</th>
+        <th>狀態</th>
+        <th>功能</th>
+        
+      </tr>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.category %></td>
+          <td>
+            <%= link_to  edit_cashier_product_path(product) do %>
+            <%= product.zh_name %>
+            <% end %>
+          </td>
+          <td><%= product.en_name %></td>
+          <td><%= product.capacity %></td>
+          <td><%= product.price %></td>
+          <td><%= product.upc %></td>
+          <td><% if product.status == "removed" %><span class="label label-danger">停用中</span><% end %></td>
+          <td>
+          <% if product.status == "removed" %>
+            <%= link_to "取消停用", listing_cashier_product_path(product), method: :post %>
+          <% else %>
+            <%= link_to "停用", remove_cashier_product_path(product), method: :post %>
+          <% end %>  
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>  
 
 </div>

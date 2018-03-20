@@ -45,6 +45,23 @@ class Cashier::ProductsController < ApplicationController
   end
   
   def removed_list
+    @products = Product.all
+  end
+  
+  def remove
+    @product = Product.find(params[:id])
+    @product.status = "removed"
+    @product.save
+    flash[:notice] = "商品停用成功"
+    redirect_back(fallback_location: root_path)  # 導回上一頁
+  end
+  
+  def listing
+    @product = Product.find(params[:id])
+    @product.status = "listing"
+    @product.save
+    flash[:notice] = "商品上架成功"
+    redirect_back(fallback_location: root_path)  # 導回上一頁
   end
   
   def manage
