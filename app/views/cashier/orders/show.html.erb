@@ -1,12 +1,17 @@
 <div class="container">
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
-      
+  
   <br>
   <h4>訂單編號：<%= @order.id%></h4>
   <% if @order.member_id == -1%>
     顧客編號：非會員
   <% else%>
     顧客編號：<%= @order.member_id%>
+  <% if @orders.count >= 2 %>
+    <span class="label label-success">回購</span>
+  <% else%>
+    <span class="label label-primary">首購</span>
+  <% end%>
   <% end%>
   <h5>門市經手人員：<%= @order.user.name%></h5>
   <br>

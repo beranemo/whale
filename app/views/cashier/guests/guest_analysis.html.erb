@@ -147,10 +147,12 @@
                 <tr>
                   <th>總客數</th>
                   <th>總銷售</th>
+                  <th>客單價</th>
                 </tr>
                 <tr>
                   <td class="alncenter"><%= @guests.count %></td>
                   <td class="alncenter"><%= number_to_currency(@total_payment, precision: 0) %></td>
+                  <td class="alncenter"><%= number_to_currency(Float(@total_payment)/(@guests.count), precision: 0) %></td>
                 </tr>
               </tbody>
             </table>

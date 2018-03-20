@@ -35,7 +35,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :new, :create, :edit, :update , :show]
+    resources :orders, only: [:index, :new, :create, :edit, :update , :show] do
+      collection do
+        get :sales_analysis_day
+        get :sales_analysis_month
+      end
+    end
 
     resources :cart_items, only: [:destroy] do
       member do

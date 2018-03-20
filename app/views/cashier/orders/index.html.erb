@@ -29,6 +29,11 @@
             非會員
           <% else%>
             <%= order.member_id%>
+            <% if @orders.where(member_id: order.member_id).count >= 2 %>
+              <span class="label label-success">回購</span>
+            <% else%>
+              <span class="label label-primary">首購</span>
+            <% end%>
           <% end%>
         </td>
         <td><%= order.payment_method%></td>
