@@ -41,7 +41,7 @@ class Cashier::CartItemsController < ApplicationController
     puts @cart_item.discount_method.content
     puts @o_price
     puts @price
-    render :json => {:price => @price -@o_price }
+    render :json => {:price => @price -@o_price, :id => @cart_item.product_id, discount_off: params[:discount]}
   end
 
   def destroy
