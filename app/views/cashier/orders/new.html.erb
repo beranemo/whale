@@ -33,9 +33,9 @@
         <th>類型</th>
         <th>商品名稱</th>          
         <th>國際條碼</th>
-        <th>定價</th>        
+        <th>定價</th>
+        <th>折扣後金額</th>
         <th>購買數量</th>
-        <th>商品活動</th>
         <th>打折方式</th>
         <th>#</th>
       </tr>        
@@ -54,16 +54,12 @@
             <input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">
             <% end %>
           </td>                  
+          <td><%= item.calculate %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>  
-          <td>
-            <% if item.product.discount%>
-              <%=item.product.discount.bulletin.title%>
-            <% end %>
-          </td>
           <td>
             <%= form_for [:cashier, item] do |f| %>
             <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
