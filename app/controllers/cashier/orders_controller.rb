@@ -6,6 +6,7 @@ class Cashier::OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @orders = Order.where(member_id: @order.member_id)
   end
 
   def edit

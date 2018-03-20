@@ -29,7 +29,7 @@
             非會員
           <% else%>
             <%= order.member_id%>
-            <% if order.member.orders.count >= 2 %>
+            <% if @orders.where(member_id: order.member_id).count >= 2 %>
               <span class="label label-success">回購</span>
             <% else%>
               <span class="label label-primary">首購</span>

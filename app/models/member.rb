@@ -31,5 +31,4 @@ class Member < ApplicationRecord
   belongs_to :skin_type
   belongs_to :hair_type, foreign_key: "hair_code", primary_key: "code"
   belongs_to :member_type, foreign_key: "member_code", primary_key: "code", optional: true
-  has_many :orders
 end

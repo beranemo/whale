@@ -7,7 +7,7 @@
     顧客編號：非會員
   <% else%>
     顧客編號：<%= @order.member_id%>
-  <% if @order.member.orders.count >= 2 %>
+  <% if @orders.count >= 2 %>
     <span class="label label-success">回購</span>
   <% else%>
     <span class="label label-primary">首購</span>

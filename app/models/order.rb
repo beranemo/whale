@@ -20,5 +20,4 @@ class Order < ApplicationRecord
   belongs_to :user
   validates_presence_of :member_id, :payment_method, :address
   has_many :order_products, through: :order_items, source: :product
-  belongs_to :member
 end
