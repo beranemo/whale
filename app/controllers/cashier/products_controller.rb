@@ -29,7 +29,9 @@ class Cashier::ProductsController < ApplicationController
       @bulletin = Bulletin.new
     end
 
-    render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name, :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,:bulletin => @bulletin.title}
+    render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
+                    :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
+                    :bulletin => @bulletin.title, :discount_method_code => discount_method.code}
   end
   
   def index
