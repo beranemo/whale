@@ -44,11 +44,11 @@
       <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
       
-      <%= f.label :member_code, "會員群組" %>
+      <%= f.label :member_code, "會員群組(內部人員註記用)" %>
       <%= f.collection_select :member_code, MemberType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
-      <%= f.label :remark, "備註" %>
+      <%= f.label :remark, "備註(內部人員註記用)" %>
       <%= f.text_area :remark, class: "form-control" %>
       <br>
 

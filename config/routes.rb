@@ -22,6 +22,10 @@ Rails.application.routes.draw do
         post :birthday_search
       end
       
+      member do
+        get :create_successfully
+      end
+      
     end
     resources :products, only: [:new, :index, :edit, :update] do
       member do
