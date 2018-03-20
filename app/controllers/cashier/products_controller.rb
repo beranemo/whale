@@ -16,7 +16,11 @@ class Cashier::ProductsController < ApplicationController
   
   def barcode_to_cart
     @product = Product.find_by(upc: params[:barcode])
+    puts @product.upc
     if @product == nil
+      render :json => @product
+    elsif @product.status == "removed" # 如果是停用不要加
+      @product = nil
       render :json => @product
     else
       @cart_item = current_cart.cart_items.build(product_id: @product.id)

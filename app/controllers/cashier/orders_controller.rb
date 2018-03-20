@@ -19,7 +19,7 @@ class Cashier::OrdersController < ApplicationController
   end
 
   def new
-    @order =Order.new(member_id: params[:id])
+    @order = Order.new(member_id: params[:id])
     @order.amount = 0
     @products = Product.all 
     @cart_items = current_cart.cart_items.all
