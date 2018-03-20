@@ -48,10 +48,10 @@
             <%=item.product.price%>
             <% if  item.discount_method_code == "B"%> 
             *
-            <input type="text" name="" size="3" value="<%=item.discount_off%>"  class="discount_off" onkeypress="return setDiscount(event)">
+            <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setDiscount(event)">
             %
             <% else %>
-            <input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">
+            <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
             <% end %>
           </td>                  
           <td class="d-price"><%= item.calculate %></td>
@@ -69,7 +69,7 @@
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
 
-          <% @order.amount+= item.calculate%>
+          <% @order.amount += item.calculate %>
         </tr>
       <% end %>
     </tbody>
@@ -80,7 +80,7 @@
       <h5>總金額</h5>
     </div>  
     <div class="col-md-2 col-md-offset-5 text-right">
-      <h5 id="total">$ <%= @order.amount%></h5>
+      <h5 id="total">$ <%= @order.amount %></h5>
       
     </div>  
   </div>
@@ -91,9 +91,9 @@
         
         
         <%= f.label :payment_method, "取貨方式" %>
-        <%= f.radio_button :address ,"local",class:"local-radio"%>
+        <%= f.radio_button :address ,"local", class:"local-radio" %>
         <%= f.label :address, "自取" %>
-        <%= f.radio_button :address ," ",class:"ship-radio"%>
+        <%= f.radio_button :address ," ",class:"ship-radio" %>
         <%= f.label :address, "宅配" %><br>
         <%= f.label :name, "姓名:" %>
         <%= f.text_field :name %><br>
@@ -102,18 +102,18 @@
         <%= f.text_field :phone %><br>
         
         <%= f.label :address, "地址:" %>
-        <%= f.text_field :address ,class:"input-address form-control"%><br>
+        <%= f.text_field :address ,class:"input-address form-control" %><br>
 
         <%= f.label :payment_method, "付款方式:" %>
-        <%= f.radio_button :payment_method ,"付現"%>
+        <%= f.radio_button :payment_method ,"付現" %>
         <%= f.label :payment_method, "付現" %>
-        <%= f.radio_button :payment_method ,"刷卡"%>
+        <%= f.radio_button :payment_method ,"刷卡" %>
         <%= f.label :payment_method, "刷卡" %>
         <br>
         
         
         <%= f.label :remark ,"備註"%>
-        <%= f.text_area :remark, class:"form-control"%>
+        <%= f.text_area :remark, class:"form-control" %>
         <br>
 
         <%= f.hidden_field :member_id, :value => @member.id %>
@@ -141,6 +141,7 @@
     </thead>
     <tbody class="product-list">    
     <% @products.each do |product| %>
+      <% if product.status != "removed" %>
       <tr id="<%= product.id%>">
         <td><%=product.category%></td>
         <td><%=product.zh_name%></td>
@@ -149,6 +150,7 @@
     
         <td><button class="add_to_cart">購買</button></td>
       </tr>
+      <% end %>
     <% end %>  
         
       
@@ -183,7 +185,7 @@
     var id  = event.target.parentNode.parentNode.id;
     console.log(id);
     $.ajax({
-      url: "/cashier/products/" + id+"/add_to_cart",
+      url: "/cashier/products/" + id + "/add_to_cart",
       method: "POST",
       dataType: "json",      
       success: function(data){        

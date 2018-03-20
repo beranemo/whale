@@ -17,11 +17,15 @@ class Cashier::MembersController < ApplicationController
     @member = Member.new(member_params)
     if @member.save!
       flash[:notice] = "成功新增會員"
-      redirect_to cashier_root_path
+      redirect_to create_successfully_cashier_member_path(@member)
     else
       flash[:alert] = @member.errors.full_messages.to_sentence
       render :new
     end
+  end
+  
+  def create_successfully
+    @member = Member.find(params[:id])
   end
 
   def search

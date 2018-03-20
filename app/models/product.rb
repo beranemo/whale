@@ -53,7 +53,8 @@ class Product < ApplicationRecord
       o_quantity = product.quantity
       product.attributes = row.to_hash
       product.stock_records.build(quantity: product.quantity)
-      product.quantity += o_quantity 
+      product.quantity += o_quantity
+      product.status = "listing" 
       product.save!
     end
   end

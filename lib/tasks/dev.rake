@@ -15,10 +15,12 @@ namespace :dev do
     50.times do |i|
       phone_number = 10000000 + rand(80000000)
       phone_string = '09' + phone_number.to_s
+      fax_string = '0' + phone_number.to_s.reverse
       member = Member.new(
         name: FFaker::Name::first_name,
         gender: FFaker::GenderCN.random,
         phone: phone_string,
+        fax: fax_string,
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
         skin_type: SkinType.all.sample,
@@ -64,31 +66,59 @@ namespace :dev do
   task fake_bulletins: :environment do
     Bulletin.destroy_all
     
-    3.times do |i|
-      Bulletin.create!(
-        start_date: rand_time(7.days.ago).to_s,
-        end_date: Date.today,
-        title: "洗手露半價活動",
-        content: "髮身系列任兩件，享洗手露(330mL)半價優惠",
-        user: User.all.sample
-      )
-    end
+    Bulletin.create!(
+      start_date: rand_time(7.days.ago).to_s,
+      end_date: Date.today,
+      title: "洗手露半價活動",
+      content: "髮身系列任兩件，享洗手露(330mL)半價優惠",
+      user: User.all.sample
+    )
     
-    3.times do |i|
-      Bulletin.create!(
-        start_date: FFaker::Time.date,
-        end_date: Date.today,
-        title: "青蜜乳液活動",
-        content: "330mL青蜜滋養乳液＋髮或身系列330mL任選，贈50mL荷葉沐浴露（價值130元）",
-        user: User.all.sample
-      )
-    end
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "青蜜乳液活動",
+      content: "330mL青蜜滋養乳液＋髮或身系列330mL任選，贈50mL荷葉沐浴露（價值130元）",
+      user: User.all.sample
+    )
+    
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "碗盤人促銷組合",
+      content: "碗盤優惠組（1瓶550mL+2包補充包）",
+      user: User.all.sample
+    )
+    
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "護手唇系列優惠",
+      content: "手唇系列買2件贈50mL洗髮露（價值130元，桑白皮洗髮露）",
+      user: User.all.sample
+    )
+    
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "護手唇系列優惠",
+      content: "手唇系列買4贈1（價值350元）（擇價低者贈，不適用滿額禮）",
+      user: User.all.sample
+    )
     
     Bulletin.create!(
       start_date: FFaker::Time.date,
       end_date: Date.today,
       title: "隨單贈",
       content: "贈品牌季刊乙本",
+      user: User.all.sample
+    )
+    
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "滿額禮",
+      content: "滿1500, 贈禮輕情重體驗組",
       user: User.all.sample
     )
     
