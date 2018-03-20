@@ -43,53 +43,6 @@
 <script>
 
 
-$("#search-form").on("click","#date-search",function(event){
-  event.preventDefault();
-  $(".search-item").remove();//刪除原先的搜尋結果
-    var date = $("#datepicker").val();
-    console.log(date);
-  $.ajax({
-    url: "/cashier/guests/search_outcome" ,
-    method: "POST",
-    dataType: "json",
-    data: {
-      created_at: date,
-    },
-    success: function(datas){
-      if(datas.length == 0){
-            alert("No data fund");
-      }
-      else{
-        for(var i=0; i <datas.length;i++){
-          var data = datas[i];
-          var guest = document.createElement("tr");
-          
-          
-          
-            guest.id = data["id"];
-            $(guest).attr("class","search-item");
-            <% id = %>
-            $(guest).html($("#guest-template").html());
-            $(guest).find(".id").html(data["id"]);
-            $(guest).find(".created_at").html(data["time"]);
-            $(guest).find(".payment").html(data["payment"]);
-            $(guest).find(".gender").html(data["gender"]);
-            $(guest).find(".guest_type").html(data["guest_type"]);
-            $(guest).find(".country").html(data["country"]);
-            $(guest).find(".age").html(data["age"]);
-            $(guest).find(".info_way").html(data["info_way"]);
-           
-          
-
-          
-          
-          $("#search-list").append(guest);
-          console.log(data["id"]);
-        }
-      }
-    }
-  });  
-});
   
   
   
@@ -111,10 +64,17 @@ $("#btn1").click(function(){
       }
       else{
         $(".table").show();
+          // pct
+          var pct = document.createElement("p");
+          pct.className = "alnright";
+          var total_guest = datas.length +1 ;
+          var total_payment = 0 ;
+          var pct_value = 0;    
 
         for(var i=0; i <datas.length;i++){
           var data = datas[i];
           var guest = document.createElement("tr");
+            total_payment += Number(data["payment"]);
            // console.log(datas);
             guest.id = data["id"];
             $(guest).attr("class","search-item");
@@ -132,6 +92,9 @@ $("#btn1").click(function(){
             $("#search-list").append(guest);
           //console.log(data["id"]);
         }
+          pct_value = (total_payment/total_guest).toFixed(0);
+          $(pct).html("客單價： "+pct_value);
+          $("#search-form").append(pct);
       }
     }
   });  
