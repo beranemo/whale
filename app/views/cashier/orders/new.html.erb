@@ -325,11 +325,15 @@
         method: "post",
         dataType: "json",
         success: function(data){
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          $(cart_item).find(".price").html(data["price"]);
+          $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
+
           var total_price = $("#total");
           var total_price_value = Number(total_price.html().replace('$ ',''));
-          var price = Number(data["price"]);
-          console.log(price);
-          $(total_price).html("$ "+(total_price_value+price));
+          var v_price = Number(data["v_price"]);
+          console.log(v_price);
+          $(total_price).html("$ "+(total_price_value+v_price));
         } 
       });
     }
@@ -375,7 +379,7 @@
                 alert("No data found");
               }
               else{
-                 var order_item = document.createElement("tr");
+                var order_item = document.createElement("tr");
                 var total_price = $("#total");
                 var total_price_value = Number(total_price.html().replace('$ ',''));
                 $(total_price).html("$ "+(total_price_value+Number(data["price"])));
