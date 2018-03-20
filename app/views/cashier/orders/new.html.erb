@@ -3,7 +3,8 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '成立訂單' } %>
       
   <br>
-  
+  <label>商品條碼:</label>
+  <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
   <h2>會員訊息</h2>
   <table class="table">
     <tbody class="customer-info">
@@ -291,6 +292,44 @@
       } 
     });
   });
+
+
+  function searchProduct(event) {
+    if (event.keyCode == 13) {
+        var barcode = $("#bar-code").val();
+        console.log(barcode);
+
+        $.ajax({
+          url: "/cashier/products/barcode_to_cart?barcode=" + barcode ,
+            method: "POST",
+            dataType: "json",      
+            success: function(data){        
+              if(data.length == 0){
+                alert("No data found");
+              }
+              else{
+                 var order_item = document.createElement("tr");
+                var total_price = $("#total");
+                var total_price_value = Number(total_price.html().replace('$ ',''));
+                $(total_price).html("$ "+(total_price_value+Number(data["price"])));
+       
+                console.log(data["id"]);
+                $(".product-list").find("#" + data["id"]).remove();
+                order_item.id = data["id"];
+                $(order_item).html($("#order-item-template").html());
+                $(order_item).find(".category").html(data["category"]);
+                $(order_item).find(".zh_name").html(data["zh_name"]);
+                $(order_item).find(".price").html(data["price"]);
+                $(order_item).find(".bulletin").html(data["bulletin"]);
+                $(order_item).find(".upc").html(data["upc"]);
+                $(".cart-item-list").append(order_item);
+              }    
+                    
+            }
+        });
+      return false;
+    }
+  }
 </script>
 
 <script type="text/template" id="order-item-template">

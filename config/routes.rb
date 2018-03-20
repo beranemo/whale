@@ -28,6 +28,7 @@ Rails.application.routes.draw do
         post :add_to_cart
       end
       collection do
+        post :barcode_to_cart
         post :import
         get :manage
       end
