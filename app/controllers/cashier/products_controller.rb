@@ -18,20 +18,22 @@ class Cashier::ProductsController < ApplicationController
     @product = Product.find_by(upc: params[:barcode])
     if @product == nil
       render :json => @product
-    end
-    @cart_item = current_cart.cart_items.build(product_id: @product.id)
-    discount_method = DiscountMethod.find_by(content: "無")
-    @cart_item.discount_method_code = discount_method.code
-    @cart_item.save!
-    if @cart_item.product.discount !=nil
-      @bulletin = @cart_item.product.discount.bulletin
     else
-      @bulletin = Bulletin.new
-    end
+      @cart_item = current_cart.cart_items.build(product_id: @product.id)
+      discount_method = DiscountMethod.find_by(content: "無")
+      @cart_item.discount_method_code = discount_method.code
+      @cart_item.save!
+      if @cart_item.product.discount !=nil
+        @bulletin = @cart_item.product.discount.bulletin
+      else
+        @bulletin = Bulletin.new
+      end
 
-    render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
-                    :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
-                    :bulletin => @bulletin.title, :discount_method_code => discount_method.code}
+      render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
+                      :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
+                      :bulletin => @bulletin.title, :discount_method_code => discount_method.code}
+    end
+      
   end
   
   def index
