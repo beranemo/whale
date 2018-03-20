@@ -30,10 +30,14 @@ class Cashier::CartItemsController < ApplicationController
 
   def add_discount
     @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
-    @o_price = @cart_item.calculate.round
+    @o_price = @cart_item.calculate.round#計算原本金額
+    
     @cart_item.discount_method_code = params[:method_code]
-    @price = @cart_item.calculate.round
+    @cart_item.discount_off = params[:discount]
+
+    @price = @cart_item.calculate.round#計算打折後金額
     @cart_item.save!
+    
     puts @cart_item.discount_method.content
     puts @o_price
     puts @price

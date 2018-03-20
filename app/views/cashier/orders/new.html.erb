@@ -44,7 +44,11 @@
           <td><%=item.product.category%></td>
           <td><%=item.product.zh_name%></td>            
           <td><%=item.product.upc%></td>
-          <td><%=item.product.price%></td>                  
+          <td>
+            <%=item.product.price%> * 
+            <input type="text" name="" size="3" value="<%=item.discount_off%>" disabled="disabled">
+            %
+          </td>                  
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
@@ -64,7 +68,7 @@
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
 
-          <% @order.amount+= item.calculate(0)%>
+          <% @order.amount+= item.calculate%>
         </tr>
       <% end %>
     </tbody>
@@ -279,18 +283,43 @@
     var method_code = $(".cart-item-list").find("#"+id).find(":selected").val();
     console.log(id);
     console.log(method_code);
-    $.ajax({
-      url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
-      method: "post",
-      dataType: "json",
-      success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
-        var price = Number(data["price"]);
-        console.log(price);
-        $(total_price).html("$ "+(total_price_value+price));
-      } 
-    });
+    if(method_code == "B"){
+      var str ;
+      if(str=prompt("","輸入0-100的數字"))
+      {
+        console.log(str);
+
+        $.ajax({
+          url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
+          method: "post",
+          dataType: "json",
+          success: function(data){
+            var total_price = $("#total");
+            var total_price_value = Number(total_price.html().replace('$ ',''));
+            var price = Number(data["price"]);
+            console.log(price);
+            $(total_price).html("$ "+(total_price_value+price));
+          } 
+        });
+      }
+    }
+    else{
+      $.ajax({
+        url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
+        method: "post",
+        dataType: "json",
+        success: function(data){
+          var total_price = $("#total");
+          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var price = Number(data["price"]);
+          console.log(price);
+          $(total_price).html("$ "+(total_price_value+price));
+        } 
+      });
+    }
+
+
+      
   });
 
 
