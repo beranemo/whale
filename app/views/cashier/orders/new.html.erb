@@ -33,9 +33,9 @@
         <th>類型</th>
         <th>商品名稱</th>          
         <th>國際條碼</th>
-        <th>定價</th>        
+        <th>定價</th>
+        <th>折扣後金額</th>
         <th>購買數量</th>
-        <th>商品活動</th>
         <th>打折方式</th>
         <th>#</th>
       </tr>        
@@ -44,17 +44,22 @@
           <td><%=item.product.category%></td>
           <td><%=item.product.zh_name%></td>            
           <td><%=item.product.upc%></td>
-          <td><%=item.product.price%></td>                  
+          <td class="price">
+            <%=item.product.price%>
+            <% if  item.discount_method_code == "B"%> 
+            *
+            <input type="text" name="" size="3" value="<%=item.discount_off%>"  class="discount_off" onkeypress="return setDiscount(event)">
+            %
+            <% else %>
+            <input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">
+            <% end %>
+          </td>                  
+          <td class="d-price"><%= item.calculate %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>  
-          <td>
-            <% if item.product.discount%>
-              <%=item.product.discount.bulletin.title%>
-            <% end %>
-          </td>
           <td>
             <%= form_for [:cashier, item] do |f| %>
             <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
@@ -200,6 +205,8 @@
           $(order_item).find(".category").html(data["category"]);
           $(order_item).find(".zh_name").html(data["zh_name"]);
           $(order_item).find(".price").html(data["price"]);
+          $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
+          $(order_item).find(".d-price").html(data["price"]);
           $(order_item).find(".bulletin").html(data["bulletin"]);
           $(order_item).find(".upc").html(data["upc"]);
           $(".cart-item-list").append(order_item);
@@ -273,14 +280,74 @@
   });
 
 
-  $(".cart-item-list").on("change",".discount-list",function(event){
-    
+
+  //設定折扣方式
+  $(".cart-item-list").on("change",".discount-list",function(event){ 
     var id = event.target.parentNode.parentNode.parentNode.id;
     var method_code = $(".cart-item-list").find("#"+id).find(":selected").val();
     console.log(id);
     console.log(method_code);
+    if(method_code == "B"){
+      var str ;
+      if(str=prompt("請輸入0-100的數字","100"))
+      {
+        console.log(str);
+
+        $.ajax({
+          url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
+          method: "post",
+          dataType: "json",
+          success: function(data){
+            var total_price = $("#total");
+            var total_price_value = Number(total_price.html().replace('$ ',''));
+            var v_price = Number(data["v_price"]);
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);
+            
+            var discount_off = $(cart_item).find(".discount_off");
+            $(discount_off).val(data["discount_off"]);
+            $(discount_off).prop("type","text");
+            console.log("test1"+discount_off.length);
+            console.log("test2"+data["discount_off"]);
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);
+            $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".d-price").html(data["d_price"]);
+            $(cart_item).find(".price").append("%");
+            $(total_price).html("$ "+(total_price_value+v_price));
+          } 
+        });
+      }
+    }
+    else{
+      $.ajax({
+        url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
+        method: "post",
+        dataType: "json",
+        success: function(data){
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          $(cart_item).find(".price").html(data["price"]);
+          $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
+          $(cart_item).find(".d-price").html(data["d_price"]);
+          var total_price = $("#total");
+          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var v_price = Number(data["v_price"]);
+          console.log(v_price);
+          $(total_price).html("$ "+(total_price_value+v_price));
+        } 
+      });
+    }
+
+
+      
+  });
+
+  //設定折扣數
+  $(".cart-item-list").on("change",".discount-off",function(event){
+    var str = event.target.val();
+    var id = event.target.parentNode.parentNode.id;
+    console.log(str);
+
     $.ajax({
-      url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
+      url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
       method: "post",
       dataType: "json",
       success: function(data){
@@ -291,9 +358,11 @@
         $(total_price).html("$ "+(total_price_value+price));
       } 
     });
+    
   });
 
 
+  //輸入barcode來搜尋商品
   function searchProduct(event) {
     if (event.keyCode == 13) {
         var barcode = $("#bar-code").val();
@@ -308,20 +377,19 @@
                 alert("No data found");
               }
               else{
-                 var order_item = document.createElement("tr");
+                var order_item = document.createElement("tr");
                 var total_price = $("#total");
                 var total_price_value = Number(total_price.html().replace('$ ',''));
                 $(total_price).html("$ "+(total_price_value+Number(data["price"])));
        
-                console.log(data["id"]);
-                $(".product-list").find("#" + data["id"]).remove();
+                console.log(data["id"]);                
                 order_item.id = data["id"];
                 $(order_item).html($("#order-item-template").html());
                 $(order_item).find(".category").html(data["category"]);
                 $(order_item).find(".zh_name").html(data["zh_name"]);
                 $(order_item).find(".price").html(data["price"]);
-                $(order_item).find(".bulletin").html(data["bulletin"]);
-                $(order_item).find("select").val(data["discount_method_code"])
+                $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
+                $(order_item).find(".d-price").html(data["price"]);
                 $(order_item).find(".upc").html(data["upc"]);
                 $(".cart-item-list").append(order_item);
               }    
@@ -331,34 +399,57 @@
       return false;
     }
   }
+  function setDiscount(event) {
+    
+    if (event.keyCode == 13) {
+      var str = $(event.target).val();
+      var id = event.target.parentNode.parentNode.id;
+      console.log(id);
+
+      console.log(str);
+
+
+      $.ajax({
+        url: "/cashier/cart_items/"+ id +"/add_discount?method_code=B" + "&discount=" + str,
+        method: "post",
+        dataType: "json",
+        success: function(data){
+          var total_price = $("#total");
+          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var v_price = Number(data["v_price"]);
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          $(cart_item).find(".d-price").html(data["d_price"]);
+          console.log(v_price);
+          $(total_price).html("$ "+(total_price_value+v_price));
+        } 
+      });
+    return false;
+    }
+  }
 </script>
 
 <script type="text/template" id="order-item-template">
   <td class="category"></td>
   <td class="zh_name"></td>  
   <td class="upc"></td>
-  <td class="price"></td>   
+  <td class="price"></td>
+  <td class="d-price"></td>   
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>
-  <td class="bulletin"></td>
   <td class="discount_method">
     <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
       <input name="utf8" type="hidden" value="✓">
       <input type="hidden" name="_method" value="patch">
       <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
       <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
-        <option value="">Please select</option>
         <option value="A">第二件半價</option>
-        <option value="B">九折</option>
-        <option value="C">八折</option>
-        <option value="D">七折</option>
-        <option value="E">六折</option>
-        <option value="F">五折</option>
-        <option value="G">贈品</option>
-        <option value="H">無</option>
+        <option value="B">打折</option>
+        <option value="C">贈品</option>
+        <option value="D">優惠價</option>
+        <option selected="selected" value="E">無</option>
       </select>
     </form>
   </td>  
@@ -366,4 +457,5 @@
     <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
   </td>
 </script>
+
 

@@ -145,13 +145,10 @@ DiscountMethod.destroy_all
 
 discount_method_list = [
   { content: "第二件半價", code: "A"},
-  { content: "九折", code: "B"},
-  { content: "八折", code: "C"},
-  { content: "七折", code: "D"},
-  { content: "六折", code: "E"},
-  { content: "五折", code: "F"},
-  { content: "贈品", code: "G"},
-  { content: "無", code: "H"}
+  { content: "打折", code: "B"},
+  { content: "贈品", code: "C"},
+  { content: "優惠價", code: "D"},
+  { content: "無", code: "E"}
 ]
 
 discount_method_list.each do |d_method|
