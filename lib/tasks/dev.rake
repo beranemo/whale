@@ -84,6 +84,22 @@ namespace :dev do
       )
     end
     
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "隨單贈",
+      content: "贈品牌季刊乙本",
+      user: User.all.sample
+    )
+    
+    Bulletin.create!(
+      start_date: FFaker::Time.date,
+      end_date: Date.today,
+      title: "滿額禮",
+      content: "滿2500, 贈小鹿版畫禮盒",
+      user: User.all.sample
+    )
+    
     puts "create fake bulletins, have #{Bulletin.count} bulletins data"
   end  
   

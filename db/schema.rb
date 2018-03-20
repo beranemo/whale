@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317171214) do
+ActiveRecord::Schema.define(version: 20180320084511) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20180317171214) do
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "discount_method_id"
+    t.integer "discount_off"
     t.string "discount_method_code"
   end
 
@@ -65,10 +65,10 @@ ActiveRecord::Schema.define(version: 20180317171214) do
   create_table "discounts", force: :cascade do |t|
     t.integer "product_id"
     t.integer "bulletin_id"
-    t.string "discount_method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "discount_method_id"
+    t.integer "discount_price"
   end
 
   create_table "guest_types", force: :cascade do |t|

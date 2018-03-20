@@ -65,7 +65,13 @@ class Cashier::GuestsController < ApplicationController
     @expo_guests = @guests.where(info_way_id: 2)
     @family_guests = @guests.where(info_way_id: 3)
     @toilet_guests = @guests.where(info_way_id: 4)
-    @total_payment = @guests.sum(:payment)
+    
+    total = 0
+    @guests.each do |g|
+      total = total + g.payment.to_i
+    end
+    
+    @total_payment = total
 
     @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
     @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]

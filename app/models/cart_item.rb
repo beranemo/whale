@@ -8,7 +8,7 @@
 #  quantity             :integer          default(1)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  discount_method_id   :integer
+#  discount_off         :integer
 #  discount_method_code :string
 #
 
@@ -20,16 +20,10 @@ class CartItem < ApplicationRecord
   def calculate
     if discount_method.content == "第二件半價"
       product.price*(quantity/2)*1.5+product.price*(quantity%2)
-    elsif discount_method.content == "九折"
-      product.price*quantity*0.9
-    elsif discount_method.content == "八折"
-      product.price*quantity*0.8
-    elsif discount_method.content == "七折"
-      product.price*quantity*0.7
-    elsif discount_method.content == "六折"
-      product.price*quantity*0.6
-    elsif discount_method.content == "五折"
-      product.price*quantity*0.5
+    elsif discount_method.content == "打折"
+      product.price*quantity* discount_off/100
+    elsif discount_method.content == "贈品"
+      0
     else
       product.price*quantity
     end
