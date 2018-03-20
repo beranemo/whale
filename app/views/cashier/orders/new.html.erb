@@ -54,7 +54,7 @@
             <input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">
             <% end %>
           </td>                  
-          <td><%= item.calculate %></td>
+          <td class="d-price"><%= item.calculate %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
@@ -206,7 +206,7 @@
           $(order_item).find(".zh_name").html(data["zh_name"]);
           $(order_item).find(".price").html(data["price"]);
           $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-
+          $(order_item).find(".d-price").html(data["price"]);
           $(order_item).find(".bulletin").html(data["bulletin"]);
           $(order_item).find(".upc").html(data["upc"]);
           $(".cart-item-list").append(order_item);
@@ -301,15 +301,17 @@
             var total_price = $("#total");
             var total_price_value = Number(total_price.html().replace('$ ',''));
             var v_price = Number(data["v_price"]);
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);
             
-            var discount_off = $(".cart-item-list").find(".discount_off");
+            var discount_off = $(cart_item).find(".discount_off");
             $(discount_off).val(data["discount_off"]);
             $(discount_off).prop("type","text");
             console.log("test1"+discount_off.length);
             console.log("test2"+data["discount_off"]);
-            $(".cart-item-list").find("#"+data["id"]).find(".discount_off").before("*");
-            
-            $(".cart-item-list").find("#"+data["id"]).find(".price").append("%");
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);
+            $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".d-price").html(data["d_price"]);
+            $(cart_item).find(".price").append("%");
             $(total_price).html("$ "+(total_price_value+v_price));
           } 
         });
@@ -324,7 +326,7 @@
           var cart_item = $(".cart-item-list").find("#"+data["id"]);
           $(cart_item).find(".price").html(data["price"]);
           $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-
+          $(cart_item).find(".d-price").html(data["d_price"]);
           var total_price = $("#total");
           var total_price_value = Number(total_price.html().replace('$ ',''));
           var v_price = Number(data["v_price"]);
@@ -380,15 +382,14 @@
                 var total_price_value = Number(total_price.html().replace('$ ',''));
                 $(total_price).html("$ "+(total_price_value+Number(data["price"])));
        
-                console.log(data["id"]);
-                $(".product-list").find("#" + data["id"]).remove();
+                console.log(data["id"]);                
                 order_item.id = data["id"];
                 $(order_item).html($("#order-item-template").html());
                 $(order_item).find(".category").html(data["category"]);
                 $(order_item).find(".zh_name").html(data["zh_name"]);
-                $(order_item).find(".price").prepend(data["price"]);
-                $(order_item).find(".bulletin").html(data["bulletin"]);
-                $(order_item).find("select").val(data["discount_method_code"])
+                $(order_item).find(".price").html(data["price"]);
+                $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
+                $(order_item).find(".d-price").html(data["price"]);
                 $(order_item).find(".upc").html(data["upc"]);
                 $(".cart-item-list").append(order_item);
               }    
@@ -407,6 +408,7 @@
 
       console.log(str);
 
+
       $.ajax({
         url: "/cashier/cart_items/"+ id +"/add_discount?method_code=B" + "&discount=" + str,
         method: "post",
@@ -415,7 +417,8 @@
           var total_price = $("#total");
           var total_price_value = Number(total_price.html().replace('$ ',''));
           var v_price = Number(data["v_price"]);
-
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          $(cart_item).find(".d-price").html(data["d_price"]);
           console.log(v_price);
           $(total_price).html("$ "+(total_price_value+v_price));
         } 
@@ -429,13 +432,13 @@
   <td class="category"></td>
   <td class="zh_name"></td>  
   <td class="upc"></td>
-  <td class="price"></td>   
+  <td class="price"></td>
+  <td class="d-price"></td>   
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>
-  <td class="bulletin"></td>
   <td class="discount_method">
     <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
       <input name="utf8" type="hidden" value="✓">
