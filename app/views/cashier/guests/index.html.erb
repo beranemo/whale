@@ -92,8 +92,8 @@ $("#btn1").click(function(){
             $("#search-list").append(guest);
           //console.log(data["id"]);
         }
-          pct_value = (total_payment/total_guest).toFixed(0);
-          $(pct).html("客單價： "+pct_value);
+          pct_value = (total_payment/total_guest).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          $(pct).html(date + " 客單價： "+pct_value);
           $("#search-form").append(pct);
       }
     }
