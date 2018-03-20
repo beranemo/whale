@@ -8,7 +8,7 @@
 #  quantity             :integer          default(1)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  discount_method_id   :integer
+#  discount_off         :integer
 #  discount_method_code :string
 #
 
