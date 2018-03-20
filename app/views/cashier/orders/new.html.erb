@@ -64,7 +64,7 @@
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
 
-          <% @order.amount+= item.calculate%>
+          <% @order.amount+= item.calculate(0)%>
         </tr>
       <% end %>
     </tbody>

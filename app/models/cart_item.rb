@@ -17,19 +17,13 @@ class CartItem < ApplicationRecord
   belongs_to :product 
   belongs_to :discount_method, foreign_key: "discount_method_code", primary_key: "code", :optional => true
 
-  def calculate
+  def calculate(discount)
     if discount_method.content == "第二件半價"
       product.price*(quantity/2)*1.5+product.price*(quantity%2)
-    elsif discount_method.content == "九折"
-      product.price*quantity*0.9
-    elsif discount_method.content == "八折"
-      product.price*quantity*0.8
-    elsif discount_method.content == "七折"
-      product.price*quantity*0.7
-    elsif discount_method.content == "六折"
-      product.price*quantity*0.6
-    elsif discount_method.content == "五折"
-      product.price*quantity*0.5
+    elsif discount_method.content == "打折"
+      product.price*quantity*discount
+    elsif discount_method.content == "贈品"
+      0
     else
       product.price*quantity
     end
