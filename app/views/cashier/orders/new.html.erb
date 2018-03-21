@@ -54,7 +54,7 @@
             <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
             <% end %>
           </td>                  
-          <td class="d-price"><%= item.calculate %></td>
+          <td class="d-price"><%= item.calculate/(item.quantity) %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
