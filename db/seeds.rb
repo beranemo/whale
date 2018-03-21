@@ -106,7 +106,7 @@ country_list = [
 ]
 
 country_list.each do |country|
-  Country.create( country_type: country[:country_type] )
+  Country.create( country_type: country[:country_type], is_active: country[:is_active] )
 end
 puts "Country created!"
 
