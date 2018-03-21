@@ -80,14 +80,15 @@
   <div class="row">
     <div class="ship-info col-md-8">
       <%= form_for [:cashier, @order] do |f|%>
-        <%= f.label :amount, "原始總金額" %>
-        <%= f.text_field :amount  ,class:"form-control",disabled:"disabled"%>
+        <label>原始總金額</label>
+        <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+  
 
         <%= f.label :discount_off, "X折扣%" %>
-        <%= f.text_field :discount_off  ,class:"form-control",onkeypress:"return setOrderDiscount(event)"%>
+        <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
        
         <%= f.label :amount, "折扣後總金額" %>
-        <%= f.text_field :amount  ,class:"discount_amout form-control"%>
+        <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
         
 
 
@@ -191,9 +192,16 @@
       dataType: "json",      
       success: function(data){        
         var order_item = document.createElement("tr");
-        var total_price = $("#order_amount");
+        var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        $(total_price).val(total_price_value+Number(data["price"]));
+        var price = Number(data["price"]);
+        var origin_amount = total_price_value+price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
+
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val(origin_amount);
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         if(cart_item.length){
@@ -229,14 +237,19 @@
       dataType: "json",
 
       success: function(data){
-        var total_price = $("#order_amount");
+        var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
         var price = Number(data["price"]);
-        console.log(total_price_value);
-        console.log(price);
-        $(total_price).val((total_price_value-price));
 
+        var origin_amount = total_price_value-price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
+
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val((total_price_value-price));
         $(".cart-item-list").find("#"+data["id"]).remove();
+
 
       }
     })
@@ -251,13 +264,15 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#order_amount");
+        var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-      
         var price = Number(data["price"]);
+        var origin_amount = total_price_value+price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
 
-        console.log(price);
-        $(total_price).val(total_price_value+price);
+        $("#order_amount").val(discount_amout);
+        $(total_price).val(origin_amount);
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         $(cart_item).find(".quantity").val(data["quantity"]);
@@ -273,13 +288,17 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#order_amount");
+        var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        var price = Number(data["price"]);
-        $(total_price).val(total_price_value+price);
+        var price = Number(data["price"]);        
+        var cart_item = $(".cart-item-list").find("#"+data["id"]);       
+        var origin_amount = total_price_value+price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
 
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
         $(cart_item).find(".quantity").val(data["quantity"]);
+        $(total_price).val(origin_amount);
+        $("#order_amount").val(discount_amout);
       }
     })
   });
@@ -303,16 +322,21 @@
           method: "post",
           dataType: "json",
           success: function(data){
-            var total_price = $("#order_amount");
+            var total_price = $("#origin_amount");
             var total_price_value = Number(total_price.val());
             var v_price = Number(data["v_price"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);
-            
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);            
             var discount_off = $(cart_item).find(".discount_off");
+
             $(discount_off).val(data["discount_off"]);
             $(discount_off).prop("type","text");
-            console.log("test1"+discount_off.length);
-            console.log("test2"+data["discount_off"]);
+
+            var origin_amount = total_price_value+v_price;
+            var discount_off = Number($("#order_discount_off").val());
+            var discount_amout = Math.round(origin_amount*discount_off/100);
+
+            $("#order_amount").val(discount_amout);
+
             var cart_item = $(".cart-item-list").find("#"+data["id"]);
             $(cart_item).find(".discount_off").before("*");
             $(cart_item).find(".d-price").html(data["d_price"]);
@@ -329,13 +353,19 @@
         dataType: "json",
         success: function(data){
           var cart_item = $(".cart-item-list").find("#"+data["id"]);
+
           $(cart_item).find(".price").html(data["price"]);
           $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
           $(cart_item).find(".d-price").html(data["d_price"]);
-          var total_price = $("#order_amount");
+
+          var total_price = $("#origin_amount");
           var total_price_value = Number(total_price.val());
           var v_price = Number(data["v_price"]);
-          console.log(v_price);
+          var origin_amount = total_price_value+v_price;
+          var discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*discount_off/100);
+
+          $("#order_amount").val(discount_amout);
           $(total_price).val(total_price_value+v_price);
         } 
       });
@@ -345,26 +375,6 @@
       
   });
 
-  //設定折扣數
-  $(".cart-item-list").on("change",".discount-off",function(event){
-    var str = event.target.val();
-    var id = event.target.parentNode.parentNode.id;
-    console.log(str);
-
-    $.ajax({
-      url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
-      method: "post",
-      dataType: "json",
-      success: function(data){
-        var total_price = $("#order_amount");
-        var total_price_value = Number(total_price.val());
-        var price = Number(data["price"]);
-        console.log(price);
-        $(total_price).val(total_price_value+price);
-      } 
-    });
-    
-  });
 
 
   //輸入barcode來搜尋商品
@@ -383,12 +393,18 @@
               }
               else{
                 var order_item = document.createElement("tr");
-                var total_price = $("#order_amount");
+                var total_price = $("#origin_amount");
                 var total_price_value = Number(total_price.val());
-                $(total_price).val(total_price_value+Number(data["price"]));
-       
-                console.log(data["id"]);                
+                var price = Number(data["price"]);
+                var origin_amount = total_price_value + price;
+                var discount_off = Number($("#order_discount_off").val());
+                var discount_amout = Math.round(origin_amount*discount_off/100);
+
                 order_item.id = data["id"];
+
+                $("#order_amount").val(discount_amout);
+                $(total_price).val(origin_amount);    
+
                 $(order_item).html($("#order-item-template").html());
                 $(order_item).find(".category").html(data["category"]);
                 $(order_item).find(".zh_name").html(data["zh_name"]);
@@ -419,13 +435,17 @@
         method: "post",
         dataType: "json",
         success: function(data){
-          var total_price = $("#order_amount");
+          var total_price = $("#origin_amount");
           var total_price_value = Number(total_price.val());
           var v_price = Number(data["v_price"]);
           var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          var origin_amount = total_price_value+v_price;
+          var discount_off = Number($(event.target).val());
+          var discount_amout = Math.round(origin_amount*discount_off/100);
+
           $(cart_item).find(".d-price").html(data["d_price"]);
-          console.log(v_price);
-          $(total_price).val(total_price_value+v_price);
+          $(total_price).val(origin_amount);
+          $("#order_amount").val(discount_amout);
         } 
       });
     return false;
@@ -436,13 +456,30 @@
     
     if (event.keyCode == 13) {
       event.preventDefault();
-      var origin_amount = Number($("#order_amount").val());
+      var origin_amount = Number($("#origin_amount").val());
       var discount_off = Number($(event.target).val());
       var discount_amout = Math.round(origin_amount*discount_off/100);//四捨五入
       console.log(discount_off);
       console.log(origin_amount);
       console.log(discount_amout);
-      $(".discount_amout").val(discount_amout);
+      $("#order_amount").val(discount_amout);
+
+      return false;
+    }
+  }
+
+  function setDiscountAmount(event) {
+    
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      var origin_amount = Number($("#origin_amount").val());
+      var discount_amout = Number($(event.target).val());
+      var discount_off = Math.round(discount_amout/origin_amount*100);
+      
+      console.log(discount_off);
+      console.log(origin_amount);
+      console.log(discount_amout);
+      $("#order_discount_off").val(discount_off);
 
       return false;
     }

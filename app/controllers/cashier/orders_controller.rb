@@ -48,7 +48,7 @@ class Cashier::OrdersController < ApplicationController
     else
       @order = current_user.orders.build(order_params)
   
-      @order.amount =0
+      
       current_cart.cart_items.each do |item|
         product = item.product
         product.quantity -= item.quantity
@@ -61,7 +61,7 @@ class Cashier::OrdersController < ApplicationController
         stock_record.save!
         order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
              
-        @order.amount += item.calculate
+        
         order_item.save!
         product.save!
       end
@@ -83,7 +83,7 @@ class Cashier::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark)
+    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark, :amount, :discount_off)
   end
   
 end
