@@ -88,9 +88,21 @@ Country.destroy_all
 country_list = [
   { code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣" },
   { code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
-  { code: "HK", system_flag: "Y", value: "香港", country_type: "香港"},
-  { code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸"},
-  { code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門"}
+  { code: "HK", system_flag: "Y", value: "香港", country_type: "香港" },
+  { code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸" },
+  { code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門" },
+  { code: "MY", system_flag: "Y", value: "馬來西亞", country_type: "馬來西亞" },
+  { code: "NL", system_flag: "Y", value: "荷蘭", country_type: "荷蘭" },
+  { code: "NZL", system_flag: "Y", value: "紐西蘭", country_type: "紐西蘭" },
+  { code: "NO", system_flag: "Y", value: "挪威", country_type: "挪威" },
+  { code: "PH", system_flag: "Y", value: "菲律賓", country_type: "菲律賓" },
+  { code: "ZA", system_flag: "Y", value: "南非", country_type: "南非" },
+  { code: "TH", system_flag: "Y", value: "泰國", country_type: "泰國" },
+  { code: "UK", system_flag: "Y", value: "英國", country_type: "英國" },
+  { code: "US", system_flag: "Y", value: "美國", country_type: "美國" },
+  { code: "FR", system_flag: "Y", value: "法國", country_type: "法國" },
+  { code: "DE", system_flag: "Y", value: "德國", country_type: "德國" },
+  { code: "KR", system_flag: "Y", value: "韓國", country_type: "韓國" }
 ]
 
 country_list.each do |country|
@@ -131,8 +143,12 @@ puts "Info_way created!"
 Category.destroy_all
 
 category_list = [
+  { code: "OIL", system_flag: "Y", value: "油", name: "油" },  
+  { code: "HAIR", system_flag: "Y", value: "髮", name: "髮" },
+  { code: "BODY", system_flag: "Y", value: "身", name: "身" },
   { code: "HOME", system_flag: "Y", value: "家", name: "家" },
-  { code: "HAIR", system_flag: "Y", value: "髮", name: "髮" }
+  { code: "GIFT", system_flag: "Y", value: "禮", name: "禮" },
+  { code: "REFILL", system_flag: "Y", value: "補", name: "補" }
 ]
 
 category_list.each do |category|
@@ -144,11 +160,11 @@ puts "Category created!"
 DiscountMethod.destroy_all
 
 discount_method_list = [
-  { content: "第二件半價", code: "A"},
-  { content: "打折", code: "B"},
-  { content: "贈品", code: "C"},
-  { content: "優惠價", code: "D"},
-  { content: "無", code: "E"}
+  { content: "第二件半價", code: "A" },
+  { content: "打折", code: "B" },
+  { content: "贈品", code: "C" },
+  { content: "優惠價", code: "D" },
+  { content: "無", code: "E" }
 ]
 
 discount_method_list.each do |d_method|
