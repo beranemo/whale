@@ -1,0 +1,21 @@
+<%= form_for [:cashier, @cart_item] do |f|%>
+  <label>名稱:</label>
+  <%=@cart_item.product.zh_name%><br>
+
+   <label>原價:</label>
+  <%=@cart_item.product.price%><br>
+  
+  <label>數量:</label>
+  <%=@cart_item.quantity%><br>
+
+  <label>小計:</label>
+  <%=@cart_item.origin_calculate%><br>
+
+  <label>售價:</label>
+  <input type="text" name=""><br>
+
+  <%= f.label :discount_off, "折扣後總金額" %>
+  <%= f.text_field :discount_off  ,class:"form-control"%>
+
+  <%= f.submit "確認修改",class: "btn btn-primary" %>
+<% end %>

@@ -24,6 +24,8 @@ class CartItem < ApplicationRecord
       product.price*quantity* discount_off/100
     elsif discount_method.content == "贈品"
       0
+    elsif discount_method.content == "優惠價"
+      discount_off
     else
       product.price*quantity
     end
