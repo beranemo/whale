@@ -75,20 +75,14 @@
     </tbody>
   </table>
   <hr>
-  <div class="row">
-    <div class="col-md-3">
-      <h5>總金額</h5>
-    </div>  
-    <div class="col-md-2 col-md-offset-5 text-right">
-      <h5 id="total">$ <%= @order.amount %></h5>
-      
-    </div>  
-  </div>
+  
   <br>
   <div class="row">
     <div class="ship-info col-md-8">
       <%= form_for [:cashier, @order] do |f|%>
         
+         <%= f.label :amount, "總金額" %>
+        <%= f.text_field :amount  ,class:"form-control", disabled:"disabled"%>
         
         <%= f.label :payment_method, "取貨方式" %>
         <%= f.radio_button :address ,"local", class:"local-radio" %>
@@ -190,9 +184,9 @@
       dataType: "json",      
       success: function(data){        
         var order_item = document.createElement("tr");
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
-        $(total_price).html("$ "+(total_price_value+Number(data["price"])));
+        var total_price = $("#order_amount");
+        var total_price_value = Number(total_price.val());
+        $(total_price).val(total_price_value+Number(data["price"]));
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         if(cart_item.length){
@@ -228,10 +222,12 @@
       dataType: "json",
 
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
+        var total_price = $("#order_amount");
+        var total_price_value = Number(total_price.val());
         var price = Number(data["price"]);
-        $(total_price).html("$ "+(total_price_value-price));
+        console.log(total_price_value);
+        console.log(price);
+        $(total_price).val((total_price_value-price));
 
         $(".cart-item-list").find("#"+data["id"]).remove();
 
@@ -248,13 +244,13 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
+        var total_price = $("#order_amount");
+        var total_price_value = Number(total_price.val());
       
         var price = Number(data["price"]);
 
         console.log(price);
-        $(total_price).html("$ "+(total_price_value+price));
+        $(total_price).val(total_price_value+price);
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         $(cart_item).find(".quantity").val(data["quantity"]);
@@ -270,10 +266,10 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
+        var total_price = $("#order_amount");
+        var total_price_value = Number(total_price.val());
         var price = Number(data["price"]);
-        $(total_price).html("$ "+(total_price_value+price));
+        $(total_price).val(total_price_value+price);
 
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
         $(cart_item).find(".quantity").val(data["quantity"]);
@@ -300,8 +296,8 @@
           method: "post",
           dataType: "json",
           success: function(data){
-            var total_price = $("#total");
-            var total_price_value = Number(total_price.html().replace('$ ',''));
+            var total_price = $("#order_amount");
+            var total_price_value = Number(total_price.val());
             var v_price = Number(data["v_price"]);
             var cart_item = $(".cart-item-list").find("#"+data["id"]);
             
@@ -314,7 +310,7 @@
             $(cart_item).find(".discount_off").before("*");
             $(cart_item).find(".d-price").html(data["d_price"]);
             $(cart_item).find(".price").append("%");
-            $(total_price).html("$ "+(total_price_value+v_price));
+            $(total_price).val(total_price_value+v_price);
           } 
         });
       }
@@ -329,11 +325,11 @@
           $(cart_item).find(".price").html(data["price"]);
           $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
           $(cart_item).find(".d-price").html(data["d_price"]);
-          var total_price = $("#total");
-          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var total_price = $("#order_amount");
+          var total_price_value = Number(total_price.val());
           var v_price = Number(data["v_price"]);
           console.log(v_price);
-          $(total_price).html("$ "+(total_price_value+v_price));
+          $(total_price).val(total_price_value+v_price);
         } 
       });
     }
@@ -353,11 +349,11 @@
       method: "post",
       dataType: "json",
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
+        var total_price = $("#order_amount");
+        var total_price_value = Number(total_price.val());
         var price = Number(data["price"]);
         console.log(price);
-        $(total_price).html("$ "+(total_price_value+price));
+        $(total_price).val(total_price_value+price);
       } 
     });
     
@@ -380,9 +376,9 @@
               }
               else{
                 var order_item = document.createElement("tr");
-                var total_price = $("#total");
-                var total_price_value = Number(total_price.html().replace('$ ',''));
-                $(total_price).html("$ "+(total_price_value+Number(data["price"])));
+                var total_price = $("#order_amount");
+                var total_price_value = Number(total_price.val());
+                $(total_price).val(total_price_value+Number(data["price"]));
        
                 console.log(data["id"]);                
                 order_item.id = data["id"];
@@ -416,13 +412,13 @@
         method: "post",
         dataType: "json",
         success: function(data){
-          var total_price = $("#total");
-          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var total_price = $("#order_amount");
+          var total_price_value = Number(total_price.val());
           var v_price = Number(data["v_price"]);
           var cart_item = $(".cart-item-list").find("#"+data["id"]);
           $(cart_item).find(".d-price").html(data["d_price"]);
           console.log(v_price);
-          $(total_price).html("$ "+(total_price_value+v_price));
+          $(total_price).val(total_price_value+v_price);
         } 
       });
     return false;
