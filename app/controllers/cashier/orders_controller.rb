@@ -36,6 +36,23 @@ class Cashier::OrdersController < ApplicationController
 
   end
 
+  def new2
+    @order = Order.new(member_id: params[:id])
+    @order.amount = 0
+    @order.discount_off = 100
+    @products = Product.all 
+    @cart_items = current_cart.cart_items.all
+    if params[:id] != "-1"
+      @member = Member.find(params[:id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      @order.address = @member.address
+    else
+      @member = Member.new(id: -1)
+    end
+
+  end
+
   def create
     if current_cart.cart_items.size ==0
       flash[:alert] = "訂單內容不能是空的"

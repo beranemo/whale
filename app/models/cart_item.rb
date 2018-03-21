@@ -28,4 +28,8 @@ class CartItem < ApplicationRecord
       product.price*quantity
     end
   end
+
+  def origin_calculate
+    product.price*quantity
+  end
 end

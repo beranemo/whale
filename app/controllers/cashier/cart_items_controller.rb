@@ -7,7 +7,8 @@ class Cashier::CartItemsController < ApplicationController
     @cart_item.save!
     @price = @cart_item.calculate.round
     puts @price
-    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :price =>@price -@o_price}
+    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :price =>@price -@o_price,
+                    :o_price => @price}
   end
 
 
@@ -22,7 +23,8 @@ class Cashier::CartItemsController < ApplicationController
       @cart_item.save!
       
 
-      render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :price => @price -@o_price}
+      render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :price =>@price -@o_price,
+                    :o_price => @price}
     else
       render :json => {:id =>params[:id] , :quantity => 0 ,:price => 0}
     end
