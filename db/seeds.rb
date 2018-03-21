@@ -86,23 +86,23 @@ puts "Member_type created!"
 Country.destroy_all
 
 country_list = [
-  { code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣" },
-  { code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
-  { code: "HK", system_flag: "Y", value: "香港", country_type: "香港" },
-  { code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸" },
-  { code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門" },
-  { code: "MY", system_flag: "Y", value: "馬來西亞", country_type: "馬來西亞" },
-  { code: "NL", system_flag: "Y", value: "荷蘭", country_type: "荷蘭" },
-  { code: "NZL", system_flag: "Y", value: "紐西蘭", country_type: "紐西蘭" },
-  { code: "NO", system_flag: "Y", value: "挪威", country_type: "挪威" },
-  { code: "PH", system_flag: "Y", value: "菲律賓", country_type: "菲律賓" },
-  { code: "ZA", system_flag: "Y", value: "南非", country_type: "南非" },
-  { code: "TH", system_flag: "Y", value: "泰國", country_type: "泰國" },
-  { code: "UK", system_flag: "Y", value: "英國", country_type: "英國" },
-  { code: "US", system_flag: "Y", value: "美國", country_type: "美國" },
-  { code: "FR", system_flag: "Y", value: "法國", country_type: "法國" },
-  { code: "DE", system_flag: "Y", value: "德國", country_type: "德國" },
-  { code: "KR", system_flag: "Y", value: "韓國", country_type: "韓國" }
+  { is_active: true, code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣",  },
+  { is_active: true, code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
+  { is_active: true, code: "HK", system_flag: "Y", value: "香港", country_type: "香港" },
+  { is_active: true, code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸" },
+  { is_active: true, code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門" },
+  { is_active: true, code: "MY", system_flag: "Y", value: "馬來西亞", country_type: "馬來西亞" },
+  { is_active: true, code: "NL", system_flag: "Y", value: "荷蘭", country_type: "荷蘭" },
+  { is_active: true, code: "NZL", system_flag: "Y", value: "紐西蘭", country_type: "紐西蘭" },
+  { is_active: true, code: "NO", system_flag: "Y", value: "挪威", country_type: "挪威" },
+  { is_active: true, code: "PH", system_flag: "Y", value: "菲律賓", country_type: "菲律賓" },
+  { is_active: true, code: "ZA", system_flag: "Y", value: "南非", country_type: "南非" },
+  { is_active: true, code: "TH", system_flag: "Y", value: "泰國", country_type: "泰國" },
+  { is_active: true, code: "UK", system_flag: "Y", value: "英國", country_type: "英國" },
+  { is_active: false, code: "US", system_flag: "Y", value: "美國", country_type: "美國" },
+  { is_active: true, code: "FR", system_flag: "Y", value: "法國", country_type: "法國" },
+  { is_active: true, code: "DE", system_flag: "Y", value: "德國", country_type: "德國" },
+  { is_active: true, code: "KR", system_flag: "Y", value: "韓國", country_type: "韓國" }
 ]
 
 country_list.each do |country|
