@@ -22,6 +22,7 @@ class Cashier::OrdersController < ApplicationController
   def new
     @order = Order.new(member_id: params[:id])
     @order.amount = 0
+    @order.discount_off = 100
     @products = Product.all 
     @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"

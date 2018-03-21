@@ -48,7 +48,7 @@
             <%=item.product.price%>
             <% if  item.discount_method_code == "B"%> 
             *
-            <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setDiscount(event)">
+            <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setItemDiscount(event)">
             %
             <% else %>
             <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
@@ -80,10 +80,17 @@
   <div class="row">
     <div class="ship-info col-md-8">
       <%= form_for [:cashier, @order] do |f|%>
+        <%= f.label :amount, "原始總金額" %>
+        <%= f.text_field :amount  ,class:"form-control",disabled:"disabled"%>
+
+        <%= f.label :discount_off, "X折扣%" %>
+        <%= f.text_field :discount_off  ,class:"form-control",onkeypress:"return setOrderDiscount(event)"%>
+       
+        <%= f.label :amount, "折扣後總金額" %>
+        <%= f.text_field :amount  ,class:"discount_amout form-control"%>
         
-         <%= f.label :amount, "總金額" %>
-        <%= f.text_field :amount  ,class:"form-control", disabled:"disabled"%>
-        
+
+
         <%= f.label :payment_method, "取貨方式" %>
         <%= f.radio_button :address ,"local", class:"local-radio" %>
         <%= f.label :address, "自取" %>
@@ -397,7 +404,7 @@
       return false;
     }
   }
-  function setDiscount(event) {
+  function setItemDiscount(event) {
     
     if (event.keyCode == 13) {
       var str = $(event.target).val();
@@ -422,6 +429,22 @@
         } 
       });
     return false;
+    }
+  }
+
+  function setOrderDiscount(event) {
+    
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      var origin_amount = Number($("#order_amount").val());
+      var discount_off = Number($(event.target).val());
+      var discount_amout = Math.round(origin_amount*discount_off/100);//四捨五入
+      console.log(discount_off);
+      console.log(origin_amount);
+      console.log(discount_amout);
+      $(".discount_amout").val(discount_amout);
+
+      return false;
     }
   }
 </script>
