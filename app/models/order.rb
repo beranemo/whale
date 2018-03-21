@@ -13,6 +13,7 @@
 #  remark         :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  discount_off   :integer
 #
 
 class Order < ApplicationRecord
