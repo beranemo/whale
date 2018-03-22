@@ -19,6 +19,11 @@ class Cashier::OrdersController < ApplicationController
     end
   end
 
+  def set_member  
+    @order = Order.find(params[:id])
+    @member = Member.find(params[:member_id])
+  end
+
   def new
     @order = Order.new(member_id: params[:id])
     @index_hash = Hash.new(0)
@@ -53,7 +58,17 @@ class Cashier::OrdersController < ApplicationController
     end
 
   end
+  def update
+    @order = Order.find(params[:id])
+    @order.member_id = params[:member_id]
 
+    if @order.save
+      redirect_to cashier_orders_path
+      flash[:notice] = "會員綁定成功"
+    else
+      flash[:alert] = "綁定失敗"
+    end
+  end
   def create
     if current_cart.cart_items.size ==0
       flash[:alert] = "訂單內容不能是空的"

@@ -1,0 +1,69 @@
+<div class="container">
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+  
+  <br>
+  <h2>訂單資訊</h2>
+  <table class="table table-hover" data-search="true" data-toggle="table" id="table" >
+    <thead>
+      <tr>
+        <th data-sortable="true" data-field="created_at">訂購日期</th>
+        <th data-sortable="true" data-field="id">編號</th>
+        <th>結帳人員</th>
+        <th>顧客編號</th>
+        <th>付款方式</th>
+        <th>取貨方式</th>
+        <th data-sortable="true" data-field="amount">總金額</th>
+      </tr>
+    </thead>
+    <tbody>
+   
+      <tr>
+        <td><%= @order.created_at.localtime.to_s(:db)%></td>
+        <td><%= link_to (cashier_order_path(@order.id)) do %><%= @order.id%><% end %></td>
+        <td><%= @order.user.name%></td>
+        <td>
+          <% if @order.member_id == -1%>
+            非會員
+          <% else%>
+            <%= @order.member_id%>
+          <% end%>
+        </td>
+        <td><%= @order.payment_method%></td>
+        <td><%= @order.address%></td>
+        <td><%= @order.amount%></td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table" data-search="true" data-toggle="table">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>手機號碼</th>
+        <th data-sortable="true" data-field="gender">性別</th>
+        <th>信箱</th>
+        <th data-sortable="true" data-field="birthday">生日</th>
+        <th>#</th>
+        <th>#</th>
+      </tr>
+    </thead>
+    <tbody id="origin-list" >           
+      <tr>         
+        <td><%= @member.name%></td>
+        <td><%= @member.phone%></td>
+        <td><%= @member.gender%></td>
+        <td><%= @member.email%></td>
+        <td class="alnleft"><%= @member.birthday%>
+        
+      </tr>
+    </tbody>
+  </table>  
+  <%= form_for [:cashier, @order], :url => {:action => "update",:id => @order} do |f| %>
+    <%= f.hidden_field :member_id %>
+    <%= hidden_field_tag 'member_id', @member.id  %>
+    <div class="text-right">
+      <%= f.submit "確定綁定",class: "btn btn-primary" %>
+    </div>
+    
+  <% end%>
+</div>
+
