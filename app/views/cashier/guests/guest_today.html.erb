@@ -28,7 +28,7 @@
       <% @guests.each do |guest| %>       
         <tr>
           <th scope="row" class="alncenter"><%= i %></th>
-          <td class="alncenter"><%= guest.created_at %></td>
+          <td class="alncenter"><%= guest.created_at.to_s[0..15] %></td>
           <td class="alnright"><%= number_to_currency(guest.payment, precision: 0) %></td>
           <td class="alncenter"><%= guest.gender %></td>
           <td class="alncenter"><%= guest.guest_type.guest_type %></td>
