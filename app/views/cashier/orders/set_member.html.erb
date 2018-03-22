@@ -1,12 +1,92 @@
 <div class="container">
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+  <form id="search-form">
 
-  <%= form_for [:cashier, @order] do |f|%>
+    <label>快速搜尋</label>
 
-  <%= f.label :member_id, "會員名稱" %>
-  <%= f.collection_select  :member_id, Member.all, :id, :name, {prompt: true}, {class: "discount-list form-control"} %>
-  <br>
-  <%= f.submit "確認修改",class: "btn btn-primary " %>
-  <% end %>
+    <input type="text" id="phone2" placeholder="請輸入手機號碼或 email "/>
+    <button id="phone-search2" class="btn btn-primary btn-sm">搜尋</button>
+    <br>
+    <br>
+  </form>
+  <table class="table">
+    <tbody id="search-list">
+      
+      <tr>
+        <th>姓名</th>
+        <th>手機號碼</th>
+        <th>性別</th>
+        <th>信箱</th>
+        <th>生日</th>
+        <th>#</th>
+      </tr>     
+        
+    </tbody>
+  </table>  
+
 
 </div>
+
+
+<script type="text/javascript">
+  $("#phone-search2").click(function(){
+    
+    event.preventDefault();
+    $(".search-item").remove();//刪除原先的搜尋結果
+    
+    var search_word = $("#phone2").val();
+    if(search_word.length < 3)//至少要輸入3碼才能搜尋
+    {
+      //alert(phone2);
+      //alert(phone2.length);
+      alert("錯誤!輸入長度不足3碼");
+    }else{
+      $.ajax({
+        url: "/cashier/members/search_outcome" ,
+        method: "POST",
+        dataType: "json",
+        data: {
+          phone: search_word,
+        },
+        success: function(datas){
+          if(datas.length == 0){
+            alert("No data found");
+          }
+          else{
+            for( var i = 0 ; i < datas.length ; i++ ){
+              var member = document.createElement("tr");
+              var data = datas[i];
+              
+              member.id = data["id"];
+              $(member).attr("class","search-item");
+              $(member).html($("#member-template").html());
+              $(member).find(".name").html(data["name"]);
+              $(member).find(".phone").html(data["phone"]);
+              $(member).find(".gender").html(data["gender"]);
+              $(member).find(".email").html(data["email"]);
+              $(member).find(".birthday").html(data["birthday"]);
+            
+              var url = document.createElement("a");
+              url.href = "/cashier/orders/update?id=" +member.id;
+              $(url).html("綁定");
+              $(member).find(".checkout").html(url);
+          
+              $("#search-list").append(member);
+              console.log(data["name"]);
+            }
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<script type="text/template" id="member-template">
+  
+  <td class="name"></td>
+  <td class="phone"></td>
+  <td class="gender"></td>
+  <td class="email"></td>
+  <td class="birthday"></td>
+  <td ><button class="checkout"></button></td>
+</script>
