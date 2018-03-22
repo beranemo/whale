@@ -34,8 +34,10 @@
         <th>商品名稱</th>          
         <th>國際條碼</th>
         <th>定價</th>
-        <th>折扣後金額</th>
-        <th>購買數量</th>
+        <th>購買數量</th>        
+        <th>小計</th>
+        <th>折扣金額</th>
+        <th>售價</th>
         <th>打折方式</th>
         <th>#</th>
       </tr>        
@@ -43,9 +45,15 @@
         <tr id="<%= item.product.id%>">
           <td><%=item.product.category%></td>
           <td><%=item.product.zh_name%></td>            
-          <td><%=item.product.upc%></td>
-          <td class="price">
-            <%=item.product.price%>
+          <td><%=item.product.upc%></td> 
+          <td class="price"><%= item.product.price %></td>
+          <td>
+            <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+            <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
+            <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+          </td>
+          <td class="o-price">
+            <%=item.origin_calculate%>
             <% if  item.discount_method_code == "B"%> 
             *
             <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setItemDiscount(event)">
@@ -53,13 +61,9 @@
             <% else %>
             <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
             <% end %>
-          </td>                  
-          <td class="d-price"><%= item.calculate/(item.quantity) %></td>
-          <td>
-            <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
-            <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
-            <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
-          </td>  
+          </td>           
+          <td class="v-price"><%= item.origin_calculate - item.calculate %></td>
+          <td class="d-price"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
             <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
@@ -266,16 +270,37 @@
       success: function(data){
         var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        var price = Number(data["price"]);
-        var origin_amount = total_price_value+price;
-        var discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*discount_off/100);
+        var o_price = Number(data["price"]);
+        var v_price = Number(data["v_price"]);
+        var d_price = Number(data["d_price"]);
+        var origin_amount = total_price_value+d_price-o_price;
+        var order_discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*order_discount_off/100);
+        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        var item_discount_off = $(cart_item).find(".discount_off");
 
+
+        console.log(total_price_value);
+        console.log(d_price);
+        console.log(item_discount_off.val());
         $("#order_amount").val(discount_amout);
         $(total_price).val(origin_amount);
 
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        
         $(cart_item).find(".quantity").val(data["quantity"]);
+        $(cart_item).find(".o-price").html(data["o_price"]);
+        if(item_discount_off.val() != "100")
+        {
+          $(cart_item).find(".o-price").append("*");
+          $(cart_item).find(".o-price").append(item_discount_off);
+          $(cart_item).find(".o-price").append("%");
+        }
+        else
+        {
+          $(cart_item).find(".o-price").append(item_discount_off);
+        } 
+        $(cart_item).find(".d-price").html(data["d_price"]);
+        $(cart_item).find(".v-price").html(data["v_price"]);
       }
     })
   });
@@ -290,15 +315,37 @@
       success: function(data){
         var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        var price = Number(data["price"]);        
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);       
-        var origin_amount = total_price_value+price;
-        var discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*discount_off/100);
+        var o_price = Number(data["price"]);
+        var v_price = Number(data["v_price"]);
+        var d_price = Number(data["d_price"]);
+        var origin_amount = total_price_value+d_price-o_price;
+        var order_discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*order_discount_off/100);
+        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        var item_discount_off = $(cart_item).find(".discount_off");
 
-        $(cart_item).find(".quantity").val(data["quantity"]);
-        $(total_price).val(origin_amount);
+
+        console.log(total_price_value);
+        console.log(d_price);
+        console.log(item_discount_off.val());
         $("#order_amount").val(discount_amout);
+        $(total_price).val(origin_amount);
+
+        
+        $(cart_item).find(".quantity").val(data["quantity"]);
+        $(cart_item).find(".o-price").html(data["o_price"]);
+        if(item_discount_off.val() != "100")
+        {
+          $(cart_item).find(".o-price").append("*");
+          $(cart_item).find(".o-price").append(item_discount_off);
+          $(cart_item).find(".o-price").append("%");
+        }
+        else
+        {
+          $(cart_item).find(".o-price").append(item_discount_off);
+        }     
+        $(cart_item).find(".d-price").html(data["d_price"]);
+        $(cart_item).find(".v-price").html(data["v_price"]);
       }
     })
   });
@@ -324,14 +371,53 @@
           success: function(data){
             var total_price = $("#origin_amount");
             var total_price_value = Number(total_price.val());
+            var o_price = Number(data["price"]);
             var v_price = Number(data["v_price"]);
+            var d_price = Number(data["d_price"]);
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);            
+            var item_discount_off = $(cart_item).find(".discount_off");
+
+            $(item_discount_off).val(data["discount_off"]);
+            $(item_discount_off).prop("type","text");
+
+            var origin_amount = total_price_value+(d_price-o_price);
+            var order_discount_off = Number($("#order_discount_off").val());
+            var discount_amout = Math.round(origin_amount*order_discount_off/100);
+
+            $("#order_amount").val(discount_amout);
+
+            var cart_item = $(".cart-item-list").find("#"+data["id"]);
+            $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".v-price").html(data["v_price"]);
+            $(cart_item).find(".d-price").html(data["d_price"]);
+   
+            $(total_price).val(origin_amount);
+          } 
+        });
+      }
+    }
+    else if(method_code == "D"){
+      if(str=prompt("請輸入修改金額",""))
+      {
+        console.log(str);
+
+        $.ajax({
+          url: "/cashier/cart_items/"+ id +"/add_discount?method_code=D" + "&discount=" + str,
+          method: "post",
+          dataType: "json",
+          success: function(data){
+            var total_price = $("#origin_amount");
+            var total_price_value = Number(total_price.val());
+            var o_price = Number(data["price"]);
+            var v_price = Number(data["v_price"]);
+            var d_price = Number(data["d_price"]);
             var cart_item = $(".cart-item-list").find("#"+data["id"]);            
             var discount_off = $(cart_item).find(".discount_off");
 
             $(discount_off).val(data["discount_off"]);
             $(discount_off).prop("type","text");
 
-            var origin_amount = total_price_value+v_price;
+            var origin_amount = total_price_value+(d_price-o_price);
             var discount_off = Number($("#order_discount_off").val());
             var discount_amout = Math.round(origin_amount*discount_off/100);
 
@@ -339,9 +425,10 @@
 
             var cart_item = $(".cart-item-list").find("#"+data["id"]);
             $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".v-price").html(data["v_price"]);
             $(cart_item).find(".d-price").html(data["d_price"]);
-            $(cart_item).find(".price").append("%");
-            $(total_price).val(total_price_value+v_price);
+   
+            $(total_price).val(origin_amount);
           } 
         });
       }
@@ -369,10 +456,7 @@
           $(total_price).val(total_price_value+v_price);
         } 
       });
-    }
-
-
-      
+    }    
   });
 
 
@@ -490,13 +574,15 @@
   <td class="category"></td>
   <td class="zh_name"></td>  
   <td class="upc"></td>
-  <td class="price"></td>
-  <td class="d-price"></td>   
+  <td class="price"></td> 
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>
+  <td class="o-price"></td> 
+  <td class="v-price"></td>  
+  <td class="d-price"></td>  
   <td class="discount_method">
     <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
       <input name="utf8" type="hidden" value="✓">
