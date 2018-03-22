@@ -226,7 +226,7 @@
         $(cart_item).find(".o-price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setItemDiscount(event)">');
         $(cart_item).find(".d-price").html(o_price);
         $(cart_item).find(".v-price").html("0");
-        
+
           
       }
     });
@@ -273,25 +273,26 @@
     var product_id = id.substring(0,index);
     var item_index = id.substring(index+1,id.length);
     $.ajax({
-      url: "/cashier/cart_items/" + id +"/plus_quantity",
+      url: "/cashier/cart_items/" + product_id +"/plus_quantity?item_index=" + item_index,
       method: "POST",
       dataType: "json",
       success: function(data){
         var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        var o_price = Number(data["price"]);
+        var l_price = Number(data["l_price"]);
         var v_price = Number(data["v_price"]);
         var d_price = Number(data["d_price"]);
-        var origin_amount = total_price_value+d_price-o_price;
+        var origin_amount = total_price_value+d_price-l_price;
         var order_discount_off = Number($("#order_discount_off").val());
         var discount_amout = Math.round(origin_amount*order_discount_off/100);
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        var id = data["id"]+ '-' + data["item_index"]
+        var cart_item = $(".cart-item-list").find("#"+id);
         var item_discount_off = $(cart_item).find(".discount_off");
 
 
-        console.log(total_price_value);
-        console.log(d_price);
-        console.log(item_discount_off.val());
+        console.log(data["item_index"]);
+        console.log(id);
+        console.log(data["id"]);
         $("#order_amount").val(discount_amout);
         $(total_price).val(origin_amount);
 
@@ -324,39 +325,38 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#origin_amount");
-        var total_price_value = Number(total_price.val());
-        var l_price = Number(data["l_price"]);
-        var v_price = Number(data["v_price"]);
-        var d_price = Number(data["d_price"]);
-        var origin_amount = total_price_value+d_price-l_price;
-        var order_discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*order_discount_off/100);
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
-        var item_discount_off = $(cart_item).find(".discount_off");
+        if(data["success"] == "1"){
+          var total_price = $("#origin_amount");
+          var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
+          var v_price = Number(data["v_price"]);
+          var d_price = Number(data["d_price"]);
+          var origin_amount = total_price_value+d_price-l_price;
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+          var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          var item_discount_off = $(cart_item).find(".discount_off");
 
+          $("#order_amount").val(discount_amout);
+          $(total_price).val(origin_amount);
 
-        console.log(total_price_value);
-        console.log(d_price);
-        console.log(item_discount_off.val());
-        $("#order_amount").val(discount_amout);
-        $(total_price).val(origin_amount);
+          
+          $(cart_item).find(".quantity").val(data["quantity"]);
+          $(cart_item).find(".o-price").html(data["o_price"]);
+          if(item_discount_off.val() != "100")
+          {
+            $(cart_item).find(".o-price").append("*");
+            $(cart_item).find(".o-price").append(item_discount_off);
+            $(cart_item).find(".o-price").append("%");
+          }
+          else
+          {
+            $(cart_item).find(".o-price").append(item_discount_off);
+          }     
+          $(cart_item).find(".d-price").html(data["d_price"]);
+          $(cart_item).find(".v-price").html(data["v_price"]);
 
-        
-        $(cart_item).find(".quantity").val(data["quantity"]);
-        $(cart_item).find(".o-price").html(data["o_price"]);
-        if(item_discount_off.val() != "100")
-        {
-          $(cart_item).find(".o-price").append("*");
-          $(cart_item).find(".o-price").append(item_discount_off);
-          $(cart_item).find(".o-price").append("%");
-        }
-        else
-        {
-          $(cart_item).find(".o-price").append(item_discount_off);
-        }     
-        $(cart_item).find(".d-price").html(data["d_price"]);
-        $(cart_item).find(".v-price").html(data["v_price"]);
+        }        
       }
     })
   });

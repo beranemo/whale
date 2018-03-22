@@ -1,7 +1,7 @@
 class Cashier::CartItemsController < ApplicationController
   
   def plus_quantity
-    @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
+    @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     @l_price = @cart_item.calculate.round#上次金額
     @cart_item.quantity+=1
     @o_price = @cart_item.origin_calculate.round#小計金額
@@ -11,12 +11,13 @@ class Cashier::CartItemsController < ApplicationController
     puts @l_price
     puts @d_price
     render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
-                    :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price}
+                    :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price,
+                    :item_index => params[:item_index]}
   end
 
 
   def minus_quantity
-    @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
+    @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     
     if @cart_item.quantity>0
       @l_price = @cart_item.calculate.round#上次金額
@@ -28,9 +29,10 @@ class Cashier::CartItemsController < ApplicationController
       
 
       render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
-                    :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price}
+                    :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price,
+                    :item_index => params[:item_index], :success => "1"}
     else
-      render :json => {:id =>params[:id] , :quantity => 0 ,:price => 0}
+      render :json => {:success => "0"}
     end
   end
 
