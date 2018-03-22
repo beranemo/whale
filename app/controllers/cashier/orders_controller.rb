@@ -19,6 +19,10 @@ class Cashier::OrdersController < ApplicationController
     end
   end
 
+  def set_member  
+    @order = Order.find(params[:id])
+  end
+
   def new
     @order = Order.new(member_id: params[:id])
     @order.amount = 0

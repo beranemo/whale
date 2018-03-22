@@ -39,7 +39,10 @@
         <td><%= order.payment_method%></td>
         <td><%= order.address%></td>
         <td><%= order.amount%></td>
-        <td><%= link_to "編輯",edit_cashier_order_path(order.id)%></td>
+        <td>
+          <%= link_to "編輯",edit_cashier_order_path(order.id)%>
+          <%= link_to "歸戶",set_member_cashier_order_path(order.id)%>
+        </td>
       </tr>
       
       <% end %>
