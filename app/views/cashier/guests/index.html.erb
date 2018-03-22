@@ -79,7 +79,7 @@ $("#btn1").click(function(){
             guest.id = data["id"];
             $(guest).attr("class","search-item");
             $(guest).html($("#guest-template").html());
-            $(guest).find(".time").html(data["created_at"].substring(0, 10));
+            $(guest).find(".time").html(data["created_at"]);
             $(guest).find(".payment").html(data["payment"].replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $(guest).find(".gender").html(data["gender"]);
             $(guest).find(".guest_type").html(data["guest_type"]["guest_type"]);
