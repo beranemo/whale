@@ -76,7 +76,7 @@ class Cashier::OrdersController < ApplicationController
         end
         stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
         stock_record.save!
-        order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
+        order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
              
         
         order_item.save!
