@@ -21,6 +21,7 @@ class Cashier::OrdersController < ApplicationController
 
   def new
     @order = Order.new(member_id: params[:id])
+    @index_hash = Hash.new(0)
     @order.amount = 0
     @order.discount_off = 100
     @products = Product.all 
@@ -76,7 +77,7 @@ class Cashier::OrdersController < ApplicationController
         end
         stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
         stock_record.save!
-        order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
+        order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
              
         
         order_item.save!
