@@ -371,8 +371,8 @@
     var item_index = id.substring(index+1,id.length);
     var method_code = $(event.target).find(":selected").val();
 
-    console.log(id);
-    console.log(method_code);
+
+
     if(method_code == "B"){
       var str ;
       if(str=prompt("請輸入0-100的數字","100"))
@@ -389,9 +389,11 @@
             var l_price = Number(data["l_price"]);
             var v_price = Number(data["v_price"]);
             var d_price = Number(data["d_price"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);            
+            var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);            
             var item_discount_off = $(cart_item).find(".discount_off");
-
+            console.log(cart_item.length);
+            console.log(data["id"]);
+            console.log(data["item_index"]);
             $(item_discount_off).val(data["discount_off"]);
             $(item_discount_off).prop("type","text");
 
@@ -401,7 +403,6 @@
 
             $("#order_amount").val(discount_amout);
 
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);
             $(cart_item).find(".discount_off").before("*");
             $(cart_item).find(".discount_off").after("%");
             $(cart_item).find(".v-price").html(data["v_price"]);
@@ -418,7 +419,7 @@
         console.log(str);
 
         $.ajax({
-          url: "/cashier/cart_items/"+ id +"/add_discount?method_code=D" + "&discount=" + str,
+          url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code=D" + "&discount=" + str+"&item_index=" +item_index,
           method: "post",
           dataType: "json",
           success: function(data){
@@ -427,13 +428,15 @@
             var l_price = Number(data["l_price"]);
             var v_price = Number(data["v_price"]);
             var d_price = Number(data["d_price"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);            
+            var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);          
             var item_discount_off = $(cart_item).find(".discount_off");
             var origin_amount = total_price_value+d_price-l_price;
             var order_discount_off = Number($("#order_discount_off").val());
             var discount_amout = Math.round(origin_amount*order_discount_off/100);
 
-
+            console.log(cart_item.length);
+            console.log(data["id"]);
+            console.log(data["item_index"]);
             $(item_discount_off).val("100");
             $(item_discount_off).prop("type","hidden");
 
@@ -443,8 +446,6 @@
             
 
             $("#order_amount").val(discount_amout);
-
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);
 
             $(cart_item).find(".v-price").html(data["v_price"]);
             $(cart_item).find(".d-price").html(data["d_price"]);
@@ -456,7 +457,7 @@
     }
     else{
       $.ajax({
-        url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
+        url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code="+method_code+"&item_index=" +item_index,
         method: "post",
         dataType: "json",
         success: function(data){
@@ -465,8 +466,12 @@
           var l_price = Number(data["l_price"]);
           var v_price = Number(data["v_price"]);
           var d_price = Number(data["d_price"]);
-          var cart_item = $(".cart-item-list").find("#"+data["id"]);            
+          var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);           
           var item_discount_off = $(cart_item).find(".discount_off");
+
+          console.log(cart_item.length);
+            console.log(data["id"]);
+            console.log(data["item_index"]);
 
           $(item_discount_off).val("100");
           $(item_discount_off).prop("type","hidden");
@@ -480,7 +485,7 @@
 
           $("#order_amount").val(discount_amout);
 
-          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          
 
           $(cart_item).find(".v-price").html(data["v_price"]);
           $(cart_item).find(".d-price").html(data["d_price"]);

@@ -43,7 +43,7 @@ class Cashier::CartItemsController < ApplicationController
   end
 
   def add_discount
-    @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
+    @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     quantity = @cart_item.quantity
     @o_price = @cart_item.origin_calculate.round#小計金額
     @l_price = @cart_item.calculate.round#上次金額
@@ -60,7 +60,8 @@ class Cashier::CartItemsController < ApplicationController
     puts @d_price
 
     render :json => {:id => params[:id], :l_price => @l_price, :d_price => @d_price,
-                    :v_price => (@o_price - @d_price ), :o_price => @o_price, discount_off: params[:discount]}
+                    :v_price => (@o_price - @d_price ), :o_price => @o_price, discount_off: params[:discount],
+                    :item_index => params[:item_index]}
   end
 
   def destroy
