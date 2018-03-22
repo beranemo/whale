@@ -10,7 +10,7 @@ class Cashier::CartItemsController < ApplicationController
     puts @o_price
     puts @l_price
     puts @d_price
-    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :price => @l_price,
+    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
                     :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price}
   end
 
@@ -27,7 +27,7 @@ class Cashier::CartItemsController < ApplicationController
       @cart_item.save!
       
 
-      render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :price => @l_price,
+      render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
                     :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price}
     else
       render :json => {:id =>params[:id] , :quantity => 0 ,:price => 0}
@@ -57,8 +57,8 @@ class Cashier::CartItemsController < ApplicationController
     puts @l_price
     puts @d_price
 
-    render :json => {:id => params[:id], :price => @l_price, :d_price => @d_price,
-                    :v_price => (@o_price - @d_price ), discount_off: params[:discount]}
+    render :json => {:id => params[:id], :l_price => @l_price, :d_price => @d_price,
+                    :v_price => (@o_price - @d_price ), :o_price => @o_price, discount_off: params[:discount]}
   end
 
   def destroy

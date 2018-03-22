@@ -195,11 +195,12 @@
       method: "POST",
       dataType: "json",      
       success: function(data){        
-        var order_item = document.createElement("tr");
+        var cart_item = document.createElement("tr");
         var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        var price = Number(data["price"]);
-        var origin_amount = total_price_value+price;
+        var o_price = Number(data["price"]);
+        
+        var origin_amount = total_price_value+o_price;
         var discount_off = Number($("#order_discount_off").val());
         var discount_amout = Math.round(origin_amount*discount_off/100);
 
@@ -207,25 +208,19 @@
 
         $(total_price).val(origin_amount);
 
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
-        if(cart_item.length){
-          console.log(data["quantity"]);
-          $(cart_item).find(".quantity").val(data["quantity"]);
-        }
-        else{
-          console.log(data["id"]);
-          $(".product-list").find("#" + data["id"]).remove();
-          order_item.id = data["id"];
-          $(order_item).html($("#order-item-template").html());
-          $(order_item).find(".category").html(data["category"]);
-          $(order_item).find(".zh_name").html(data["zh_name"]);
-          $(order_item).find(".price").html(data["price"]);
-          $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-          $(order_item).find(".d-price").html(data["price"]);
-          $(order_item).find(".bulletin").html(data["bulletin"]);
-          $(order_item).find(".upc").html(data["upc"]);
-          $(".cart-item-list").append(order_item);
-        }
+       
+        console.log(data["id"]);
+        cart_item.id = data["id"];
+        $(cart_item).html($("#order-item-template").html());
+        $(cart_item).find(".category").html(data["category"]);
+        $(cart_item).find(".zh_name").html(data["zh_name"]);
+        $(cart_item).find(".price").html(o_price);
+        $(cart_item).find(".upc").html(data["upc"]);
+        $(".cart-item-list").append(cart_item);
+        $(cart_item).find(".o-price").html(o_price);
+        $(cart_item).find(".o-price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setItemDiscount(event)">');
+        $(cart_item).find(".d-price").html(o_price);
+        $(cart_item).find(".v-price").html("0");
           
       }
     });
@@ -315,10 +310,10 @@
       success: function(data){
         var total_price = $("#origin_amount");
         var total_price_value = Number(total_price.val());
-        var o_price = Number(data["price"]);
+        var l_price = Number(data["l_price"]);
         var v_price = Number(data["v_price"]);
         var d_price = Number(data["d_price"]);
-        var origin_amount = total_price_value+d_price-o_price;
+        var origin_amount = total_price_value+d_price-l_price;
         var order_discount_off = Number($("#order_discount_off").val());
         var discount_amout = Math.round(origin_amount*order_discount_off/100);
         var cart_item = $(".cart-item-list").find("#"+data["id"]);
@@ -371,7 +366,7 @@
           success: function(data){
             var total_price = $("#origin_amount");
             var total_price_value = Number(total_price.val());
-            var o_price = Number(data["price"]);
+            var l_price = Number(data["l_price"]);
             var v_price = Number(data["v_price"]);
             var d_price = Number(data["d_price"]);
             var cart_item = $(".cart-item-list").find("#"+data["id"]);            
@@ -380,7 +375,7 @@
             $(item_discount_off).val(data["discount_off"]);
             $(item_discount_off).prop("type","text");
 
-            var origin_amount = total_price_value+(d_price-o_price);
+            var origin_amount = total_price_value+(d_price-l_price);
             var order_discount_off = Number($("#order_discount_off").val());
             var discount_amout = Math.round(origin_amount*order_discount_off/100);
 
@@ -388,6 +383,7 @@
 
             var cart_item = $(".cart-item-list").find("#"+data["id"]);
             $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".discount_off").after("%");
             $(cart_item).find(".v-price").html(data["v_price"]);
             $(cart_item).find(".d-price").html(data["d_price"]);
    
@@ -408,23 +404,28 @@
           success: function(data){
             var total_price = $("#origin_amount");
             var total_price_value = Number(total_price.val());
-            var o_price = Number(data["price"]);
+            var l_price = Number(data["l_price"]);
             var v_price = Number(data["v_price"]);
             var d_price = Number(data["d_price"]);
             var cart_item = $(".cart-item-list").find("#"+data["id"]);            
-            var discount_off = $(cart_item).find(".discount_off");
+            var item_discount_off = $(cart_item).find(".discount_off");
+            var origin_amount = total_price_value+d_price-l_price;
+            var order_discount_off = Number($("#order_discount_off").val());
+            var discount_amout = Math.round(origin_amount*order_discount_off/100);
 
-            $(discount_off).val(data["discount_off"]);
-            $(discount_off).prop("type","text");
 
-            var origin_amount = total_price_value+(d_price-o_price);
-            var discount_off = Number($("#order_discount_off").val());
-            var discount_amout = Math.round(origin_amount*discount_off/100);
+            $(item_discount_off).val("100");
+            $(item_discount_off).prop("type","hidden");
+
+            $(cart_item).find(".o-price").html(data["o_price"]);
+            $(cart_item).find(".o-price").append(item_discount_off);
+
+            
 
             $("#order_amount").val(discount_amout);
 
             var cart_item = $(".cart-item-list").find("#"+data["id"]);
-            $(cart_item).find(".discount_off").before("*");
+
             $(cart_item).find(".v-price").html(data["v_price"]);
             $(cart_item).find(".d-price").html(data["d_price"]);
    
@@ -439,21 +440,29 @@
         method: "post",
         dataType: "json",
         success: function(data){
-          var cart_item = $(".cart-item-list").find("#"+data["id"]);
-
-          $(cart_item).find(".price").html(data["price"]);
-          $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-          $(cart_item).find(".d-price").html(data["d_price"]);
-
           var total_price = $("#origin_amount");
           var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
           var v_price = Number(data["v_price"]);
-          var origin_amount = total_price_value+v_price;
-          var discount_off = Number($("#order_discount_off").val());
-          var discount_amout = Math.round(origin_amount*discount_off/100);
+          var d_price = Number(data["d_price"]);
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);            
+          var item_discount_off = $(cart_item).find(".discount_off");
+
+          $(item_discount_off).val("100");
+          $(item_discount_off).prop("type","hidden");
+
+          var origin_amount = total_price_value+(d_price-l_price);
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
 
           $("#order_amount").val(discount_amout);
-          $(total_price).val(total_price_value+v_price);
+
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+
+          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(cart_item).find(".d-price").html(data["d_price"]);
+ 
+          $(total_price).val(origin_amount);
         } 
       });
     }    
@@ -521,13 +530,16 @@
         success: function(data){
           var total_price = $("#origin_amount");
           var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
           var v_price = Number(data["v_price"]);
+          var d_price = Number(data["d_price"]);
           var cart_item = $(".cart-item-list").find("#"+data["id"]);
-          var origin_amount = total_price_value+v_price;
-          var discount_off = Number($(event.target).val());
-          var discount_amout = Math.round(origin_amount*discount_off/100);
+          var origin_amount = total_price_value+d_price-l_price;
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
 
           $(cart_item).find(".d-price").html(data["d_price"]);
+          $(cart_item).find(".v-price").html(data["v_price"]);
           $(total_price).val(origin_amount);
           $("#order_amount").val(discount_amout);
         } 
@@ -568,6 +580,7 @@
       return false;
     }
   }
+
 </script>
 
 <script type="text/template" id="order-item-template">
