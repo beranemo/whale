@@ -47,6 +47,10 @@ Rails.application.routes.draw do
         get :sales_analysis_month
         get :new2
       end
+
+      member do 
+        get :set_member
+      end
     end
 
     resources :cart_items, only: [:destroy, :edit] do

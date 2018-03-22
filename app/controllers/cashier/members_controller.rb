@@ -8,7 +8,7 @@ class Cashier::MembersController < ApplicationController
   def show
     @member = Member.find(params[:id])  
   end
-
+  
   def new
     @member = Member.new
   end
@@ -66,6 +66,7 @@ class Cashier::MembersController < ApplicationController
     
   end
 
+  
 
   private
 
