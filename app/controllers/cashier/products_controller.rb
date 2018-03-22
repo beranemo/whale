@@ -1,7 +1,7 @@
 class Cashier::ProductsController < ApplicationController
   def add_to_cart
     @product = Product.find(params[:id])
-    @cart_item = current_cart.add_cart_item(@product)
+    @cart_item = current_cart.cart_items.build(product_id: @product.id)
     discount_method = DiscountMethod.find_by(content: "無")
     @cart_item.discount_method_code = discount_method.code
     @cart_item.save!
