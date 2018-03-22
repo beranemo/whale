@@ -21,6 +21,7 @@ class Cashier::OrdersController < ApplicationController
 
   def new
     @order = Order.new(member_id: params[:id])
+    @index_hash = Hash.new(0)
     @order.amount = 0
     @order.discount_off = 100
     @products = Product.all 

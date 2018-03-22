@@ -62,9 +62,9 @@ class Cashier::CartItemsController < ApplicationController
   end
 
   def destroy
-    @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
+    @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     @price = @cart_item.calculate.round
     @cart_item.destroy
-    render :json => {:id =>params[:id], :price => @price}
+    render :json => {:id =>params[:id], :item_index => params[:item_index], :price => @price}
   end
 end

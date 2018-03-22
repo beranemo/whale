@@ -40,9 +40,11 @@
         <th>售價</th>
         <th>打折方式</th>
         <th>#</th>
-      </tr>        
+      </tr> 
+             
       <% @cart_items.each do |item|%>
-        <tr id="<%= item.product.id%>">
+
+        <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
           <td><%=item.product.category%></td>
           <td><%=item.product.zh_name%></td>            
           <td><%=item.product.upc%></td> 
@@ -72,7 +74,7 @@
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
-
+          <% @index_hash[item.product.id] +=1%>
           <% @order.amount += item.calculate %>
         </tr>
       <% end %>
@@ -229,9 +231,11 @@
 
   $(".cart-item-list").on("click",".delete-item",function(event){
     var id = event.target.parentNode.parentNode.id;
-
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     $.ajax({
-      url: "/cashier/cart_items/" + id,
+      url: "/cashier/cart_items/" + product_id+"?item_index=" +item_index,
       method: "DELETE",
       dataType: "json",
 
@@ -244,20 +248,26 @@
         var discount_off = Number($("#order_discount_off").val());
         var discount_amout = Math.round(origin_amount*discount_off/100);
 
+        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
         $("#order_amount").val(discount_amout);
 
         $(total_price).val((total_price_value-price));
-        $(".cart-item-list").find("#"+data["id"]).remove();
+        $(".cart-item-list").find("tr[id^="+data["id"]+"-"+data["item_index"]+"]").remove();
 
-
+        for(i = 1+Number(data["item_index"]); i < exist_cart_item ; i++){
+          $(".cart-item-list").find("tr[id^="+data["id"]+"-"+i+"]").attr("id",data["id"].toString() +"-" +(i-1));
+          console.log(i);
+        }
       }
-    })
+    });
   });
 
 
   $(".cart-item-list").on("click",".plus-item",function(event){
     var id = event.target.parentNode.parentNode.id;
-
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     $.ajax({
       url: "/cashier/cart_items/" + id +"/plus_quantity",
       method: "POST",
@@ -302,9 +312,11 @@
 
   $(".cart-item-list").on("click",".minus-item",function(event){
     var id = event.target.parentNode.parentNode.id;
-
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     $.ajax({
-      url: "/cashier/cart_items/" + id +"/minus_quantity",
+      url: "/cashier/cart_items/" + product_id +"/minus_quantity?item_index=" +item_index,
       method: "POST",
       dataType: "json",
       success: function(data){
@@ -350,7 +362,11 @@
   //設定折扣方式
   $(".cart-item-list").on("change",".discount-list",function(event){ 
     var id = event.target.parentNode.parentNode.parentNode.id;
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     var method_code = $(event.target).find(":selected").val();
+
     console.log(id);
     console.log(method_code);
     if(method_code == "B"){
@@ -360,7 +376,7 @@
         console.log(str);
 
         $.ajax({
-          url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
+          url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code="+method_code + "&discount=" + str +"&item_index=" +item_index,
           method: "post",
           dataType: "json",
           success: function(data){
