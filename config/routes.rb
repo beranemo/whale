@@ -45,10 +45,11 @@ Rails.application.routes.draw do
       collection do
         get :sales_analysis_day
         get :sales_analysis_month
+        get :new2
       end
     end
 
-    resources :cart_items, only: [:destroy] do
+    resources :cart_items, only: [:destroy, :edit] do
       member do
         post :plus_quantity
         post :minus_quantity
