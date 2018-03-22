@@ -1,7 +1,7 @@
 <div class="container">
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
-      
+  
   <br>
   <h2>訂單資訊</h2>
   <table class="table table-hover" data-search="true" data-toggle="table" id="table" >
@@ -41,7 +41,6 @@
         <td><%= order.amount%></td>
         <td>
           <%= link_to "編輯",edit_cashier_order_path(order.id)%>
-          <%= link_to "歸戶",set_member_cashier_order_path(order.id)%>
         </td>
       </tr>
       

@@ -66,6 +66,7 @@ class Cashier::MembersController < ApplicationController
     
   end
 
+  
 
   private
 
