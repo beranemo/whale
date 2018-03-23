@@ -1,4 +1,4 @@
-class Cashier::ProductsController < ApplicationController
+class Cashier::ProductsController < Cashier::BaseController
   def add_to_cart
     @product = Product.find(params[:id])
     @cart_item = current_cart.cart_items.build(product_id: @product.id)

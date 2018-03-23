@@ -1,4 +1,4 @@
-class Cashier::CountriesController < ApplicationController
+class Cashier::CountriesController < Cashier::BaseController
   before_action :set_country, only: [:update, :destroy]
 
   def index

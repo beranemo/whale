@@ -1,4 +1,4 @@
-class Cashier::DiscountsController < ApplicationController
+class Cashier::DiscountsController < Cashier::BaseController
   def new
     @discount = Discount.new(bulletin_id: params[:bulletin_id])
   end

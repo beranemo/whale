@@ -1,4 +1,4 @@
-class Cashier::AgesController < ApplicationController
+class Cashier::AgesController < Cashier::BaseController
   before_action :set_age, only: [:update, :destroy]
 
   def index

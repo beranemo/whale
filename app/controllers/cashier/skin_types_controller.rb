@@ -1,4 +1,4 @@
-class Cashier::SkinTypesController < ApplicationController
+class Cashier::SkinTypesController < Cashier::BaseController
 
   before_action :set_skin, only: [:update, :destroy]
 

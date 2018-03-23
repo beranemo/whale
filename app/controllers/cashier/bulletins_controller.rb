@@ -1,4 +1,4 @@
-class Cashier::BulletinsController < ApplicationController
+class Cashier::BulletinsController < Cashier::BaseController
   
   def index
     @bulletins = Bulletin.all.order(created_at: :desc)

@@ -1,4 +1,4 @@
-class Cashier::CartItemsController < ApplicationController
+class Cashier::CartItemsController < Cashier::BaseController
   
   def plus_quantity
     @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
