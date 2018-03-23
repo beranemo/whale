@@ -183,7 +183,10 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
 
 <script type="text/javascript">
-  
+  //讓進入頁面游標直接在barcode輸入匡
+  var elem = $("#bar-code");
+  elem.focus();
+  elem.select;
 
   $(".ship-radio").on("click", function(event){
     
@@ -665,6 +668,25 @@
     }
   }
 
+  function setToBarCodePosition() {
+    var elem = $("#bar-code");
+
+    if(elem != null) {
+        if(elem.createTextRange) {
+            var range = elem.createTextRange();
+            range.move('character', caretPos);
+            range.select();
+        }
+        else {
+            if(elem.selectionStart) {
+                elem.focus();
+                elem.setSelectionRange(caretPos, caretPos);
+            }
+            else
+                elem.focus();
+        }
+    }
+}
 </script>
 
 <script type="text/template" id="order-item-template">
