@@ -27,7 +27,7 @@
   <br>
   
   
-  <h2>購買內容#<%= current_cart.id%></h2>
+  <h2>購買內容</h2>
   <table class="table">
     <tbody class="cart-item-list">
       <tr>
@@ -85,49 +85,52 @@
   
   <br>
   <div class="row">
-    <div class="ship-info col-md-8">
+    <div class="ship-info ">
       <%= form_for [:cashier, @order] do |f|%>
-        <label>原始總金額</label>
-        <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
-  
+        <div class="col-md-7">
+          <%= f.label :payment_method, "取貨方式" %>
+          <%= f.radio_button :address ,"local", class:"local-radio" %>
+          <%= f.label :address, "自取" %>
+          <%= f.radio_button :address ," ",class:"ship-radio" %>
+          <%= f.label :address, "宅配" %><br>
+          <%= f.label :name, "姓名:" %>
+          <%= f.text_field :name %><br>
+          
+          <%= f.label :phone, "電話:" %>
+          <%= f.text_field :phone %><br>
+          
+          <%= f.label :address, "地址:" %>
+          <%= f.text_field :address ,class:"input-address form-control" %><br>
 
-        <%= f.label :discount_off, "X折扣%" %>
-        <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
-       
-        <%= f.label :amount, "折扣後總金額" %>
-        <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
-        
+          <%= f.label :payment_method, "付款方式:" %>
+          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.label :payment_method, "付現" %>
+          <%= f.radio_button :payment_method ,"刷卡" %>
+          <%= f.label :payment_method, "刷卡" %>
+          <br>
+          
+          
+          <%= f.label :remark ,"備註"%>
+          <%= f.text_area :remark, class:"form-control" %>
+        </div>
+        <div class="col-md-2 col-md-offset-1 ">
+          <label>原始總金額</label>
+          <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+    
+
+          <%= f.label :discount_off, "X折扣%" %>
+          <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+         
+          <%= f.label :amount, "折扣後總金額" %>
+          <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
+          <%= f.hidden_field :member_id, :value => @member.id %>
+          <br>
+          <br>
+          <%= f.submit "結帳完成並成立訂單",class: "btn btn-success" %>
+        </div>
 
 
-        <%= f.label :payment_method, "取貨方式" %>
-        <%= f.radio_button :address ,"local", class:"local-radio" %>
-        <%= f.label :address, "自取" %>
-        <%= f.radio_button :address ," ",class:"ship-radio" %>
-        <%= f.label :address, "宅配" %><br>
-        <%= f.label :name, "姓名:" %>
-        <%= f.text_field :name %><br>
         
-        <%= f.label :phone, "電話:" %>
-        <%= f.text_field :phone %><br>
-        
-        <%= f.label :address, "地址:" %>
-        <%= f.text_field :address ,class:"input-address form-control" %><br>
-
-        <%= f.label :payment_method, "付款方式:" %>
-        <%= f.radio_button :payment_method ,"付現" %>
-        <%= f.label :payment_method, "付現" %>
-        <%= f.radio_button :payment_method ,"刷卡" %>
-        <%= f.label :payment_method, "刷卡" %>
-        <br>
-        
-        
-        <%= f.label :remark ,"備註"%>
-        <%= f.text_area :remark, class:"form-control" %>
-        <br>
-
-        <%= f.hidden_field :member_id, :value => @member.id %>
-        
-        <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
       <% end %>
     </div>
     
