@@ -174,3 +174,9 @@ discount_method_list.each do |d_method|
   DiscountMethod.create(content: d_method[:content], code: d_method[:code], is_active: d_method[:is_active])
 end
 puts "Discount_Method created!"
+
+# =======================  Default_Coupon  =======================
+Product.create(zh_name: "折價卷",price: 0)
+puts "Default_Coupon created!"
+
+

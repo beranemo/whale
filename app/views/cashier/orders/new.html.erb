@@ -13,20 +13,21 @@
         <th>電話</th>
         <th>信箱</th>
         <th>地址</th>        
-        <th>#</th>
+        <th>備註</th>
       </tr>
        <tr>
         <td><%= @member.name%></td>
         <td><%= @member.phone%></td>
         <td><%= @member.email%></td>
-        <td class="address"><%= @member.address%></td>        
+        <td class="address"><%= @member.address%></td>
+        <td class="remark"><%= @member.remark%></td>         
       </tr>
     </tbody>
   </table>  
   <br>
   
   
-  <h2>購買內容#<%= current_cart.id%></h2>
+  <h2>購買內容</h2>
   <table class="table">
     <tbody class="cart-item-list">
       <tr>
@@ -81,52 +82,57 @@
     </tbody>
   </table>
   <hr>
-  
+  <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+  <button class="add-coupon" id="<%= @coupon.id%>">使用優惠卷</button>
+  <br>
   <br>
   <div class="row">
-    <div class="ship-info col-md-8">
+    <div class="ship-info ">
       <%= form_for [:cashier, @order] do |f|%>
-        <label>原始總金額</label>
-        <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
-  
+        <div class="col-md-7">
+          <%= f.label :payment_method, "取貨方式" %>
+          <%= f.radio_button :address ,"local", class:"local-radio" %>
+          <%= f.label :address, "自取" %>
+          <%= f.radio_button :address ," ",class:"ship-radio" %>
+          <%= f.label :address, "宅配" %><br>
+          <%= f.label :name, "姓名:" %>
+          <%= f.text_field :name %><br>
+          
+          <%= f.label :phone, "電話:" %>
+          <%= f.text_field :phone %><br>
+          
+          <%= f.label :address, "地址:" %>
+          <%= f.text_field :address ,class:"input-address form-control" %><br>
 
-        <%= f.label :discount_off, "X折扣%" %>
-        <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
-       
-        <%= f.label :amount, "折扣後總金額" %>
-        <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
-        
+          <%= f.label :payment_method, "付款方式:" %>
+          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.label :payment_method, "付現" %>
+          <%= f.radio_button :payment_method ,"刷卡" %>
+          <%= f.label :payment_method, "刷卡" %>
+          <br>
+          
+          
+          <%= f.label :remark ,"備註"%>
+          <%= f.text_area :remark, class:"form-control" %>
+        </div>
+        <div class="col-md-2 col-md-offset-1 ">
+          <label>原始總金額</label>
+          <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+    
+
+          <%= f.label :discount_off, "X折扣%" %>
+          <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+         
+          <%= f.label :amount, "折扣後總金額" %>
+          <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
+          <%= f.hidden_field :member_id, :value => @member.id %>
+          <br>
+          <br>
+          <%= f.submit "結帳完成並成立訂單",class: "btn btn-success" %>
+        </div>
 
 
-        <%= f.label :payment_method, "取貨方式" %>
-        <%= f.radio_button :address ,"local", class:"local-radio" %>
-        <%= f.label :address, "自取" %>
-        <%= f.radio_button :address ," ",class:"ship-radio" %>
-        <%= f.label :address, "宅配" %><br>
-        <%= f.label :name, "姓名:" %>
-        <%= f.text_field :name %><br>
         
-        <%= f.label :phone, "電話:" %>
-        <%= f.text_field :phone %><br>
-        
-        <%= f.label :address, "地址:" %>
-        <%= f.text_field :address ,class:"input-address form-control" %><br>
-
-        <%= f.label :payment_method, "付款方式:" %>
-        <%= f.radio_button :payment_method ,"付現" %>
-        <%= f.label :payment_method, "付現" %>
-        <%= f.radio_button :payment_method ,"刷卡" %>
-        <%= f.label :payment_method, "刷卡" %>
-        <br>
-        
-        
-        <%= f.label :remark ,"備註"%>
-        <%= f.text_area :remark, class:"form-control" %>
-        <br>
-
-        <%= f.hidden_field :member_id, :value => @member.id %>
-        
-        <%= f.submit "結帳完成並成立訂單",class: "btn btn-primary" %>
       <% end %>
     </div>
     
@@ -177,7 +183,10 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
 
 <script type="text/javascript">
-  
+  //讓進入頁面游標直接在barcode輸入匡
+  var elem = $("#bar-code");
+  elem.focus();
+  elem.select;
 
   $(".ship-radio").on("click", function(event){
     
@@ -188,6 +197,47 @@
     
     $(".ship-info").find(".input-address").attr('disabled','disabled');
   });
+
+  $(".add-coupon").on("click", function(event){
+    var id  = event.target.id;
+    var coupon_price = $("#coupon-price").val(); 
+    console.log(id);
+    $.ajax({
+      url: "/cashier/products/" + id + "/add_to_cart?coupon_price=" + coupon_price,
+      method: "POST",
+      dataType: "json",      
+      success: function(data){        
+        var cart_item = document.createElement("tr");
+        var total_price = $("#origin_amount");
+        var total_price_value = Number(total_price.val());
+        var coupon_price = Number(data["coupon_price"]);
+        var origin_amount = total_price_value+coupon_price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
+        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+        console.log(coupon_price);
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val(origin_amount);
+
+
+
+        cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
+        $(cart_item).find("select").val("D");
+        $(cart_item).html($("#discount-template").html());
+        $(cart_item).find(".category").html(data["category"]);
+        $(cart_item).find(".zh_name").html(data["zh_name"]);
+        $(cart_item).find(".price").html("0");
+        $(cart_item).find(".upc").html(data["upc"]);
+        $(".cart-item-list").append(cart_item);
+        $(cart_item).find(".o-price").html("0");
+        $(cart_item).find(".d-price").html(coupon_price);
+        $(cart_item).find(".v-price").html(-coupon_price);
+
+          
+      }
+    });
+  }); 
 
   $(".product-list").on("click", ".add_to_cart", function(event){
     var id  = event.target.parentNode.parentNode.id;
@@ -500,10 +550,11 @@
 
   //輸入barcode來搜尋商品
   function searchProduct(event) {
+    
     if (event.keyCode == 13) {
         var barcode = $("#bar-code").val();
         console.log(barcode);
-
+        $("#bar-code").val("");
         $.ajax({
           url: "/cashier/products/barcode_to_cart?barcode=" + barcode ,
             method: "POST",
@@ -550,6 +601,8 @@
       return false;
     }
   }
+
+  //變更單一品項打折框數字
   function setItemDiscount(event) {
     
     if (event.keyCode == 13) {
@@ -585,6 +638,7 @@
     }
   }
 
+  //變更總金額打折框數字
   function setOrderDiscount(event) {
     
     if (event.keyCode == 13) {
@@ -601,6 +655,7 @@
     }
   }
 
+  //變更總金額
   function setDiscountAmount(event) {
     
     if (event.keyCode == 13) {
@@ -617,6 +672,8 @@
       return false;
     }
   }
+
+  
 
 </script>
 
@@ -652,4 +709,34 @@
   </td>
 </script>
 
-
+<script type="text/template" id="discount-template">
+  <td class="category"></td>
+  <td class="zh_name"></td>  
+  <td class="upc"></td>
+  <td class="price"></td> 
+  <td>
+    <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+    <input type="text" name="" size="3" class="quantity text-center" value="1">
+    <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+  </td>
+  <td class="o-price"></td> 
+  <td class="v-price"></td>  
+  <td class="d-price"></td>  
+  <td class="discount_method">
+    <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
+      <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
+        <option value="A">第二件半價</option>
+        <option value="B">打折</option>
+        <option value="C">贈品</option>
+        <option selected="selected" value="D">優惠價</option>
+        <option value="E">無</option>
+      </select>
+    </form>
+  </td>  
+  <td>
+    <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+  </td>
+</script>

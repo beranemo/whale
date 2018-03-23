@@ -1,19 +1,29 @@
 class Cashier::ProductsController < ApplicationController
   def add_to_cart
     @product = Product.find(params[:id])
-    @cart_item = current_cart.cart_items.build(product_id: @product.id)
-    discount_method = DiscountMethod.find_by(content: "無")
-    @cart_item.discount_method_code = discount_method.code
-    @cart_item.save!
-    
-    if @cart_item.product.discount !=nil
-      @bulletin = @cart_item.product.discount.bulletin
+    if @product.zh_name == "折價卷"
+      @cart_item = current_cart.cart_items.build(product_id: @product.id, discount_off: -params[:coupon_price].to_i)
+      discount_method = DiscountMethod.find_by(content: "優惠價")
+      @cart_item.discount_method_code = discount_method.code
+      @cart_item.save!
+      puts @cart_item.discount_off
+      render :json => {:id => @product.id, :zh_name => @product.zh_name,
+                      :coupon_price => @cart_item.discount_off, :quantity => @cart_item.quantity,
+                      }
+
     else
-      @bulletin = Bulletin.new
+      @cart_item = current_cart.cart_items.build(product_id: @product.id)
+      discount_method = DiscountMethod.find_by(content: "無")
+      @cart_item.discount_method_code = discount_method.code
+      @cart_item.save!
+      
+      
+      render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
+                      :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
+                      }
     end
-    render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
-                    :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
-                    :bulletin => @bulletin.title}
+
+      
   end
   
   def barcode_to_cart
