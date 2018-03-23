@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       collection do
         get :sales_analysis_day
         get :sales_analysis_month
+        post :search_outcome_day
       end
     end
 

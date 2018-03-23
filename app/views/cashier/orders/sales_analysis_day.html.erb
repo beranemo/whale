@@ -2,6 +2,89 @@
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '每日銷售報表' } %>
-      
-  <h2>每日銷售報表</h2>
+
+ <form id="search-form">
+  <input type="date" id="date1">
+  <button id="btn1">日期搜尋</button>
+</form>
+
+  <table class="table" style="display: none;">
+    <tbody id="search-list">
+      <tr>
+        <th>分類</th>
+        <th>中文名稱</th>
+        <th>國際通用碼</th>
+        <th>規格</th>
+        <th>定價</th>
+        <th>數量</th>
+        <th>銷售金額</th> 
+      </tr>
+    </tbody>  
+  </table>  
 </div>
+
+<script>
+
+$("#btn1").click(function(){
+  event.preventDefault();
+  $(".search-item").remove();//刪除原先的搜尋結果
+  var date = $("#date1").val();
+  console.log(date);
+  $.ajax({
+    url: "/cashier/orders/search_outcome_day" ,
+    method: "POST",
+    dataType: "json",
+    data: {
+      created_at: date,
+    },
+    success: function(datas){
+      var total_uni = datas.total_uni;
+      var order_item_hash = datas.order_item_hash;
+      var products = datas.products;
+      console.log(order_item_hash);
+      console.log(total_uni[0]["id"]);
+      if(datas.length == 0){
+            alert("No data found");
+      }
+      else{
+        $(".table").show();   
+
+        for(var i=0; i < total_uni.length;i++){
+          
+          var order_item = document.createElement("tr");
+  
+            console.log(total_uni[i]);
+            // console.log(products);
+            // console.log(products[i]["zh_name"]);
+            order_item.id = total_uni[i]["id"];
+            $(order_item).attr("class","search-item");
+            $(order_item).html($("#analysis-template").html());
+            $(order_item).find(".category").html(products[i]["category"]);
+            $(order_item).find(".zh_name").html(products[i]["zh_name"]);
+            $(order_item).find(".upc").html(products[i]["upc"]);
+            $(order_item).find(".capacity").html(products[i]["capacity"]);
+            $(order_item).find(".price").html(products[i]["price"]);
+            $(order_item).find(".quantity").html(order_item_hash[products[i]["id"]]);
+            // $(order_item).find(".total").html(product_amount[i]);
+            
+            $("#search-list").append(order_item);
+        }
+      }
+    }
+  });
+});  
+</script>
+
+
+<script type="text/template" id="analysis-template">
+  
+  <td class="category"></td>
+  <td class="zh_name"></td>
+  <td class="upc"></td>
+  <td class="capacity"></td>
+  <td class="price"></td>
+  <td class="quantity"></td>
+  <td class="total"></td>
+
+  
+</script>
