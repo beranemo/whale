@@ -1,4 +1,4 @@
-class Cashier::InfoWaysController < ApplicationController
+class Cashier::InfoWaysController < Cashier::BaseController
   before_action :set_info_way, only: [:update, :destroy]
 
   def index

@@ -1,3 +1,3 @@
-class Cashier::OrderItemsController < ApplicationController
+class Cashier::OrderItemsController < Cashier::BaseController
   
 end

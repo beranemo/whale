@@ -1,4 +1,4 @@
-class Cashier::ProductsController < ApplicationController
+class Cashier::ProductsController < Cashier::BaseController
   def add_to_cart
     @product = Product.find(params[:id])
     if @product.zh_name == "折價卷"

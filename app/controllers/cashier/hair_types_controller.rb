@@ -1,4 +1,4 @@
-class Cashier::HairTypesController < ApplicationController
+class Cashier::HairTypesController < Cashier::BaseController
 
   before_action :set_hair, only: [:update, :destroy]
 

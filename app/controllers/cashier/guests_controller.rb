@@ -1,4 +1,4 @@
-class Cashier::GuestsController < ApplicationController
+class Cashier::GuestsController < Cashier::BaseController
 
   before_action :set_guest, only:  [:edit, :update, :destroy]
 

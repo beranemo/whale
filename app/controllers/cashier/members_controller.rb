@@ -1,4 +1,4 @@
-class Cashier::MembersController < ApplicationController
+class Cashier::MembersController < Cashier::BaseController
   before_action :authenticate_user!
 
   def index

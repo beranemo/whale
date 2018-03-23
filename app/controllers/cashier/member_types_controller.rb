@@ -1,4 +1,4 @@
-class Cashier::MemberTypesController < ApplicationController
+class Cashier::MemberTypesController < Cashier::BaseController
   before_action :set_member, only: [:update, :destroy]
 
   def index

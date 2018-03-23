@@ -1,4 +1,4 @@
-class Cashier::GuestTypesController < ApplicationController
+class Cashier::GuestTypesController < Cashier::BaseController
   before_action :set_guest, only: [:update, :destroy]
 
   def index

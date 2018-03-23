@@ -1,4 +1,4 @@
-class Cashier::OrdersController < ApplicationController
+class Cashier::OrdersController < Cashier::BaseController
   def index
     @orders = Order.all
 
