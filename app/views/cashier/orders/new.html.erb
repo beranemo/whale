@@ -82,7 +82,9 @@
     </tbody>
   </table>
   <hr>
-  
+  <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+  <button class="add-coupon" id="<%= @coupon.id%>">使用優惠卷</button>
+  <br>
   <br>
   <div class="row">
     <div class="ship-info ">
@@ -192,6 +194,47 @@
     
     $(".ship-info").find(".input-address").attr('disabled','disabled');
   });
+
+  $(".add-coupon").on("click", function(event){
+    var id  = event.target.id;
+    var coupon_price = $("#coupon-price").val(); 
+    console.log(id);
+    $.ajax({
+      url: "/cashier/products/" + id + "/add_to_cart?coupon_price=" + coupon_price,
+      method: "POST",
+      dataType: "json",      
+      success: function(data){        
+        var cart_item = document.createElement("tr");
+        var total_price = $("#origin_amount");
+        var total_price_value = Number(total_price.val());
+        var coupon_price = Number(data["coupon_price"]);
+        var origin_amount = total_price_value+coupon_price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
+        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+        console.log(coupon_price);
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val(origin_amount);
+
+
+
+        cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
+        $(cart_item).find("select").val("D");
+        $(cart_item).html($("#discount-template").html());
+        $(cart_item).find(".category").html(data["category"]);
+        $(cart_item).find(".zh_name").html(data["zh_name"]);
+        $(cart_item).find(".price").html("0");
+        $(cart_item).find(".upc").html(data["upc"]);
+        $(".cart-item-list").append(cart_item);
+        $(cart_item).find(".o-price").html("0");
+        $(cart_item).find(".d-price").html(coupon_price);
+        $(cart_item).find(".v-price").html(-coupon_price);
+
+          
+      }
+    });
+  }); 
 
   $(".product-list").on("click", ".add_to_cart", function(event){
     var id  = event.target.parentNode.parentNode.id;
@@ -656,4 +699,34 @@
   </td>
 </script>
 
-
+<script type="text/template" id="discount-template">
+  <td class="category"></td>
+  <td class="zh_name"></td>  
+  <td class="upc"></td>
+  <td class="price"></td> 
+  <td>
+    <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+    <input type="text" name="" size="3" class="quantity text-center" value="1">
+    <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+  </td>
+  <td class="o-price"></td> 
+  <td class="v-price"></td>  
+  <td class="d-price"></td>  
+  <td class="discount_method">
+    <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
+      <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
+        <option value="A">第二件半價</option>
+        <option value="B">打折</option>
+        <option value="C">贈品</option>
+        <option selected="selected" value="D">優惠價</option>
+        <option value="E">無</option>
+      </select>
+    </form>
+  </td>  
+  <td>
+    <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+  </td>
+</script>

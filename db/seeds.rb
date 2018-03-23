@@ -176,7 +176,7 @@ end
 puts "Discount_Method created!"
 
 # =======================  Default_Coupon  =======================
-Product.create(zh_name: "折價卷")
+Product.create(zh_name: "折價卷",price: 0)
 puts "Default_Coupon created!"
 
 
