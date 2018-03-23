@@ -2,11 +2,14 @@
   
   <%= render :partial => "shared/tabs2", :locals => { :selected_item => '上傳商品' } %>
   
-  <br>
+<div class="col-md-4 col-md-offset-4" style="text-align: center">
   <%= form_tag import_cashier_products_path, multipart: true do %>
+    <%= image_tag ("xlsx.png") , style:'height:200px' %>
     <%= file_field_tag :file %>
-    <%= submit_tag "更新" %>
+    <br>
+    <%= submit_tag "更新" , class:'btn btn-success form-control'%>
   <% end %>
+  </div>
 </div>
 
   

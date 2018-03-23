@@ -113,6 +113,56 @@ class Cashier::OrdersController < ApplicationController
     
   end
 
+  def sales_analysis_day
+     @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
+
+    sum = []
+    @orders.each do |order|
+      order_items = order.order_items
+
+      sum.concat(order_items)
+      puts sum
+    end
+    @total = sum.sort_by { |k| k["product_id"] }
+    @total_uni = @total.uniq{|t| t["product_id"]}
+
+  end
+
+  def search_outcome_day
+    date = Date.parse(params[:created_at]).to_time
+    puts date
+    @orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+    # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
+
+    sum = []
+    @orders.each do |order|
+      order_items = order.order_items
+
+      sum.concat(order_items)
+      puts sum
+    end
+    @total = sum.sort_by { |k| k["product_id"] }
+    @total_uni = @total.uniq{|t| t["product_id"]}
+
+    mix_arr = @total.pluck(:product_id, :quantity).sort!
+    @order_item_hash = Hash.new(0)
+    mix_arr.each {|key, value| @order_item_hash[key] += value}
+
+    # 另外抓商品價格pluck(:product_id, :price)
+    # mix_arr = @total.pluck(:product_id, :quantity).sort!
+    # @order_item_hash = Hash.new(0)
+    # mix_arr.each {|key, value| @order_item_hash[key] += value}
+
+    @products = Array.new()
+    @total_uni.each do |item|
+      @products  << item.product
+    end
+
+    #puts @order_item_hash
+    #puts @products[0]
+    render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products}
+  end
+
   private
 
   def order_params
