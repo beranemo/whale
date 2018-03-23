@@ -19,9 +19,16 @@ class Cashier::OrdersController < ApplicationController
     end
   end
 
+  def set_member  
+    @order = Order.find(params[:id])
+    @member = Member.find(params[:member_id])
+  end
+
   def new
     @order = Order.new(member_id: params[:id])
+    @index_hash = Hash.new(0)
     @order.amount = 0
+    @order.discount_off = 100
     @products = Product.all 
     @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"
@@ -35,6 +42,33 @@ class Cashier::OrdersController < ApplicationController
 
   end
 
+  def new2
+    @order = Order.new(member_id: params[:id])
+    @order.amount = 0
+    @order.discount_off = 100
+    @products = Product.all 
+    @cart_items = current_cart.cart_items.all
+    if params[:id] != "-1"
+      @member = Member.find(params[:id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      @order.address = @member.address
+    else
+      @member = Member.new(id: -1)
+    end
+
+  end
+  def update
+    @order = Order.find(params[:id])
+    @order.member_id = params[:member_id]
+
+    if @order.save
+      redirect_to cashier_orders_path
+      flash[:notice] = "會員綁定成功"
+    else
+      flash[:alert] = "綁定失敗"
+    end
+  end
   def create
     if current_cart.cart_items.size ==0
       flash[:alert] = "訂單內容不能是空的"
@@ -47,7 +81,7 @@ class Cashier::OrdersController < ApplicationController
     else
       @order = current_user.orders.build(order_params)
   
-      @order.amount =0
+      
       current_cart.cart_items.each do |item|
         product = item.product
         product.quantity -= item.quantity
@@ -58,9 +92,9 @@ class Cashier::OrdersController < ApplicationController
         end
         stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
         stock_record.save!
-        order_item = @order.order_items.build(product_id: item.product.id, price: item.product.price, quantity: item.quantity)
+        order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
              
-        @order.amount += item.calculate
+        
         order_item.save!
         product.save!
       end
@@ -132,7 +166,7 @@ class Cashier::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark)
+    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark, :amount, :discount_off)
   end
   
 end

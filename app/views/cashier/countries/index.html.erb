@@ -23,6 +23,7 @@
       <tr>
         <th class="alncenter auto-no">編號</th>
         <th class="alncenter">內容</th>
+        <th>狀態</th>
         <th class="alncenter">功能</th>
       </tr>
     </thead>
@@ -32,6 +33,10 @@
       <tr>
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alnleft"><%= country.country_type %></td>
+        <td>
+        <% if country.is_active %><span class="label label-success">啓用中</span><% end %>
+        <% if !country.is_active %><span class="label label-danger">停用中</span><% end %>
+        </td>
         <td>
           <%= link_to '編輯', cashier_country_path(id: country.id) %> ｜
           <%= link_to '刪除', cashier_country_path(country), method: :delete, data: {confirm:"確定刪除?"} %>

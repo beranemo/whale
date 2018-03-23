@@ -81,8 +81,11 @@ class Cashier::GuestsController < ApplicationController
   def search_outcome
     date = Date.parse(params[:created_at]).to_time
     #@guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
-    
-    @guests = Guest.where("DateTime(created_at) BETWEEN ? AND ?", date.beginning_of_day, date.end_of_day)
+    puts date
+    @guests = Guest.where(created_at: date.beginning_of_day..date.end_of_day)
+    @guests.each do |g|
+      g.created_at.in_time_zone('Taipei')
+    end
     render :json => @guests.to_json(:include => [:age, :country, :guest_type, :info_way, :user])
   end
 

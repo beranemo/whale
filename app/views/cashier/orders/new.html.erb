@@ -34,32 +34,38 @@
         <th>商品名稱</th>          
         <th>國際條碼</th>
         <th>定價</th>
-        <th>折扣後金額</th>
-        <th>購買數量</th>
+        <th>購買數量</th>        
+        <th>小計</th>
+        <th>折扣金額</th>
+        <th>售價</th>
         <th>打折方式</th>
         <th>#</th>
-      </tr>        
+      </tr> 
+             
       <% @cart_items.each do |item|%>
-        <tr id="<%= item.product.id%>">
+
+        <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
           <td><%=item.product.category%></td>
           <td><%=item.product.zh_name%></td>            
-          <td><%=item.product.upc%></td>
-          <td class="price">
-            <%=item.product.price%>
-            <% if  item.discount_method_code == "B"%> 
-            *
-            <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setDiscount(event)">
-            %
-            <% else %>
-            <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
-            <% end %>
-          </td>                  
-          <td class="d-price"><%= item.calculate %></td>
+          <td><%=item.product.upc%></td> 
+          <td class="price"><%= item.product.price %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
-          </td>  
+          </td>
+          <td class="o-price">
+            <%=item.origin_calculate%>
+            <% if  item.discount_method_code == "B"%> 
+            *
+            <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setItemDiscount(event)">
+            %
+            <% else %>
+            <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
+            <% end %>
+          </td>           
+          <td class="v-price"><%= item.origin_calculate - item.calculate %></td>
+          <td class="d-price"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
             <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
@@ -68,28 +74,30 @@
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
-
+          <% @index_hash[item.product.id] +=1%>
           <% @order.amount += item.calculate %>
         </tr>
       <% end %>
     </tbody>
   </table>
   <hr>
-  <div class="row">
-    <div class="col-md-3">
-      <h5>總金額</h5>
-    </div>  
-    <div class="col-md-2 col-md-offset-5 text-right">
-      <h5 id="total">$ <%= @order.amount %></h5>
-      
-    </div>  
-  </div>
+  
   <br>
   <div class="row">
     <div class="ship-info col-md-8">
       <%= form_for [:cashier, @order] do |f|%>
+        <label>原始總金額</label>
+        <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+  
+
+        <%= f.label :discount_off, "X折扣%" %>
+        <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+       
+        <%= f.label :amount, "折扣後總金額" %>
+        <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
         
-        
+
+
         <%= f.label :payment_method, "取貨方式" %>
         <%= f.radio_button :address ,"local", class:"local-radio" %>
         <%= f.label :address, "自取" %>
@@ -189,30 +197,36 @@
       method: "POST",
       dataType: "json",      
       success: function(data){        
-        var order_item = document.createElement("tr");
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
-        $(total_price).html("$ "+(total_price_value+Number(data["price"])));
+        var cart_item = document.createElement("tr");
+        var total_price = $("#origin_amount");
+        var total_price_value = Number(total_price.val());
+        var o_price = Number(data["price"]);
+        var origin_amount = total_price_value+o_price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
+        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
 
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
-        if(cart_item.length){
-          console.log(data["quantity"]);
-          $(cart_item).find(".quantity").val(data["quantity"]);
-        }
-        else{
-          console.log(data["id"]);
-          $(".product-list").find("#" + data["id"]).remove();
-          order_item.id = data["id"];
-          $(order_item).html($("#order-item-template").html());
-          $(order_item).find(".category").html(data["category"]);
-          $(order_item).find(".zh_name").html(data["zh_name"]);
-          $(order_item).find(".price").html(data["price"]);
-          $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-          $(order_item).find(".d-price").html(data["price"]);
-          $(order_item).find(".bulletin").html(data["bulletin"]);
-          $(order_item).find(".upc").html(data["upc"]);
-          $(".cart-item-list").append(order_item);
-        }
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val(origin_amount);
+
+       
+        console.log(data["id"]);
+        console.log(exist_cart_item);
+
+        cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
+
+        $(cart_item).html($("#order-item-template").html());
+        $(cart_item).find(".category").html(data["category"]);
+        $(cart_item).find(".zh_name").html(data["zh_name"]);
+        $(cart_item).find(".price").html(o_price);
+        $(cart_item).find(".upc").html(data["upc"]);
+        $(".cart-item-list").append(cart_item);
+        $(cart_item).find(".o-price").html(o_price);
+        $(cart_item).find(".o-price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setItemDiscount(event)">');
+        $(cart_item).find(".d-price").html(o_price);
+        $(cart_item).find(".v-price").html("0");
+
           
       }
     });
@@ -221,62 +235,128 @@
 
   $(".cart-item-list").on("click",".delete-item",function(event){
     var id = event.target.parentNode.parentNode.id;
-
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     $.ajax({
-      url: "/cashier/cart_items/" + id,
+      url: "/cashier/cart_items/" + product_id+"?item_index=" +item_index,
       method: "DELETE",
       dataType: "json",
 
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
+        var total_price = $("#origin_amount");
+        var total_price_value = Number(total_price.val());
         var price = Number(data["price"]);
-        $(total_price).html("$ "+(total_price_value-price));
 
-        $(".cart-item-list").find("#"+data["id"]).remove();
+        var origin_amount = total_price_value-price;
+        var discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*discount_off/100);
 
+        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val((total_price_value-price));
+        $(".cart-item-list").find("tr[id^="+data["id"]+"-"+data["item_index"]+"]").remove();
+
+        for(i = 1+Number(data["item_index"]); i < exist_cart_item ; i++){
+          $(".cart-item-list").find("tr[id^="+data["id"]+"-"+i+"]").attr("id",data["id"].toString() +"-" +(i-1));
+          console.log(i);
+        }
       }
-    })
+    });
   });
 
 
   $(".cart-item-list").on("click",".plus-item",function(event){
     var id = event.target.parentNode.parentNode.id;
-
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     $.ajax({
-      url: "/cashier/cart_items/" + id +"/plus_quantity",
+      url: "/cashier/cart_items/" + product_id +"/plus_quantity?item_index=" + item_index,
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
-      
-        var price = Number(data["price"]);
+        var total_price = $("#origin_amount");
+        var total_price_value = Number(total_price.val());
+        var l_price = Number(data["l_price"]);
+        var v_price = Number(data["v_price"]);
+        var d_price = Number(data["d_price"]);
+        var origin_amount = total_price_value+d_price-l_price;
+        var order_discount_off = Number($("#order_discount_off").val());
+        var discount_amout = Math.round(origin_amount*order_discount_off/100);
+        var id = data["id"]+ '-' + data["item_index"]
+        var cart_item = $(".cart-item-list").find("#"+id);
+        var item_discount_off = $(cart_item).find(".discount_off");
 
-        console.log(price);
-        $(total_price).html("$ "+(total_price_value+price));
 
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
+        console.log(data["item_index"]);
+        console.log(id);
+        console.log(data["id"]);
+        $("#order_amount").val(discount_amout);
+        $(total_price).val(origin_amount);
+
+        
         $(cart_item).find(".quantity").val(data["quantity"]);
+        $(cart_item).find(".o-price").html(data["o_price"]);
+        if(item_discount_off.val() != "100")
+        {
+          $(cart_item).find(".o-price").append("*");
+          $(cart_item).find(".o-price").append(item_discount_off);
+          $(cart_item).find(".o-price").append("%");
+        }
+        else
+        {
+          $(cart_item).find(".o-price").append(item_discount_off);
+        } 
+        $(cart_item).find(".d-price").html(data["d_price"]);
+        $(cart_item).find(".v-price").html(data["v_price"]);
       }
     })
   });
 
   $(".cart-item-list").on("click",".minus-item",function(event){
     var id = event.target.parentNode.parentNode.id;
-
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
     $.ajax({
-      url: "/cashier/cart_items/" + id +"/minus_quantity",
+      url: "/cashier/cart_items/" + product_id +"/minus_quantity?item_index=" +item_index,
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
-        var price = Number(data["price"]);
-        $(total_price).html("$ "+(total_price_value+price));
+        if(data["success"] == "1"){
+          var total_price = $("#origin_amount");
+          var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
+          var v_price = Number(data["v_price"]);
+          var d_price = Number(data["d_price"]);
+          var origin_amount = total_price_value+d_price-l_price;
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+          var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          var item_discount_off = $(cart_item).find(".discount_off");
 
-        var cart_item = $(".cart-item-list").find("#"+data["id"]);
-        $(cart_item).find(".quantity").val(data["quantity"]);
+          $("#order_amount").val(discount_amout);
+          $(total_price).val(origin_amount);
+
+          
+          $(cart_item).find(".quantity").val(data["quantity"]);
+          $(cart_item).find(".o-price").html(data["o_price"]);
+          if(item_discount_off.val() != "100")
+          {
+            $(cart_item).find(".o-price").append("*");
+            $(cart_item).find(".o-price").append(item_discount_off);
+            $(cart_item).find(".o-price").append("%");
+          }
+          else
+          {
+            $(cart_item).find(".o-price").append(item_discount_off);
+          }     
+          $(cart_item).find(".d-price").html(data["d_price"]);
+          $(cart_item).find(".v-price").html(data["v_price"]);
+
+        }        
       }
     })
   });
@@ -286,9 +366,13 @@
   //設定折扣方式
   $(".cart-item-list").on("change",".discount-list",function(event){ 
     var id = event.target.parentNode.parentNode.parentNode.id;
-    var method_code = $(".cart-item-list").find("#"+id).find(":selected").val();
-    console.log(id);
-    console.log(method_code);
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
+    var method_code = $(event.target).find(":selected").val();
+
+
+
     if(method_code == "B"){
       var str ;
       if(str=prompt("請輸入0-100的數字","100"))
@@ -296,72 +380,122 @@
         console.log(str);
 
         $.ajax({
-          url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
+          url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code="+method_code + "&discount=" + str +"&item_index=" +item_index,
           method: "post",
           dataType: "json",
           success: function(data){
-            var total_price = $("#total");
-            var total_price_value = Number(total_price.html().replace('$ ',''));
+            var total_price = $("#origin_amount");
+            var total_price_value = Number(total_price.val());
+            var l_price = Number(data["l_price"]);
             var v_price = Number(data["v_price"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);
-            
-            var discount_off = $(cart_item).find(".discount_off");
-            $(discount_off).val(data["discount_off"]);
-            $(discount_off).prop("type","text");
-            console.log("test1"+discount_off.length);
-            console.log("test2"+data["discount_off"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]);
+            var d_price = Number(data["d_price"]);
+            var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);            
+            var item_discount_off = $(cart_item).find(".discount_off");
+            console.log(cart_item.length);
+            console.log(data["id"]);
+            console.log(data["item_index"]);
+            $(item_discount_off).val(data["discount_off"]);
+            $(item_discount_off).prop("type","text");
+
+            var origin_amount = total_price_value+(d_price-l_price);
+            var order_discount_off = Number($("#order_discount_off").val());
+            var discount_amout = Math.round(origin_amount*order_discount_off/100);
+
+            $("#order_amount").val(discount_amout);
+
             $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".discount_off").after("%");
+            $(cart_item).find(".v-price").html(data["v_price"]);
             $(cart_item).find(".d-price").html(data["d_price"]);
-            $(cart_item).find(".price").append("%");
-            $(total_price).html("$ "+(total_price_value+v_price));
+   
+            $(total_price).val(origin_amount);
+          } 
+        });
+      }
+    }
+    else if(method_code == "D"){
+      if(str=prompt("請輸入修改金額",""))
+      {
+        console.log(str);
+
+        $.ajax({
+          url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code=D" + "&discount=" + str+"&item_index=" +item_index,
+          method: "post",
+          dataType: "json",
+          success: function(data){
+            var total_price = $("#origin_amount");
+            var total_price_value = Number(total_price.val());
+            var l_price = Number(data["l_price"]);
+            var v_price = Number(data["v_price"]);
+            var d_price = Number(data["d_price"]);
+            var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);          
+            var item_discount_off = $(cart_item).find(".discount_off");
+            var origin_amount = total_price_value+d_price-l_price;
+            var order_discount_off = Number($("#order_discount_off").val());
+            var discount_amout = Math.round(origin_amount*order_discount_off/100);
+
+            console.log(cart_item.length);
+            console.log(data["id"]);
+            console.log(data["item_index"]);
+            $(item_discount_off).val("100");
+            $(item_discount_off).prop("type","hidden");
+
+            $(cart_item).find(".o-price").html(data["o_price"]);
+            $(cart_item).find(".o-price").append(item_discount_off);
+
+            
+
+            $("#order_amount").val(discount_amout);
+
+            $(cart_item).find(".v-price").html(data["v_price"]);
+            $(cart_item).find(".d-price").html(data["d_price"]);
+   
+            $(total_price).val(origin_amount);
           } 
         });
       }
     }
     else{
       $.ajax({
-        url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code,
+        url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code="+method_code+"&item_index=" +item_index,
         method: "post",
         dataType: "json",
         success: function(data){
-          var cart_item = $(".cart-item-list").find("#"+data["id"]);
-          $(cart_item).find(".price").html(data["price"]);
-          $(cart_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-          $(cart_item).find(".d-price").html(data["d_price"]);
-          var total_price = $("#total");
-          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var total_price = $("#origin_amount");
+          var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
           var v_price = Number(data["v_price"]);
-          console.log(v_price);
-          $(total_price).html("$ "+(total_price_value+v_price));
+          var d_price = Number(data["d_price"]);
+          var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);           
+          var item_discount_off = $(cart_item).find(".discount_off");
+
+          console.log(cart_item.length);
+            console.log(data["id"]);
+            console.log(data["item_index"]);
+
+          $(item_discount_off).val("100");
+          $(item_discount_off).prop("type","hidden");
+
+          $(cart_item).find(".o-price").html(data["o_price"]);
+          $(cart_item).find(".o-price").append(item_discount_off);
+
+          var origin_amount = total_price_value+d_price-l_price;
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+
+          $("#order_amount").val(discount_amout);
+
+          
+
+          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(cart_item).find(".d-price").html(data["d_price"]);
+ 
+          $(total_price).val(origin_amount);
         } 
       });
-    }
-
-
-      
+    }    
   });
 
-  //設定折扣數
-  $(".cart-item-list").on("change",".discount-off",function(event){
-    var str = event.target.val();
-    var id = event.target.parentNode.parentNode.id;
-    console.log(str);
-
-    $.ajax({
-      url: "/cashier/cart_items/"+ id +"/add_discount?method_code="+method_code + "&discount=" + str,
-      method: "post",
-      dataType: "json",
-      success: function(data){
-        var total_price = $("#total");
-        var total_price_value = Number(total_price.html().replace('$ ',''));
-        var price = Number(data["price"]);
-        console.log(price);
-        $(total_price).html("$ "+(total_price_value+price));
-      } 
-    });
-    
-  });
 
 
   //輸入barcode來搜尋商品
@@ -379,21 +513,36 @@
                 alert("No data found");
               }
               else{
-                var order_item = document.createElement("tr");
-                var total_price = $("#total");
-                var total_price_value = Number(total_price.html().replace('$ ',''));
-                $(total_price).html("$ "+(total_price_value+Number(data["price"])));
-       
-                console.log(data["id"]);                
-                order_item.id = data["id"];
-                $(order_item).html($("#order-item-template").html());
-                $(order_item).find(".category").html(data["category"]);
-                $(order_item).find(".zh_name").html(data["zh_name"]);
-                $(order_item).find(".price").html(data["price"]);
-                $(order_item).find(".price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setDiscount(event)">');
-                $(order_item).find(".d-price").html(data["price"]);
-                $(order_item).find(".upc").html(data["upc"]);
-                $(".cart-item-list").append(order_item);
+                var cart_item = document.createElement("tr");
+                var total_price = $("#origin_amount");
+                var total_price_value = Number(total_price.val());
+                var o_price = Number(data["price"]);
+                var origin_amount = total_price_value+o_price;
+                var discount_off = Number($("#order_discount_off").val());
+                var discount_amout = Math.round(origin_amount*discount_off/100);
+                var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+
+                $("#order_amount").val(discount_amout);
+
+                $(total_price).val(origin_amount);
+
+               
+                console.log(data["id"]);
+                console.log(exist_cart_item);
+
+                cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
+
+                $(cart_item).html($("#order-item-template").html());
+                $(cart_item).find(".category").html(data["category"]);
+                $(cart_item).find(".zh_name").html(data["zh_name"]);
+                $(cart_item).find(".price").html(o_price);
+                $(cart_item).find(".upc").html(data["upc"]);
+                $(".cart-item-list").append(cart_item);
+                $(cart_item).find(".o-price").html(o_price);
+                $(cart_item).find(".o-price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setItemDiscount(event)">');
+                $(cart_item).find(".d-price").html(o_price);
+                $(cart_item).find(".v-price").html("0");
+
               }    
                     
             }
@@ -401,7 +550,7 @@
       return false;
     }
   }
-  function setDiscount(event) {
+  function setItemDiscount(event) {
     
     if (event.keyCode == 13) {
       var str = $(event.target).val();
@@ -416,31 +565,74 @@
         method: "post",
         dataType: "json",
         success: function(data){
-          var total_price = $("#total");
-          var total_price_value = Number(total_price.html().replace('$ ',''));
+          var total_price = $("#origin_amount");
+          var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
           var v_price = Number(data["v_price"]);
+          var d_price = Number(data["d_price"]);
           var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          var origin_amount = total_price_value+d_price-l_price;
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+
           $(cart_item).find(".d-price").html(data["d_price"]);
-          console.log(v_price);
-          $(total_price).html("$ "+(total_price_value+v_price));
+          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(total_price).val(origin_amount);
+          $("#order_amount").val(discount_amout);
         } 
       });
     return false;
     }
   }
+
+  function setOrderDiscount(event) {
+    
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      var origin_amount = Number($("#origin_amount").val());
+      var discount_off = Number($(event.target).val());
+      var discount_amout = Math.round(origin_amount*discount_off/100);//四捨五入
+      console.log(discount_off);
+      console.log(origin_amount);
+      console.log(discount_amout);
+      $("#order_amount").val(discount_amout);
+
+      return false;
+    }
+  }
+
+  function setDiscountAmount(event) {
+    
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      var origin_amount = Number($("#origin_amount").val());
+      var discount_amout = Number($(event.target).val());
+      var discount_off = Math.round(discount_amout/origin_amount*100);
+      
+      console.log(discount_off);
+      console.log(origin_amount);
+      console.log(discount_amout);
+      $("#order_discount_off").val(discount_off);
+
+      return false;
+    }
+  }
+
 </script>
 
 <script type="text/template" id="order-item-template">
   <td class="category"></td>
   <td class="zh_name"></td>  
   <td class="upc"></td>
-  <td class="price"></td>
-  <td class="d-price"></td>   
+  <td class="price"></td> 
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>
+  <td class="o-price"></td> 
+  <td class="v-price"></td>  
+  <td class="d-price"></td>  
   <td class="discount_method">
     <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
       <input name="utf8" type="hidden" value="✓">

@@ -86,15 +86,30 @@ puts "Member_type created!"
 Country.destroy_all
 
 country_list = [
-  { code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣" },
-  { code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
-  { code: "HK", system_flag: "Y", value: "香港", country_type: "香港"},
-  { code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸"},
-  { code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門"}
+  { is_active: true, code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣",  },
+  { is_active: true, code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
+  { is_active: true, code: "HK", system_flag: "Y", value: "香港", country_type: "香港" },
+  { is_active: true, code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸" },
+  { is_active: true, code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門" },
+  { is_active: false, code: "MY", system_flag: "Y", value: "馬來西亞", country_type: "馬來西亞" },
+  { is_active: true, code: "AU", system_flag: "Y", value: "澳洲", country_type: "澳洲" },
+  { is_active: true, code: "BR", system_flag: "Y", value: "巴西", country_type: "巴西" },
+  { is_active: true, code: "NL", system_flag: "Y", value: "荷蘭", country_type: "荷蘭" },
+  { is_active: true, code: "NZL", system_flag: "Y", value: "紐西蘭", country_type: "紐西蘭" },
+  { is_active: true, code: "NO", system_flag: "Y", value: "挪威", country_type: "挪威" },
+  { is_active: true, code: "PH", system_flag: "Y", value: "菲律賓", country_type: "菲律賓" },
+  { is_active: true, code: "ZA", system_flag: "Y", value: "南非", country_type: "南非" },
+  { is_active: true, code: "TH", system_flag: "Y", value: "泰國", country_type: "泰國" },
+  { is_active: true, code: "UK", system_flag: "Y", value: "英國", country_type: "英國" },
+  { is_active: true, code: "US", system_flag: "Y", value: "美國", country_type: "美國" },
+  { is_active: true, code: "FR", system_flag: "Y", value: "法國", country_type: "法國" },
+  { is_active: true, code: "DE", system_flag: "Y", value: "德國", country_type: "德國" },
+  { is_active: true, code: "KR", system_flag: "Y", value: "韓國", country_type: "韓國" },
+  { is_active: true, code: "99", system_flag: "Y", value: "其他", country_type: "其他" }
 ]
 
 country_list.each do |country|
-  Country.create( country_type: country[:country_type] )
+  Country.create( country_type: country[:country_type], is_active: country[:is_active] )
 end
 puts "Country created!"
 
@@ -131,8 +146,12 @@ puts "Info_way created!"
 Category.destroy_all
 
 category_list = [
+  { code: "OIL", system_flag: "Y", value: "油", name: "油" },  
+  { code: "HAIR", system_flag: "Y", value: "髮", name: "髮" },
+  { code: "BODY", system_flag: "Y", value: "身", name: "身" },
   { code: "HOME", system_flag: "Y", value: "家", name: "家" },
-  { code: "HAIR", system_flag: "Y", value: "髮", name: "髮" }
+  { code: "GIFT", system_flag: "Y", value: "禮", name: "禮" },
+  { code: "REFILL", system_flag: "Y", value: "補", name: "補" }
 ]
 
 category_list.each do |category|
@@ -144,14 +163,14 @@ puts "Category created!"
 DiscountMethod.destroy_all
 
 discount_method_list = [
-  { content: "第二件半價", code: "A"},
-  { content: "打折", code: "B"},
-  { content: "贈品", code: "C"},
-  { content: "優惠價", code: "D"},
-  { content: "無", code: "E"}
+  { is_active: true, content: "無", code: "E" },
+  { is_active: true, content: "優惠價", code: "D" },
+  { is_active: true, content: "贈品", code: "C" },
+  { is_active: true, content: "打折", code: "B" },
+  { is_active: true, content: "第二件半價", code: "A" }
 ]
 
 discount_method_list.each do |d_method|
-  DiscountMethod.create(content: d_method[:content], code: d_method[:code])
+  DiscountMethod.create(content: d_method[:content], code: d_method[:code], is_active: d_method[:is_active])
 end
 puts "Discount_Method created!"
