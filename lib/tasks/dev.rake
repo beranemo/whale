@@ -133,6 +133,29 @@ namespace :dev do
     puts "create fake bulletins, have #{Bulletin.count} bulletins data"
   end  
   
+  task fake_orders: :environment do
+    10.times do |i|
+      member = Member.all.sample
+      order =Order.create!(user_id: User.all.sample.id,
+                    name: member.name,
+                    member_id: member.id,
+                    phone: member.phone,
+                    address: ["宅配","自取"].sample,
+                    payment_method: ["付現","刷卡"].sample,
+                    )
+      order.amount =0
+      3.times do 
+        order_item = order.order_items.build(product_id:Product.all.sample.id,
+                                quantity: rand(1..5))
+        order_item.price = order_item.product.price * order_item.quantity
+        order.amount += order_item.price
+        order_item.save! 
+      end
+      order.save!
+    end
+    puts "create fake order, have 10 orders with 3 order_items"
+  end
+
   task fake_all: :environment do
     Rake::Task['db:drop'].execute
     Rake::Task['db:create'].execute
