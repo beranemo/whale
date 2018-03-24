@@ -30,7 +30,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @index_hash = Hash.new(0)
     @order.amount = 0
     @order.discount_off = 100
-    @products = Product.all 
+    @products = Product.where("quantity > 0") 
     @cart_items = current_cart.cart_items.all
     if params[:id] != "-1"
       @member = Member.find(params[:id])
@@ -70,7 +70,7 @@ class Cashier::OrdersController < Cashier::BaseController
       flash[:alert] = "綁定失敗"
     end
   end
-  
+
   def create
     if current_cart.cart_items.size ==0
       flash[:alert] = "訂單內容不能是空的"
