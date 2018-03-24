@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     resources :countries
     resources :ages
     resources :info_ways
+    resources :discount_methods
     
   end
   
