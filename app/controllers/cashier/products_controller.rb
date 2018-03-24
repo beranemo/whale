@@ -13,6 +13,9 @@ class Cashier::ProductsController < Cashier::BaseController
 
     else
       @cart_item = current_cart.cart_items.build(product_id: @product.id)
+      if @cart_item.product.quantity <=0
+        flash[:alert] = "商品庫存數量錯誤"
+      end
       discount_method = DiscountMethod.find_by(content: "無")
       @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
