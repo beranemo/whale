@@ -70,11 +70,11 @@ $("#btn1").click(function(){
             $(order_item).find(".capacity").html(products[i]["capacity"]);
             $(order_item).find(".price").html(products[i]["price"]);
             $(order_item).find(".quantity").html(order_item_hash[products[i]["id"]]);
-            $(order_item).find(".total").html(order_item_price_hash[products[i]["id"]]);
+            $(order_item).find(".total").html(order_item_price_hash[products[i]["id"]].toLocaleString('en-US', {minimumFractionDigits: 0}));
             
             $("#search-list").append(order_item);
         }
-          $(total_price).html(date + " 總銷售金額： "+total_price_value);
+          $(total_price).html(date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
           $("#search-form").append(total_price);
       }
     }
@@ -91,7 +91,7 @@ $("#btn1").click(function(){
   <td class="capacity"></td>
   <td class="price"></td>
   <td class="quantity"></td>
-  <td class="total"></td>
+  <td class="total" style="text-align: right"></td>
 
   
 </script>
