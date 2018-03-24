@@ -136,17 +136,20 @@ namespace :dev do
   task fake_orders: :environment do
     10.times do |i|
       member = Member.all.sample
-      order =Order.create!(user_id: User.all.sample.id,
-                    name: member.name,
-                    member_id: member.id,
-                    phone: member.phone,
-                    address: ["宅配","自取"].sample,
-                    payment_method: ["付現","刷卡"].sample,
-                    )
+      order = Order.create!(
+        user_id: User.all.sample.id,
+        name: member.name,
+        member_id: member.id,
+        phone: member.phone,
+        address: ["宅配","自取"].sample,
+        payment_method: ["付現","刷卡"].sample
+        )
       order.amount =0
       3.times do 
-        order_item = order.order_items.build(product_id:Product.all.sample.id,
-                                quantity: rand(1..5))
+        order_item = order.order_items.build(
+          product_id:Product.all.sample.id,
+          quantity: rand(1..5)
+          )
         order_item.price = order_item.product.price * order_item.quantity
         order.amount += order_item.price
         order_item.save! 
@@ -164,6 +167,7 @@ namespace :dev do
     Rake::Task['dev:fake_members'].execute
     Rake::Task['dev:fake_guests'].execute
     Rake::Task['dev:fake_bulletins'].execute
+    Rake::Task['dev:fake_orders'].execute
     # Rake::Task['dev:fake_products'].execute
   end
   
@@ -173,6 +177,7 @@ namespace :dev do
     Rake::Task['dev:fake_members'].execute
     Rake::Task['dev:fake_guests'].execute
     Rake::Task['dev:fake_bulletins'].execute
+    Rake::Task['dev:fake_orders'].execute
   end
   
 end

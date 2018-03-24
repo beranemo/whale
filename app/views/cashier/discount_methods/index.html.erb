@@ -25,6 +25,7 @@
         <th class="alncenter">內容</th>
         <th>狀態</th>
         <th class="alncenter">功能</th>
+        <th class="alncenter">備註</th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +42,7 @@
           <%= link_to '編輯', cashier_discount_method_path(id: discount_method.id) %> ｜
           <%= link_to '刪除', cashier_discount_method_path(discount_method), method: :delete, data: {confirm:"確定刪除?"} %>
         </td>
+        <td class="alncenter"><%= discount_method.note %></td>
       </tr>
       <% i = i + 1 %>
     <% end %>
