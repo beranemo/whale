@@ -7,6 +7,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  code       :string
+#  is_active  :boolean          default(TRUE)
 #
 
 require 'test_helper'

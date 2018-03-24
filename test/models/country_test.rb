@@ -6,7 +6,7 @@
 #  country_type :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  is_active    :boolean
+#  is_active    :boolean          default(TRUE)
 #
 
 require 'test_helper'
