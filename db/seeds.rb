@@ -163,15 +163,20 @@ puts "Category created!"
 DiscountMethod.destroy_all
 
 discount_method_list = [
-  { is_active: true, content: "無", code: "E" },
-  { is_active: true, content: "優惠價", code: "D" },
-  { is_active: true, content: "贈品", code: "C" },
-  { is_active: true, content: "打折", code: "B" },
-  { is_active: true, content: "第二件半價", code: "A" }
+  { note: "系統變數，不能刪除", is_active: true, content: "無", code: "E" },
+  { note: "系統變數，不能刪除", is_active: true, content: "優惠價", code: "D" },
+  { note: "系統變數，不能刪除", is_active: true, content: "贈品", code: "C" },
+  { note: "系統變數，不能刪除", is_active: true, content: "打折", code: "B" },
+  { note: "系統變數，不能刪除", is_active: true, content: "第二件半價", code: "A" }
 ]
 
 discount_method_list.each do |d_method|
-  DiscountMethod.create(content: d_method[:content], code: d_method[:code], is_active: d_method[:is_active])
+  DiscountMethod.create(
+    content: d_method[:content], 
+    code: d_method[:code], 
+    is_active: d_method[:is_active],
+    note: d_method[:note]
+    )
 end
 puts "Discount_Method created!"
 
