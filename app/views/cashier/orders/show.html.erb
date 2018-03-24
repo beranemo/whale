@@ -28,15 +28,15 @@
         <th>折扣價</th>
         <th>小記</th>
       </tr>
-      <% @order.order_products.each do |p| %>
+      <% @order.order_items.each do |p| %>
       <tr>
-        <td><%= p.zh_name%></td>
-        <td><%= p.upc%></td>
-        <td><%= p.capacity%></td>
-        <td><%= @order.amount%></td>
+        <td><%= p.product.zh_name%></td>
+        <td><%= p.product.upc%></td>
+        <td><%= p.product.capacity%></td>
+        <td><%= p.quantity%></td>
+        <td><%= p.product.price%></td>
+        <td><%= %></td>
         <td><%= p.price%></td>
-        <td></td>
-        <td></td>
       </tr>
       <% end %>
     </tbody>

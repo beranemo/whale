@@ -120,17 +120,6 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def sales_analysis_day
-     @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
-
-    sum = []
-    @orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
-    end
-    @total = sum.sort_by { |k| k["product_id"] }
-    @total_uni = @total.uniq{|t| t["product_id"]}
 
   end
 
@@ -150,23 +139,53 @@ class Cashier::OrdersController < Cashier::BaseController
     @total = sum.sort_by { |k| k["product_id"] }
     @total_uni = @total.uniq{|t| t["product_id"]}
 
-    mix_arr = @total.pluck(:product_id, :quantity).sort!
+    mix_arr_1 = @total.pluck(:product_id, :quantity).sort!
     @order_item_hash = Hash.new(0)
-    mix_arr.each {|key, value| @order_item_hash[key] += value}
+    mix_arr_1.each {|key, value| @order_item_hash[key] += value}
+    puts @order_item_hash
 
     # 另外抓商品價格pluck(:product_id, :price)
-    # mix_arr = @total.pluck(:product_id, :quantity).sort!
-    # @order_item_hash = Hash.new(0)
-    # mix_arr.each {|key, value| @order_item_hash[key] += value}
+    mix_arr_2 = @total.pluck(:product_id, :price).sort!
+    @order_item_price_hash = Hash.new(0)
+    mix_arr_2.each {|key, value| @order_item_price_hash[key] += value}
+    puts @order_item_price_hash
 
     @products = Array.new()
     @total_uni.each do |item|
       @products  << item.product
     end
 
-    #puts @order_item_hash
+    all_price = @total.pluck(:price)
+    @total_price = all_price.inject(0){|sum,x| sum + x }
+
     #puts @products[0]
-    render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products}
+    render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
+  end
+
+  def ranking
+    # date = Date.today
+    # @orders = Order.where(created_at: date.days_ago(7)..date)
+    @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
+
+    sum = []
+    @orders.each do |order|
+      order_items = order.order_items
+
+      sum.concat(order_items)
+      puts sum
+    end
+    total = sum.sort_by { |k| k["product_id"] }
+    total_uni = total.uniq{|t| t["product_id"]}
+
+    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
+    order_item_hash = Hash.new(0)
+    mix_arr_1.each {|key, value| order_item_hash[key] += value}
+
+    puts order_item_hash
+
+    product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
+    @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
+    @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
   end
 
   private

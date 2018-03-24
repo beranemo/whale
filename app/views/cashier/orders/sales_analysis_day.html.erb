@@ -41,7 +41,12 @@ $("#btn1").click(function(){
       var total_uni = datas.total_uni;
       var order_item_hash = datas.order_item_hash;
       var products = datas.products;
+      var order_item_price_hash = datas.order_item_price_hash;
+      var total_price = document.createElement("p");
+      total_price.className = "alnright";
+      var total_price_value = datas.total_price;
       console.log(order_item_hash);
+      console.log(order_item_price_hash);
       console.log(total_uni[0]["id"]);
       if(datas.length == 0){
             alert("No data found");
@@ -65,10 +70,12 @@ $("#btn1").click(function(){
             $(order_item).find(".capacity").html(products[i]["capacity"]);
             $(order_item).find(".price").html(products[i]["price"]);
             $(order_item).find(".quantity").html(order_item_hash[products[i]["id"]]);
-            // $(order_item).find(".total").html(product_amount[i]);
+            $(order_item).find(".total").html(order_item_price_hash[products[i]["id"]].toLocaleString('en-US', {minimumFractionDigits: 0}));
             
             $("#search-list").append(order_item);
         }
+          $(total_price).html(date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          $("#search-form").append(total_price);
       }
     }
   });
@@ -84,7 +91,7 @@ $("#btn1").click(function(){
   <td class="capacity"></td>
   <td class="price"></td>
   <td class="quantity"></td>
-  <td class="total"></td>
+  <td class="total" style="text-align: right"></td>
 
   
 </script>
