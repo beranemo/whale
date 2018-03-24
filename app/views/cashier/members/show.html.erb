@@ -30,7 +30,7 @@
     <label>生日:</label>
     <%= @member.birthday%>
     <% if @member.birthday.month == Date.current.month %>
-      <span class="label label-warning">當月壽星</span>
+      <i class="fa fa-birthday-cake" aria-hidden="true" style="color:#FF9900"></i>
     <% end %>
     <br>
     
