@@ -18,7 +18,10 @@
       <% @all.each do |item| %> 
       <tr>
         <td><%= item.product.category %></td>
-        <td><%= item.product.zh_name %></td>
+        <td><%= item.product.zh_name %>
+        <% if i == 0 %>
+        <i class = "glyphicon glyphicon-fire" aria-hidden="true" style="color:red"></i>
+        <% end %></td>
         <td><%= item.product.upc %></td>
         <td><%= item.product.capacity %></td>
         <td><%= @product_quantity[i]  %></td>
