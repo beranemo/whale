@@ -167,7 +167,6 @@ namespace :dev do
     Rake::Task['dev:fake_members'].execute
     Rake::Task['dev:fake_guests'].execute
     Rake::Task['dev:fake_bulletins'].execute
-    Rake::Task['dev:fake_orders'].execute
     # Rake::Task['dev:fake_products'].execute
   end
   
@@ -177,7 +176,6 @@ namespace :dev do
     Rake::Task['dev:fake_members'].execute
     Rake::Task['dev:fake_guests'].execute
     Rake::Task['dev:fake_bulletins'].execute
-    Rake::Task['dev:fake_orders'].execute
   end
   
 end
