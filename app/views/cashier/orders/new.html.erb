@@ -564,6 +564,9 @@
                 alert("No data found");
               }
               else{
+                if (data["recode"] == 0){
+                  alert("商品庫存紀錄錯誤");
+                }
                 var cart_item = document.createElement("tr");
                 var total_price = $("#origin_amount");
                 var total_price_value = Number(total_price.val());

@@ -13,9 +13,6 @@ class Cashier::ProductsController < Cashier::BaseController
 
     else
       @cart_item = current_cart.cart_items.build(product_id: @product.id)
-      if @cart_item.product.quantity <=0
-        flash[:alert] = "商品庫存數量錯誤"
-      end
       discount_method = DiscountMethod.find_by(content: "無")
       @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
@@ -50,7 +47,8 @@ class Cashier::ProductsController < Cashier::BaseController
 
       render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
                       :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
-                      :bulletin => @bulletin.title, :discount_method_code => discount_method.code}
+                      :bulletin => @bulletin.title, :discount_method_code => discount_method.code,
+                      :recode => @product.quantity}
     end
       
   end
