@@ -3,6 +3,29 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售排行' } %>
 
-<h2>銷售排行</h2>
+ <table class="table">
+    <tbody>
+      <tr>
+        <th>分類</th>
+        <th>中文名稱</th>
+        <th>國際通用碼</th>
+        <th>規格</th>
+        <th>數量</th>
+      </tr>
+    </tbody>  
+    <tbody>
+      <% i = 0 %>
+      <% @all.each do |item| %> 
+      <tr>
+        <td><%= item.product.category %></td>
+        <td><%= item.product.zh_name %></td>
+        <td><%= item.product.upc %></td>
+        <td><%= item.product.capacity %></td>
+        <td><%= @product_quantity[i]  %></td>
+      </tr>
+      <% i += 1 %>
+      <% end %>
+    </tbody>
+  </table>  
 
 </div>
