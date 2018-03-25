@@ -279,6 +279,24 @@ class Cashier::OrdersController < Cashier::BaseController
     @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
   end
 
+  def ranking_user
+    date = Date.today.all_month
+    @orders = Order.where(created_at: date)
+
+
+    total = @orders.sort_by { |k| k["user_id"] }
+    total_uni = total.uniq{|t| t["user_id"]}
+
+    mix_arr_1 = total.pluck(:user_id, :amount).sort!
+    order_user_hash = Hash.new(0)
+    mix_arr_1.each {|key, value| order_user_hash[key] += value}
+    puts @order_user_hash
+
+    user_ranking = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.first
+    @user_amount = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.last
+    @all = total_uni.sort_by {|e| user_ranking.index(e.user_id) }
+  end
+
   private
 
   def order_params

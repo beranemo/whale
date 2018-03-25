@@ -1,34 +1,36 @@
+<div class="container">
+ 
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
+  <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售排行' } %>
+ 
 <div style="text-align: center">
   <%= link_to '當月排行' , ranking_month_cashier_orders_path %> >
   <%= link_to '當週排行' , ranking_week_cashier_orders_path %> >
   <%= link_to '當日排行' , ranking_cashier_orders_path %> >
   <%= link_to '門市人員排行' , ranking_user_cashier_orders_path %>
 </div>
-
+<br>
+<div class="col-md-6 col-md-offset-3">
+  <p style="text-align: right">統計時間：<%= Date.today.all_month %></p> 
  <table class="table">
     <tbody>
       <tr>
-        <th>分類</th>
-        <th>中文名稱</th>
-        <th>國際通用碼</th>
-        <th>規格</th>
-        <th>數量</th>
+        <th>門市人員</th>
+        <th>銷售金額</th>
       </tr>
     </tbody>  
     <tbody>
       <% i = 0 %>
-      <% @all.each do |item| %> 
+      <% @all.each do |order| %> 
       <tr>
-        <td><%= item.product.category %></td>
-        <td><%= item.product.zh_name %>
-        <% if i == 0 %>
+        <td><%= order.user.name %> <% if i == 0 %>
         <i class = "glyphicon glyphicon-fire" aria-hidden="true" style="color:red"></i>
         <% end %></td>
-        <td><%= item.product.upc %></td>
-        <td><%= item.product.capacity %></td>
-        <td><%= @product_quantity[i]  %></td>
+        <td><%= number_to_currency(@user_amount[i], precision: 0)  %></td>
       </tr>
       <% i += 1 %>
       <% end %>
     </tbody>
   </table>  
+</div>
+</div>
