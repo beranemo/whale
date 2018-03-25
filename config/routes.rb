@@ -49,6 +49,8 @@ Rails.application.routes.draw do
         post :search_outcome_month
         get :new2
         get :ranking
+        get :ranking_week
+        get :ranking_month
       end
 
       member do 
