@@ -43,33 +43,6 @@ class Cashier::OrdersController < Cashier::BaseController
 
   end
 
-  def new2
-    @order = Order.new(member_id: params[:id])
-    @order.amount = 0
-    @order.discount_off = 100
-    @products = Product.all 
-    @cart_items = current_cart.cart_items.all
-    if params[:id] != "-1"
-      @member = Member.find(params[:id])
-      @order.name = @member.name
-      @order.phone = @member.phone
-      @order.address = @member.address
-    else
-      @member = Member.new(id: -1)
-    end
-
-  end
-  def update
-    @order = Order.find(params[:id])
-    @order.member_id = params[:member_id]
-
-    if @order.save
-      redirect_to cashier_orders_path
-      flash[:notice] = "會員綁定成功"
-    else
-      flash[:alert] = "綁定失敗"
-    end
-  end
 
   def create
     if current_cart.cart_items.size ==0
