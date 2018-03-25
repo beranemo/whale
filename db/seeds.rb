@@ -12,7 +12,7 @@ User.destroy_all
 User.create(email: "cash@123", password: "123456", role: "cashier", name: "小魚")
 User.create(email: "cash@456", password: "123456", role: "cashier", name: "小鯨")
 User.create(email: "cash@789", password: "123456", role: "cashier", name: "小蘋果")
-
+User.create(email: "sp831031@gmail.com", password: "123456", role: "storehouse", name: "倉庫人員")
 puts "Default cashier created!"
 
 # =======================  GuestType  =======================

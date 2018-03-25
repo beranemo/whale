@@ -42,11 +42,6 @@ class Cashier::MembersController < Cashier::BaseController
     @members = temp.group_by{ |t| t.birthday.month == DateTime.now.month + 1 }
   end
 
-  def birthday_search
-    month = Date.current.month 
-    @members = Member.where("cast(strftime('%m', birthday) as int) = ?", month)
-    render :json => @members
-  end
  
   def search_outcome
     puts params[:phone]

@@ -19,7 +19,6 @@ Rails.application.routes.draw do
         get :birthday_this_month
         get :birthday_next_month
         post :search_outcome
-        post :birthday_search
       end
       
       member do
@@ -45,9 +44,7 @@ Rails.application.routes.draw do
       collection do
         get :sales_analysis_day
         get :sales_analysis_month
-        post :search_outcome_day
-        post :search_outcome_month
-        get :new2
+        post :search_outcome
         get :ranking
         get :ranking_week
         get :ranking_month

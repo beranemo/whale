@@ -43,33 +43,6 @@ class Cashier::OrdersController < Cashier::BaseController
 
   end
 
-  def new2
-    @order = Order.new(member_id: params[:id])
-    @order.amount = 0
-    @order.discount_off = 100
-    @products = Product.all 
-    @cart_items = current_cart.cart_items.all
-    if params[:id] != "-1"
-      @member = Member.find(params[:id])
-      @order.name = @member.name
-      @order.phone = @member.phone
-      @order.address = @member.address
-    else
-      @member = Member.new(id: -1)
-    end
-
-  end
-  def update
-    @order = Order.find(params[:id])
-    @order.member_id = params[:member_id]
-
-    if @order.save
-      redirect_to cashier_orders_path
-      flash[:notice] = "會員綁定成功"
-    else
-      flash[:alert] = "綁定失敗"
-    end
-  end
 
   def create
     if current_cart.cart_items.size ==0
@@ -82,33 +55,33 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-  
       
       current_cart.cart_items.each do |item|
         product = item.product
-        if product.zh_name != "折價卷"
+        if product.zh_name != "折價卷" && @order.address == "local"
           product.quantity -= item.quantity
-          if product.quantity < 0
-            redirect_to new_cashier_order_path(id: -1)
-            flash[:alert] = "#{product.zh_name}數量不足"
-            return 
+          if product.quantity <= 0
+            flash[:alert] += "#{product.zh_name}商品庫存數量錯誤."
           end
           stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
           stock_record.save!
         end
 
-          
+
         order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
-             
-        
         order_item.save!
         product.save!
       end
+      
+
       if @order.save
-        
         session[:cart_id] = nil
-        redirect_to new_cashier_order_path(id: -1)
+        #當訂單為宅配時寄信通知倉庫
+        if @order.address != "local"
+          UserMailer.notify_order_deliver(@order).deliver_now!
+        end
         flash[:notice] = "成功成立訂單"
+        redirect_to new_cashier_order_path(id: -1)
       else
         flash[:alert] = @order.errors.full_messages.to_sentence
         redirect_to new_cashier_order_path(id: order_params[:member_id])
@@ -123,10 +96,17 @@ class Cashier::OrdersController < Cashier::BaseController
 
   end
 
-  def search_outcome_day
-    date = Date.parse(params[:created_at]).to_time
-    puts date
-    orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+  def search_outcome
+    if params[:type] == "day"
+      date = Date.parse(params[:created_at]).to_time
+      puts date
+      orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+    else
+      date = Date.parse(params[:created_at]+'-01').to_time
+      puts date
+      orders = Order.where(created_at: date.all_month)
+    end
+    
     # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
 
     sum = []
@@ -165,43 +145,7 @@ class Cashier::OrdersController < Cashier::BaseController
   def sales_analysis_month
   end
 
-  def search_outcome_month
-    date = Date.parse(params[:created_at]+'-01').to_time
-    puts date
-    orders = Order.where(created_at: date.all_month)
-
-    sum = []
-    orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
-    end
-    total = sum.sort_by { |k| k["product_id"] }
-    @total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    @order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| @order_item_hash[key] += value}
-    puts @order_item_hash
-
-    # 另外抓商品價格pluck(:product_id, :price)
-    mix_arr_2 = total.pluck(:product_id, :price).sort!
-    @order_item_price_hash = Hash.new(0)
-    mix_arr_2.each {|key, value| @order_item_price_hash[key] += value}
-    puts @order_item_price_hash
-
-    @products = Array.new()
-    @total_uni.each do |item|
-      @products  << item.product
-    end
-
-    all_price = total.pluck(:price)
-    @total_price = all_price.inject(0){|sum,x| sum + x }
-
-    render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
-    
-  end
+  
 
   def ranking
     # date = Date.today
