@@ -3,7 +3,6 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   
   <br>
-  <h2>訂單資訊</h2>
   <table class="table table-hover" data-toggle="table" id="table" >
     <thead>
       <tr>
@@ -38,7 +37,7 @@
         </td>
         <td><%= order.payment_method%></td>
         <td><%= order.address%></td>
-        <td><%= order.amount%></td>
+        <td><%= number_to_currency(order.amount, precision: 0)%></td>
         <td>
           <%= link_to "編輯",edit_cashier_order_path(order.id)%>
         </td>

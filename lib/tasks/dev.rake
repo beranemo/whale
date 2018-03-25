@@ -134,7 +134,9 @@ namespace :dev do
   end  
   
   task fake_orders: :environment do
-    10.times do |i|
+    Order.destroy_all
+
+    30.times do |i|
       member = Member.all.sample
       order = Order.create!(
         user_id: User.all.sample.id,
@@ -147,16 +149,30 @@ namespace :dev do
       order.amount =0
       3.times do 
         order_item = order.order_items.build(
-          product_id:Product.all.sample.id,
+          product_id:Product.where.not(id:1).sample.id,
           quantity: rand(1..5)
           )
         order_item.price = order_item.product.price * order_item.quantity
         order.amount += order_item.price
         order_item.save! 
       end
+
+      orders = Order.all
+      
+      orders.each do |o|
+        dat = rand_time(60.days.ago).to_s
+        first = dat[0..10]
+        middle = 10 + rand(11)
+        last = dat[13..-1]
+        rand_date = first + middle.to_s + last
+        
+        o.created_at = rand_date
+        o.save
+      end
+
       order.save!
     end
-    puts "create fake order, have 10 orders with 3 order_items"
+    puts "create fake order, have #{Order.count} orders with 3 order_items"
   end
 
   task fake_all: :environment do
@@ -167,6 +183,7 @@ namespace :dev do
     Rake::Task['dev:fake_members'].execute
     Rake::Task['dev:fake_guests'].execute
     Rake::Task['dev:fake_bulletins'].execute
+    # Rake::Task['dev:fake_orders'].execute
     # Rake::Task['dev:fake_products'].execute
   end
   

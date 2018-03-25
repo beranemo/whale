@@ -46,8 +46,12 @@ Rails.application.routes.draw do
         get :sales_analysis_day
         get :sales_analysis_month
         post :search_outcome_day
+        post :search_outcome_month
         get :new2
         get :ranking
+        get :ranking_week
+        get :ranking_month
+        get :ranking_user
       end
 
       member do 
