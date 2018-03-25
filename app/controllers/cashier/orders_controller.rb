@@ -82,33 +82,30 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-  
-      
+      flash[:alert] = ""
       current_cart.cart_items.each do |item|
         product = item.product
-        if product.zh_name != "折價卷"
+        if @order.address != "local"
+
+        elsif product.zh_name != "折價卷" 
           product.quantity -= item.quantity
-          if product.quantity < 0
-            redirect_to new_cashier_order_path(id: -1)
-            flash[:alert] = "#{product.zh_name}數量不足"
-            return 
+          if product.quantity <= 0
+            flash[:alert] += "#{product.zh_name}商品庫存數量錯誤."
           end
           stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
           stock_record.save!
         end
 
-          
         order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
-             
-        
         order_item.save!
         product.save!
       end
+
       if @order.save
-        
         session[:cart_id] = nil
-        redirect_to new_cashier_order_path(id: -1)
+
         flash[:notice] = "成功成立訂單"
+        redirect_to new_cashier_order_path(id: -1)
       else
         flash[:alert] = @order.errors.full_messages.to_sentence
         redirect_to new_cashier_order_path(id: order_params[:member_id])
