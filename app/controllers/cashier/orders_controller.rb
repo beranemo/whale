@@ -283,7 +283,6 @@ class Cashier::OrdersController < Cashier::BaseController
     date = Date.today.all_month
     @orders = Order.where(created_at: date)
 
-
     total = @orders.sort_by { |k| k["user_id"] }
     total_uni = total.uniq{|t| t["user_id"]}
 
@@ -295,6 +294,16 @@ class Cashier::OrdersController < Cashier::BaseController
     user_ranking = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @user_amount = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.last
     @all = total_uni.sort_by {|e| user_ranking.index(e.user_id) }
+  
+  # chart
+    @users = Array.new()
+    total_uni.each do |order|
+    @users  << order.user.name
+
+    puts @users
+    end
+
+    @y = order_user_hash.sort_by{ |k, v| k }.transpose.last
   end
 
   private

@@ -33,4 +33,60 @@
     </tbody>
   </table>  
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+<canvas id="userChart" width="200" height="50"></canvas>
 </div>
+
+
+
+<script>
+clearTimeout(go);   
+var go = setTimeout(display, 500); 
+
+function display() {
+  var yAxis= <%= @y.inspect.html_safe %>;
+  var datas = <%= @users.inspect.html_safe %>;
+
+var ctx = document.getElementById("userChart").getContext('2d');
+
+
+var userChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: datas,
+        datasets: [{
+            label: '個人銷售量',
+            data: yAxis,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+}
+</script>
+
