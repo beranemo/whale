@@ -96,10 +96,17 @@ class Cashier::OrdersController < Cashier::BaseController
 
   end
 
-  def search_outcome_day
-    date = Date.parse(params[:created_at]).to_time
-    puts date
-    orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+  def search_outcome
+    if params[:type] == "day"
+      date = Date.parse(params[:created_at]).to_time
+      puts date
+      orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+    else
+      date = Date.parse(params[:created_at]+'-01').to_time
+      puts date
+      orders = Order.where(created_at: date.all_month)
+    end
+    
     # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
 
     sum = []
@@ -138,43 +145,7 @@ class Cashier::OrdersController < Cashier::BaseController
   def sales_analysis_month
   end
 
-  def search_outcome_month
-    date = Date.parse(params[:created_at]+'-01').to_time
-    puts date
-    orders = Order.where(created_at: date.all_month)
-
-    sum = []
-    orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
-    end
-    total = sum.sort_by { |k| k["product_id"] }
-    @total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    @order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| @order_item_hash[key] += value}
-    puts @order_item_hash
-
-    # 另外抓商品價格pluck(:product_id, :price)
-    mix_arr_2 = total.pluck(:product_id, :price).sort!
-    @order_item_price_hash = Hash.new(0)
-    mix_arr_2.each {|key, value| @order_item_price_hash[key] += value}
-    puts @order_item_price_hash
-
-    @products = Array.new()
-    @total_uni.each do |item|
-      @products  << item.product
-    end
-
-    all_price = total.pluck(:price)
-    @total_price = all_price.inject(0){|sum,x| sum + x }
-
-    render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
-    
-  end
+  
 
   def ranking
     # date = Date.today

@@ -31,7 +31,7 @@ $("#btn1").click(function(){
   var date = $("#date1").val();
   console.log(date);
   $.ajax({
-    url: "/cashier/orders/search_outcome_day" ,
+    url: "/cashier/orders/search_outcome?type=day" ,
     method: "POST",
     dataType: "json",
     data: {
