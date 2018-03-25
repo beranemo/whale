@@ -82,12 +82,10 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-      flash[:alert] = ""
+      
       current_cart.cart_items.each do |item|
         product = item.product
-        if @order.address != "local"
-
-        elsif product.zh_name != "折價卷" 
+        if product.zh_name != "折價卷" && @order.address == "local"
           product.quantity -= item.quantity
           if product.quantity <= 0
             flash[:alert] += "#{product.zh_name}商品庫存數量錯誤."
@@ -96,14 +94,19 @@ class Cashier::OrdersController < Cashier::BaseController
           stock_record.save!
         end
 
+
         order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
         order_item.save!
         product.save!
       end
+      
 
       if @order.save
         session[:cart_id] = nil
-
+        #當訂單為宅配時寄信通知倉庫
+        if @order.address != "local"
+          UserMailer.notify_order_deliver(@order).deliver_now!
+        end
         flash[:notice] = "成功成立訂單"
         redirect_to new_cashier_order_path(id: -1)
       else

@@ -1,0 +1,39 @@
+<h3>Hi, 庫存管理 </h3>
+
+<h4>訂單內容:</h4>
+<table>
+  <thead>
+    <tr>
+      <th>商品名稱</th>
+      <th>商品數量</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_items.each do |item|%>
+      <tr>
+        <td><%= item.product.zh_name%></td>
+        <td><%= item.quantity %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>姓名:</td>
+      <td><%= @order.name %></td>
+    </tr>
+    <tr>
+      <td>地址:</td>
+      <td><%= @order.address %></td>
+    </tr>
+     <tr>
+      <td>電話:</td>
+      <td><%= @order.phone %></td>
+    </tr>
+  </tbody>
+</table>
+    
+
+
+<p>
+  Best, <br>
+  from 茶籽堂
+</p>
