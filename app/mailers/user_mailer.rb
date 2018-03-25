@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
     @order = order
    
 
-    mail to: "sp831031@gmail.com",
+    mail to: User.find_by(role: "storehouse").email,
     subject: "茶籽堂 | 訂單成立: #{@order.id}"
   end
 end
