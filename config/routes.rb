@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         get :ranking_week
         get :ranking_month
         get :ranking_user
+        get :ranking_hour
       end
 
       member do 

@@ -1,0 +1,89 @@
+<div class="container">
+ 
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
+  <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售排行' } %>
+
+  <div style="text-align: center">
+  <%= link_to '當月排行' , ranking_month_cashier_orders_path %> >
+  <%= link_to '當週排行' , ranking_week_cashier_orders_path %> >
+  <%= link_to '當日排行' , ranking_cashier_orders_path %> >
+  <%= link_to '門市人員排行' , ranking_user_cashier_orders_path %> >
+  <%= link_to '整點銷售' , ranking_hour_cashier_orders_path %>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+<div class="container">  
+<% @hour_amount_hash.each {|key, value|
+      if key.to_s == '10'
+        @arr_y[0] += value
+      elsif key.to_s == '11'
+        @arr_y[1] += value
+      elsif key.to_s == '12'
+        @arr_y[2] += value
+      elsif key.to_s == '13'
+        @arr_y[3] += value
+      elsif key.to_s == '14'
+        @arr_y[4] += value
+      elsif key.to_s == '15'
+        @arr_y[5] += value
+      elsif key.to_s == '16'
+        @arr_y[6] += value
+      elsif key.to_s == '17'
+        @arr_y[7] += value
+      elsif key.to_s == '18'
+        @arr_y[8] += value
+      elsif key.to_s == '19'
+        @arr_y[9] += value
+      elsif key.to_s == '20'
+        @arr_y[10] += value
+      elsif key.to_s == '21'
+        @arr_y[11] += value
+      else key.to_s == '22'
+        @arr_y[12] += value
+      end
+    } %>
+
+<canvas id="hourChart" width="200" height="50"></canvas>
+
+<script>
+clearTimeout(go);   
+var go = setTimeout(display, 500);  
+
+function display() {
+  var yAxis= <%= @arr_y.inspect.html_safe %>;
+  var datas = <%= @arr_x.inspect.html_safe %>;                                  
+  var ctx = document.getElementById("hourChart").getContext('2d');
+  var hourChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: datas,
+      datasets: [{
+        label: '整點銷售額',
+        data: yAxis,
+        backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+             'rgba(75, 192, 192, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: { 
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    }
+  });
+}
+  
+</script>
+</div>
