@@ -250,6 +250,19 @@ class Cashier::OrdersController < Cashier::BaseController
     @y = order_user_hash.sort_by{ |k, v| k }.transpose.last
   end
 
+  def ranking_hour
+    orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
+    total = orders.sort_by {  |s| s.created_at.hour }
+    mix_arr_1 = total.pluck(:created_at, :amount)
+
+    @hour_amount_hash = Hash.new(0)
+    mix_arr_1.each {|key, value| @hour_amount_hash[key.hour] += value}
+    puts @hour_amount_hash
+
+    @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
+    @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+  end
+
   private
 
   def order_params
