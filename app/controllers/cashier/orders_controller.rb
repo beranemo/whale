@@ -31,7 +31,13 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.amount = 0
     @order.discount_off = 100
     @products = Product.where("quantity > 0") 
-    @cart_items = current_cart.cart_items.all
+    @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
+    @cart_coupons = current_cart.cart_items.where('product_id == ?',@coupon.id)
+    @coupon_discount = 0
+    @cart_coupons.each do |c|
+      @coupon_discount += c.discount_off
+    end
+
     if params[:id] != "-1"
       @member = Member.find(params[:id])
       @order.name = @member.name

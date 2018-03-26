@@ -86,6 +86,7 @@
   <button class="add-coupon" id="<%= @coupon.id%>">使用優惠卷</button>
   <br>
   <br>
+ 
   <div class="row">
     <div class="ship-info ">
       <%= form_for [:cashier, @order] do |f|%>
@@ -115,20 +116,36 @@
           <%= f.label :remark ,"備註"%>
           <%= f.text_area :remark, class:"form-control" %>
         </div>
-        <div class="col-md-2 col-md-offset-1 ">
-          <label>原始總金額</label>
-          <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+        <div class="col-md-5">
+          <div class="col-md-6">
+            <label>原始總金額</label>
+            <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+            <label>小計</label>
+            <input class="discount_amout form-control" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i %>"  id="off_amount" disabled="disabled">
+            <% @order.amount += @coupon_discount %>
+            <%= f.label :amount, "折扣後金額" %>
+            <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
+            <%= f.hidden_field :member_id, :value => @member.id %>
+            <br>
+            <br>
+            <%= f.submit "結帳完成並成立訂單",class: "btn btn-success" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :discount_off, "折扣%" %>
+            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+            
+            <label>優惠卷折扣</label>
+            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+           
+          </div>
+          
+          
     
 
-          <%= f.label :discount_off, "X折扣%" %>
-          <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
          
-          <%= f.label :amount, "折扣後總金額" %>
-          <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
-          <%= f.hidden_field :member_id, :value => @member.id %>
-          <br>
-          <br>
-          <%= f.submit "結帳完成並成立訂單",class: "btn btn-success" %>
+         
+          
+          
         </div>
 
 
@@ -188,6 +205,23 @@
   elem.focus();
   elem.select;
 
+  //多次使用的變數
+  var cart_item ;
+  var total_price ;
+  var total_price_value ;
+  var o_price;
+  var l_price;
+  var v_price;
+  var d_price;
+  var origin_amount;
+  var discount_off;
+  var coupon_discount;
+  var off_amount; //原始總金額打折
+  var discount_amout;
+  var exist_cart_item;
+
+
+
   $(".ship-radio").on("click", function(event){
     
     $(".ship-info").find(".input-address").removeAttr('disabled');
@@ -207,34 +241,14 @@
       method: "POST",
       dataType: "json",      
       success: function(data){        
-        var cart_item = document.createElement("tr");
-        var total_price = $("#origin_amount");
-        var total_price_value = Number(total_price.val());
+        var off_amount = Number($("#off_amount").val());
         var coupon_price = Number(data["coupon_price"]);
-        var origin_amount = total_price_value+coupon_price;
-        var discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*discount_off/100);
-        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+        var coupon_discount = Number($("#coupon_discount").val()) +coupon_price;
+        var discount_amout = off_amount+ coupon_discount;
+
         console.log(coupon_price);
         $("#order_amount").val(discount_amout);
-
-        $(total_price).val(origin_amount);
-
-
-
-        cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
-        $(cart_item).find("select").val("D");
-        $(cart_item).html($("#discount-template").html());
-        $(cart_item).find(".category").html(data["category"]);
-        $(cart_item).find(".zh_name").html(data["zh_name"]);
-        $(cart_item).find(".price").html("0");
-        $(cart_item).find(".upc").html(data["upc"]);
-        $(".cart-item-list").append(cart_item);
-        $(cart_item).find(".o-price").html("0");
-        $(cart_item).find(".d-price").html(coupon_price);
-        $(cart_item).find(".v-price").html(-coupon_price);
-
-          
+        $("#coupon_discount").val(coupon_discount);     
       }
     });
   }); 
@@ -247,15 +261,9 @@
       method: "POST",
       dataType: "json",      
       success: function(data){        
-        var cart_item = document.createElement("tr");
-        var total_price = $("#origin_amount");
-        var total_price_value = Number(total_price.val());
-        var o_price = Number(data["price"]);
-        var origin_amount = total_price_value+o_price;
-        var discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*discount_off/100);
-        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+        setUpVariable(data);
 
+        $("#off_amount").val(off_amount);
         $("#order_amount").val(discount_amout);
 
         $(total_price).val(origin_amount);
@@ -294,18 +302,12 @@
       dataType: "json",
 
       success: function(data){
-        var total_price = $("#origin_amount");
-        var total_price_value = Number(total_price.val());
-        var price = Number(data["price"]);
+        setUpVariable(data);
 
-        var origin_amount = total_price_value-price;
-        var discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*discount_off/100);
-
-        var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+        $("#off_amount").val(off_amount);
         $("#order_amount").val(discount_amout);
+        $(total_price).val((origin_amount));
 
-        $(total_price).val((total_price_value-price));
         $(".cart-item-list").find("tr[id^="+data["id"]+"-"+data["item_index"]+"]").remove();
 
         for(i = 1+Number(data["item_index"]); i < exist_cart_item ; i++){
@@ -327,22 +329,14 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        var total_price = $("#origin_amount");
-        var total_price_value = Number(total_price.val());
-        var l_price = Number(data["l_price"]);
-        var v_price = Number(data["v_price"]);
-        var d_price = Number(data["d_price"]);
-        var origin_amount = total_price_value+d_price-l_price;
-        var order_discount_off = Number($("#order_discount_off").val());
-        var discount_amout = Math.round(origin_amount*order_discount_off/100);
-        var id = data["id"]+ '-' + data["item_index"]
-        var cart_item = $(".cart-item-list").find("#"+id);
+        setUpVariable(data);
+        cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+        origin_amount = total_price_value+d_price-l_price;
+        off_amount = Math.round(origin_amount*discount_off/100);
+        discount_amout = off_amount + coupon_discount;
         var item_discount_off = $(cart_item).find(".discount_off");
 
-
-        console.log(data["item_index"]);
-        console.log(id);
-        console.log(data["id"]);
+        $("#off_amount").val(off_amount);
         $("#order_amount").val(discount_amout);
         $(total_price).val(origin_amount);
 
@@ -376,17 +370,14 @@
       dataType: "json",
       success: function(data){
         if(data["success"] == "1"){
-          var total_price = $("#origin_amount");
-          var total_price_value = Number(total_price.val());
-          var l_price = Number(data["l_price"]);
-          var v_price = Number(data["v_price"]);
-          var d_price = Number(data["d_price"]);
-          var origin_amount = total_price_value+d_price-l_price;
-          var order_discount_off = Number($("#order_discount_off").val());
-          var discount_amout = Math.round(origin_amount*order_discount_off/100);
-          var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          setUpVariable(data);
+          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          origin_amount = total_price_value+d_price-l_price;
+          off_amount = Math.round(origin_amount*discount_off/100);
+          discount_amout = off_amount + coupon_discount;
           var item_discount_off = $(cart_item).find(".discount_off");
-
+          
+          $("#off_amount").val(off_amount);
           $("#order_amount").val(discount_amout);
           $(total_price).val(origin_amount);
 
@@ -434,24 +425,20 @@
           method: "post",
           dataType: "json",
           success: function(data){
-            var total_price = $("#origin_amount");
-            var total_price_value = Number(total_price.val());
-            var l_price = Number(data["l_price"]);
-            var v_price = Number(data["v_price"]);
-            var d_price = Number(data["d_price"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);            
+            setUpVariable(data);
+            cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+            origin_amount = total_price_value+d_price-l_price;
+            off_amount = Math.round(origin_amount*discount_off/100);
+            discount_amout = off_amount + coupon_discount;
             var item_discount_off = $(cart_item).find(".discount_off");
-            console.log(cart_item.length);
-            console.log(data["id"]);
-            console.log(data["item_index"]);
+          
+            $("#off_amount").val(off_amount);
+            $("#order_amount").val(discount_amout);
+        
+            
+
             $(item_discount_off).val(data["discount_off"]);
             $(item_discount_off).prop("type","text");
-
-            var origin_amount = total_price_value+(d_price-l_price);
-            var order_discount_off = Number($("#order_discount_off").val());
-            var discount_amout = Math.round(origin_amount*order_discount_off/100);
-
-            $("#order_amount").val(discount_amout);
 
             $(cart_item).find(".discount_off").before("*");
             $(cart_item).find(".discount_off").after("%");
@@ -473,30 +460,21 @@
           method: "post",
           dataType: "json",
           success: function(data){
-            var total_price = $("#origin_amount");
-            var total_price_value = Number(total_price.val());
-            var l_price = Number(data["l_price"]);
-            var v_price = Number(data["v_price"]);
-            var d_price = Number(data["d_price"]);
-            var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);          
+            setUpVariable(data);
+            cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+            origin_amount = total_price_value+d_price-l_price;
+            off_amount = Math.round(origin_amount*discount_off/100);
+            discount_amout = off_amount + coupon_discount;
             var item_discount_off = $(cart_item).find(".discount_off");
-            var origin_amount = total_price_value+d_price-l_price;
-            var order_discount_off = Number($("#order_discount_off").val());
-            var discount_amout = Math.round(origin_amount*order_discount_off/100);
-
-            console.log(cart_item.length);
-            console.log(data["id"]);
-            console.log(data["item_index"]);
+          
+            $("#off_amount").val(off_amount);
+            $("#order_amount").val(discount_amout);
+    
             $(item_discount_off).val("100");
             $(item_discount_off).prop("type","hidden");
 
             $(cart_item).find(".o-price").html(data["o_price"]);
-            $(cart_item).find(".o-price").append(item_discount_off);
-
-            
-
-            $("#order_amount").val(discount_amout);
-
+            $(cart_item).find(".o-price").append(item_discount_off);           
             $(cart_item).find(".v-price").html(data["v_price"]);
             $(cart_item).find(".d-price").html(data["d_price"]);
    
@@ -511,32 +489,21 @@
         method: "post",
         dataType: "json",
         success: function(data){
-          var total_price = $("#origin_amount");
-          var total_price_value = Number(total_price.val());
-          var l_price = Number(data["l_price"]);
-          var v_price = Number(data["v_price"]);
-          var d_price = Number(data["d_price"]);
-          var cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);           
+          setUpVariable(data);
+          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          origin_amount = total_price_value+d_price-l_price;
+          off_amount = Math.round(origin_amount*discount_off/100);
+          discount_amout = off_amount + coupon_discount;
           var item_discount_off = $(cart_item).find(".discount_off");
-
-          console.log(cart_item.length);
-            console.log(data["id"]);
-            console.log(data["item_index"]);
+        
+          $("#off_amount").val(off_amount);
+          $("#order_amount").val(discount_amout);
 
           $(item_discount_off).val("100");
           $(item_discount_off).prop("type","hidden");
 
           $(cart_item).find(".o-price").html(data["o_price"]);
-          $(cart_item).find(".o-price").append(item_discount_off);
-
-          var origin_amount = total_price_value+d_price-l_price;
-          var order_discount_off = Number($("#order_discount_off").val());
-          var discount_amout = Math.round(origin_amount*order_discount_off/100);
-
-          $("#order_amount").val(discount_amout);
-
-          
-
+          $(cart_item).find(".o-price").append(item_discount_off);         
           $(cart_item).find(".v-price").html(data["v_price"]);
           $(cart_item).find(".d-price").html(data["d_price"]);
  
@@ -567,22 +534,12 @@
                 if (data["recode"] == 0){
                   alert("商品庫存紀錄錯誤");
                 }
-                var cart_item = document.createElement("tr");
-                var total_price = $("#origin_amount");
-                var total_price_value = Number(total_price.val());
-                var o_price = Number(data["price"]);
-                var origin_amount = total_price_value+o_price;
-                var discount_off = Number($("#order_discount_off").val());
-                var discount_amout = Math.round(origin_amount*discount_off/100);
-                var exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+                setUpVariable(data);
 
+                $("#off_amount").val(off_amount);
                 $("#order_amount").val(discount_amout);
-
                 $(total_price).val(origin_amount);
 
-               
-                console.log(data["id"]);
-                console.log(exist_cart_item);
 
                 cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
 
@@ -676,7 +633,23 @@
     }
   }
 
-  
+  function setUpVariable(data) {
+    cart_item = document.createElement("tr");
+    total_price = $("#origin_amount");
+    total_price_value = Number(total_price.val());
+    o_price = Number(data["o_price"]);
+    l_price = Number(data["l_price"]);
+    v_price = Number(data["v_price"]);
+    d_price = Number(data["d_price"]);
+    origin_amount = total_price_value+o_price;
+    discount_off = Number($("#order_discount_off").val());
+    coupon_discount = Number($("#coupon_discount").val());
+    off_amount = Math.round(origin_amount*discount_off/100); //原始總金額打折
+    discount_amout = off_amount + coupon_discount;
+    exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+  }  
+
+
 
 </script>
 
@@ -699,12 +672,11 @@
       <input type="hidden" name="_method" value="patch">
       <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
       <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
-        <option value="A">第二件半價</option>
-        <option value="B">打折</option>
-        <option value="C">贈品</option>
-        <option value="D">優惠價</option>
         <option selected="selected" value="E">無</option>
-      </select>
+        <option value="D">優惠價</option>
+        <option value="C">贈品</option>
+        <option value="B">打折</option>
+        <option value="A">第二件半價</option></select>
     </form>
   </td>  
   <td>
@@ -731,11 +703,11 @@
       <input type="hidden" name="_method" value="patch">
       <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
       <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
-        <option value="A">第二件半價</option>
-        <option value="B">打折</option>
-        <option value="C">贈品</option>
-        <option selected="selected" value="D">優惠價</option>
         <option value="E">無</option>
+        <option selected="selected" value="D">優惠價</option>
+        <option value="C">贈品</option>
+        <option value="B">打折</option>
+        <option value="A">第二件半價</option></select>
       </select>
     </form>
   </td>  
