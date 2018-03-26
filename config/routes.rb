@@ -63,6 +63,10 @@ Rails.application.routes.draw do
         post :minus_quantity
         post :add_discount
       end
+
+      collection do
+        post :clear_coupon
+      end
     end
     
     resources :guests do
