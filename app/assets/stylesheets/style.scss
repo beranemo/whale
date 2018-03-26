@@ -246,3 +246,14 @@ header {
 .cart-item-list span:hover {
     cursor: pointer;
 }
+
+/* ============================== 09. sales-tab =========================*/
+.guest-tab .dropdown-menu {
+  margin: 0;
+  white-space: nowrap;
+  padding: 10px;
+  background-color: #ffffff;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+ }
