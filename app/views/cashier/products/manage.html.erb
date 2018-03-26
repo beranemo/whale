@@ -27,10 +27,10 @@
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
           <td><%= product.quantity %></td>
-          <td><%= link_to "編輯數量", edit_cashier_product_path(product) %></td>
+          <td><input type="number" name="quantity" min="-100" max="100"></td>
         </tr>
       <% end %>
     </tbody>
   </table>  
-    
+  <button type="button" class="btn btn-primary">批次修改數量</button>  
 </div>
