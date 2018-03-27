@@ -1,5 +1,5 @@
 class Cashier::OrdersController < Cashier::BaseController
-  before_action :set_order, only: [:pick_up, :edit, :set_member, :new_guest, :create_guest]
+  before_action :set_order, only: [:show,:pick_up, :edit, :set_member, :new_guest, :create_guest, :edit_products]
 
   def index
     @orders = Order.all
@@ -43,17 +43,50 @@ class Cashier::OrdersController < Cashier::BaseController
     redirect_to cashier_orders_path
   end
 
+  def edit_products
+    @order_items = @order.order_items
+    current_cart.cart_items.destroy 
+    @order_items.each do |item|
+      if item.product.zh_name == "折價卷"
+        @cart_item = current_cart.cart_items.build(product_id: @product.id, discount_off: -params[:coupon_price].to_i)
+        discount_method = DiscountMethod.find_by(content: "優惠價")
+        @cart_item.discount_method_code = discount_method.code
+
+      else
+        @cart_item = current_cart.cart_items.build(product_id: item.product.id)
+        discount_method = DiscountMethod.find_by(content: "無")
+        @cart_item.discount_method_code = discount_method.code
+
+      end
+      @cart_item.save!
+    end
+
+    @cart_items = current_cart.cart_items
+    @index_hash = Hash.new(0)
+    @coupon = Product.find_by(zh_name: "折價卷")
+    @cart_coupons = current_cart.cart_items.where('product_id == ?',@coupon.id)
+    @products = Product.where('id != ?',@coupon.id) 
+    @coupon_discount = 0
+    @cart_coupons.each do |c|
+      @coupon_discount += c.discount_off
+    end
+
+    if @order.member_id != "-1"
+      @member = Member.find(params[:id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      @order.address = @member.address
+    else
+      @member = Member.new(id: -1)
+    end
+  end
+
   def show
     @orders = Order.where(member_id: @order.member_id)
   end
 
   def edit
-    @order = Order.find(params[:id])
-    if current_user.id != @order.user_id
-      flash[:alert] = "結帳人員不符"
-      redirect_to cashier_orders_path
-
-    end
+    @order = Order.find(params[:id])    
   end
 
   def set_member  
