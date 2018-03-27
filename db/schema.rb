@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327023145) do
+ActiveRecord::Schema.define(version: 20180327071935) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20180327023145) do
     t.datetime "updated_at", null: false
     t.integer "discount_off"
     t.boolean "status"
+    t.integer "sn"
   end
 
   create_table "products", force: :cascade do |t|
