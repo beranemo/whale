@@ -171,6 +171,16 @@ class Cashier::OrdersController < Cashier::BaseController
     product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
     @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
+
+    # chart
+    @products = Array.new()
+    total_uni.each do |order|
+    @products  << order.product.zh_name
+
+    puts @products
+    end
+
+    @y = order_item_hash.sort_by{ |k, v| k }.transpose.last
   end
 
   def ranking_user
