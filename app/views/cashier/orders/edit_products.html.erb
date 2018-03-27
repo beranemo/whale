@@ -140,7 +140,7 @@
             <label>原始總金額</label>
             <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
             <label>小計</label>
-            <input class="discount_amout form-control" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i %>"  id="off_amount" disabled="disabled">
+            <input class="discount_amout form-control" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i if @order.discount_off %>"  id="off_amount" disabled="disabled">
             <% @order.amount += @coupon_discount %>
             <%= f.label :amount, "折扣後金額" %>
             <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>

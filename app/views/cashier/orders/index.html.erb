@@ -24,7 +24,7 @@
       <tr>
         <td><%= order.created_at.localtime.to_s(:db)%></td>
         <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn%><% end %></td>
-        <td><%= order.user.name%></td>
+        <td><%= order.user.name %></td>
         <td>
           <% if order.member_id == -1%>
             非會員
