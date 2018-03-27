@@ -127,7 +127,7 @@ class Cashier::OrdersController < Cashier::BaseController
           UserMailer.notify_order_deliver(@order).deliver_now!
         end
         flash[:notice] = "成功成立訂單"
-        redirect_to new_cashier_order_path(id: -1)
+        redirect_to new_guest_cashier_order_path(@order)
       else
         flash[:alert] = @order.errors.full_messages.to_sentence
         redirect_to new_cashier_order_path(id: order_params[:member_id])
