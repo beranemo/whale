@@ -1,8 +1,7 @@
 <div class="container">
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
-  <%= render :partial => "shared/tab_order", :locals => { :selected_item => '所有訂單' } %>
-  
+  <%= render :partial => "shared/tab_order", :locals => { :selected_item => '未領取訂單' } %>
   <br>
   <table class="table table-hover" data-toggle="table" id="table" >
     <thead>
@@ -41,17 +40,11 @@
         <td><%= order.address%></td>
         <td><%= number_to_currency(order.amount, precision: 0)%></td>
         <td>
-          <% if order.status%>
-            已取貨
-          <% else %>
             未取貨
-          <% end%>
         </td>
         <td>
-          <%= link_to "編輯訂單",edit_products_cashier_order_path(order.id)%>
-          <% if order.guest_id == nil %>
-            <%= link_to "建立客情",new_guest_cashier_order_path(order.id)%>
-          <% end %>
+          <%= link_to "編輯",edit_cashier_order_path(order.id)%>
+          <%= link_to "取貨完成",pick_up_cashier_order_path(order.id), method: :post%>
         </td>
       </tr>
       

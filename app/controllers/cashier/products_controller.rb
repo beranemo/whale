@@ -7,9 +7,7 @@ class Cashier::ProductsController < Cashier::BaseController
       @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
       puts @cart_item.discount_off
-      render :json => {:id => @product.id, :zh_name => @product.zh_name,
-                      :coupon_price => @cart_item.discount_off, :quantity => @cart_item.quantity,
-                      }
+      render :json => {:coupon_price => @cart_item.discount_off, :quantity => @cart_item.quantity }
 
     else
       @cart_item = current_cart.cart_items.build(product_id: @product.id)
@@ -19,7 +17,7 @@ class Cashier::ProductsController < Cashier::BaseController
       
       
       render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
-                      :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
+                      :o_price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
                       }
     end
 
@@ -46,9 +44,8 @@ class Cashier::ProductsController < Cashier::BaseController
       end
 
       render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
-                      :price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
-                      :bulletin => @bulletin.title, :discount_method_code => discount_method.code,
-                      :recode => @product.quantity}
+                      :o_price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
+                      :bulletin => @bulletin.title, :discount_method_code => discount_method.code}
     end
       
   end
