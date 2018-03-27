@@ -86,7 +86,7 @@ class Cashier::OrdersController < Cashier::BaseController
         product.save!
       end
       
-      @order.status =  @order.status || @order.address != "local"
+      @order.status =  (@order.status || @order.address != "local")
       if @order.save
         session[:cart_id] = nil
         #當訂單為宅配時寄信通知倉庫
@@ -279,7 +279,9 @@ class Cashier::OrdersController < Cashier::BaseController
   private
 
   def order_params
-    params.require(:order).permit(:member_id, :payment_method, :address, :phone, :name, :remark, :amount, :discount_off)
+    params.require(:order).permit(:member_id, :payment_method, :address,
+                                  :phone, :name, :remark,
+                                  :amount, :discount_off, :status)
   end
   
 end
