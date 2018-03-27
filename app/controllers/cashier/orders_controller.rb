@@ -148,7 +148,7 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
 
-  def ranking_month
+  def ranking_product
     date = Date.today.all_month
     @orders = Order.where(created_at: date)
 
