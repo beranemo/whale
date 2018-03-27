@@ -144,7 +144,7 @@ class Cashier::OrdersController < Cashier::BaseController
     render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
   end
 
-  def sales_analysis_month
+  def sales_analysis_statement
   end
 
 
