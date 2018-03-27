@@ -8,6 +8,7 @@
 #  updated_at :datetime         not null
 #  code       :string
 #  is_active  :boolean          default(TRUE)
+#  note       :string
 #
 
 class DiscountMethod < ApplicationRecord
