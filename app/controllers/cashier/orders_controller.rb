@@ -98,9 +98,11 @@ class Cashier::OrdersController < Cashier::BaseController
 
   def search_outcome
     if params[:type] == "day"
-      date = Date.parse(params[:created_at]).to_time
-      puts date
-      orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+      s_date = Date.parse(params[:s_date]).to_time
+      e_date = Date.parse(params[:e_date]).to_time
+      puts s_date
+      puts e_date
+      orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day)
     else
       date = Date.parse(params[:created_at]+'-01').to_time
       puts date
