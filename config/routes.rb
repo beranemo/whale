@@ -50,10 +50,15 @@ Rails.application.routes.draw do
         get :ranking_month
         get :ranking_user
         get :ranking_hour
+        get :not_pick
       end
 
       member do 
         get :set_member
+        get :new_guest
+        get :edit_products
+        post :create_guest
+        post :pick_up
       end
     end
 
@@ -62,6 +67,10 @@ Rails.application.routes.draw do
         post :plus_quantity
         post :minus_quantity
         post :add_discount
+      end
+
+      collection do
+        post :clear_coupon
       end
     end
     

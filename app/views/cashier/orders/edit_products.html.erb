@@ -1,7 +1,7 @@
 <div class="container">
 
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '成立訂單' } %>
-      
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+  <h1>編輯訂單</h1>
   <br>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
@@ -76,7 +76,7 @@
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
           <% @index_hash[item.product.id] +=1%>
-          <% @order.amount += item.calculate %>
+
         </tr>
       <% end %>
     </tbody>
@@ -97,13 +97,22 @@
           <%= f.label :status, "是" %>
           <%= f.radio_button :status , false %>
           <%= f.label :status, "否" %>
-          <%= f.radio_button :status , true ,:checked => true %><br>
+          <%= f.radio_button :status , true  %><br>
 
           <%= f.label :address, "取貨方式:" %>
-          <%= f.radio_button :address ,"local", class:"local-radio" %>
-          <%= f.label :address, "自取" %>
-          <%= f.radio_button :address ," ",class:"ship-radio" %>
-          <%= f.label :address, "宅配" %><br>
+          <% if @order.address == "local"%>
+            <%= f.radio_button :address ,"local", class:"local-radio" %>
+            <%= f.label :address, "自取" %>
+            <%= f.radio_button :address ," ",class:"ship-radio" %>
+            <%= f.label :address, "宅配" %><br>
+          <% else%>
+            <%= f.radio_button :address ,"local", class:"local-radio" %>
+            <%= f.label :address, "自取" %>
+            <%= f.radio_button :address ," ",:checked => true,class:"ship-radio" %>
+            <%= f.label :address, "宅配" %><br>
+          <% end%>
+           
+
           <%= f.label :payment_method, "付款方式:" %>
           <%= f.radio_button :payment_method ,"付現" %>
           <%= f.label :payment_method, "付現" %>
@@ -138,13 +147,15 @@
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
             <br>
-            <%= f.submit "結帳完成並成立訂單",class: "btn btn-success" %>
+            <%= f.submit "更新訂單",class: "btn btn-success" %>
           </div>
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
             <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
             <label>優惠卷折扣</label>
             <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+            <%= f.label :user_id, "結帳人員" %>
+            <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
           </div>  
         </div>   
       <% end %>

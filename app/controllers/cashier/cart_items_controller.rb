@@ -36,6 +36,13 @@ class Cashier::CartItemsController < Cashier::BaseController
     end
   end
 
+  def clear_coupon
+    
+    @coupons = current_cart.cart_items.where("product_id == ?",params[:id])
+    @coupons.destroy_all
+    render  :json => {:success => "0"}
+  end
+
   def edit
     
     @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
@@ -68,6 +75,6 @@ class Cashier::CartItemsController < Cashier::BaseController
     @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     @price = @cart_item.calculate.round
     @cart_item.destroy
-    render :json => {:id =>params[:id], :item_index => params[:item_index], :price => @price}
+    render :json => {:id =>params[:id], :item_index => params[:item_index], :o_price => -@price}
   end
 end

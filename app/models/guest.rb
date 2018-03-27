@@ -21,4 +21,5 @@ class Guest < ApplicationRecord
   belongs_to :info_way
   belongs_to :guest_type
   belongs_to :age
+  belongs_to :order, optional: true
 end
