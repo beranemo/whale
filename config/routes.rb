@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         get :ranking_month
         get :ranking_user
         get :ranking_hour
+        get :not_pick
       end
 
       member do 

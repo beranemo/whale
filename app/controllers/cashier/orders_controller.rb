@@ -4,6 +4,10 @@ class Cashier::OrdersController < Cashier::BaseController
 
   end
 
+  def not_pick
+    @orders = Order.where('status ==?',false)
+  end
+
   def show
     @order = Order.find(params[:id])
     @orders = Order.where(member_id: @order.member_id)
@@ -61,16 +65,15 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-    
+      
       current_cart.cart_items.each do |item|
         product = item.product
         if product.zh_name != "折價卷" && @order.status && @order.address == "local"
           product.quantity -= item.quantity
           if product.quantity <= 0
-            flash[:alert] += "#{product.zh_name}商品庫存數量錯誤."
+            flash[:alert] = "商品庫存數量錯誤."
           end
 
-          
           stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
           stock_record.save!
         end
@@ -81,7 +84,7 @@ class Cashier::OrdersController < Cashier::BaseController
         product.save!
       end
       
-
+      @order.status =  @order.status || @order.address != "local"
       if @order.save
         session[:cart_id] = nil
         #當訂單為宅配時寄信通知倉庫
