@@ -85,57 +85,69 @@ var go = setTimeout(display, 500);
 
 function display() {
   var yAxis= <%= @arr_y.inspect.html_safe %>;
-  var Axis= <%= @arr_y2.inspect.html_safe %>;
   var datas = <%= @arr_x.inspect.html_safe %>;                                  
   var ctx = document.getElementById("hourChart").getContext('2d');
   var hourChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: datas,
-    datasets: [{
-      label: '整點銷售額',
-      yAxisID: 'A',
-      data: yAxis,
-      backgroundColor: [
+      type: 'line',
+    data: {
+      labels: datas,
+      datasets: [{
+        label: '整點銷售額',
+        data: yAxis,
+        backgroundColor: [
+
             'rgba(75, 192, 192, 0.2)',
         ],
         borderColor: [
              'rgba(75, 192, 192, 1)',
         ],
         borderWidth: 1
-    }, {
-      label: '整點訂單量',
-      yAxisID: 'B',
-      data: Axis,
-      backgroundColor: [
-              'rgba(255, 186, 117, 0.2)',
+      }]
+          },
+    options: { 
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+  }
+  });
+
+  
+// chart2
+  var Axis= <%= @arr_y2.inspect.html_safe %>;
+  var datasx = <%= @arr_x.inspect.html_safe %>;                                  
+  var ctx2 = document.getElementById("orderChart").getContext('2d');
+  var orderChart = new Chart(ctx2, {
+      type: 'line',
+    data: {
+      labels: datasx,
+      datasets: [{
+        label: '整點訂單量',
+        data: Axis,
+        backgroundColor: [
+
+            'rgba(51, 102, 102, 0.2)',
         ],
         borderColor: [
-            'rgba(255, 186, 117, 1)',
+             'rgba(51, 102, 102, 1)',
         ],
         borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        id: 'A',
-        type: 'linear',
-        position: 'left',
-      }, {
-        id: 'B',
-        type: 'linear',
-        position: 'right',
-        ticks: {
-          beginAtZero: true,
-          stepSize: 1
-        }
       }]
-    }
+          },
+    options: { 
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
   }
   });
 }
-  
  
 </script>
 </div>
