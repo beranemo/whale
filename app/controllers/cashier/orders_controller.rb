@@ -97,17 +97,19 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def search_outcome
-    if params[:type] == "day"
+    if params[:type] == "statement"
       s_date = Date.parse(params[:s_date]).to_time
       e_date = Date.parse(params[:e_date]).to_time
       puts s_date
       puts e_date
-      orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day)
+      @orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
+
+      render :json =>  @orders.to_json(:include => [:user])
     else
       date = Date.parse(params[:created_at]+'-01').to_time
       puts date
       orders = Order.where(created_at: date.all_month)
-    end
+   
     
     # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
 
@@ -142,9 +144,11 @@ class Cashier::OrdersController < Cashier::BaseController
 
     #puts @products[0]
     render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
+    end
   end
 
   def sales_analysis_statement
+    @orders = Order.all
   end
 
 

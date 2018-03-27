@@ -3,95 +3,102 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售報表查詢' } %>
       
-<form id="search-form">
-  <input type="month" id="month">
-  <button id="btn1">月份搜尋</button>
-</form>
-
-  <table class="table" style="display: none;">
-    <tbody id="search-list">
+   <form id="search-form">
+    <label for="startDate">開始日</label>
+    <input type="date" id="s_date">
+    <label for="endDate">結束日</label>
+    <input type="date" id="e_date">
+    <button id="btn1">搜尋</button>
+  </form>
+<br>
+  <table class="table table-hover" data-toggle="table" id="table" style="display: none">
+    <thead id="search-list">
       <tr>
-        <th>分類</th>
-        <th>中文名稱</th>
-        <th>國際通用碼</th>
-        <th>規格</th>
-        <th>定價</th>
-        <th>數量</th>
-        <th>銷售金額</th> 
+        <th data-sortable="true" data-field="created_at">訂購日期</th>
+        <th data-sortable="true" data-field="id">編號</th>
+        <th>結帳人員</th>
+        <th>顧客編號</th>
+        <th>付款方式</th>
+        <th>取貨方式</th>
+        <th data-sortable="true" data-field="amount">總金額</th>
+        <th>功能</th>
       </tr>
-    </tbody>  
-  </table>  
+    </thead>
+    <tbody>
+    
+    </tbody>
+  </table>
 </div>
+
+<!-- Latest compiled and minified CSS -->
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css"> -->
+
+<!-- Latest compiled and minified JavaScript -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script> -->
+
+<!-- Latest compiled and minified Locales -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script> -->
 
 <script>
 
 $("#btn1").click(function(){
   event.preventDefault();
   $(".search-item").remove();//刪除原先的搜尋結果
-  var date = $("#month").val();
-  console.log(date);
+  var s_date = $("#s_date").val();
+  var e_date = $("#e_date").val();
+
+  console.log(s_date);
+  console.log(e_date);
+
   $.ajax({
-    url: "/cashier/orders/search_outcome?type=month" ,
+    url: "/cashier/orders/search_outcome?type=statement" ,
     method: "POST",
     dataType: "json",
     data: {
-      created_at: date,
+      s_date: s_date,
+      e_date: e_date
     },
     success: function(datas){
-      var total_uni = datas.total_uni;
-      var order_item_hash = datas.order_item_hash;
-      var products = datas.products;
-      var order_item_price_hash = datas.order_item_price_hash;
-      var total_price = document.createElement("p");
-      total_price.className = "alnright";
-      var total_price_value = datas.total_price;
-      console.log(order_item_hash);
-      console.log(order_item_price_hash);
-      console.log(total_uni[0]["id"]);
+
       if(datas.length == 0){
             alert("No data found");
       }
       else{
-        $(".table").show();   
+        $(".table").show();  
 
-        for(var i=0; i < total_uni.length;i++){
-          
-          var order_item = document.createElement("tr");
-  
-            console.log(total_uni[i]);
-            // console.log(products);
-            // console.log(products[i]["zh_name"]);
-            order_item.id = total_uni[i]["id"];
-            $(order_item).attr("class","search-item");
-            $(order_item).html($("#analysis-template").html());
-            $(order_item).find(".category").html(products[i]["category"]);
-            $(order_item).find(".zh_name").html(products[i]["zh_name"]);
-            $(order_item).find(".upc").html(products[i]["upc"]);
-            $(order_item).find(".capacity").html(products[i]["capacity"]);
-            $(order_item).find(".price").html(products[i]["price"]);
-            $(order_item).find(".quantity").html(order_item_hash[products[i]["id"]]);
-            $(order_item).find(".total").html(order_item_price_hash[products[i]["id"]].toLocaleString('en-US', {minimumFractionDigits: 0}));
+        for(var i=0; i < datas.length;i++){
+          var data = datas[i];
+          var order = document.createElement("tr");
+             console.log(datas);
+            order.id = data["id"];
+            $(order).attr("class","search-item");
+            $(order).html($("#statement-template").html());
+            $(order).find(".date").html(data["created_at"].substring(0, 10));
+            $(order).find(".number").html(data["id"]);
+            $(order).find(".user").html(data["user"]["name"]);
+            $(order).find(".member_id").html(data["member_id"]);
+            $(order).find(".payment_method").html(data["payment_method"]);
+            $(order).find(".address").html(data["address"]);
+            $(order).find(".amount").html(data["amount"].toLocaleString('en-US', {minimumFractionDigits: 0}));
             
-            $("#search-list").append(order_item);
+            $("#search-list").append(order);
         }
-          $(total_price).html(date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
-          $("#search-form").append(total_price);
+          // $(total_price).html(s_date + " ～ " + e_date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          // $("#search-form").append(total_price);
       }
     }
   });
 });  
 </script>
 
+<script type="text/template"  id="statement-template">
 
-<script type="text/template" id="analysis-template">
-  
-  <td class="category"></td>
-  <td class="zh_name"></td>
-  <td class="upc"></td>
-  <td class="capacity"></td>
-  <td class="price"></td>
-  <td class="quantity"></td>
-  <td class="total" style="text-align: right"></td>
+  <td class="date"></td>
+  <td class="number"></td>
+  <td class="user"></td>
+  <td class="member_id"></td>
+  <td class="payment_method"></td>
+  <td class="address"></td>
+  <td class="amount" style="text-align: right"></td>
 
-  
 </script>
