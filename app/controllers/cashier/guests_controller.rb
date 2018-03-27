@@ -45,7 +45,7 @@ class Cashier::GuestsController < Cashier::BaseController
     # @guests = Guest.where("Date(created_at) = ?", Date.today).order(created_at: :desc)
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day).order(created_at: :desc)
     # @guests = Guest.all
-    puts @guests
+    # puts @guests
 
   end 
 
@@ -53,8 +53,8 @@ class Cashier::GuestsController < Cashier::BaseController
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
 #    @old_guests = @guests.where(guest_type_id: 2)
 #    @new_guests = @guests.where(guest_type_id: 1)
-    @boy_guests = @guests.where(gender: "男")
-    @girl_guests = @guests.where(gender: "女")
+#    @boy_guests = @guests.where(gender: "男")
+#    @girl_guests = @guests.where(gender: "女")
 #    @tw_guests = @guests.where(country_id: 1)
 #    @jp_guests = @guests.where(country_id: 2)
 #    @hk_guests = @guests.where(country_id: 3)
@@ -80,8 +80,8 @@ class Cashier::GuestsController < Cashier::BaseController
 
   def search_outcome
     date = Date.parse(params[:created_at]).to_time
-    #@guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
-    puts date
+    # @guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
+    # puts date
     @guests = Guest.where(created_at: date.beginning_of_day..date.end_of_day)
     @guests.each do |g|
       g.created_at.in_time_zone('Taipei')

@@ -7,20 +7,20 @@
         <blockquote>
           <div class="progress">
             <div class="progress-bar progress-bar-success" style="width: <%= 
-            number_to_percentage( Float(@boy_guests.count)/(@guests.count)*100 , precision: 0) %>">
+            number_to_percentage( Float(@guests.where(gender: "男").count)/(@guests.count)*100 , precision: 0) %>">
               <span class="sr-only"></span>
-              <p><%= @boy_guests.count %></p>
+              <p><%= @guests.where(gender: "男").count %></p>
             </div>
             <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= 
-            number_to_percentage( Float(@girl_guests.count)/(@guests.count)*100 , precision: 0) %>">
+            number_to_percentage( Float(@guests.where(gender: "女").count)/(@guests.count)*100 , precision: 0) %>">
               <span class="sr-only"></span>
-              <p><%= @girl_guests.count %></p>
+              <p><%= @guests.where(gender: "女").count %></p>
             </div>
           </div>
 
           <p style="font-size: 16px">
-            男生：<%= @boy_guests.count %><br>
-            女生：<%= @girl_guests.count %>
+            男生：<%= @guests.where(gender: "男").count %><br>
+            女生：<%= @guests.where(gender: "女").count %>
           </p>
         </blockquote>
         </div>
