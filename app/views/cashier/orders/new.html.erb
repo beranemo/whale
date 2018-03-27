@@ -92,11 +92,24 @@
     <div class="ship-info ">
       <%= form_for [:cashier, @order] do |f|%>
         <div class="col-md-7">
-          <%= f.label :payment_method, "取貨方式" %>
+          
+          <%= f.label :status, "預購:" %>
+          <%= f.label :status, "是" %>
+          <%= f.radio_button :status , false %>
+          <%= f.label :status, "否" %>
+          <%= f.radio_button :status , true ,:checked => true %><br>
+
+          <%= f.label :address, "取貨方式:" %>
           <%= f.radio_button :address ,"local", class:"local-radio" %>
           <%= f.label :address, "自取" %>
           <%= f.radio_button :address ," ",class:"ship-radio" %>
           <%= f.label :address, "宅配" %><br>
+          <%= f.label :payment_method, "付款方式:" %>
+          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.label :payment_method, "付現" %>
+          <%= f.radio_button :payment_method ,"刷卡" %>
+          <%= f.label :payment_method, "刷卡" %><br>
+
           <%= f.label :name, "姓名:" %>
           <%= f.text_field :name %><br>
           
@@ -106,11 +119,7 @@
           <%= f.label :address, "地址:" %>
           <%= f.text_field :address ,class:"input-address form-control" %><br>
 
-          <%= f.label :payment_method, "付款方式:" %>
-          <%= f.radio_button :payment_method ,"付現" %>
-          <%= f.label :payment_method, "付現" %>
-          <%= f.radio_button :payment_method ,"刷卡" %>
-          <%= f.label :payment_method, "刷卡" %>
+          
           <br>
           
           
@@ -134,29 +143,12 @@
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
             <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
-            
             <label>優惠卷折扣</label>
             <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
-           
-          </div>
-          
-          
-    
-
-         
-         
-          
-          
-        </div>
-
-
-        
+          </div>  
+        </div>   
       <% end %>
     </div>
-    
-      
-      
-
   </div>
     
   <br>
