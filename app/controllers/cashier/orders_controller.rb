@@ -147,58 +147,6 @@ class Cashier::OrdersController < Cashier::BaseController
   def sales_analysis_month
   end
 
-  
-
-  def ranking
-    # date = Date.today
-    # @orders = Order.where(created_at: date.days_ago(7)..date)
-    @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
-
-    sum = []
-    @orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
-    end
-    total = sum.sort_by { |k| k["product_id"] }
-    total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| order_item_hash[key] += value}
-
-    puts order_item_hash
-
-    product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
-    @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
-    @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
-  end
-
-  def ranking_week
-    date = Date.today.all_week
-    @orders = Order.where(created_at: date)
-
-    sum = []
-    @orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
-    end
-    total = sum.sort_by { |k| k["product_id"] }
-    total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| order_item_hash[key] += value}
-
-    puts order_item_hash
-
-    product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
-    @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
-    @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
-  end
 
   def ranking_month
     date = Date.today.all_month

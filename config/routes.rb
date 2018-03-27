@@ -45,8 +45,6 @@ Rails.application.routes.draw do
         get :sales_analysis_day
         get :sales_analysis_month
         post :search_outcome
-        get :ranking
-        get :ranking_week
         get :ranking_month
         get :ranking_user
         get :ranking_hour
