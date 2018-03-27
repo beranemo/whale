@@ -4,29 +4,37 @@
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售排行' } %>
  
 <br>
-<div class="col-md-6 col-md-offset-3">
-  <p style="text-align: right">統計時間：<%= Date.today.all_month %></p> 
+<p style="text-align: right">統計時間：<%= Date.today.all_month %></p> 
  <table class="table">
     <tbody>
       <tr>
-        <th>門市人員</th>
-        <th>銷售金額</th>
+        <th>分類</th>
+        <th>中文名稱</th>
+        <th>國際通用碼</th>
+        <th>規格</th>
+        <th>數量</th>
       </tr>
     </tbody>  
     <tbody>
       <% i = 0 %>
-      <% @all.each do |order| %> 
+      <% @all.each do |item| %> 
       <tr>
-        <td><%= order.user.name %> <% if i == 0 %>
+        <td><%= item.product.category %></td>
+        <td><%= item.product.zh_name %>
+        <% if i == 0 %>
         <i class = "glyphicon glyphicon-fire" aria-hidden="true" style="color:red"></i>
         <% end %></td>
-        <td><%= number_to_currency(@user_amount[i], precision: 0)  %></td>
+        <td><%= item.product.upc %></td>
+        <td><%= item.product.capacity %></td>
+        <td><%= @product_quantity[i]  %></td>
       </tr>
       <% i += 1 %>
       <% end %>
     </tbody>
-  </table>  
+  </table> 
+  
 </div>
+<div class="container">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <canvas id="userChart" width="200" height="80"></canvas>
@@ -40,7 +48,7 @@ var go = setTimeout(display, 500);
 
 function display() {
   var yAxis= <%= @y.inspect.html_safe %>;
-  var datas = <%= @users.inspect.html_safe %>;
+  var datas = <%= @products.inspect.html_safe %>;
 
 var ctx = document.getElementById("userChart").getContext('2d');
 
@@ -50,9 +58,15 @@ var userChart = new Chart(ctx, {
     data: {
         labels: datas,
         datasets: [{
-            label: '個人銷售量',
+            label: '商品銷售量',
             data: yAxis,
             backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -61,6 +75,12 @@ var userChart = new Chart(ctx, {
                 'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
                 'rgba(255,99,132,1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
@@ -83,4 +103,3 @@ var userChart = new Chart(ctx, {
 });
 }
 </script>
-

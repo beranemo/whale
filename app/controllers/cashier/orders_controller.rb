@@ -225,15 +225,19 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def search_outcome
-    if params[:type] == "day"
-      date = Date.parse(params[:created_at]).to_time
-      puts date
-      orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+    if params[:type] == "statement"
+      s_date = Date.parse(params[:s_date]).to_time
+      e_date = Date.parse(params[:e_date]).to_time
+      puts s_date
+      puts e_date
+      @orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
+
+      render :json =>  @orders.to_json(:include => [:user])
     else
       date = Date.parse(params[:created_at]+'-01').to_time
       puts date
       orders = Order.where(created_at: date.all_month)
-    end
+   
     
     # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
 
@@ -268,65 +272,15 @@ class Cashier::OrdersController < Cashier::BaseController
 
     #puts @products[0]
     render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
-  end
-
-  def sales_analysis_month
-  end
-
-  
-
-  def ranking
-    # date = Date.today
-    # @orders = Order.where(created_at: date.days_ago(7)..date)
-    @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
-
-    sum = []
-    @orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
     end
-    total = sum.sort_by { |k| k["product_id"] }
-    total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| order_item_hash[key] += value}
-
-    puts order_item_hash
-
-    product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
-    @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
-    @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
   end
 
-  def ranking_week
-    date = Date.today.all_week
-    @orders = Order.where(created_at: date)
-
-    sum = []
-    @orders.each do |order|
-      order_items = order.order_items
-
-      sum.concat(order_items)
-      puts sum
-    end
-    total = sum.sort_by { |k| k["product_id"] }
-    total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| order_item_hash[key] += value}
-
-    puts order_item_hash
-
-    product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
-    @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
-    @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
+  def sales_analysis_statement
+    @orders = Order.all
   end
 
-  def ranking_month
+
+  def ranking_product
     date = Date.today.all_month
     @orders = Order.where(created_at: date)
 
@@ -349,6 +303,16 @@ class Cashier::OrdersController < Cashier::BaseController
     product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
     @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
+
+    # chart
+    @products = Array.new()
+    total_uni.each do |order|
+    @products  << order.product.zh_name
+
+    puts @products
+    end
+
+    @y = order_item_hash.sort_by{ |k, v| k }.transpose.last
   end
 
   def ranking_user
@@ -379,8 +343,8 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def ranking_hour
-    orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
-    total = orders.sort_by {  |s| s.created_at.hour }
+    @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
+    total = @orders.sort_by {  |s| s.created_at.hour }
     mix_arr_1 = total.pluck(:created_at, :amount)
 
     @hour_amount_hash = Hash.new(0)
@@ -389,6 +353,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
     @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
     @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    @arr_y2 = [0,0,0,0,0,0,0,0,0,0,0,0,0]
   end
 
   private

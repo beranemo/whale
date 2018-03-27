@@ -43,11 +43,9 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :new, :create, :edit, :update , :show] do
       collection do
         get :sales_analysis_day
-        get :sales_analysis_month
+        get :sales_analysis_statement
         post :search_outcome
-        get :ranking
-        get :ranking_week
-        get :ranking_month
+        get :ranking_product
         get :ranking_user
         get :ranking_hour
         get :not_pick

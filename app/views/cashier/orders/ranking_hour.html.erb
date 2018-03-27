@@ -3,14 +3,6 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售排行' } %>
 
-  <div style="text-align: center">
-  <%= link_to '當月排行' , ranking_month_cashier_orders_path %> >
-  <%= link_to '當週排行' , ranking_week_cashier_orders_path %> >
-  <%= link_to '當日排行' , ranking_cashier_orders_path %> >
-  <%= link_to '門市人員排行' , ranking_user_cashier_orders_path %> >
-  <%= link_to '整點銷售' , ranking_hour_cashier_orders_path %>
-  </div>
-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
@@ -46,8 +38,46 @@
         @arr_y[12] += value
       end
     } %>
-
+<p style="text-align: right">統計時間：<%= Date.today %></p> 
 <canvas id="hourChart" width="200" height="50"></canvas>
+
+
+<% @orders.each do |o| %>
+
+  <% if o.created_at.hour.to_s == '10'
+      @arr_y2[0] += 1
+    elsif o.created_at.hour.to_s == '11'
+      @arr_y2[1] += 1
+    elsif o.created_at.hour.to_s == '12'
+      @arr_y2[2] += 1    
+    elsif o.created_at.hour.to_s == '13'
+      @arr_y2[3] += 1 
+    elsif o.created_at.hour.to_s == '14'
+      @arr_y2[4] += 1
+    elsif o.created_at.hour.to_s == '15'
+      @arr_y2[5] += 1
+    elsif o.created_at.hour.to_s == '16'
+      @arr_y2[6] += 1
+    elsif o.created_at.hour.to_s == '17'
+      @arr_y2[7] += 1
+    elsif o.created_at.hour.to_s == '18'
+      @arr_y2[8] += 1
+    elsif o.created_at.hour.to_s == '19'
+      @arr_y2[9] += 1
+    elsif o.created_at.hour.to_s == '20'
+      @arr_y2[10] += 1
+    elsif o.created_at.hour.to_s == '21'
+      @arr_y2[11] += 1
+    else o.created_at.hour.to_s == '22'
+      @arr_y2[12] += 1
+     end %>  
+
+<% end %> 
+<br>
+
+
+
+<canvas id="orderChart" width="200" height="50"></canvas>
 
 <script>
 clearTimeout(go);   
@@ -58,13 +88,14 @@ function display() {
   var datas = <%= @arr_x.inspect.html_safe %>;                                  
   var ctx = document.getElementById("hourChart").getContext('2d');
   var hourChart = new Chart(ctx, {
-    type: 'line',
+      type: 'line',
     data: {
       labels: datas,
       datasets: [{
         label: '整點銷售額',
         data: yAxis,
         backgroundColor: [
+
             'rgba(75, 192, 192, 0.2)',
         ],
         borderColor: [
@@ -72,18 +103,53 @@ function display() {
         ],
         borderWidth: 1
       }]
-    },
+          },
     options: { 
       scales: {
         yAxes: [{
           ticks: {
             beginAtZero: true,
+            min: 0
           }
         }]
       }
-    }
+  }
+  });
+
+  
+// chart2
+  var Axis= <%= @arr_y2.inspect.html_safe %>;
+  var datasx = <%= @arr_x.inspect.html_safe %>;                                  
+  var ctx2 = document.getElementById("orderChart").getContext('2d');
+  var orderChart = new Chart(ctx2, {
+      type: 'line',
+    data: {
+      labels: datasx,
+      datasets: [{
+        label: '整點訂單量',
+        data: Axis,
+        backgroundColor: [
+
+            'rgba(51, 102, 102, 0.2)',
+        ],
+        borderColor: [
+             'rgba(51, 102, 102, 1)',
+        ],
+        borderWidth: 1
+      }]
+          },
+    options: { 
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1,
+          }
+        }]
+      }
+  }
   });
 }
-  
+ 
 </script>
 </div>
