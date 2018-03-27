@@ -22,7 +22,7 @@
       <% @orders.each do |order|%>
       <tr>
         <td><%= order.created_at.localtime.to_s(:db)%></td>
-        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.id%><% end %></td>
+        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn%><% end %></td>
         <td><%= order.user.name%></td>
         <td>
           <% if order.member_id == -1%>
@@ -44,6 +44,7 @@
         </td>
         <td>
           <%= link_to "編輯",edit_cashier_order_path(order.id)%>
+          <%= link_to "取貨完成",pick_up_cashier_order_path(order.id), method: :post%>
         </td>
       </tr>
       

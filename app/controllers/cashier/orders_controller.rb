@@ -1,4 +1,5 @@
 class Cashier::OrdersController < Cashier::BaseController
+  before_action :set_order, only: [:pick_up, :edit, :set_member]
   def index
     @orders = Order.all
 
@@ -8,8 +9,26 @@ class Cashier::OrdersController < Cashier::BaseController
     @orders = Order.where('status ==?',false)
   end
 
-  def show
+  def pick_up
     @order = Order.find(params[:id])
+    @order.order_items.each do |item|
+      product = item.product
+      product.quantity -= item.quantity
+      if product.quantity <= 0
+        flash[:alert] = "商品庫存數量錯誤."
+      end
+
+      stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
+      stock_record.save!
+    end
+    @order.status = true
+    @order.save!
+    flash[:notice] = "訂單取貨成功"
+    redirect_to not_pick_cashier_orders_path
+  end
+
+  def show
+    
     @orders = Order.where(member_id: @order.member_id)
   end
 
@@ -24,7 +43,7 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def set_member  
-    @order = Order.find(params[:id])
+
     @member = Member.find(params[:member_id])
   end
 
@@ -284,4 +303,7 @@ class Cashier::OrdersController < Cashier::BaseController
                                   :amount, :discount_off, :status)
   end
   
+  def set_order
+    
+  end
 end

@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
       member do 
         get :set_member
+        post :pick_up
       end
     end
 
