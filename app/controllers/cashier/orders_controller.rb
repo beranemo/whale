@@ -1,8 +1,8 @@
 class Cashier::OrdersController < Cashier::BaseController
-  before_action :set_order, only: [:pick_up, :edit, :set_member]
+  before_action :set_order, only: [:pick_up, :edit, :set_member, :new_guest, :create_guest]
+
   def index
     @orders = Order.all
-
   end
 
   def not_pick
@@ -27,13 +27,27 @@ class Cashier::OrdersController < Cashier::BaseController
     redirect_to not_pick_cashier_orders_path
   end
 
+  def new_guest
+    @guest = Guest.new
+
+  end
+
+  def create_guest
+    @guest = Guest.new(guest_params)
+    @guest.user_id = current_user.id
+    @guest.save!
+
+    @order.guest_id = @guest.id
+    @order.save!
+    flash[:notice] = "訂單新增客情成功"
+    redirect_to cashier_orders_path
+  end
+
   def show
-    
     @orders = Order.where(member_id: @order.member_id)
   end
 
   def edit
-    
     @order = Order.find(params[:id])
     if current_user.id != @order.user_id
       flash[:alert] = "結帳人員不符"
@@ -303,7 +317,11 @@ class Cashier::OrdersController < Cashier::BaseController
                                   :amount, :discount_off, :status)
   end
   
+  def guest_params
+    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id, :remark)
+  end
+
   def set_order
-    
+    @order = Order.find(params[:id])
   end
 end

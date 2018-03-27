@@ -49,6 +49,9 @@
         </td>
         <td>
           <%= link_to "編輯",edit_cashier_order_path(order.id)%>
+          <% if order.guest_id == nil %>
+            <%= link_to "建立客情",new_guest_cashier_order_path(order.id)%>
+          <% end %>
         </td>
       </tr>
       

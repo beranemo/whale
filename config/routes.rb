@@ -55,6 +55,8 @@ Rails.application.routes.draw do
 
       member do 
         get :set_member
+        get :new_guest
+        post :create_guest
         post :pick_up
       end
     end
