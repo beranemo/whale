@@ -65,7 +65,9 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-      
+      today = Date.today.to_s
+      today.slice!("2")
+      @order.sn = today.tr('-','').to_i * 1000 + current_cart.id
       current_cart.cart_items.each do |item|
         product = item.product
         if product.zh_name != "折價卷" && @order.status && @order.address == "local"
