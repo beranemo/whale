@@ -1,5 +1,6 @@
 class Cashier::OrdersController < Cashier::BaseController
-  before_action :set_order, only: [:show,:pick_up, :edit, :set_member, :new_guest, :create_guest, :edit_products]
+  before_action :set_order, only: [:show, :pick_up, :edit, :set_member, :update,
+                                   :new_guest, :create_guest, :edit_products]
 
   def index
     @orders = Order.all
@@ -45,7 +46,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
   def edit_products
     @order_items = @order.order_items
-    current_cart.cart_items.destroy 
+    current_cart.cart_items.destroy_all
     @order_items.each do |item|
       if item.product.zh_name == "折價卷"
         @cart_item = current_cart.cart_items.build(product_id: @product.id, discount_off: -params[:coupon_price].to_i)
@@ -53,7 +54,7 @@ class Cashier::OrdersController < Cashier::BaseController
         @cart_item.discount_method_code = discount_method.code
 
       else
-        @cart_item = current_cart.cart_items.build(product_id: item.product.id)
+        @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
         discount_method = DiscountMethod.find_by(content: "無")
         @cart_item.discount_method_code = discount_method.code
 
@@ -73,21 +74,16 @@ class Cashier::OrdersController < Cashier::BaseController
 
     if @order.member_id != "-1"
       @member = Member.find(params[:id])
-      @order.name = @member.name
-      @order.phone = @member.phone
-      @order.address = @member.address
     else
       @member = Member.new(id: -1)
     end
   end
 
+
   def show
     @orders = Order.where(member_id: @order.member_id)
   end
 
-  def edit
-    @order = Order.find(params[:id])    
-  end
 
   def set_member  
 
@@ -119,6 +115,54 @@ class Cashier::OrdersController < Cashier::BaseController
 
   end
 
+  def update
+    #復原原本訂單扣的庫存
+    @order.order_items.each do |item|
+      product = item.product
+      if product.zh_name != "折價卷" && @order.status && @order.address == "local"
+        product.quantity += item.quantity
+        product.save!
+      end
+      
+    end
+
+    if @order.update(order_params)
+      current_cart.cart_items.each do |item|
+        product = item.product
+        if product.zh_name != "折價卷" && @order.status && @order.address == "local"
+          product.quantity -= item.quantity
+          if product.quantity <= 0
+            flash[:alert] = "商品庫存數量錯誤."
+          end
+
+          stock_record = product.stock_records.find_by(order_id: @order.id)
+          if stock_record == nil
+            stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
+          else
+            stock_record.quantity -= item.quantity
+          end
+          stock_record.save!
+        end
+        
+        order_item = @order.order_items.find_by(product_id: item.product.id)
+        if order_item == nil
+          order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
+        else
+          order_item.update(price: item.calculate, quantity: item.quantity)
+        end
+        
+        order_item.save!
+        product.save!
+      end
+      
+      @order.status =  (@order.status || @order.address != "local")
+      flash[:notice] = "成功更新訂單記錄"
+      redirect_to cashier_orders_path
+    else
+      flash[:alert] = @guest.errors.full_messages.to_sentence
+      
+    end
+  end
 
   def create
     if current_cart.cart_items.size ==0
@@ -142,7 +186,12 @@ class Cashier::OrdersController < Cashier::BaseController
             flash[:alert] = "商品庫存數量錯誤."
           end
 
-          stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
+          stock_record = product.stock_records.find_by(order_id: @order.id)
+          if stock_record == nil
+            stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
+          else
+            stock_record.quantity -= item.quantity
+          end
           stock_record.save!
         end
 
@@ -347,7 +396,8 @@ class Cashier::OrdersController < Cashier::BaseController
   def order_params
     params.require(:order).permit(:member_id, :payment_method, :address,
                                   :phone, :name, :remark,
-                                  :amount, :discount_off, :status)
+                                  :amount, :discount_off, :status,
+                                  :user_id)
   end
   
   def guest_params
