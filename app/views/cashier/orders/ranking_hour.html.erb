@@ -38,7 +38,7 @@
         @arr_y[12] += value
       end
     } %>
-
+<p style="text-align: right">統計時間：<%= Date.today %></p> 
 <canvas id="hourChart" width="200" height="50"></canvas>
 
 
@@ -109,6 +109,7 @@ function display() {
         yAxes: [{
           ticks: {
             beginAtZero: true,
+            min: 0
           }
         }]
       }
@@ -142,6 +143,7 @@ function display() {
         yAxes: [{
           ticks: {
             beginAtZero: true,
+            stepSize: 1,
           }
         }]
       }
