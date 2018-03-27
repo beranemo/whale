@@ -30,7 +30,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @index_hash = Hash.new(0)
     @order.amount = 0
     @order.discount_off = 100
-    @products = Product.where("quantity > 0") 
+    @products = Product.where('id != ?',@coupon.id) 
     @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
     @cart_coupons = current_cart.cart_items.where('product_id == ?',@coupon.id)
     @coupon_discount = 0
@@ -61,14 +61,16 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-      
+    
       current_cart.cart_items.each do |item|
         product = item.product
-        if product.zh_name != "折價卷" && @order.address == "local"
+        if product.zh_name != "折價卷" && @order.status && @order.address == "local"
           product.quantity -= item.quantity
           if product.quantity <= 0
             flash[:alert] += "#{product.zh_name}商品庫存數量錯誤."
           end
+
+          
           stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
           stock_record.save!
         end
