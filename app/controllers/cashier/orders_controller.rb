@@ -232,7 +232,21 @@ class Cashier::OrdersController < Cashier::BaseController
       puts e_date
       @orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
 
-      render :json =>  @orders.to_json(:include => [:user])
+      sum = []
+      @orders.each do |order|
+      order_amount = order.amount
+      sum.push(order_amount)
+      puts sum
+      end
+      @total_amount = sum.inject(0){|sum,x| sum + x }
+
+      @users = Array.new()
+      @orders.each do |order|
+      @users  << order.user.name
+      end
+
+      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users}
+
     else
       date = Date.parse(params[:created_at]+'-01').to_time
       puts date
@@ -276,7 +290,6 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def sales_analysis_statement
-    @orders = Order.all
   end
 
 
