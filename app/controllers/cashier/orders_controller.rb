@@ -65,7 +65,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @cart_items = current_cart.cart_items
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")
-    @cart_coupons = current_cart.cart_items.where('product_id == ?',@coupon.id)
+    @cart_coupons = current_cart.cart_items.where('product_id = ?',@coupon.id)
     @products = Product.where('id != ?',@coupon.id) 
     @coupon_discount = 0
     @cart_coupons.each do |c|
@@ -98,7 +98,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.discount_off = 100
     @products = Product.where('id != ?',@coupon.id) 
     @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
-    @cart_coupons = current_cart.cart_items.where('product_id == ?',@coupon.id)
+    @cart_coupons = current_cart.cart_items.where('product_id = ?',@coupon.id)
     @coupon_discount = 0
     @cart_coupons.each do |c|
       @coupon_discount += c.discount_off
