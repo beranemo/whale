@@ -1,6 +1,6 @@
 class Cashier::OrdersController < Cashier::BaseController
   before_action :set_order, only: [:show, :pick_up, :edit, :set_member, :update,
-                                   :new_guest, :create_guest, :edit_products]
+                                   :new_guest, :create_guest, ]
 
   def index
     @orders = Order.all
@@ -44,35 +44,29 @@ class Cashier::OrdersController < Cashier::BaseController
     redirect_to cashier_orders_path
   end
 
-  def edit_products
+  def edit
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
     @order_items.each do |item|
-      if item.product.zh_name == "折價卷"
-        @cart_item = current_cart.cart_items.build(product_id: @product.id, discount_off: -params[:coupon_price].to_i)
-        discount_method = DiscountMethod.find_by(content: "優惠價")
-        @cart_item.discount_method_code = discount_method.code
-
-      else
-        @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
-        discount_method = DiscountMethod.find_by(content: "無")
-        @cart_item.discount_method_code = discount_method.code
-
-      end
+      @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
+      @cart_item.discount_off = item.price
+      discount_method = DiscountMethod.find_by(content: "優惠價")
+      @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
     end
 
-    @cart_items = current_cart.cart_items
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")
     @cart_coupons = current_cart.cart_items.where('product_id = ?',@coupon.id)
+    @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
     @products = Product.where('id != ?',@coupon.id) 
     @coupon_discount = 0
     @cart_coupons.each do |c|
       @coupon_discount += c.discount_off
     end
-
-    if @order.member_id != -1
+    if params[:member_id] != nil
+      @member = Member.find(params[:member_id])
+    elsif @order.member_id != -1
       @member = Member.find(@order.member_id)
     else
       @member = Member.new(id: -1)
@@ -87,7 +81,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
   def set_member  
 
-    @member = Member.find(params[:member_id])
+    @member = Member.new
   end
 
   def new
@@ -362,7 +356,7 @@ class Cashier::OrdersController < Cashier::BaseController
     params.require(:order).permit(:member_id, :payment_method, :address,
                                   :phone, :name, :remark,
                                   :amount, :discount_off, :status,
-                                  :user_id)
+                                  :user_id, :created_at)
   end
   
   def guest_params

@@ -1,124 +1,745 @@
 <div class="container">
+
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
-      
+  <h1>編輯訂單</h1>
   <br>
-  <h2>訂單列表</h2>
+  <label>商品條碼:</label>
+  <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
+  <h2>會員訊息</h2>
   <table class="table">
-    <thead>
-      <tr>
-        <th>編號</th>
-        <th>結帳人員</th>
-        <th>顧客編號</th>
-        <th>付款方式</th>
-        <th>總金額</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="order-id"><%= @order.id%></td>
-        <td><%= @order.user.name%></td>
-        <td>
-          <% if @order.member_id == -1%>
-            非會員
-          <% else%>
-            <%= @order.member_id%>
-          <% end%>
-        </td>
-        <td><%= @order.payment_method%></td>
-        <td><%= @order.amount%></td>
-      </tr>
-      
-    </tbody>
-  </table>
-
-  <form id="search-form">
-
-    <label>快速搜尋</label>
-
-    <input type="text" id="phone2" placeholder="請輸入手機號碼或 email "/>
-    <button id="phone-search2" class="btn btn-primary btn-sm">搜尋</button>
-    <br>
-    <br>
-  </form>
-  <table class="table">
-    <tbody id="search-list">
-      
+    <tbody class="customer-info">
       <tr>
         <th>姓名</th>
-        <th>手機號碼</th>
-        <th>性別</th>
+        <th>電話</th>
         <th>信箱</th>
-        <th>生日</th>
-        <th>#</th>
-      </tr>     
+        <th>地址</th>        
+        <th>備註</th>
+      </tr>
+       <tr>
+        <td><%= @member.name%></td>
+        <td><%= @member.phone%></td>
+        <td><%= @member.email%></td>
+        <td class="address"><%= @member.address%></td>
+        <td class="remark"><%= @member.remark%></td>         
+      </tr>
+    </tbody>
+  </table>  
+  <br>
+  
+  
+  <h2>購買內容</h2>
+  <table class="table">
+    <tbody class="cart-item-list">
+      <tr>
+        <th>類型</th>
+        <th>商品名稱</th>          
+        <th>國際條碼</th>
+        <th>定價</th>
+        <th>購買數量</th>        
+        <th>小計</th>
+        <th>折扣金額</th>
+        <th>售價</th>
+        <th>打折方式</th>
+        <th>功能</th>
+      </tr> 
+             
+      <% @cart_items.each do |item|%>
+
+        <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
+          <td><%=item.product.category%></td>
+          <td><%=item.product.zh_name%></td>            
+          <td><%=item.product.upc%></td> 
+          <td class="price"><%= item.product.price %></td>
+          <td>
+            <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+            <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
+            <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+          </td>
+          <td class="o-price">
+            <%=item.origin_calculate%>
+            <% if  item.discount_method_code == "B"%> 
+            *
+            <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setItemDiscount(event)">
+            %
+            <% else %>
+            <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
+            <% end %>
+          </td>           
+          <td class="v-price"><%= item.origin_calculate - item.calculate %></td>
+          <td class="d-price"><%= item.calculate %></td>  
+          <td>
+            <%= form_for [:cashier, item] do |f| %>
+            <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
+            <% end%>
+          </td>        
+          <td>
+            <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+          </td>
+          <% @index_hash[item.product.id] +=1%>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <hr>
+  <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+  <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
+  <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+  <br>
+  <br>
+ 
+  <div class="row">
+    <div class="ship-info ">
+      <%= form_for [:cashier, @order] do |f|%>
+        <div class="col-md-7">
+          <%= f.label :created_at, "成立時間:" %>
+          <%= f.datetime_select :created_at, class:"form-control"%>  
+          <br>
+          <%= f.label :status, "預購:" %>
+          <%= f.label :status, "是" %>
+          <%= f.radio_button :status , false %>
+          <%= f.label :status, "否" %>
+          <%= f.radio_button :status , true  %><br>
+
+          <%= f.label :address, "取貨方式:" %>
+          <% if @order.address == "local"%>
+            <%= f.radio_button :address ,"local", class:"local-radio" %>
+            <%= f.label :address, "自取" %>
+            <%= f.radio_button :address ," ",class:"ship-radio" %>
+            <%= f.label :address, "宅配" %><br>
+          <% else%>
+            <%= f.radio_button :address ,"local", class:"local-radio" %>
+            <%= f.label :address, "自取" %>
+            <%= f.radio_button :address ," ",:checked => true,class:"ship-radio" %>
+            <%= f.label :address, "宅配" %><br>
+          <% end%>
+           
+
+          <%= f.label :payment_method, "付款方式:" %>
+          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.label :payment_method, "付現" %>
+          <%= f.radio_button :payment_method ,"刷卡" %>
+          <%= f.label :payment_method, "刷卡" %><br>
+
+          <%= f.label :name, "姓名:" %>
+          <%= f.text_field :name %><br>
+          
+          <%= f.label :phone, "電話:" %>
+          <%= f.text_field :phone %><br>
+          
+          <%= f.label :address, "地址:" %>
+          <%= f.text_field :address ,class:"input-address form-control" %><br>
+
+          
+          <br>
+          
+          
+          <%= f.label :remark ,"備註"%>
+          <%= f.text_area :remark, class:"form-control" %>
+        </div>
+        <div class="col-md-5">
+          
+          <div class="col-md-6">
+            <label>原始總金額</label>
+            <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+            <label>小計</label>
+            <input class="discount_amout form-control" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i if @order.discount_off %>"  id="off_amount" disabled="disabled">
+            <% @order.amount += @coupon_discount %>
+            <%= f.label :amount, "折扣後金額" %>
+            <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
+            <%= f.hidden_field :member_id, :value => @member.id %>
+            <br>
+            <%= f.submit "更新訂單",class: "btn btn-success" %>
+            <br>
+            
+          </div>
+
+          <div class="col-md-6">
+            <%= f.label :discount_off, "折扣%" %>
+            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+            <label>優惠卷折扣</label>
+            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+            <%= f.label :user_id, "結帳人員" %>
+            <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
+          </div>
+          
+          
+        </div>   
+      <% end %>
+    </div>
+  </div>
+    
+  <br>
+  <h2>商品列表</h2>
+  <table class="table" data-toggle="table">
+    <thead>
+      <tr>
+        <th>類型</th>
+        <th>商品名稱</th>
+        <th data-sortable="true" data-field="price">定價</th>
+        <th>國際條碼</th>       
+        <th>功能</th>
+      </tr>
+    </thead>
+    <tbody class="product-list">    
+    <% @products.each do |product| %>
+      <% if product.status != "removed" %>
+      <tr id="<%= product.id%>">
+        <td><%=product.category%></td>
+        <td><%=product.zh_name%></td>
+        <td><%=product.price%></td>
+        <td><%=product.upc%></td> 
+    
+        <td><button class="add_to_cart">購買</button></td>
+      </tr>
+      <% end %>
+    <% end %>  
         
+      
     </tbody>
   </table>  
 
-
 </div>
 
-<script type="text/javascript">
-  $("#phone-search2").click(function(){
-    
-    event.preventDefault();
-    $(".search-item").remove();//刪除原先的搜尋結果
-    
-    var search_word = $("#phone2").val();
-    if(search_word.length < 3)//至少要輸入3碼才能搜尋
-    {
-      //alert(phone2);
-      //alert(phone2.length);
-      alert("錯誤!輸入長度不足3碼");
-    }else{
-      $.ajax({
-        url: "/cashier/members/search_outcome" ,
-        method: "POST",
-        dataType: "json",
-        data: {
-          phone: search_word,
-        },
-        success: function(datas){
-          if(datas.length == 0){
-            alert("No data found");
-          }
-          else{
-            for( var i = 0 ; i < datas.length ; i++ ){
-              var member = document.createElement("tr");
-              var data = datas[i];
-              var order_id = $(".order-id").html();
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
 
-              member.id = data["id"];
-              $(member).attr("class","search-item");
-              $(member).html($("#member-template").html());
-              $(member).find(".name").html(data["name"]);
-              $(member).find(".phone").html(data["phone"]);
-              $(member).find(".gender").html(data["gender"]);
-              $(member).find(".email").html(data["email"]);
-              $(member).find(".birthday").html(data["birthday"]);
-            
-              var url = document.createElement("a");
-              url.href = "/cashier/orders/"+order_id+"/set_member?member_id=" +member.id;
-              $(url).html("綁定");
-              $(member).find(".setmember").html(url);
-          
-              $("#search-list").append(member);
-              console.log(data["name"]);
-            }
-          }
-        }
-      });
-    }
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+  //讓進入頁面游標直接在barcode輸入匡
+  var elem = $("#bar-code");
+  elem.focus();
+  elem.select;
+
+  //多次使用的變數
+  var cart_item ;
+  var total_price ;
+  var total_price_value ;
+  var o_price;
+  var l_price;
+  var v_price;
+  var d_price;
+  var origin_amount;
+  var discount_off;
+  var coupon_discount;
+  var off_amount; //原始總金額打折
+  var discount_amout;
+  var exist_cart_item;
+
+
+  //設定取貨方式解鎖地址輸入框
+  $(".ship-radio").on("click", function(event){
+    
+    $(".ship-info").find(".input-address").removeAttr('disabled');
   });
+  //設定取貨方式鎖定地址輸入框
+  $("#order_address_local").on("click", function(event){
+    
+    $(".ship-info").find(".input-address").attr('disabled','disabled');
+  });
+
+  //新增優惠卷
+  $(".add-coupon").on("click", function(event){
+    var id  = event.target.id;
+    var coupon_price = $("#coupon-price").val(); 
+    console.log(id);
+    $.ajax({
+      url: "/cashier/products/" + id + "/add_to_cart?coupon_price=" + coupon_price,
+      method: "POST",
+      dataType: "json",      
+      success: function(data){        
+        var off_amount = Number($("#off_amount").val());
+        var coupon_price = Number(data["coupon_price"]);
+        var coupon_discount = Number($("#coupon_discount").val()) +coupon_price;
+        var discount_amout = off_amount+ coupon_discount;
+
+        $("#order_amount").val(discount_amout);
+        $("#coupon_discount").val(coupon_discount);     
+      }
+    });
+  }); 
+
+  //清除優惠卷
+  $(".clear-coupon").on("click", function(event){
+    var id  = event.target.id;
+
+    $.ajax({
+      url: "/cashier/cart_items/clear_coupon?id=" + id,
+      method: "POST",
+      dataType: "json",      
+      success: function(data){        
+        var off_amount = Number($("#off_amount").val());    
+        var coupon_discount = Number($("#coupon_discount").val());
+        var discount_amount = off_amount - coupon_discount;
+
+        $("#order_amount").val(discount_amount);
+        $("#coupon_discount").val(0);     
+      }
+    });
+  }); 
+
+  //將商品加入購物車
+  $(".product-list").on("click", ".add_to_cart", function(event){
+    var id  = event.target.parentNode.parentNode.id;
+    console.log(id);
+    $.ajax({
+      url: "/cashier/products/" + id + "/add_to_cart",
+      method: "POST",
+      dataType: "json",      
+      success: function(data){        
+        setUpVariable(data);
+
+        $("#off_amount").val(off_amount);
+        $("#order_amount").val(discount_amout);
+
+        $(total_price).val(origin_amount);
+
+       
+        console.log(data["id"]);
+        console.log(exist_cart_item);
+
+        cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
+
+        $(cart_item).html($("#order-item-template").html());
+        $(cart_item).find(".category").html(data["category"]);
+        $(cart_item).find(".zh_name").html(data["zh_name"]);
+        $(cart_item).find(".price").html(o_price);
+        $(cart_item).find(".upc").html(data["upc"]);
+        $(".cart-item-list").append(cart_item);
+        $(cart_item).find(".o-price").html(o_price);
+        $(cart_item).find(".o-price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setItemDiscount(event)">');
+        $(cart_item).find(".d-price").html(o_price);
+        $(cart_item).find(".v-price").html("0");
+
+          
+      }
+    });
+  }); 
+
+
+  $(".cart-item-list").on("click",".delete-item",function(event){
+    var id = event.target.parentNode.parentNode.id;
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
+    $.ajax({
+      url: "/cashier/cart_items/" + product_id+"?item_index=" +item_index,
+      method: "DELETE",
+      dataType: "json",
+
+      success: function(data){
+        setUpVariable(data);
+
+        $("#off_amount").val(off_amount);
+        $("#order_amount").val(discount_amout);
+        $(total_price).val((origin_amount));
+
+        $(".cart-item-list").find("tr[id^="+data["id"]+"-"+data["item_index"]+"]").remove();
+
+        for(i = 1+Number(data["item_index"]); i < exist_cart_item ; i++){
+          $(".cart-item-list").find("tr[id^="+data["id"]+"-"+i+"]").attr("id",data["id"].toString() +"-" +(i-1));
+          console.log(i);
+        }
+      }
+    });
+  });
+
+
+  $(".cart-item-list").on("click",".plus-item",function(event){
+    var id = event.target.parentNode.parentNode.id;
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
+    $.ajax({
+      url: "/cashier/cart_items/" + product_id +"/plus_quantity?item_index=" + item_index,
+      method: "POST",
+      dataType: "json",
+      success: function(data){
+        setUpVariable(data);
+        cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+        origin_amount = total_price_value+d_price-l_price;
+        off_amount = Math.round(origin_amount*discount_off/100);
+        discount_amout = off_amount + coupon_discount;
+        var item_discount_off = $(cart_item).find(".discount_off");
+
+        $("#off_amount").val(off_amount);
+        $("#order_amount").val(discount_amout);
+        $(total_price).val(origin_amount);
+
+        
+        $(cart_item).find(".quantity").val(data["quantity"]);
+        $(cart_item).find(".o-price").html(data["o_price"]);
+        if(item_discount_off.val() != "100")
+        {
+          $(cart_item).find(".o-price").append("*");
+          $(cart_item).find(".o-price").append(item_discount_off);
+          $(cart_item).find(".o-price").append("%");
+        }
+        else
+        {
+          $(cart_item).find(".o-price").append(item_discount_off);
+        } 
+        $(cart_item).find(".d-price").html(data["d_price"]);
+        $(cart_item).find(".v-price").html(data["v_price"]);
+      }
+    })
+  });
+
+  $(".cart-item-list").on("click",".minus-item",function(event){
+    var id = event.target.parentNode.parentNode.id;
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
+    $.ajax({
+      url: "/cashier/cart_items/" + product_id +"/minus_quantity?item_index=" +item_index,
+      method: "POST",
+      dataType: "json",
+      success: function(data){
+        if(data["success"] == "1"){
+          setUpVariable(data);
+          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          origin_amount = total_price_value+d_price-l_price;
+          off_amount = Math.round(origin_amount*discount_off/100);
+          discount_amout = off_amount + coupon_discount;
+          var item_discount_off = $(cart_item).find(".discount_off");
+          
+          $("#off_amount").val(off_amount);
+          $("#order_amount").val(discount_amout);
+          $(total_price).val(origin_amount);
+
+          
+          $(cart_item).find(".quantity").val(data["quantity"]);
+          $(cart_item).find(".o-price").html(data["o_price"]);
+          if(item_discount_off.val() != "100")
+          {
+            $(cart_item).find(".o-price").append("*");
+            $(cart_item).find(".o-price").append(item_discount_off);
+            $(cart_item).find(".o-price").append("%");
+          }
+          else
+          {
+            $(cart_item).find(".o-price").append(item_discount_off);
+          }     
+          $(cart_item).find(".d-price").html(data["d_price"]);
+          $(cart_item).find(".v-price").html(data["v_price"]);
+
+        }        
+      }
+    })
+  });
+
+
+
+  //設定折扣方式
+  $(".cart-item-list").on("change",".discount-list",function(event){ 
+    var id = event.target.parentNode.parentNode.parentNode.id;
+    var index = id.indexOf("-");
+    var product_id = id.substring(0,index);
+    var item_index = id.substring(index+1,id.length);
+    var method_code = $(event.target).find(":selected").val();
+
+
+
+    if(method_code == "B"){
+      var str ;
+      if(str=prompt("請輸入0-100的數字","100"))
+      {
+        console.log(str);
+
+        $.ajax({
+          url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code="+method_code + "&discount=" + str +"&item_index=" +item_index,
+          method: "post",
+          dataType: "json",
+          success: function(data){
+            setUpVariable(data);
+            cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+            origin_amount = total_price_value+d_price-l_price;
+            off_amount = Math.round(origin_amount*discount_off/100);
+            discount_amout = off_amount + coupon_discount;
+            var item_discount_off = $(cart_item).find(".discount_off");
+          
+            $("#off_amount").val(off_amount);
+            $("#order_amount").val(discount_amout);
+        
+            
+
+            $(item_discount_off).val(data["discount_off"]);
+            $(item_discount_off).prop("type","text");
+
+            $(cart_item).find(".discount_off").before("*");
+            $(cart_item).find(".discount_off").after("%");
+            $(cart_item).find(".v-price").html(data["v_price"]);
+            $(cart_item).find(".d-price").html(data["d_price"]);
+   
+            $(total_price).val(origin_amount);
+          } 
+        });
+      }
+    }
+    else if(method_code == "D"){
+      if(str=prompt("請輸入修改金額",""))
+      {
+        console.log(str);
+
+        $.ajax({
+          url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code=D" + "&discount=" + str+"&item_index=" +item_index,
+          method: "post",
+          dataType: "json",
+          success: function(data){
+            setUpVariable(data);
+            cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+            origin_amount = total_price_value+d_price-l_price;
+            off_amount = Math.round(origin_amount*discount_off/100);
+            discount_amout = off_amount + coupon_discount;
+            var item_discount_off = $(cart_item).find(".discount_off");
+          
+            $("#off_amount").val(off_amount);
+            $("#order_amount").val(discount_amout);
+    
+            $(item_discount_off).val("100");
+            $(item_discount_off).prop("type","hidden");
+
+            $(cart_item).find(".o-price").html(data["o_price"]);
+            $(cart_item).find(".o-price").append(item_discount_off);           
+            $(cart_item).find(".v-price").html(data["v_price"]);
+            $(cart_item).find(".d-price").html(data["d_price"]);
+   
+            $(total_price).val(origin_amount);
+          } 
+        });
+      }
+    }
+    else{
+      $.ajax({
+        url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code="+method_code+"&item_index=" +item_index,
+        method: "post",
+        dataType: "json",
+        success: function(data){
+          setUpVariable(data);
+          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          origin_amount = total_price_value+d_price-l_price;
+          off_amount = Math.round(origin_amount*discount_off/100);
+          discount_amout = off_amount + coupon_discount;
+          var item_discount_off = $(cart_item).find(".discount_off");
+        
+          $("#off_amount").val(off_amount);
+          $("#order_amount").val(discount_amout);
+
+          $(item_discount_off).val("100");
+          $(item_discount_off).prop("type","hidden");
+
+          $(cart_item).find(".o-price").html(data["o_price"]);
+          $(cart_item).find(".o-price").append(item_discount_off);         
+          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(cart_item).find(".d-price").html(data["d_price"]);
+ 
+          $(total_price).val(origin_amount);
+        } 
+      });
+    }    
+  });
+
+
+
+  //輸入barcode來搜尋商品
+  function searchProduct(event) {
+    
+    if (event.keyCode == 13) {
+        var barcode = $("#bar-code").val();
+        console.log(barcode);
+        $("#bar-code").val("");
+        $.ajax({
+          url: "/cashier/products/barcode_to_cart?barcode=" + barcode ,
+            method: "POST",
+            dataType: "json",      
+            success: function(data){        
+              if(data == null || data.length == 0){
+                alert("No data found");
+              }
+              else{
+                setUpVariable(data);
+
+                $("#off_amount").val(off_amount);
+                $("#order_amount").val(discount_amout);
+                $(total_price).val(origin_amount);
+
+
+                cart_item.id = data["id"].toString() +"-" +exist_cart_item.toString();
+
+                $(cart_item).html($("#order-item-template").html());
+                $(cart_item).find(".category").html(data["category"]);
+                $(cart_item).find(".zh_name").html(data["zh_name"]);
+                $(cart_item).find(".price").html(o_price);
+                $(cart_item).find(".upc").html(data["upc"]);
+                $(".cart-item-list").append(cart_item);
+                $(cart_item).find(".o-price").html(o_price);
+                $(cart_item).find(".o-price").append('<input type="hidden" name="" size="3" value="100"  class="discount_off" onkeypress="return setItemDiscount(event)">');
+                $(cart_item).find(".d-price").html(o_price);
+                $(cart_item).find(".v-price").html("0");
+
+              }    
+                    
+            }
+        });
+      return false;
+    }
+  }
+
+  //變更單一品項打折框數字
+  function setItemDiscount(event) {
+    
+    if (event.keyCode == 13) {
+      var str = $(event.target).val();
+      var id = event.target.parentNode.parentNode.id;
+      console.log(id);
+
+      console.log(str);
+
+
+      $.ajax({
+        url: "/cashier/cart_items/"+ id +"/add_discount?method_code=B" + "&discount=" + str,
+        method: "post",
+        dataType: "json",
+        success: function(data){
+          var total_price = $("#origin_amount");
+          var total_price_value = Number(total_price.val());
+          var l_price = Number(data["l_price"]);
+          var v_price = Number(data["v_price"]);
+          var d_price = Number(data["d_price"]);
+          var cart_item = $(".cart-item-list").find("#"+data["id"]);
+          var origin_amount = total_price_value+d_price-l_price;
+          var order_discount_off = Number($("#order_discount_off").val());
+          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+
+          $(cart_item).find(".d-price").html(data["d_price"]);
+          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(total_price).val(origin_amount);
+          $("#order_amount").val(discount_amout);
+        } 
+      });
+    return false;
+    }
+  }
+
+  //變更總金額打折框數字
+  function setOrderDiscount(event) {
+    
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      var origin_amount = Number($("#origin_amount").val());
+      var discount_off = Number($(event.target).val());
+      var discount_amout = Math.round(origin_amount*discount_off/100);//四捨五入
+      console.log(discount_off);
+      console.log(origin_amount);
+      console.log(discount_amout);
+      $("#order_amount").val(discount_amout);
+
+      return false;
+    }
+  }
+
+  //變更總金額
+  function setDiscountAmount(event) {
+    
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      var origin_amount = Number($("#origin_amount").val());
+      var discount_amout = Number($(event.target).val());
+      var discount_off = Math.round(discount_amout/origin_amount*100);
+      
+      console.log(discount_off);
+      console.log(origin_amount);
+      console.log(discount_amout);
+      $("#order_discount_off").val(discount_off);
+
+      return false;
+    }
+  }
+
+  function setUpVariable(data) {
+    cart_item = document.createElement("tr");
+    total_price = $("#origin_amount");
+    total_price_value = Number(total_price.val());
+    o_price = Number(data["o_price"]);
+    l_price = Number(data["l_price"]);
+    v_price = Number(data["v_price"]);
+    d_price = Number(data["d_price"]);
+    origin_amount = total_price_value+o_price;
+    discount_off = Number($("#order_discount_off").val());
+    coupon_discount = Number($("#coupon_discount").val());
+    off_amount = Math.round(origin_amount*discount_off/100); //原始總金額打折
+    discount_amout = off_amount + coupon_discount;
+    exist_cart_item = $(".cart-item-list").find("tr[id^="+data["id"]+"-]").length;
+  }  
+
+
+
 </script>
 
-<script type="text/template" id="member-template">
-  
-  <td class="name"></td>
-  <td class="phone"></td>
-  <td class="gender"></td>
-  <td class="email"></td>
-  <td class="birthday"></td>
-  <td ><button class="setmember"></button></td>
+<script type="text/template" id="order-item-template">
+  <td class="category"></td>
+  <td class="zh_name"></td>  
+  <td class="upc"></td>
+  <td class="price"></td> 
+  <td>
+    <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+    <input type="text" name="" size="3" class="quantity text-center" value="1">
+    <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+  </td>
+  <td class="o-price"></td> 
+  <td class="v-price"></td>  
+  <td class="d-price"></td>  
+  <td class="discount_method">
+    <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
+      <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
+        <option selected="selected" value="E">無</option>
+        <option value="D">優惠價</option>
+        <option value="C">贈品</option>
+        <option value="B">打折</option>
+        <option value="A">第二件半價</option></select>
+    </form>
+  </td>  
+  <td>
+    <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+  </td>
+</script>
+
+<script type="text/template" id="discount-template">
+  <td class="category"></td>
+  <td class="zh_name"></td>  
+  <td class="upc"></td>
+  <td class="price"></td> 
+  <td>
+    <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
+    <input type="text" name="" size="3" class="quantity text-center" value="1">
+    <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
+  </td>
+  <td class="o-price"></td> 
+  <td class="v-price"></td>  
+  <td class="d-price"></td>  
+  <td class="discount_method">
+    <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="LckDhqbe2ZR6jq+KbjlrGQdj7+JAKBOGf+puxULIZde9GCuOwN3XI1zBLPfQHTDRm4RzYc6T9gXI93wZYOhhPA==">
+      <select class="discount-list form-control" name="cart_item[discount_method_code]" id="cart_item_discount_method_code">
+        <option value="E">無</option>
+        <option selected="selected" value="D">優惠價</option>
+        <option value="C">贈品</option>
+        <option value="B">打折</option>
+        <option value="A">第二件半價</option></select>
+      </select>
+    </form>
+  </td>  
+  <td>
+    <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+  </td>
 </script>
