@@ -1,6 +1,6 @@
 class Cashier::OrdersController < Cashier::BaseController
   before_action :set_order, only: [:show, :pick_up, :edit, :set_member, :update,
-                                   :new_guest, :create_guest, :edit_products]
+                                   :new_guest, :create_guest, ]
 
   def index
     @orders = Order.all
@@ -44,7 +44,7 @@ class Cashier::OrdersController < Cashier::BaseController
     redirect_to cashier_orders_path
   end
 
-  def edit_products
+  def edit
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
     @order_items.each do |item|
@@ -64,8 +64,9 @@ class Cashier::OrdersController < Cashier::BaseController
     @cart_coupons.each do |c|
       @coupon_discount += c.discount_off
     end
-
-    if @order.member_id != -1
+    if params[:member_id] != nil
+      @member = Member.find(params[:member_id])
+    elsif @order.member_id != -1
       @member = Member.find(@order.member_id)
     else
       @member = Member.new(id: -1)
@@ -80,7 +81,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
   def set_member  
 
-    @member = Member.find(params[:member_id])
+    @member = Member.new
   end
 
   def new

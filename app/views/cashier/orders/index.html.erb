@@ -48,7 +48,8 @@
           <% end%>
         </td>
         <td>
-          <%= link_to "編輯訂單",edit_products_cashier_order_path(order.id)%>
+          <%= link_to "編輯訂單",edit_cashier_order_path(order.id)%>
+          <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id)%>
           <% if order.guest_id == nil %>
             <%= link_to "建立客情",new_guest_cashier_order_path(order.id)%>
           <% end %>
