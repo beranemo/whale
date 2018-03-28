@@ -72,8 +72,8 @@ class Cashier::OrdersController < Cashier::BaseController
       @coupon_discount += c.discount_off
     end
 
-    if @order.member_id != "-1"
-      @member = Member.find(params[:id])
+    if @order.member_id != -1
+      @member = Member.find(@order.member_id)
     else
       @member = Member.new(id: -1)
     end
