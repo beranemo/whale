@@ -248,11 +248,9 @@ class Cashier::OrdersController < Cashier::BaseController
       render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users}
 
     else
-      date = Date.parse(params[:created_at]+'-01').to_time
+      date = Date.parse(params[:created_at]).to_time
       puts date
-      orders = Order.where(created_at: date.all_month)
-   
-    
+      orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
     # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
 
     sum = []

@@ -4,11 +4,8 @@
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '每日銷售明細' } %>
 
  <form id="search-form">
-  <label for="startDate">開始日</label>
-  <input type="date" id="s_date">
-  <label for="endDate">結束日</label>
-  <input type="date" id="e_date">
-  <button id="btn1">搜尋</button>
+  <input type="date" id="date1">
+  <button id="btn1">日期搜尋</button>
 </form>
 
   <table class="table" style="display: none;">
@@ -31,19 +28,16 @@
 $("#btn1").click(function(){
   event.preventDefault();
   $(".search-item").remove();//刪除原先的搜尋結果
-  var s_date = $("#s_date").val();
-  var e_date = $("#e_date").val();
+    var date = $("#date1").val();
+    console.log(date);
 
-  console.log(s_date);
-  console.log(e_date);
 
   $.ajax({
     url: "/cashier/orders/search_outcome?type=day" ,
     method: "POST",
     dataType: "json",
     data: {
-      s_date: s_date,
-      e_date: e_date
+      created_at: date,
     },
     success: function(datas){
       var total_uni = datas.total_uni;
@@ -82,7 +76,7 @@ $("#btn1").click(function(){
             
             $("#search-list").append(order_item);
         }
-          $(total_price).html(s_date + " ～ " + e_date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          $(total_price).html(date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
           $("#search-form").append(total_price);
       }
     }
