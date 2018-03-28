@@ -10,8 +10,8 @@
         <th data-sortable="true" data-field="gender">性別</th>
         <th>信箱</th>
         <th data-sortable="true" data-field="birthday">生日</th>
-        <th>#</th>
-        <th>#</th>
+        <th>功能</th>
+
       </tr>
     </thead>
     <tbody id="origin-list" >          
@@ -26,8 +26,11 @@
           <% if member.birthday.month == Date.current.month %>
             <i class="fa fa-birthday-cake" aria-hidden="true" style="color:#FF9900"></i>
           <% end %></td>
-          <td><button><%= link_to "成立訂單", new_cashier_order_path(id: member)%></button></td>
-          <td><button><%= link_to "詳細資料", cashier_member_path(id: member.id)  %></button></td>
+          <td>
+            <button><%= link_to "成立訂單", new_cashier_order_path(id: member)%></button>
+            <button><%= link_to "詳細資料", cashier_member_path(id: member.id)  %></button>
+            <button><%= link_to "訂單記錄", show_orders_cashier_member_path(id: member.id)  %></button>
+          </td>
         </tr>
       
       <% end %>

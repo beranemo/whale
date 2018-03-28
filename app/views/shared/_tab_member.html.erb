@@ -1,0 +1,4 @@
+<ul class="guest-tab clearfix">
+  <li role="presentation" class="<%= 'active' if selected_item == '詳細資料' %>"><%= link_to '詳細資料', cashier_member_path(@member.id) %></li>
+  <li role="presentation" class="<%= 'active' if selected_item == '訂單記錄' %>"><%= link_to '訂單記錄', show_orders_cashier_member_path(@member.id) %></li>
+</ul>

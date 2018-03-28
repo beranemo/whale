@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       
       member do
         get :create_successfully
+        get :show_orders
       end
       
     end
