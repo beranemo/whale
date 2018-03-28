@@ -48,24 +48,17 @@ class Cashier::OrdersController < Cashier::BaseController
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
     @order_items.each do |item|
-      if item.product.zh_name == "折價卷"
-        @cart_item = current_cart.cart_items.build(product_id: @product.id, discount_off: -params[:coupon_price].to_i)
-        discount_method = DiscountMethod.find_by(content: "優惠價")
-        @cart_item.discount_method_code = discount_method.code
-
-      else
-        @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
-        discount_method = DiscountMethod.find_by(content: "無")
-        @cart_item.discount_method_code = discount_method.code
-
-      end
+      @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
+      @cart_item.discount_off = item.price
+      discount_method = DiscountMethod.find_by(content: "優惠價")
+      @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
     end
 
-    @cart_items = current_cart.cart_items
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")
     @cart_coupons = current_cart.cart_items.where('product_id = ?',@coupon.id)
+    @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
     @products = Product.where('id != ?',@coupon.id) 
     @coupon_discount = 0
     @cart_coupons.each do |c|
