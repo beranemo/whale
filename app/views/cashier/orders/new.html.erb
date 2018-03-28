@@ -93,11 +93,12 @@
       <%= form_for [:cashier, @order] do |f|%>
         <div class="col-md-7">
           
-          <%= f.label :status, "預購:" %>
-          <%= f.label :status, "是" %>
+          <%= f.label :status, "訂單狀態:" %>
+          <%= f.radio_button :status , true ,:checked => true %>
+          <%= f.label :status, "現貨" %>
           <%= f.radio_button :status , false %>
-          <%= f.label :status, "否" %>
-          <%= f.radio_button :status , true ,:checked => true %><br>
+          <%= f.label :status, "預購" %>
+          <br>
 
           <%= f.label :address, "取貨方式:" %>
           <%= f.radio_button :address ,"local", class:"local-radio" %>
