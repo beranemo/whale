@@ -356,7 +356,7 @@ class Cashier::OrdersController < Cashier::BaseController
     params.require(:order).permit(:member_id, :payment_method, :address,
                                   :phone, :name, :remark,
                                   :amount, :discount_off, :status,
-                                  :user_id)
+                                  :user_id, :created_at)
   end
   
   def guest_params

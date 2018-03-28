@@ -92,7 +92,9 @@
     <div class="ship-info ">
       <%= form_for [:cashier, @order] do |f|%>
         <div class="col-md-7">
-          
+          <%= f.label :created_at, "成立時間:" %>
+          <%= f.datetime_select :created_at, class:"form-control"%>  
+          <br>
           <%= f.label :status, "預購:" %>
           <%= f.label :status, "是" %>
           <%= f.radio_button :status , false %>
@@ -136,6 +138,7 @@
           <%= f.text_area :remark, class:"form-control" %>
         </div>
         <div class="col-md-5">
+          
           <div class="col-md-6">
             <label>原始總金額</label>
             <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
@@ -146,9 +149,11 @@
             <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
-            <br>
             <%= f.submit "更新訂單",class: "btn btn-success" %>
+            <br>
+            
           </div>
+
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
             <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
@@ -156,7 +161,9 @@
             <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
             <%= f.label :user_id, "結帳人員" %>
             <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
-          </div>  
+          </div>
+          
+          
         </div>   
       <% end %>
     </div>
