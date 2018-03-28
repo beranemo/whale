@@ -9,6 +9,11 @@ class Cashier::MembersController < Cashier::BaseController
     @member = Member.find(params[:id])  
   end
   
+  def show_orders
+    @member = Member.find(params[:id])
+    @orders =@member.orders
+  end
+
   def new
     @member = Member.new
   end
