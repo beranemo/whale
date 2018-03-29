@@ -616,12 +616,12 @@
       event.preventDefault();
       var origin_amount = Number($("#origin_amount").val());
       var discount_off = Number($(event.target).val());
-      var discount_amout = Math.round(origin_amount*discount_off/100);//四捨五入
-      console.log(discount_off);
-      console.log(origin_amount);
-      console.log(discount_amout);
-      $("#order_amount").val(discount_amout);
+      var off_amount = Math.round(origin_amount*discount_off/100); //原始總金額打折
+      coupon_discount = Number($("#coupon_discount").val());
+      var discount_amout = off_amount + coupon_discount;
 
+      $("#off_amount").val(off_amount);
+      $("#order_amount").val(discount_amout);
       return false;
     }
   }
