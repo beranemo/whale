@@ -82,35 +82,54 @@
     </tbody>
   </table>
   <hr>
-  <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
-  <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
-  <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+  <div class="text-right">
+    <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+    <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
+    <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+  </div>
+  
   <br>
   <br>
  
   <div class="row">
-    <div class="ship-info ">
+    <div class="order-info ">
       <%= form_for [:cashier, @order] do |f|%>
         <div class="col-md-7">
           
           <%= f.label :status, "訂單狀態:" %>
-          <%= f.radio_button :status , true ,:checked => true %>
-          <%= f.label :status, "現貨" %>
-          <%= f.radio_button :status , false %>
-          <%= f.label :status, "預購" %>
+
+          <label class="my_radio">
+            <%= f.radio_button :status , true ,:checked => true %>
+            現貨
+          </label>
+          <label class="my_radio">
+            <%= f.radio_button :status , false %>
+            預購
+          </label>
           <br>
 
           <%= f.label :address, "取貨方式:" %>
-          <%= f.radio_button :address ,"local", class:"local-radio" %>
-          <%= f.label :address, "自取" %>
-          <%= f.radio_button :address ," ",class:"ship-radio" %>
-          <%= f.label :address, "宅配" %><br>
-          <%= f.label :payment_method, "付款方式:" %>
-          <%= f.radio_button :payment_method ,"付現" %>
-          <%= f.label :payment_method, "付現" %>
-          <%= f.radio_button :payment_method ,"刷卡" %>
-          <%= f.label :payment_method, "刷卡" %><br>
+          <label class="my_radio">
+            <%= f.radio_button :address ,"local", class:"local-radio" %>
+          自取
+          </label>
+          <label class="my_radio">
+            <%= f.radio_button :address ," ",class:"ship-radio" %>
+          宅配
+          </label>
+          <br>
 
+          <%= f.label :payment_method, "付款方式:" %>
+          <label class="my_radio">
+          <%= f.radio_button :payment_method ,"付現" %>
+          付現
+          </label>
+          <label class="my_radio">
+          <%= f.radio_button :payment_method ,"刷卡" %>
+          刷卡
+          </label>
+          <br>
+          
           <%= f.label :name, "姓名:" %>
           <%= f.text_field :name %><br>
           
@@ -218,12 +237,12 @@
   //設定取貨方式解鎖地址輸入框
   $(".ship-radio").on("click", function(event){
     
-    $(".ship-info").find(".input-address").removeAttr('disabled');
+    $(".order-info").find(".input-address").removeAttr('disabled');
   });
   //設定取貨方式鎖定地址輸入框
   $("#order_address_local").on("click", function(event){
     
-    $(".ship-info").find(".input-address").attr('disabled','disabled');
+    $(".order-info").find(".input-address").attr('disabled','disabled');
   });
 
   //新增優惠卷
@@ -616,12 +635,12 @@
       event.preventDefault();
       var origin_amount = Number($("#origin_amount").val());
       var discount_off = Number($(event.target).val());
-      var discount_amout = Math.round(origin_amount*discount_off/100);//四捨五入
-      console.log(discount_off);
-      console.log(origin_amount);
-      console.log(discount_amout);
-      $("#order_amount").val(discount_amout);
+      var off_amount = Math.round(origin_amount*discount_off/100); //原始總金額打折
+      coupon_discount = Number($("#coupon_discount").val());
+      var discount_amout = off_amount + coupon_discount;
 
+      $("#off_amount").val(off_amount);
+      $("#order_amount").val(discount_amout);
       return false;
     }
   }
