@@ -2,7 +2,7 @@
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售報表查詢' } %>
-      
+
    <form id="search-form">
     <label for="startDate">開始日</label>
     <input type="date" id="s_date">
@@ -16,12 +16,12 @@
       <tr>
         <th data-sortable="true" data-field="created_at">訂購日期</th>
         <th data-sortable="true" data-field="id">編號</th>
+        <th>訂單狀態</th>
         <th>結帳人員</th>
         <th>顧客編號</th>
         <th>付款方式</th>
         <th>取貨方式</th>
         <th data-sortable="true" data-field="amount">總金額</th>
-        <th>功能</th>
       </tr>
     </thead>
     <tbody>
@@ -60,22 +60,28 @@ $("#btn1").click(function(){
     },
     success: function(datas){
 
-      if(datas.length == 0){
+      var total_amount = document.createElement("p");
+      total_amount.className = "alnright";
+      var total_amount_value = datas.total_amount;
+      var orders = datas.orders;
+      var users = datas.users;
+      if(orders.length == 0){
             alert("No data found");
       }
       else{
         $(".table").show();  
 
-        for(var i=0; i < datas.length;i++){
-          var data = datas[i];
+        for(var i=0; i < orders.length;i++){
+          var data = orders[i];
           var order = document.createElement("tr");
-             console.log(datas);
+             console.log(orders);
             order.id = data["id"];
             $(order).attr("class","search-item");
             $(order).html($("#statement-template").html());
             $(order).find(".date").html(data["created_at"].substring(0, 10));
-            $(order).find(".number").html(data["id"]);
-            $(order).find(".user").html(data["user"]["name"]);
+            $(order).find(".sn").append("<a href=\"/cashier/orders/" + data["id"] + "\">" + data["sn"] + "</a>");
+            $(order).find(".status").html(data["status"]);
+            $(order).find(".user").html(users[i]);
             $(order).find(".member_id").html(data["member_id"]);
             $(order).find(".payment_method").html(data["payment_method"]);
             $(order).find(".address").html(data["address"]);
@@ -83,8 +89,8 @@ $("#btn1").click(function(){
             
             $("#search-list").append(order);
         }
-          // $(total_price).html(s_date + " ～ " + e_date + " 總銷售金額： "+total_price_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
-          // $("#search-form").append(total_price);
+          $(total_amount).html(s_date + " ～ " + e_date + " 總銷售金額： "+ total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          $("#search-form").append(total_amount);
       }
     }
   });
@@ -94,7 +100,8 @@ $("#btn1").click(function(){
 <script type="text/template"  id="statement-template">
 
   <td class="date"></td>
-  <td class="number"></td>
+  <td class="sn"></td>
+  <td class="status"></td>
   <td class="user"></td>
   <td class="member_id"></td>
   <td class="payment_method"></td>
