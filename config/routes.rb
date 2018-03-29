@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         post :import
         get :manage
         get :removed_list
+        post :update_all
       end
     end
 
