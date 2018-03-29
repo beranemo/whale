@@ -79,10 +79,11 @@ class Cashier::GuestsController < Cashier::BaseController
   end
 
   def search_outcome
-    date = Date.parse(params[:created_at]).to_time
-    # @guests = Guest.where("cast(strftime('%D', created_at) as int) = ?", date)
-    # puts date
-    @guests = Guest.where(created_at: date.beginning_of_day..date.end_of_day)
+    s_date = Date.parse(params[:s_date]).to_time
+    e_date = Date.parse(params[:e_date]).to_time
+    puts s_date
+    puts e_date
+    @guests = Guest.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
     @guests.each do |g|
       g.created_at.in_time_zone('Taipei')
     end

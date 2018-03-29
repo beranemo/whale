@@ -3,19 +3,15 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
   <%= render :partial => "shared/tabs_guest", :locals => { :selected_item => '客情紀錄' } %>
     
-<!--============== need your help ===================-->
   <form id="search-form">
-    <!--
-    <input type="text" id="datepicker">
-    <button id="date-search">日期搜尋</button>
-    -->
-    
-    <input type="date" id="date1">
-    <button id="btn1">日期搜尋</button>
+    <label for="startDate">開始日</label>
+    <input type="date" id="s_date">
+    <label for="endDate">結束日</label>
+    <input type="date" id="e_date">
+    <button id="btn1">搜尋</button>
   </form>
 
   <br>
-  
   <table class="table" style="display: none;">
     <tbody id="search-list">
 
@@ -34,29 +30,25 @@
     </tbody>
   </table>  
 
-<!--============== need your help ===================--> 
-
-
 </div>
 
 
-<script>
-
-
-  
-  
-  
+<script> 
 $("#btn1").click(function(){
   event.preventDefault();
   $(".search-item").remove();//刪除原先的搜尋結果
-  var date = $("#date1").val();
-  console.log(date);
+  var s_date = $("#s_date").val();
+  var e_date = $("#e_date").val();
+
+  console.log(s_date);
+  console.log(e_date);
   $.ajax({
     url: "/cashier/guests/search_outcome" ,
     method: "POST",
     dataType: "json",
     data: {
-      created_at: date,
+      s_date: s_date,
+      e_date: e_date
     },
     success: function(datas){
       if(datas.length == 0){
@@ -93,17 +85,14 @@ $("#btn1").click(function(){
           //console.log(data["id"]);
         }
           pct_value = (total_payment/total_guest).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          $(pct).html(date + " 客單價： "+pct_value);
+          $(pct).html(s_date + " ～ " + e_date + " 客單價： "+pct_value);
           $("#search-form").append(pct);
       }
     }
   });  
  
 });  
-  
-
 </script>
-
 
 <script type="text/template" id="guest-template">
   
