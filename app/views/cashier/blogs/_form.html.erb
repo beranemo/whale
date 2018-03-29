@@ -1,0 +1,21 @@
+<%= form_for [:cashier, @blog] do |f| %>
+  <div class="form-group">
+
+    <% if @blog.id != nil %>
+      <%= f.label :published_at, "日期" %>
+      <%= f.text_field :published_at, class: "form-control" %>
+      <br>
+    <% end %>
+    
+    <%= f.label :weather, "天氣" %>
+    <%= f.text_field :weather, class: "form-control" %>
+    <br>
+    
+    <%= f.label :content, "內容" %>
+    <%= f.text_area :content, class: "form-control", rows: "10"%>
+    <br>
+    
+    <%= f.submit "新增紀錄",class: "btn btn-primary" %>
+    
+  </div>
+<% end %>

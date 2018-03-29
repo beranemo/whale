@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327084027) do
+ActiveRecord::Schema.define(version: 20180329155829) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "blogs", force: :cascade do |t|
+    t.string "title"
+    t.string "weather"
+    t.string "content"
+    t.integer "user_id"
+    t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

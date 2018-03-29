@@ -28,8 +28,13 @@ class User < ApplicationRecord
   has_many :guests
   has_many :orders
   has_many :bulletins
+  has_many :blogs
 
   def cashier?
     self.role == "cashier"
+  end
+  
+  def admin?
+    self.role == "admin"
   end
 end
