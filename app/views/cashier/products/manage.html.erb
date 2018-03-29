@@ -14,6 +14,8 @@
         <th>數量</th>
         <th>增減數量</th>
       </tr>
+      <form  accept-charset="UTF-8" action="/cashier/products/update_all" method="post" >
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <% @products.each do |product| %>
         <tr>
           <td><%= product.category %></td>
@@ -27,10 +29,11 @@
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
           <td><%= product.quantity %></td>
-          <td><input type="number" name="quantity" min="-100" max="100" value="0" class="alnright"></td>
+          <td><input type="number" name="products[<%=product.id%>][quantity]" min="-100" max="100" value="0" class="alnright"></td>
         </tr>
       <% end %>
     </tbody>
   </table>  
-  <button type="button" class="btn btn-primary pull-right">批次修改數量</button>  
+  <input type="submit" class="btn btn-primary pull-right">批次修改數量</button>  
+  </form>
 </div>

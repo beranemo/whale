@@ -86,6 +86,21 @@ class Cashier::ProductsController < Cashier::BaseController
     @product = Product.find(params[:id])
   end
   
+  def update_all
+    @products = Product.all
+    datas = params[:products]
+    @products.each do |product|
+      if datas[product.id.to_s] != nil
+        product.quantity += datas[product.id.to_s][:quantity].to_i
+        stock_record = product.stock_records.build(quantity: datas[product.id.to_s][:quantity].to_i)
+        stock_record.save!
+        product.save!
+      end
+    end
+    flash[:notice] = "商品數量批次更新成功"
+    redirect_to manage_cashier_products_path
+  end
+
   def update
     @product = Product.find(params[:id])
     if @product.update(product2_params)
