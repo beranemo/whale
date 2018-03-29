@@ -43,4 +43,7 @@ class User < ApplicationRecord
   def admin?
     self.role == "admin"
   end
+  
+  scope :in_service, -> { where(resigned: false) }
+  
 end
