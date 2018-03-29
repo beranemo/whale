@@ -92,6 +92,7 @@ Rails.application.routes.draw do
     resources :ages
     resources :info_ways
     resources :discount_methods
+    resources :blogs
     
   end
   
