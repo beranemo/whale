@@ -221,9 +221,9 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def sales_analysis_day
-
   end
 
+  Item_Data = Struct.new(:name, :quantity)
   def search_outcome
     if params[:type] == "statement"
       s_date = Date.parse(params[:s_date]).to_time
@@ -250,42 +250,34 @@ class Cashier::OrdersController < Cashier::BaseController
     else
       date = Date.parse(params[:created_at]).to_time
       puts date
-      orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
-    # @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
+      @orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
+      
+      
+      @orders_hash ={}
+      
+      @orders.each do |order|
+        
+        order_items_hash = {}
+        order.order_items.each do |item|
+          if order_items_hash[item.product.id]
 
-    sum = []
-    orders.each do |order|
-      order_items = order.order_items
+            order_items_hash[item.product.id].quantity += item.quantity
+          else
+            order_items_hash[item.product.id] =  Item_Data.new(item.product.zh_name, item.quantity)
+          end
+        end
+        @orders_hash[order.id] = order_items_hash
+      end
 
-      sum.concat(order_items)
-      puts sum
-    end
-    total = sum.sort_by { |k| k["product_id"] }
-    @total_uni = total.uniq{|t| t["product_id"]}
-
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
-    @order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| @order_item_hash[key] += value}
-    puts @order_item_hash
-
-    # 另外抓商品價格pluck(:product_id, :price)
-    mix_arr_2 = total.pluck(:product_id, :price).sort!
-    @order_item_price_hash = Hash.new(0)
-    mix_arr_2.each {|key, value| @order_item_price_hash[key] += value}
-    puts @order_item_price_hash
-
-    @products = Array.new()
-    @total_uni.each do |item|
-      @products  << item.product
-    end
-
-    all_price = total.pluck(:price)
-    @total_price = all_price.inject(0){|sum,x| sum + x }
-
-    #puts @products[0]
-    render :json => {:total_uni =>@total_uni, :order_item_hash => @order_item_hash, :products => @products, :order_item_price_hash => @order_item_price_hash, :total_price => @total_price}
+      @users = Array.new()
+      @orders.each do |order|
+      @users  << order.user.name
+      end
+      
+      render :json => {:orders => @orders, :orders_hash => @orders_hash, :users =>@users}
     end
   end
+      
 
   def sales_analysis_statement
   end
