@@ -23,12 +23,12 @@
         <tr>
           <td><%= product.category %></td>
           <td><%= product.zh_name %></td>
-          <td><%= product.en_name %></td>
+          <td title="<%= product.en_name %>"><%= truncate(product.en_name, length: 20) %></td>
           <td><%= product.capacity %></td>
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
-          <td><%= product.use_for %></td>
-          <td><%= product.directions %></td>
+          <td title="<%= product.use_for %>"><%= truncate(product.use_for, length: 9) %></td>
+          <td title="<%= product.directions %>"><%= truncate(product.directions, length: 20) %></td>
           <!--
           <td><%= product.zh_m_ingredients %></td>
           <td><%= product.zh_ingredients %></td>
