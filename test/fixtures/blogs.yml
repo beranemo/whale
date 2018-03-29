@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: blogs
+#
+#  id           :integer          not null, primary key
+#  title        :string
+#  weather      :string
+#  content      :string
+#  user_id      :integer
+#  published_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the

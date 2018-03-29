@@ -14,6 +14,9 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  discount_off   :integer
+#  status         :boolean
+#  sn             :integer
+#  guest_id       :integer
 #
 
 require 'test_helper'
