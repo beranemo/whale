@@ -17,6 +17,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  name                   :string
+#  status                 :string
 #
 
 class User < ApplicationRecord
@@ -30,6 +31,11 @@ class User < ApplicationRecord
   has_many :bulletins
   has_many :blogs
 
+  #  status resigned 已離職
+  def resigned?
+    self.status == "resigned"
+  end
+  
   def cashier?
     self.role == "cashier"
   end
