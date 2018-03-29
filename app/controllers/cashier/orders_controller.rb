@@ -268,8 +268,16 @@ class Cashier::OrdersController < Cashier::BaseController
       @orders.each do |order|
       @users  << order.user.name
       end
+
+      sum = []
+      @orders.each do |order|
+      order_amount = order.amount
+      sum.push(order_amount)
+      puts sum
+      end
+      @total_amount = sum.inject(0){|sum,x| sum + x }
       
-      render :json => {:orders => @orders, :orders_hash => @orders_hash, :users =>@users}
+      render :json => {:orders => @orders, :orders_hash => @orders_hash, :users =>@users, :total_amount => @total_amount}
     end
   end
       

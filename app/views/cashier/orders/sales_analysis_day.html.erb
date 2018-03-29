@@ -53,7 +53,9 @@ $("#btn1").click(function(){
       var orders = datas.orders;
       var users = datas.users;
 
-      // var order_order_item = datas.order_order_item;
+      var total_amount = document.createElement("p");
+      total_amount.className = "alnright";
+      var total_amount_value = datas.total_amount;
       if(orders.length == 0){
             alert("No data found");
       }
@@ -62,7 +64,7 @@ $("#btn1").click(function(){
 
         for(var i=0; i < orders.length;i++){
           var data = orders[i];
-          var item_datas = orders_hash[''+data["id"]];
+          var item_datas = orders_hash[data["id"]];
           var order = document.createElement("tr");
           console.log(orders_hash);
           console.log(data["id"]);
@@ -86,8 +88,8 @@ $("#btn1").click(function(){
           
           $("#search-list").append(order);
         }
-          // $(total_amount).html(date + " 總銷售金額： "+ total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
-          // $("#search-form").append(total_amount);
+          $(total_amount).html(date + " 總銷售金額： "+ total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          $("#search-form").append(total_amount);
       }
     }
   });
