@@ -9,13 +9,17 @@
 
       <%= f.label :name, "姓名" %>
       <%= f.text_field :name , class: "form-control"%>
-      <br>
-
+      <br>   
+     
       <%= f.label :gender, "性別" %>
-      <%= f.radio_button :gender ,"男"%>
-      <%= f.label :gender, "男" %>
-      <%= f.radio_button :gender ,"女"%>
-      <%= f.label :gender, "女" %>
+      <label class="my_radio">
+        <%= f.radio_button :gender ,"男" %>
+        男
+      </label>
+      <label class="my_radio">
+        <%= f.radio_button :gender ,"女" %>
+        女
+      </label>               
       <br>
       <br>
 
