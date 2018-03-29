@@ -64,6 +64,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @cart_coupons.each do |c|
       @coupon_discount += c.discount_off
     end
+    @order.amount -= @coupon_discount
     if params[:member_id] != nil
       @member = Member.find(params[:member_id])
     elsif @order.member_id != -1
