@@ -258,7 +258,7 @@
       success: function(data){        
         var off_amount = Number($("#off_amount").val());    
         var coupon_discount = Number($("#coupon_discount").val());
-        var discount_amount = off_amount - coupon_discount;
+        var discount_amount = off_amount ;
 
         $("#order_amount").val(discount_amount);
         $("#coupon_discount").val(0);     
