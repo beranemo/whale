@@ -17,7 +17,8 @@
            <li><%= link_to("每日日誌", cashier_blogs_path) %></li>
            <li><%= link_to("更改名稱", edit_user_path(current_user)) %></li>
            <li><%= link_to("密碼變更", edit_user_registration_path) %></li>
-           <li><%= link_to('<i class = "glyphicon glyphicon-log-out" aria-hidden="true"></i> Log out'.html_safe, destroy_user_session_path,:method => :delete)%></li>
+           <li><%= link_to('<i class = "glyphicon glyphicon-log-out" aria-hidden="true"></i> Log out'.html_safe, destroy_user_session_path, method: :delete)%></li>
+           <li><%= link_to("所有會員資料(未來移除)", cashier_members_path) %></li>
          <% end %>
         </ul>
       </li>  
