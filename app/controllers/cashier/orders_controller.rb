@@ -6,6 +6,10 @@ class Cashier::OrdersController < Cashier::BaseController
     @orders = Order.all
   end
 
+  def today
+    @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).order(created_at: :desc)
+  end
+
   def not_pick
     @orders = Order.where('status ==?',false)
   end
