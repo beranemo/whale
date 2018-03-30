@@ -231,20 +231,34 @@ class Cashier::OrdersController < Cashier::BaseController
       puts e_date
       @orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
 
-      sum = []
+      order_amount_arr = []
       @orders.each do |order|
       order_amount = order.amount
-      sum.push(order_amount)
-      puts sum
+      order_amount_arr.push(order_amount)
+      puts order_amount_arr
       end
-      @total_amount = sum.inject(0){|sum,x| sum + x }
+      @total_amount = order_amount_arr.inject(0){|order_amount_arr,x| order_amount_arr + x }
 
       @users = Array.new()
       @orders.each do |order|
       @users  << order.user.name
       end
 
-      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users}
+      # ranking_day 銷售排行 - 日期銷售
+      total = @orders.sort_by {  |s| s.created_at.day }
+      day_amount_arr = total.pluck(:created_at, :amount)
+
+      day_amount_hash = Hash.new(0)
+      day_amount_arr.each {|key, value| day_amount_hash[key.day] += value}
+      @arr_x = day_amount_hash.keys
+      @arr_y = day_amount_hash.values
+
+      day_order_arr = total.pluck(:created_at, :id)
+      day_order_hash = Hash.new(0)
+      day_order_arr.each {|key, value| day_order_hash[key.day] += 1 }
+      @arr_y2 = day_order_hash.values
+
+      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y, :arr_y2 => @arr_y2}
 
     else
       date = Date.parse(params[:created_at]).to_time
@@ -273,13 +287,13 @@ class Cashier::OrdersController < Cashier::BaseController
       @users  << order.user.name
       end
 
-      sum = []
+      order_amount_arr = []
       @orders.each do |order|
       order_amount = order.amount
-      sum.push(order_amount)
-      puts sum
+      order_amount_arr.push(order_amount)
+      puts order_amount_arr
       end
-      @total_amount = sum.inject(0){|sum,x| sum + x }
+      @total_amount = order_amount_arr.inject(0){|order_amount_arr,x| order_amount_arr + x }
       
       render :json => {:orders => @orders, :orders_hash => @orders_hash, :users =>@users, :total_amount => @total_amount}
     end
@@ -294,25 +308,25 @@ class Cashier::OrdersController < Cashier::BaseController
     date = Date.today.all_month
     @orders = Order.where(created_at: date)
 
-    sum = []
+    order_item_arr = []
     @orders.each do |order|
       order_items = order.order_items
 
-      sum.concat(order_items)
-      puts sum
+      order_item_arr.concat(order_items)
+      puts order_item_arr
     end
-    total = sum.sort_by { |k| k["product_id"] }
+    total = order_item_arr.sort_by { |k| k["product_id"] }
     total_uni = total.uniq{|t| t["product_id"]}
 
-    mix_arr_1 = total.pluck(:product_id, :quantity).sort!
+    product_quantity_arr = total.pluck(:product_id, :quantity).sort!
     order_item_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| order_item_hash[key] += value}
+    product_quantity_arr.each {|key, value| order_item_hash[key] += value}
 
     puts order_item_hash
 
-    product_ranking = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
+    product_id_ranking_arr = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
-    @all = total_uni.sort_by {|e| product_ranking.index(e.product_id) }
+    @product_ranking = total_uni.sort_by {|e| product_id_ranking_arr.index(e.product_id) }
 
     # chart
     @products = Array.new()
@@ -332,14 +346,14 @@ class Cashier::OrdersController < Cashier::BaseController
     total = @orders.sort_by { |k| k["user_id"] }
     total_uni = total.uniq{|t| t["user_id"]}
 
-    mix_arr_1 = total.pluck(:user_id, :amount).sort!
+    user_amount_arr = total.pluck(:user_id, :amount).sort!
     order_user_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| order_user_hash[key] += value}
+    user_amount_arr.each {|key, value| order_user_hash[key] += value}
     puts @order_user_hash
 
-    user_ranking = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.first
+    user_id_ranking_arr = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @user_amount = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.last
-    @all = total_uni.sort_by {|e| user_ranking.index(e.user_id) }
+    @user_ranking = total_uni.sort_by {|e| user_id_ranking_arr.index(e.user_id) }
   
   # chart
     @users = Array.new()
@@ -355,15 +369,19 @@ class Cashier::OrdersController < Cashier::BaseController
   def ranking_hour
     @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day)
     total = @orders.sort_by {  |s| s.created_at.hour }
-    mix_arr_1 = total.pluck(:created_at, :amount)
+    hour_amount_arr = total.pluck(:created_at, :amount)
 
     @hour_amount_hash = Hash.new(0)
-    mix_arr_1.each {|key, value| @hour_amount_hash[key.hour] += value}
+    hour_amount_arr.each {|key, value| @hour_amount_hash[key.hour] += value}
     puts @hour_amount_hash
 
     @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
     @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     @arr_y2 = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+  end
+
+  def ranking_day
+    
   end
 
   private

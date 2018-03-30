@@ -5,11 +5,16 @@
     <%= f.text_field :payment, class: "form-control"%>
     <br>
 
-    <%= f.label :gender, "性別" %>　
-    <%= f.radio_button :gender ,"男"%>
-    <%= f.label :gender, "男" %>　
-    <%= f.radio_button :gender ,"女"%>
-    <%= f.label :gender, "女" %>
+    <%= f.label :gender, "性別" %>
+    <label class="my_radio">
+      <%= f.radio_button :gender ,"男" %>
+      男
+    </label>
+    <label class="my_radio">
+      <%= f.radio_button :gender ,"女" %>
+      女
+    </label>
+
     <br>
     <br>
 
