@@ -1,0 +1,100 @@
+<div class="container">
+ 
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+  <%= render :partial => "shared/tab_order", :locals => { :selected_item => '訂單搜尋' } %>
+  
+  <br>
+  <form id="search-form">
+    <label for="startDate">開始日</label>
+    <input type="date" id="s_date">
+    <label for="endDate">結束日</label>
+    <input type="date" id="e_date">
+    <button id="btn1">搜尋</button>
+  </form>
+  <table class="table table-hover" data-toggle="table" id="table" >
+    <thead>
+      <tr>
+        <th data-sortable="true" data-field="created_at">訂購日期</th>
+        <th data-sortable="true" data-field="id">編號</th>
+        <th>結帳人員</th>
+        <th>顧客編號</th>
+        <th>付款方式</th>
+        <th>取貨方式</th>
+        <th data-sortable="true" data-field="amount">總金額</th>
+        <th>狀態</th>
+        <th>功能</th>
+      </tr>
+    </thead>
+    <tbody class="order-list">
+      
+    </tbody>
+  </table>
+</div>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+$("#btn1").click(function(){
+  event.preventDefault();
+  $(".search-item").remove();//刪除原先的搜尋結果
+  var s_date = $("#s_date").val();
+  var e_date = $("#e_date").val();
+
+  console.log(s_date);
+  console.log(e_date);
+
+  $.ajax({
+    url: "/cashier/orders/search_outcome?type=order" ,
+    method: "POST",
+    dataType: "json",
+    data: {
+      s_date: s_date,
+      e_date: e_date
+    },
+    success: function(datas){
+
+      var total_amount = document.createElement("p");
+      total_amount.className = "alnright";
+      var total_amount_value = datas.total_amount;
+      var orders = datas.orders;
+      var users = datas.users;
+      if(orders.length == 0){
+            alert("No data found");
+      }
+      else{
+        $(".table").show();  
+
+        for(var i=0; i < orders.length;i++){
+          var data = orders[i];
+          var order = document.createElement("tr");
+             console.log(orders);
+            order.id = data["id"];
+            $(order).attr("class","search-item");
+            $(order).html($("#statement-template").html());
+            $(order).find(".date").html(data["created_at"].substring(0, 10));
+            $(order).find(".sn").append("<a href=\"/cashier/orders/" + data["id"] + "\">" + data["sn"] + "</a>");
+            $(order).find(".status").html(data["status"]);
+            $(order).find(".user").html(users[i]);
+            $(order).find(".member_id").html(data["member_id"]);
+            $(order).find(".payment_method").html(data["payment_method"]);
+            $(order).find(".address").html(data["address"]);
+            $(order).find(".amount").html(data["amount"].toLocaleString('en-US', {minimumFractionDigits: 0}));
+            
+            $("#search-list").append(order);
+        }
+          $(total_amount).html(s_date + " ～ " + e_date + " 總銷售金額： "+ total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          $("#search-form").append(total_amount);
+      }
+    }
+  });
+});  
+</script>
+
+
