@@ -315,7 +315,7 @@ class Cashier::OrdersController < Cashier::BaseController
       order_item_arr.concat(order_items)
       puts order_item_arr
     end
-    total = order_item_arr.sort_by { |k| k["product_id"] }
+    total = order_item_arr.delete_if {|k| k.product_id == 1 }.sort_by { |k| k["product_id"] }
     total_uni = total.uniq{|t| t["product_id"]}
 
     product_quantity_arr = total.pluck(:product_id, :quantity).sort!
@@ -332,7 +332,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @products = Array.new()
     total_uni.each do |order|
     @products  << order.product.zh_name
-
+    @products.delete_if {|k| k.to_s == "折價卷" } 
     puts @products
     end
 
