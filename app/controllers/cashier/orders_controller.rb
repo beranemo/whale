@@ -45,7 +45,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.guest_id = @guest.id
     @order.save!
     flash[:notice] = "訂單新增客情成功"
-    redirect_to cashier_orders_path
+    redirect_to today_cashier_orders_path
   end
 
   def edit
