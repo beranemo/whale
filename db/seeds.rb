@@ -8,7 +8,7 @@
 
 # =======================  Default cashier  =======================
 User.destroy_all
-
+User.create(email: "admin@123", password: "123456", role: "admin", name: "管理員")
 User.create(email: "cash@123", password: "123456", role: "cashier", name: "小魚")
 User.create(email: "cash@456", password: "123456", role: "cashier", name: "小鯨")
 User.create(email: "cash@789", password: "123456", role: "cashier", name: "小蘋果")
