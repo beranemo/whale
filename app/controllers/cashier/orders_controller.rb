@@ -224,7 +224,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
   Item_Data = Struct.new(:name, :quantity)
   def search_outcome
-    if params[:type] == "statement"
+    if params[:type] == "period"
       s_date = Date.parse(params[:s_date]).to_time
       e_date = Date.parse(params[:e_date]).to_time
       puts s_date
