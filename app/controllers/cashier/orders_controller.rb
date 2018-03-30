@@ -3,7 +3,7 @@ class Cashier::OrdersController < Cashier::BaseController
                                    :new_guest, :create_guest, ]
 
   def index
-    @orders = Order.all
+    @orders = Order.all.order(:created_at)
   end
 
   def today
