@@ -32,7 +32,7 @@ $("#btn1").click(function(){
   console.log(e_date);
 
   $.ajax({
-    url: "/cashier/orders/search_outcome?type=statement" ,
+    url: "/cashier/orders/search_outcome?type=period" ,
     method: "POST",
     dataType: "json",
     data: {
