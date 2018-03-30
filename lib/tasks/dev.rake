@@ -144,7 +144,8 @@ namespace :dev do
         member_id: member.id,
         phone: member.phone,
         address: ["宅配","自取"].sample,
-        payment_method: ["付現","刷卡"].sample
+        payment_method: ["付現","刷卡"].sample,
+        status: [0,1].sample
         )
       order.amount =0
       3.times do 
@@ -167,6 +168,10 @@ namespace :dev do
         rand_date = first + middle.to_s + last
         
         o.created_at = rand_date
+        a = o.created_at.to_s
+        a.slice!("20")
+        o.sn = a.tr('-','').to_i * 1000 + o.id
+
         o.save
       end
 

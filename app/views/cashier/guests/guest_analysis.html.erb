@@ -2,217 +2,85 @@
   
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '客情資料' } %>
   <%= render :partial => "shared/tabs_guest", :locals => { :selected_item => '今日客情分析' } %>
-    <div>
-      <div class="col-xs-6 col-sm-4">
-        <blockquote>
-          <div class="progress">
-            <div class="progress-bar progress-bar-success" style="width: <%= 
-            number_to_percentage( Float(@guests.where(gender: "男").count)/(@guests.count)*100 , precision: 0) %>">
-              <span class="sr-only"></span>
-              <p><%= @guests.where(gender: "男").count %></p>
-            </div>
-            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= 
-            number_to_percentage( Float(@guests.where(gender: "女").count)/(@guests.count)*100 , precision: 0) %>">
-              <span class="sr-only"></span>
-              <p><%= @guests.where(gender: "女").count %></p>
-            </div>
-          </div>
 
-          <p style="font-size: 16px">
-            男生：<%= @guests.where(gender: "男").count %><br>
-            女生：<%= @guests.where(gender: "女").count %>
-          </p>
-        </blockquote>
-        </div>
 
-        <div class="col-xs-6 col-sm-4">
-          <blockquote>         
-            <div class="progress">
-              <% i = 0 %>
-              <% GuestType.all.each do |guest_type| %>
-                <% color = '' %>
-                <% color = 'success' if i % 4 == 0 %>
-                <% color = 'warning progress-bar-striped' if i % 4 == 1 %>
-                <% color = 'danger progress-bar-striped' if i % 4 == 2 %>
-                <% color = 'info progress-bar-striped' if i % 4 == 3 %>
-                <div 
-                  class="progress-bar progress-bar-<%= color %>" 
-                  style="width: <%= number_to_percentage(Float(@guests.where(guest_type_id: guest_type.id).count)/(@guests.count)*100 , precision: 0) %>">
-                  <span class="sr-only"></span>
-                  <p><%= @guests.where(guest_type_id: guest_type.id).count %></p>
-                </div>
-              <% i += 1 %>
-              <% end %>  
-            </div>
-
-            <p style="font-size: 16px">
-              <% GuestType.all.each do |guest_type| %>
-                <%= GuestType.find(guest_type.id).guest_type %>：<%= @guests.where(guest_type_id: guest_type.id).count %><br>
-              <% end %>
-            </p>
-          </blockquote>
-        </div>
-
-        <div class="col-xs-6 col-sm-4">
-          <blockquote>
-            <div class="progress">
-              <% i = 0 %>
-              <% Country.all.each do |country| %>
-                <% country_num = @guests.where(country_id: country.id).count %>
-                <% if country_num != 0 %>
-                  <% color = '' %>
-                  <% color = 'success' if i % 4 == 0 %>
-                  <% color = 'warning progress-bar-striped' if i % 4 == 1 %>
-                  <% color = 'danger progress-bar-striped' if i % 4 == 2 %>
-                  <% color = 'info progress-bar-striped' if i % 4 == 3 %>
-                  <div 
-                    class="progress-bar progress-bar-<%= color %>" 
-                    style="width: <%= number_to_percentage(Float(@guests.where(country_id: country.id).count)/(@guests.count)*100 , precision: 0) %>">
-                    <span class="sr-only"></span>
-                    <p><%= @guests.where(country_id: country.id).count %></p>
-                  </div>
-                  <% i += 1 %>
-                <% end %>
-              <% end %>
-            </div>
-            <p style="font-size: 16px">
-              <% Country.all.each do |country| %>
-                <% country_num = @guests.where(country_id: country.id).count %>
-                <% if country_num != 0 %>
-                  <%= Country.find(country.id).country_type %>：<%= @guests.where(country_id: country.id).count %><br>
-                <% end %> 
-              <% end %>
-            </p>
-          </blockquote>
-        </div>
-
-        <div class="col-xs-6 col-sm-4">
-          <blockquote>
-            <div class="progress">
-              <% i = 0 %>
-              <% Age.all.each do |age| %>
-                <% age_num = @guests.where(age_id: age.id).count %>
-                <% if age_num != 0 %>
-                  <% color = '' %>
-                  <% color = 'success' if i % 4 == 0 %>
-                  <% color = 'warning progress-bar-striped' if i % 4 == 1 %>
-                  <% color = 'danger progress-bar-striped' if i % 4 == 2 %>
-                  <% color = 'info progress-bar-striped' if i % 4 == 3 %>
-                  <div 
-                    class="progress-bar progress-bar-<%= color %>" 
-                    style="width: <%= number_to_percentage(Float(@guests.where(age_id: age.id).count)/(@guests.count)*100 , precision: 0) %>">
-                    <span class="sr-only"></span>
-                    <p><%= @guests.where(age_id: age.id).count %></p>
-                  </div>
-                  <% i += 1 %>
-                <% end %>
-              <% end %>
-            </div>
-            <p style="font-size: 16px">
-              <% Age.all.each do |age| %>
-                <% age_num = @guests.where(age_id: age.id).count %>
-                <% if age_num != 0 %>
-                  <%= Age.find(age.id).age_type %>：<%= @guests.where(age_id: age.id).count %><br>
-                <% end %> 
-              <% end %>             
-            </p>
-          </blockquote>
-        </div>
-
-        <div class="col-xs-6 col-sm-4">
-          <blockquote>
-            <div class="progress">
-              <% i = 0 %>
-              <% InfoWay.all.each do |way| %>
-                <% way_num = @guests.where(info_way_id: way.id).count %>
-                <% if way_num != 0 %>
-                  <% color = '' %>
-                  <% color = 'success' if i % 4 == 0 %>
-                  <% color = 'warning progress-bar-striped' if i % 4 == 1 %>
-                  <% color = 'danger progress-bar-striped' if i % 4 == 2 %>
-                  <% color = 'info progress-bar-striped' if i % 4 == 3 %>
-                  <div 
-                    class="progress-bar progress-bar-<%= color %>" 
-                    style="width: <%= number_to_percentage(Float(@guests.where(info_way_id: way.id).count)/(@guests.count)*100 , precision: 0) %>">
-                    <span class="sr-only"></span>
-                    <p><%= @guests.where(info_way_id: way.id).count %></p>
-                  </div>
-                  <% i += 1 %>
-                <% end %>
-              <% end %>
-            </div>
-            <p style="font-size: 16px">
-              <% InfoWay.all.each do |way| %>
-                <% way_num = @guests.where(info_way_id: way.id).count %>
-                <% if way_num != 0 %>
-                  <%= InfoWay.find(way.id).news_channel %>：<%= @guests.where(info_way_id: way.id).count %><br>
-                <% end %> 
-              <% end %>
-            </p>
-          </blockquote>
-        </div>
-
-        <div class="col-xs-6 col-sm-4">
-          <blockquote>
-            <table class="table">
-              <tbody class="customer-info">
-                <tr>
-                  <th>總客數</th>
-                  <th>總銷售</th>
-                  <th>客單價</th>
-                </tr>
-                <tr>
-                  <td class="alncenter"><%= @guests.count %></td>
-                  <td class="alncenter"><%= number_to_currency(@total_payment, precision: 0) %></td>
-                  <td class="alncenter"><%= number_to_currency(Float(@total_payment)/(@guests.count), precision: 0) %></td>
-                </tr>
-              </tbody>
-            </table>
-          </blockquote>
-        </div>
-      </div>
+  <div class="container">
+    <div class="col-xs-6 col-sm-4 chart">
+      <canvas id="genderChart" width="70" height="50"></canvas>
     </div>
+    <div class="col-xs-6 col-sm-4 chart">
+    <canvas id="guesttypeChart" width="70" height="50"></canvas>
+    </div>
+    <div class="col-xs-6 col-sm-4 chart">
+      <canvas id="countryChart" width="70" height="50"></canvas>
+    </div>
+  </div>
+  <div class="container">
+    <div class="col-xs-6 col-sm-4 chart">
+      <canvas id="ageChart" width="70" height="50"></canvas>
+    </div>
+    <div class="col-xs-6 col-sm-4 chart">
+      <canvas id="infowayChart" width="70" height="50"></canvas>
+    </div>
+    
+    <div class="col-xs-6 col-sm-4 clearfix analysis">
+      <table class="table">
+        <tbody class="customer-info">
+          <tr>
+            <th>總客數</th>
+            <th>總銷售</th>
+            <th>客單價</th>
+          </tr>
+          <tr>
+            <td class="alncenter"><%= @guests.count %></td>
+            <td class="alncenter"><%= number_to_currency(@total_payment, precision: 0) %></td>
+            <td class="alncenter"><%= number_to_currency(Float(@total_payment)/(@guests.count), precision: 0) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<!-- ======================= 今日客流量 ===============================-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+  <div class="container hourchart">
+    <% @guests.each do |g| %>
 
-<div class="container">
-<% @guests.each do |g| %>
+      <% if g.created_at.localtime.hour.to_s == '10'
+          @arr_y[0] += 1
+        elsif g.created_at.localtime.hour.to_s == '11'
+          @arr_y[1] += 1
+        elsif g.created_at.localtime.hour.to_s == '12'
+          @arr_y[2] += 1    
+        elsif g.created_at.localtime.hour.to_s == '13'
+          @arr_y[3] += 1 
+        elsif g.created_at.localtime.hour.to_s == '14'
+          @arr_y[4] += 1
+        elsif g.created_at.localtime.hour.to_s == '15'
+          @arr_y[5] += 1
+        elsif g.created_at.localtime.hour.to_s == '16'
+          @arr_y[6] += 1
+        elsif g.created_at.localtime.hour.to_s == '17'
+          @arr_y[7] += 1
+        elsif g.created_at.localtime.hour.to_s == '18'
+          @arr_y[8] += 1
+        elsif g.created_at.localtime.hour.to_s == '19'
+          @arr_y[9] += 1
+        elsif g.created_at.localtime.hour.to_s == '20'
+          @arr_y[10] += 1
+        elsif g.created_at.localtime.hour.to_s == '21'
+          @arr_y[11] += 1
+        else g.created_at.localtime.hour.to_s == '22'
+          @arr_y[12] += 1
+         end %>  
 
-  <% if g.created_at.localtime.hour.to_s == '10'
-      @arr_y[0] += 1
-    elsif g.created_at.localtime.hour.to_s == '11'
-      @arr_y[1] += 1
-    elsif g.created_at.localtime.hour.to_s == '12'
-      @arr_y[2] += 1    
-    elsif g.created_at.localtime.hour.to_s == '13'
-      @arr_y[3] += 1 
-    elsif g.created_at.localtime.hour.to_s == '14'
-      @arr_y[4] += 1
-    elsif g.created_at.localtime.hour.to_s == '15'
-      @arr_y[5] += 1
-    elsif g.created_at.localtime.hour.to_s == '16'
-      @arr_y[6] += 1
-    elsif g.created_at.localtime.hour.to_s == '17'
-      @arr_y[7] += 1
-    elsif g.created_at.localtime.hour.to_s == '18'
-      @arr_y[8] += 1
-    elsif g.created_at.localtime.hour.to_s == '19'
-      @arr_y[9] += 1
-    elsif g.created_at.localtime.hour.to_s == '20'
-      @arr_y[10] += 1
-    elsif g.created_at.localtime.hour.to_s == '21'
-      @arr_y[11] += 1
-    else g.created_at.localtime.hour.to_s == '22'
-      @arr_y[12] += 1
-     end %>  
+    <% end %> 
+    <br>
 
-<% end %> 
-<br>
-
-<canvas id="hourChart" width="200" height="50"></canvas>
+    <canvas id="hourChart" width="200" height="50"></canvas>
+  </div>
+</div>
 
 <script>
 clearTimeout(go);   
@@ -230,10 +98,10 @@ function display() {
         label: '今日客情流量',
         data: yAxis,
         backgroundColor: [
-            'rgba(54, 162, 235, 0.2)',
+            'rgba(155, 166, 165, 0.2)',
         ],
         borderColor: [
-            'rgba(54, 162, 235, 1)',
+            'rgba(155, 166, 165, 1)',
         ],
         borderWidth: 1
       }]
@@ -250,9 +118,123 @@ function display() {
       }
     }
   });
+
+  // chart2
+
+  var yAxis= <%= @gender_hash.values.inspect.html_safe %>;
+  var datas = <%= @gender_hash.keys.inspect.html_safe %>;    
+  new Chart(document.getElementById("genderChart"), {
+    type: 'doughnut',
+    data: {
+      labels: datas,
+      datasets: [
+        {
+          backgroundColor: ["#A2D5F2", "#FF7E67","#A4E5D9","#e8c3b9","#B9BBDF","#F69D9D", "#FCE38A", "#07689F", "#6A2C70"],
+          data: yAxis
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '客戶性別 (Gender)'
+      }
+    }
+});
+
+// chart3
+  var yAxis= <%= @guest_type_hash.values.inspect.html_safe %>;
+  var datas = <%= @guest_type_hash.keys.inspect.html_safe %>;  
+  new Chart(document.getElementById("guesttypeChart"), {
+    type: 'doughnut',
+    data: {
+      labels: datas,
+      datasets: [
+        {
+          backgroundColor: ["#A2D5F2", "#FF7E67","#A4E5D9","#e8c3b9","#B9BBDF","#F69D9D", "#FCE38A", "#07689F", "#6A2C70"],
+          data: yAxis
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '客戶類型 (Guest Type)'
+      }
+    }
+});
+
+
+// chart4
+  var yAxis= <%= @country_hash.values.inspect.html_safe %>;
+  var datas = <%= @country_hash.keys.inspect.html_safe %>; 
+  new Chart(document.getElementById("countryChart"), {
+    type: 'doughnut',
+    data: {
+      labels: datas,
+      datasets: [
+        {
+          backgroundColor: ["#A2D5F2", "#FF7E67","#A4E5D9","#e8c3b9","#B9BBDF","#F69D9D", "#FCE38A", "#07689F", "#6A2C70"],
+          data: yAxis
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '國籍 (Country)'
+      }
+    }
+});
+
+
+// chart5
+  var yAxis= <%= @age_hash.values.inspect.html_safe %>;
+  var datas = <%= @age_hash.keys.inspect.html_safe %>; 
+  new Chart(document.getElementById("ageChart"), {
+    type: 'doughnut',
+    data: {
+      labels: datas,
+      datasets: [
+        {
+          backgroundColor: ["#A2D5F2", "#FF7E67","#A4E5D9","#e8c3b9","#B9BBDF","#F69D9D", "#FCE38A", "#07689F", "#6A2C70"],
+          data: yAxis
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '年齡結構(Age Range)'
+      }
+    }
+});
+
+
+// chart6
+  var yAxis= <%= @info_way_hash.values.inspect.html_safe %>;
+  var datas = <%= @info_way_hash.keys.inspect.html_safe %>; 
+  new Chart(document.getElementById("infowayChart"), {
+    type: 'doughnut',
+    data: {
+      labels: datas,
+      datasets: [
+        {
+          backgroundColor: ["#A2D5F2", "#FF7E67","#A4E5D9","#e8c3b9","#B9BBDF","#F69D9D", "#FCE38A", "#07689F", "#6A2C70"],
+          data: yAxis
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '如何得知茶籽堂？'
+      }
+    }
+});
+
 }
   
 </script>
-</div>
 
 <br>
