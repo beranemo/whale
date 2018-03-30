@@ -80,7 +80,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
 
   def show
-    @orders = Order.where(member_id: @order.member_id)
+    @order_counts = Order.where("member_id = ?",@order.member_id).count
   end
 
 

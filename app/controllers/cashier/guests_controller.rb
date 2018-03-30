@@ -36,6 +36,11 @@ class Cashier::GuestsController < Cashier::BaseController
   end
 
   def destroy
+    @order = Order.find_by(guest_id: @guest.id)
+    if @order
+      @order.guest_id = nil
+      @order.save!
+    end
     @guest.destroy
     redirect_to guest_today_cashier_guests_path
     flash[:alert] = "客情紀錄已刪除"
