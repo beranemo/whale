@@ -139,7 +139,7 @@ namespace :dev do
     30.times do |i|
       member = Member.all.sample
       order = Order.create!(
-        user_id: User.all.sample.id,
+        user_id: User.group_by_cashier.sample.id,
         name: member.name,
         member_id: member.id,
         phone: member.phone,

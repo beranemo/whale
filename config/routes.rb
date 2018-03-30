@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     resources :info_ways
     resources :discount_methods
     resources :blogs
+    resources :users
     
   end
   

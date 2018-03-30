@@ -1,0 +1,23 @@
+<div class="container">
+ 
+  <br>
+  <table class="table" data-toggle="table">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>功能</th>
+      </tr>
+    </thead>
+    <tbody id="origin-list" >          
+      <% @users.each do |user| %>
+         
+        <tr>         
+          <td><%= user.name %></td>
+          <td><%=  %></td>
+        </tr>
+
+      <% end %>
+    </tbody>
+  </table>  
+    
+</div>
