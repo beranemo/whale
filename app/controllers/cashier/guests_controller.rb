@@ -56,21 +56,12 @@ class Cashier::GuestsController < Cashier::BaseController
 
   def guest_analysis
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
-#    @old_guests = @guests.where(guest_type_id: 2)
-#    @new_guests = @guests.where(guest_type_id: 1)
-#    @boy_guests = @guests.where(gender: "男")
-#    @girl_guests = @guests.where(gender: "女")
-#    @tw_guests = @guests.where(country_id: 1)
-#    @jp_guests = @guests.where(country_id: 2)
-#    @hk_guests = @guests.where(country_id: 3)
-#    @twenty_guests = @guests.where(age_id: 1)
-#    @thirty_guests = @guests.where(age_id: 2)
-#    @forty_guests = @guests.where(age_id: 3)
-#    @pass_guests = @guests.where(info_way_id: 1)
-#    @expo_guests = @guests.where(info_way_id: 2)
-#    @family_guests = @guests.where(info_way_id: 3)
-#    @toilet_guests = @guests.where(info_way_id: 4)
-    
+    @gender_hash = @guests.group_by{|h| h[:gender]}.map{|k,v| [k, v.size]}.to_h
+    @guest_type_hash = @guests.group_by{|h| h.guest_type.guest_type}.map{|k,v| [k, v.size]}.to_h
+    @country_hash = @guests.group_by{|h| h.country.country_type}.map{|k,v| [k, v.size]}.to_h
+    @age_hash = @guests.group_by{|h| h.age.age_type}.map{|k,v| [k, v.size]}.to_h
+    @info_way_hash = @guests.group_by{|h| h.info_way.news_channel}.map{|k,v| [k, v.size]}.to_h
+
     total = 0
     @guests.each do |g|
       total = total + g.payment.to_i
