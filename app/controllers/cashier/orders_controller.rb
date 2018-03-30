@@ -240,19 +240,21 @@ class Cashier::OrdersController < Cashier::BaseController
       @users  << order.user.name
       end
 
-      # ranking_day
+      # ranking_day 銷售排行 - 日期銷售
       total = @orders.sort_by {  |s| s.created_at.day }
       day_amount_arr = total.pluck(:created_at, :amount)
 
       day_amount_hash = Hash.new(0)
       day_amount_arr.each {|key, value| day_amount_hash[key.day] += value}
-      puts @day_amount_hash
-
       @arr_x = day_amount_hash.keys
       @arr_y = day_amount_hash.values
 
+      day_order_arr = total.pluck(:created_at, :id)
+      day_order_hash = Hash.new(0)
+      day_order_arr.each {|key, value| day_order_hash[key.day] += 1 }
+      @arr_y2 = day_order_hash.values
 
-      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y}
+      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y, :arr_y2 => @arr_y2}
 
     else
       date = Date.parse(params[:created_at]).to_time

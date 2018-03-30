@@ -18,6 +18,8 @@
 
 <div class="container">  
 <canvas id="amountChart" width="200" height="50"></canvas>
+<br>
+<canvas id="orderChart" width="200" height="50"></canvas>
 
 <script>
 $("#btn1").click(function(){
@@ -74,7 +76,39 @@ $("#btn1").click(function(){
             }
           }
         });
-       }
+
+    // chart2
+      var yAxis= datas.arr_y2;
+      var xAxis = datas.arr_x;                                  
+      var ctx2 = document.getElementById("orderChart").getContext('2d');
+      var orderChart = new Chart(ctx2, {
+          type: 'line',
+        data: {
+          labels: xAxis,
+          datasets: [{
+            label: '每日訂單量',
+            data: yAxis,
+            backgroundColor: [
+                'rgba(51, 102, 102, 0.2)',
+            ],
+            borderColor: [
+                 'rgba(51, 102, 102, 1)',
+            ],
+            borderWidth: 1
+          }]
+              },
+        options: { 
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1,
+              }
+            }]
+          }
+         }
+      });
+      }
      }
   });
 }); 
