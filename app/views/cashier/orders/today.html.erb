@@ -1,7 +1,7 @@
 <div class="container">
  
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
-  <%= render :partial => "shared/tab_order", :locals => { :selected_item => '所有訂單' } %>
+  <%= render :partial => "shared/tab_order", :locals => { :selected_item => '今日訂單' } %>
   
   <br>
   <table class="table table-hover" data-toggle="table" id="table" >
@@ -49,7 +49,7 @@
         </td>
         <td>
           <%= link_to "編輯訂單",edit_cashier_order_path(order.id)%>
-          <% if order.member_id == -1 %>
+          <% if order.member_id == nil %>
             <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id)%>
           <% end %>
           <% if order.guest_id == nil %>

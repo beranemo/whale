@@ -3,7 +3,11 @@ class Cashier::OrdersController < Cashier::BaseController
                                    :new_guest, :create_guest, ]
 
   def index
-    @orders = Order.all
+    @orders = Order.all.order(:created_at)
+  end
+
+  def today
+    @orders = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).order(created_at: :desc)
   end
 
   def not_pick
@@ -41,7 +45,7 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.guest_id = @guest.id
     @order.save!
     flash[:notice] = "訂單新增客情成功"
-    redirect_to cashier_orders_path
+    redirect_to today_cashier_orders_path
   end
 
   def edit
@@ -76,7 +80,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
 
   def show
-    @orders = Order.where(member_id: @order.member_id)
+    @order_counts = Order.where("member_id = ?",@order.member_id).count
   end
 
 
@@ -220,7 +224,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
   Item_Data = Struct.new(:name, :quantity)
   def search_outcome
-    if params[:type] == "statement"
+    if params[:type] == "period"
       s_date = Date.parse(params[:s_date]).to_time
       e_date = Date.parse(params[:e_date]).to_time
       puts s_date

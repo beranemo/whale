@@ -51,6 +51,8 @@ Rails.application.routes.draw do
         get :ranking_user
         get :ranking_hour
         get :not_pick
+        get :today
+        get :search
       end
 
       member do 
