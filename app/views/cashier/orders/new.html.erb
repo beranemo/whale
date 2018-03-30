@@ -3,8 +3,6 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '成立訂單' } %>
       
   <br>
-  <label>商品條碼:</label>
-  <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
   <h2>會員訊息</h2>
   <table class="table">
     <tbody class="customer-info">
@@ -28,6 +26,10 @@
   
   
   <h2>購買內容</h2>
+  <label>商品條碼:</label>
+  <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
+  <br>
+  <br>
   <table class="table">
     <tbody class="cart-item-list">
       <tr>
