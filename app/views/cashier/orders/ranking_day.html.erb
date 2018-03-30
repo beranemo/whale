@@ -1,0 +1,82 @@
+<div class="container">
+ 
+  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
+  <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '銷售排行' } %>
+
+  <form id="search-form">
+    <label for="startDate">開始日</label>
+    <input type="date" id="s_date">
+    <label for="endDate">結束日</label>
+    <input type="date" id="e_date">
+    <button id="btn1">搜尋</button>
+  </form>
+  <br>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+<div class="container">  
+<canvas id="amountChart" width="200" height="50"></canvas>
+
+<script>
+$("#btn1").click(function(){
+  event.preventDefault();
+  $(".search-item").remove();//刪除原先的搜尋結果
+  var s_date = $("#s_date").val();
+  var e_date = $("#e_date").val();
+
+  console.log(s_date);
+  console.log(e_date);
+
+  $.ajax({
+    url: "/cashier/orders/search_outcome?type=statement" ,
+    method: "POST",
+    dataType: "json",
+    data: {
+      s_date: s_date,
+      e_date: e_date
+    },
+    success: function(datas){
+
+
+      clearTimeout(go);   
+      var go = setTimeout(display, 500);  
+
+      function display() {
+        var yAxis= datas.arr_y;
+        var xAxis = datas.arr_x;                                  
+        var ctx = document.getElementById("amountChart").getContext('2d');
+        var amountChart = new Chart(ctx, {
+            type: 'line',
+          data: {
+            labels: xAxis,
+            datasets: [{
+              label: '每日銷售額',
+              data: yAxis,
+              backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+              ],
+              borderColor: [
+                   'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 1
+            }]
+                },
+          options: { 
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  min: 0
+                }
+              }]
+            }
+          }
+        });
+       }
+     }
+  });
+}); 
+</script>
+</div>

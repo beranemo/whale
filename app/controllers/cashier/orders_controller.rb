@@ -240,7 +240,19 @@ class Cashier::OrdersController < Cashier::BaseController
       @users  << order.user.name
       end
 
-      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users}
+      # ranking_day
+      total = @orders.sort_by {  |s| s.created_at.day }
+      day_amount_arr = total.pluck(:created_at, :amount)
+
+      day_amount_hash = Hash.new(0)
+      day_amount_arr.each {|key, value| day_amount_hash[key.day] += value}
+      puts @day_amount_hash
+
+      @arr_x = day_amount_hash.keys
+      @arr_y = day_amount_hash.values
+
+
+      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y}
 
     else
       date = Date.parse(params[:created_at]).to_time
@@ -360,6 +372,10 @@ class Cashier::OrdersController < Cashier::BaseController
     @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
     @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     @arr_y2 = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+  end
+
+  def ranking_day
+    
   end
 
   private

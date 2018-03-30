@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         post :search_outcome
         get :ranking_product
         get :ranking_user
+        get :ranking_day
         get :ranking_hour
         get :not_pick
       end
