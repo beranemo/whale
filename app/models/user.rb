@@ -45,5 +45,6 @@ class User < ApplicationRecord
   end
   
   scope :in_service, -> { where(resigned: false) }
+  scope :group_by_cashier, -> { where(role: "cashier") }
   
 end
