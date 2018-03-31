@@ -39,7 +39,7 @@
       end
     } %>
 <p style="text-align: right">統計時間：<%= Date.today %></p> 
-<canvas id="hourChart" width="200" height="50"></canvas>
+<canvas id="amountChart" width="200" height="50"></canvas>
 
 
 <% @orders.each do |o| %>
@@ -86,8 +86,8 @@ var go = setTimeout(display, 500);
 function display() {
   var yAxis= <%= @arr_y.inspect.html_safe %>;
   var datas = <%= @arr_x.inspect.html_safe %>;                                  
-  var ctx = document.getElementById("hourChart").getContext('2d');
-  var hourChart = new Chart(ctx, {
+  var ctx = document.getElementById("amountChart").getContext('2d');
+  var amountChart = new Chart(ctx, {
       type: 'line',
     data: {
       labels: datas,
@@ -118,16 +118,16 @@ function display() {
 
   
 // chart2
-  var Axis= <%= @arr_y2.inspect.html_safe %>;
-  var datasx = <%= @arr_x.inspect.html_safe %>;                                  
+  var yAxis= <%= @arr_y2.inspect.html_safe %>;
+  var xAxis = <%= @arr_x.inspect.html_safe %>;                                  
   var ctx2 = document.getElementById("orderChart").getContext('2d');
   var orderChart = new Chart(ctx2, {
       type: 'line',
     data: {
-      labels: datasx,
+      labels: xAxis,
       datasets: [{
         label: '整點訂單量',
-        data: Axis,
+        data: yAxis,
         backgroundColor: [
 
             'rgba(51, 102, 102, 0.2)',
