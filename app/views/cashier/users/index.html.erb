@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>姓名</th>
+        <th>狀態</th>
         <th>功能</th>
       </tr>
     </thead>
@@ -13,7 +14,16 @@
          
         <tr>         
           <td><%= user.name %></td>
-          <td><%=  %></td>
+          <td>
+            <% if user.resigned %>
+              <span class="label label-danger">已離職</span>
+            <% else %>
+              <span class="label label-success">在職中</span>
+            <% end %>
+          </td>
+          <td>
+            
+          </td>
         </tr>
 
       <% end %>
