@@ -31,10 +31,13 @@ class User < ApplicationRecord
   has_many :orders
   has_many :bulletins
   has_many :blogs
-
-  #  status resigned 已離職
-  def resigned?
-    self.status == "resigned"
+  
+  def to_resigned
+    self.update_columns(resigned: true)
+  end
+  
+  def to_in_service
+    self.update_columns(resigned: false)
   end
   
   def cashier?
@@ -46,6 +49,6 @@ class User < ApplicationRecord
   end
   
   scope :in_service, -> { where(resigned: false) }
-  scope :group_by_cashier, -> { where(role: "cashier") }
+  scope :group_by_cashier, -> { where(role: "cashier").order("created_at ASC") }
   
 end

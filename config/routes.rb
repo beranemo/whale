@@ -96,7 +96,12 @@ Rails.application.routes.draw do
     resources :info_ways
     resources :discount_methods
     resources :blogs
-    resources :users
+    resources :users, only: [:index] do
+      member do
+        post :to_resigned
+        post :to_in_service
+      end
+    end
     
   end
   

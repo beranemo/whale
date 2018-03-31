@@ -2,24 +2,18 @@
 
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '搜尋會員' } %>
   <%= render :partial => "shared/tabs_query_members", :locals => { :selected_item => '快速搜尋' }  %>
-  
+    
   <form id="search-form">
-    <!--
-    <button id="birthday-search">當月壽星搜尋</button>
-    <button id="clear-search">清除搜尋</button>
-    <br>
-    <br>
-    -->
-    <label>快速搜尋</label>
-    <!--
-    <input type="text" id="phone" placeholder="請輸入手機號碼或 email "/>
-    <button id="phone-search" class="btn btn-primary btn-sm">搜尋</button>
-    -->
-    <input type="text" id="phone2" placeholder="請輸入手機號碼或 email "/>
-    <button id="search-member" class="btn btn-primary btn-sm">搜尋</button>
-    <br>
-    <br>
-  </form>
+    <div class="input-group col-xs-3">
+      <input type="text" id="phone2" class="form-control" placeholder="請輸入手機號碼或 email">
+      <div class="input-group-btn">
+        <button class="btn btn-default" type="submit" id="search-member" >
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </div>
+    </div>
+  </form> 
+  <br>
  
   <table class="table">
     <tbody id="search-list">

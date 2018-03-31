@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user.update(user_params)
     redirect_to guest_today_cashier_guests_path
   end
-
+  
   private
 
   def set_user
