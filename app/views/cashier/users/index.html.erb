@@ -22,10 +22,13 @@
             <% end %>
           </td>
           <td>
-            
+            <% if user.resigned %>
+              <%= link_to "恢復成在職", to_in_service_cashier_user_path(user), method: :post %>
+            <% else %>
+              <%= link_to "轉換為離職", to_resigned_cashier_user_path(user), method: :post %>
+            <% end %>
           </td>
         </tr>
-
       <% end %>
     </tbody>
   </table>  
