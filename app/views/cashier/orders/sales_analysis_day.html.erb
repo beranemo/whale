@@ -74,9 +74,14 @@ $("#btn1").click(function(){
           $(order).html($("#statement-template").html());
           $(order).find(".date").html(data["created_at"].substring(0, 10));
           $(order).find(".sn").append("<a href=\"/cashier/orders/" + data["id"] + "\">" + data["sn"] + "</a>");
-          $(order).find(".status").html(data["status"]);
+          $(order).find(".status").html(data["status"]? "已取貨" : "未取貨");
           $(order).find(".user").html(users[i]);
-          $(order).find(".member_id").html(data["member_id"]);
+          if (data["member_id"] == -1 ){
+            $(order).find(".member_id").html("非會員");
+          }
+          else{
+            $(order).find(".member_id").html(data["member_id"]);
+          }
           for(var key in item_datas){
             $(order).find(".order_item").append(item_datas[key]["name"]+"*"+item_datas[key]["quantity"]+",");
             console.log(item_datas[key]["name"]);
