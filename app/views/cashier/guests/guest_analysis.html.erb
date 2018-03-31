@@ -138,7 +138,25 @@ function display() {
       title: {
         display: true,
         text: '客戶性別 (Gender)'
-      }
+      },
+      tooltips: {
+  callbacks: {
+    label: function(tooltipItem, data) {
+      //get the concerned dataset
+      var dataset = data.datasets[tooltipItem.datasetIndex];
+      //calculate the total of this data set
+      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+        return previousValue + currentValue;
+      });
+      //get the current items value
+      var currentValue = dataset.data[tooltipItem.index];
+      //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+      var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+      return precentage + "%";
+    }
+  }
+}
     }
 });
 
@@ -160,7 +178,21 @@ function display() {
       title: {
         display: true,
         text: '客戶類型 (Guest Type)'
-      }
+      },
+      tooltips: {
+  callbacks: {
+    label: function(tooltipItem, data) {
+      var dataset = data.datasets[tooltipItem.datasetIndex];
+      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+        return previousValue + currentValue;
+      });
+      var currentValue = dataset.data[tooltipItem.index];
+      var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+      return precentage + "%";
+    }
+  }
+}
     }
 });
 
@@ -183,7 +215,21 @@ function display() {
       title: {
         display: true,
         text: '國籍 (Country)'
-      }
+      },
+      tooltips: {
+  callbacks: {
+    label: function(tooltipItem, data) {
+      var dataset = data.datasets[tooltipItem.datasetIndex];
+      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+        return previousValue + currentValue;
+      });
+      var currentValue = dataset.data[tooltipItem.index];
+      var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+      return precentage + "%";
+    }
+  }
+}
     }
 });
 
@@ -206,7 +252,21 @@ function display() {
       title: {
         display: true,
         text: '年齡結構(Age Range)'
-      }
+      },
+      tooltips: {
+  callbacks: {
+    label: function(tooltipItem, data) {
+      var dataset = data.datasets[tooltipItem.datasetIndex];
+      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+        return previousValue + currentValue;
+      });
+      var currentValue = dataset.data[tooltipItem.index];
+      var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+      return precentage + "%";
+    }
+  }
+}
     }
 });
 
@@ -229,7 +289,21 @@ function display() {
       title: {
         display: true,
         text: '如何得知茶籽堂？'
-      }
+      },
+      tooltips: {
+  callbacks: {
+    label: function(tooltipItem, data) {
+      var dataset = data.datasets[tooltipItem.datasetIndex];
+      var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+        return previousValue + currentValue;
+      });
+      var currentValue = dataset.data[tooltipItem.index];
+      var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+      return precentage + "%";
+    }
+  }
+}
     }
 });
 
