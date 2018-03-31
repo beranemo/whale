@@ -3,10 +3,12 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '會員資料(測試用，暫時)' } %>
   <%= render :partial => "shared/tab_member", :locals => { :selected_item => '詳細資料' } %>
   <br>
-  <div class="col-md-4">
-    <img src="">
+
+  <div class="col-md-6">
+    <%= image_tag @member.avatar, class: "img-responsive center-block" if @member.avatar?%>
+      <%= image_tag ("avatar.png"), class: "img-responsive center-block img-rounded"  unless @member.avatar?%> 
   </div>
-  <div class="col-md-8">
+  <div class="col-md-6">
    
     <% if Date.today.month == @member.birthday.month %>
       *～當月壽星～*
