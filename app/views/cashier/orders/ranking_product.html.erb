@@ -48,7 +48,7 @@ var go = setTimeout(display, 500);
 
 function display() {
   var yAxis= <%= @y.inspect.html_safe %>;
-  var datas = <%= @products.inspect.html_safe %>;
+  var xAxis = <%= @products.inspect.html_safe %>;
 
 var ctx = document.getElementById("userChart").getContext('2d');
 
@@ -56,7 +56,7 @@ var ctx = document.getElementById("userChart").getContext('2d');
 var userChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: datas,
+        labels: xAxis,
         datasets: [{
             label: '商品銷售量',
             data: yAxis,

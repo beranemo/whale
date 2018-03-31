@@ -40,7 +40,7 @@ var go = setTimeout(display, 500);
 
 function display() {
   var yAxis= <%= @y.inspect.html_safe %>;
-  var datas = <%= @users.inspect.html_safe %>;
+  var xAxis = <%= @users.inspect.html_safe %>;
 
 var ctx = document.getElementById("userChart").getContext('2d');
 
@@ -48,7 +48,7 @@ var ctx = document.getElementById("userChart").getContext('2d');
 var userChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: datas,
+        labels: xAxis,
         datasets: [{
             label: '個人銷售量',
             data: yAxis,
