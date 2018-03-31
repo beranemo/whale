@@ -18,6 +18,7 @@
 #  updated_at             :datetime         not null
 #  name                   :string
 #  status                 :string
+#  resigned               :boolean          default(FALSE)
 #
 
 class User < ApplicationRecord
