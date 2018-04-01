@@ -6,6 +6,10 @@ class Cashier::MemberTypesController < Cashier::BaseController
     @member = MemberType.new
   end
   
+  def edit
+    @member = MemberType.find(params[:id])
+  end
+  
   def update
     if @member.update(member_params)
       redirect_to cashier_member_types_path

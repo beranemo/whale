@@ -75,12 +75,16 @@ puts "Hair_type created!"
 MemberType.destroy_all
 
 member_type_list = [
-  { code: "GENERAL", system_flag: "Y", value: "一般會員" },
-  { code: "VIP", system_flag: "Y", value: "VIP會員" }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "一般會員", code: "GENERAL" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "VIP會員", code: "VIP" }
 ]
 
 member_type_list.each do |member_type|
-  MemberType.create( value: member_type[:value], code: member_type[:code], system_flag: member_type[:system_flag] )
+  MemberType.create( 
+    note: member_type[:note],
+    value: member_type[:value], 
+    code: member_type[:code], 
+    system_flag: member_type[:system_flag] )
 end
 puts "Member_type created!"
 

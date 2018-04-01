@@ -24,6 +24,7 @@
         <th class="alncenter auto-no">編號</th>
         <th class="alncenter">內容</th>
         <th class="alncenter">功能</th>
+        <th class="alncenter">備註</th>
       </tr>
     </thead>
     <tbody>
@@ -33,9 +34,14 @@
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alnleft"><%= member.value %></td>
         <td>
-          <%= link_to '編輯', cashier_member_type_path(id: member.id) %> ｜
-          <%= link_to '刪除', cashier_member_type_path(member), method: :delete, data: {confirm:"確定刪除?"} %>
+          <%= link_to '編輯', edit_cashier_member_type_path(id: member.id) %> ｜
+          <% if member.system_flag == "Y" %>
+            <span style="color: gray;">刪除</span>
+          <% else %>
+            <%= link_to '刪除', cashier_member_type_path(member), method: :delete, data: {confirm:"確定刪除?"} %>
+          <% end %>
         </td>
+        <td class="alncenter"><%= member.note %></td>
       </tr>
       <% i = i + 1 %>
     <% end %>
