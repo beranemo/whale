@@ -4,8 +4,14 @@
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '每日銷售明細' } %>
 
  <form id="search-form">
-  <input type="date" id="date1">
-  <button id="btn1">日期搜尋</button>
+ <div class="input-group col-xs-2">
+  <input type="date" id="date1" class="form-control">
+  <div class="input-group-btn">
+    <button class="btn btn-default" type="submit" id="search-btn" >
+      <i class="glyphicon glyphicon-search"></i>
+    </button>
+  </div>
+</div>
 </form>
 
 <table class="table table-hover" data-toggle="table" id="table" style="display: none">
@@ -30,7 +36,7 @@
 
 <script>
 
-$("#btn1").click(function(){
+$("#search-btn").click(function(){
   event.preventDefault();
   $(".search-item").remove();//刪除原先的搜尋結果
     var date = $("#date1").val();

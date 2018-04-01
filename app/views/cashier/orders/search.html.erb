@@ -5,11 +5,17 @@
   
   <br>
   <form id="search-form">
-    <label for="startDate">開始日</label>
-    <input type="date" id="s_date">
-    <label for="endDate">結束日</label>
-    <input type="date" id="e_date">
-    <button id="btn1">搜尋</button>
+    <div class="input-group col-xs-4">
+      <input type="date" id="s_date" class="form-control">
+      <div class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i>
+    </div>
+      <input type="date" id="e_date" class="form-control">
+      <div class="input-group-btn">
+        <button class="btn btn-default" type="submit" id="search-btn" >
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </div>
+    </div>
   </form>
   <br>
   <table class="table table-hover" data-toggle="table" id="table" >
@@ -35,7 +41,7 @@
 
 
 <script type="text/javascript">
-$("#btn1").click(function(){
+$("#search-btn").click(function(){
   event.preventDefault();
   $(".search-item").remove();//刪除原先的搜尋結果
   var s_date = $("#s_date").val();
