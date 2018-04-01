@@ -3,8 +3,6 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   <h1>編輯訂單</h1>
   <br>
-  <label>商品條碼:</label>
-  <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
   <h2>會員訊息</h2>
   <table class="table">
     <tbody class="customer-info">
@@ -28,6 +26,10 @@
   
   
   <h2>購買內容</h2>
+  <label>商品條碼:</label>
+  <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
+  <br>
+  <br>
   <table class="table">
     <tbody class="cart-item-list">
       <tr>
@@ -82,9 +84,13 @@
     </tbody>
   </table>
   <hr>
-  <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
-  <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
-  <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+  <div class="text-right">
+    <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+    <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
+    <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+  </div>
+
+
   <br>
   <br>
  
@@ -95,31 +101,50 @@
           <%= f.label :created_at, "成立時間:" %>
           <%= f.datetime_select :created_at, class:"form-control"%>  
           <br>
-          <%= f.label :status, "預購:" %>
-          <%= f.label :status, "是" %>
+          <%= f.label :status, "訂單狀態:" %>
+          <label class="my_radio">
+          <%= f.radio_button :status , true  %>
+          現貨
+          </label>
+          <label class="my_radio">
           <%= f.radio_button :status , false %>
-          <%= f.label :status, "否" %>
-          <%= f.radio_button :status , true  %><br>
+          預購
+          </label>
+          <br>
 
           <%= f.label :address, "取貨方式:" %>
           <% if @order.address == "local"%>
+          <label class="my_radio">
             <%= f.radio_button :address ,"local", class:"local-radio" %>
-            <%= f.label :address, "自取" %>
+          自取
+          </label>
+          <label class="my_radio">
             <%= f.radio_button :address ," ",class:"ship-radio" %>
-            <%= f.label :address, "宅配" %><br>
+           宅配
+          </label>
+          <br>
           <% else%>
+          <label class="my_radio">
             <%= f.radio_button :address ,"local", class:"local-radio" %>
-            <%= f.label :address, "自取" %>
+          自取
+          </label>
+          <label class="my_radio">
             <%= f.radio_button :address ," ",:checked => true,class:"ship-radio" %>
-            <%= f.label :address, "宅配" %><br>
+          宅配
+          </label>
+          <br>
           <% end%>
            
-
           <%= f.label :payment_method, "付款方式:" %>
+          <label class="my_radio">
           <%= f.radio_button :payment_method ,"付現" %>
-          <%= f.label :payment_method, "付現" %>
+          付現
+          </label>
+          <label class="my_radio">
           <%= f.radio_button :payment_method ,"刷卡" %>
-          <%= f.label :payment_method, "刷卡" %><br>
+          刷卡
+          </label>
+          <br>
 
           <%= f.label :name, "姓名:" %>
           <%= f.text_field :name %><br>
@@ -138,7 +163,16 @@
           <%= f.text_area :remark, class:"form-control" %>
         </div>
         <div class="col-md-5">
-          
+
+          <div class="col-md-6">
+            <%= f.label :discount_off, "折扣%" %>
+            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+            <label>優惠卷折扣</label>
+            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+            <%= f.label :user_id, "結帳人員" %>
+            <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
+          </div>
+
           <div class="col-md-6">
             <label>原始總金額</label>
             <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
@@ -149,18 +183,9 @@
             <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
-            <%= f.submit "更新訂單",class: "btn btn-success" %>
+            <%= f.submit "更新訂單",class: "btn btn-danger form-control" %>
             <br>
             
-          </div>
-
-          <div class="col-md-6">
-            <%= f.label :discount_off, "折扣%" %>
-            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
-            <label>優惠卷折扣</label>
-            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
-            <%= f.label :user_id, "結帳人員" %>
-            <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
           </div>
           
           
