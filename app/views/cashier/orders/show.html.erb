@@ -23,20 +23,23 @@
         <th>商品名稱</th>
         <th>國際條碼</th>
         <th>規格</th>
-        <th>數量</th>
         <th>單價</th>
-        <th>折扣價</th>
+        <th>數量</th>
         <th>小計</th>
+        <th>折扣金額</th>
+        <th>售價</th>
       </tr>
-      <% @order.order_items.each do |p| %>
+      <% @order_items.each do |p| %>
       <tr>
         <td><%= p.product.zh_name %></td>
         <td><%= p.product.upc %></td>
         <td><%= p.product.capacity %></td>
-        <td><%= p.quantity %></td>
         <td><%= p.product.price %></td>
-        <td><%= %></td>
+        <td><%= p.quantity %></td>
+        <td><%= p.product.price * p.quantity%></td>
+        <td><%= (p.product.price * p.quantity) -p.price %></td>
         <td><%= p.price %></td>
+        <% @origin_amount += p.price%>
       </tr>
       <% end %>
     </tbody>
@@ -46,7 +49,25 @@
     <div class="col-md-3 col-md-offset-3"></div>
     <div class="col-md-3 col-md-offset-3">
     <hr>
-    <strong><p class="text-right">應付總金額： <%= number_to_currency(@order.amount, precision: 0)%></p></strong>
+    <strong>
+      <p class="text-right">
+        原始總金額： <%= number_to_currency(@origin_amount, precision: 0)%> *  <%= @order.discount_off%>%
+      </p>
+    </strong>
+    <hr>
+    <strong>
+      <p class="text-right">
+        折扣後總金額： <%= number_to_currency(@origin_amount*@order.discount_off/100, precision: 0)%>
+      </p>
+    </strong>
+    <hr>
+    <strong>
+      <p class="text-right">折扣卷金額： <%= number_to_currency(@coupon_discount, precision: 0)%></p>
+    </strong>
+    <hr>
+    <strong>
+      <p class="text-right">應付總金額： <%= number_to_currency(@order.amount, precision: 0)%></p>
+    </strong>
     </div>
   </div>
   <br> 

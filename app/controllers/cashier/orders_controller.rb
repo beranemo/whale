@@ -83,7 +83,16 @@ class Cashier::OrdersController < Cashier::BaseController
 
 
   def show
+    @coupon = Product.find_by(zh_name: "折價卷")
+    @order_items = @order.order_items.where("product_id != ?",@coupon.id)
+    @origin_amount = 0
     @order_counts = Order.where("member_id = ?",@order.member_id).count
+
+    @cart_coupons = @order.order_items.where('product_id = ?',@coupon.id)
+    @coupon_discount = 0
+    @cart_coupons.each do |c|
+      @coupon_discount += c.price
+    end
   end
 
 
