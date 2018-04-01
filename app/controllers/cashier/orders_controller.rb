@@ -130,7 +130,7 @@ class Cashier::OrdersController < Cashier::BaseController
     #復原原本訂單扣的庫存
     @order.order_items.each do |item|
       product = item.product
-      if product.zh_name != "折價卷" && @order.status && @order.address == "local"
+      if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
         product.quantity += item.quantity
         product.save!
       end
@@ -140,7 +140,7 @@ class Cashier::OrdersController < Cashier::BaseController
     if @order.update(order_params)
       current_cart.cart_items.each do |item|
         product = item.product
-        if product.zh_name != "折價卷" && @order.status && @order.address == "local"
+        if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
           product.quantity -= item.quantity
           if product.quantity <= 0
             flash[:alert] = "商品庫存數量錯誤."
@@ -166,7 +166,7 @@ class Cashier::OrdersController < Cashier::BaseController
         product.save!
       end
       
-      @order.status =  (@order.status || @order.address != "local")
+      @order.status =  (@order.status || @order.address != "自取")
       flash[:notice] = "成功更新訂單記錄"
       redirect_to cashier_orders_path
     else
@@ -191,7 +191,7 @@ class Cashier::OrdersController < Cashier::BaseController
       @order.sn = today.tr('-','').to_i * 1000 + current_cart.id
       current_cart.cart_items.each do |item|
         product = item.product
-        if product.zh_name != "折價卷" && @order.status && @order.address == "local"
+        if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
           product.quantity -= item.quantity
           if product.quantity <= 0
             flash[:alert] = "商品庫存數量錯誤."
@@ -212,11 +212,11 @@ class Cashier::OrdersController < Cashier::BaseController
         product.save!
       end
       
-      @order.status =  (@order.status || @order.address != "local")
+      @order.status =  (@order.status || @order.address != "自取")
       if @order.save
         session[:cart_id] = nil
         #當訂單為宅配時寄信通知倉庫
-        if @order.address != "local"
+        if @order.address != "自取"
           UserMailer.notify_order_deliver(@order).deliver_now!
         end
         flash[:notice] = "成功成立訂單"
