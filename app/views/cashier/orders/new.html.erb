@@ -4,10 +4,45 @@
       
   <br>
   
+
+  
   <h2>會員訊息</h2>
-  <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
   <input type="text" id="key" placeholder="請輸入手機號碼或 email "/>
-  <button id="search-member" class="btn btn-primary btn-sm">搜尋</button>
+  <!-- Trigger the modal with a button -->
+  <button id="search-member" type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#myModal">搜尋</button>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">會員清單</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tbody id="search-list">
+              
+              <tr>
+                <th>姓名</th>
+                <th>手機號碼</th>
+                <th>性別</th>
+                <th>信箱</th>
+                <th>生日</th>
+                <th>#</th>
+              </tr>     
+                
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
   <br>
   <br>
   <table class="table">
@@ -208,25 +243,6 @@
       
     </tbody>
   </table>  
-  
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span> Login</h4>
-        </div>
-        <div class="modal-body">
-          
-        </div>
-        <div class="modal-footer">
-          
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- Latest compiled and minified CSS -->
@@ -260,11 +276,10 @@
   var exist_cart_item;
 
 
-  var search_modal = $(".modal");
+  
 
   $("#search-member").click(function(){
     event.preventDefault();
-    $(search_modal).css("display","block");
     $(".search-item").remove();//刪除原先的搜尋結果
     
     var search_word = $("#key").val();
@@ -272,7 +287,8 @@
     {
       //alert(phone2);
       //alert(phone2.length);
-      alert("錯誤!輸入長度不足3碼");
+      
+      $("#search-list").append("錯誤!輸入長度不足3碼");
     }else{
       $.ajax({
         url: "/cashier/members/search_outcome" ,
@@ -283,6 +299,7 @@
         },
         success: function(datas){
           if(datas.length == 0){
+            
             alert("No data found");
           }
           else{
@@ -300,21 +317,10 @@
               $(member).find(".birthday").html(data["birthday"]);
             
               var url_checkout = document.createElement("a");
-              var url_info = document.createElement("a");
-              var url_history = document.createElement("a");
 
               url_checkout.href = "/cashier/orders/new?id=" +member.id;
-              url_info.href = "/cashier/members/" +member.id ;
-              url_history.href = "/cashier/members/" +member.id + "/show_orders";
-
-              $(url_checkout).html("成立訂單");
-              $(url_info).html("詳細資料");
-              $(url_history).html("訂單記錄");
-              
-              $(member).find(".checkout").html(url_checkout);
-              $(member).find(".info").html(url_info);
-              $(member).find(".history").html(url_history);
-              
+              $(url_checkout).html("成立訂單");              
+              $(member).find(".checkout").html(url_checkout);             
 
               $("#search-list").append(member);
             }
@@ -833,5 +839,17 @@
   </td>  
   <td>
     <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+  </td>
+</script>
+
+<script type="text/template" id="member-template">
+  
+  <td class="name"></td>
+  <td class="phone"></td>
+  <td class="gender"></td>
+  <td class="email"></td>
+  <td class="birthday"></td>
+  <td >
+    <button class="checkout btn-default" type="button"></button>
   </td>
 </script>
