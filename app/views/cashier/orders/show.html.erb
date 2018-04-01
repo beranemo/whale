@@ -2,7 +2,7 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   
   <br>
-  <h4>訂單編號：<%= @order.id%></h4>
+  <h4>訂單編號：<%= @order.sn%></h4>
   <% if @order.member_id == -1%>
     顧客編號：非會員
   <% else%>
@@ -45,29 +45,14 @@
     </tbody>
   </table>
  
-  <div class="row">
-    <div class="col-md-3 col-md-offset-3"></div>
-    <div class="col-md-3 col-md-offset-3">
-    <hr>
-    <strong>
-      <p class="text-right">
-        原始總金額： <%= number_to_currency(@origin_amount, precision: 0)%> *  <%= @order.discount_off%>%
-      </p>
-    </strong>
-    <hr>
-    <strong>
-      <p class="text-right">
-        折扣後總金額： <%= number_to_currency(@origin_amount*@order.discount_off/100, precision: 0)%>
-      </p>
-    </strong>
-    <hr>
-    <strong>
-      <p class="text-right">折扣卷金額： <%= number_to_currency(@coupon_discount, precision: 0)%></p>
-    </strong>
-    <hr>
-    <strong>
-      <p class="text-right">應付總金額： <%= number_to_currency(@order.amount, precision: 0)%></p>
-    </strong>
+   <div class="row">
+    <div class="cart-bill">
+      <ul>
+        <li><span>原始總金額</span><span><%= number_to_currency(@origin_amount, precision: 0)%> *  <%= @order.discount_off%>%</span></li>
+        <li><span>折扣後總金額</span><span><%= number_to_currency(@origin_amount*@order.discount_off/100, precision: 0)%></span></li>
+        <li><span>折扣卷金額</span><span><%= number_to_currency(@coupon_discount, precision: 0)%></span></li>
+        <li class="last"><strong><span>應付總金額</span><span><%= number_to_currency(@order.amount, precision: 0)%></span></strong></li>
+      </ul>
     </div>
   </div>
   <br> 
