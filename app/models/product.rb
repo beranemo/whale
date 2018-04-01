@@ -29,17 +29,17 @@ class Product < ApplicationRecord
   has_many :product_orders, through: :order_items, source: :order
   def self.update_by_file(file)
     attribute = Hash["類型" => "category" ,
-                    "中文品名"=> "zh_name",
-                    "英文品名"=> "en_name",
-                    "規格"=>"capacity",
-                    "定價"=>"price",
-                    "國際條碼"=>"upc",
-                    "適用對象"=>"use_for",
-                    "使用方法"=>"directions",
-                    "中文主成分"=>"zh_m_ingredients",
-                    "中文全成分"=>"zh_ingredients",
-                    "英文全成分"=>"en_ingredients",
-                    "數量"=>"quantity"                    
+                    "中文品名" => "zh_name",
+                    "英文品名" => "en_name",
+                    "規格" => "capacity",
+                    "定價" => "price",
+                    "國際條碼" => "upc",
+                    "適用對象" => "use_for",
+                    "使用方法" => "directions",
+                    "中文主成分" => "zh_m_ingredients",
+                    "中文全成分" => "zh_ingredients",
+                    "英文全成分" => "en_ingredients",
+                    "數量" => "quantity"                    
                     ]
     sheet = Roo::Spreadsheet.open(file.path)
     header = sheet.row(1)

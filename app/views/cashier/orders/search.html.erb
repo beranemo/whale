@@ -3,7 +3,6 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   <%= render :partial => "shared/tab_order", :locals => { :selected_item => '訂單搜尋' } %>
   
-  <br>
   <form id="search-form">
     <div class="input-group col-xs-4">
       <input type="date" id="s_date" class="form-control">
@@ -100,6 +99,7 @@ $("#search-btn").click(function(){
             }
             else{
               $(order).find(".member_id").html(data["member_id"]);
+              $(order).find(".function").append("<span style='color: gray;'>訂單歸戶</span>｜");
             }
 
             if(data["guest_id"] == null){

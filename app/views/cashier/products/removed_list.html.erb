@@ -18,11 +18,7 @@
       <% @products.each do |product| %>
         <tr>
           <td><%= product.category %></td>
-          <td>
-            <%= link_to  edit_cashier_product_path(product) do %>
-            <%= product.zh_name %>
-            <% end %>
-          </td>
+          <td><%= product.zh_name %></td>
           <td><%= product.en_name %></td>
           <td><%= product.capacity %></td>
           <td><%= product.price %></td>
