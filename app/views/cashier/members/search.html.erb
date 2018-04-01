@@ -7,7 +7,7 @@
     <div class="input-group col-xs-3">
       <input type="text" id="phone2" class="form-control" placeholder="請輸入手機號碼或 email">
       <div class="input-group-btn">
-        <button class="btn btn-default" type="submit" id="search-member" >
+        <button class="btn btn-default" type="submit" id="search-btn" >
           <i class="glyphicon glyphicon-search"></i>
         </button>
       </div>
@@ -34,7 +34,7 @@
 <script type="text/javascript">
  
   
-  $("#search-member").click(function(){
+  $("#search-btn").click(function(){
     
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果

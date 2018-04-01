@@ -7,7 +7,7 @@
  <div class="input-group col-xs-2">
   <input type="date" id="date1" class="form-control">
   <div class="input-group-btn">
-    <button class="btn btn-default" type="submit" id="btn1" >
+    <button class="btn btn-default" type="submit" id="search-btn" >
       <i class="glyphicon glyphicon-search"></i>
     </button>
   </div>
@@ -36,7 +36,7 @@
 
 <script>
 
-$("#btn1").click(function(){
+$("#search-btn").click(function(){
   event.preventDefault();
   $(".search-item").remove();//刪除原先的搜尋結果
     var date = $("#date1").val();
