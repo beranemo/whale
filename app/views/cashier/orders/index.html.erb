@@ -38,7 +38,7 @@
         </td>
         <td><%= order.payment_method %></td>
         <td><%= order.address %></td>
-        <td><%= number_to_currency(order.amount, precision: 0) %></td>
+        <td class="alnright"><%= number_to_currency(order.amount, precision: 0) %></td>
         <td>
           <% if order.status %>
             已取貨

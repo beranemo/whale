@@ -38,7 +38,7 @@
         </td>
         <td><%= order.payment_method %></td>
         <td><%= order.address %></td>
-        <td><%= number_to_currency(order.amount, precision: 0)%></td>
+        <td class="alnright"><%= number_to_currency(order.amount, precision: 0)%></td>
         <td>
           <% if order.status %>
             已取貨
@@ -63,6 +63,7 @@
     </tbody>
   </table>
 </div>
+<br>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">

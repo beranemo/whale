@@ -21,9 +21,9 @@
       
       <% @orders.each do |order|%>
       <tr>
-        <td><%= order.created_at.localtime.to_s(:db)%></td>
-        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn%><% end %></td>
-        <td><%= order.user.name%></td>
+        <td><%= order.created_at.localtime.to_s(:db)[0..15] %></td>
+        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn %><% end %></td>
+        <td><%= order.user.name %></td>
         <td>
           <% if order.member_id == -1%>
             非會員
@@ -36,14 +36,14 @@
             <% end%>
           <% end%>
         </td>
-        <td><%= order.payment_method%></td>
-        <td><%= order.address%></td>
-        <td><%= number_to_currency(order.amount, precision: 0)%></td>
+        <td><%= order.payment_method %></td>
+        <td><%= order.address %></td>
+        <td class="alnright"><%= number_to_currency(order.amount, precision: 0) %></td>
         <td>
             未取貨
         </td>
         <td>
-          <%= link_to "編輯",edit_cashier_order_path(order.id)%> ｜
+          <%= link_to "編輯",edit_cashier_order_path(order.id) %> ｜
           <%= link_to "取貨完成",pick_up_cashier_order_path(order.id), method: :post%>
         </td>
       </tr>
