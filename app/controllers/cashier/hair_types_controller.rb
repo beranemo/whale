@@ -7,12 +7,16 @@ class Cashier::HairTypesController < Cashier::BaseController
     @hair = HairType.new
   end
   
+  def edit
+    @hair = HairType.find(params[:id])
+  end
+  
   def update
     if @hair.update(hair_params)
       redirect_to cashier_hair_types_path
       flash[:notice] = "髮質資料已更新"
     else
-      @hairs = HairType.all
+#      @hairs = HairType.all
       render :index
     end
   end

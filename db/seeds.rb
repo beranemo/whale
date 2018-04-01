@@ -53,16 +53,17 @@ puts "Skin_type created!"
 HairType.destroy_all
 
 hair_type_list = [
-  { code: "A", system_flag: "Y", value: "中性髮質" },
-  { code: "B", system_flag: "Y", value: "油性髮質" },
-  { code: "C", system_flag: "Y", value: "染燙受損髮質" },
-  { code: "D", system_flag: "Y", value: "乾性髮質" },
-  { code: "E", system_flag: "Y", value: "毛躁髮質" },
-  { code: "F", system_flag: "Y", value: "有頭皮屑困擾" }
+  { note: "系統設置，不能刪除", code: "A", system_flag: "Y", value: "中性髮質" },
+  { note: "系統設置，不能刪除", code: "B", system_flag: "Y", value: "油性髮質" },
+  { note: "系統設置，不能刪除", code: "C", system_flag: "Y", value: "染燙受損髮質" },
+  { note: "系統設置，不能刪除", code: "D", system_flag: "Y", value: "乾性髮質" },
+  { note: "系統設置，不能刪除", code: "E", system_flag: "Y", value: "毛躁髮質" },
+  { note: "系統設置，不能刪除", code: "F", system_flag: "Y", value: "有頭皮屑困擾" }
 ]
 
 hair_type_list.each do |hair_type|
   HairType.create( 
+    note: hair_type[:note],
     code: hair_type[:code],
     value: hair_type[:value], 
     system_flag: hair_type[:system_flag] 
@@ -164,11 +165,11 @@ puts "Category created!"
 DiscountMethod.destroy_all
 
 discount_method_list = [
-  { note: "系統變數，不能刪除", is_active: true, content: "無", code: "E" },
-  { note: "系統變數，不能刪除", is_active: true, content: "優惠價", code: "D" },
-  { note: "系統變數，不能刪除", is_active: true, content: "贈品", code: "C" },
-  { note: "系統變數，不能刪除", is_active: true, content: "打折", code: "B" },
-  { note: "系統變數，不能刪除", is_active: true, content: "第二件半價", code: "A" }
+  { note: "系統設置，不能刪除", is_active: true, content: "無", code: "E" },
+  { note: "系統設置，不能刪除", is_active: true, content: "優惠價", code: "D" },
+  { note: "系統設置，不能刪除", is_active: true, content: "贈品", code: "C" },
+  { note: "系統設置，不能刪除", is_active: true, content: "打折", code: "B" },
+  { note: "系統設置，不能刪除", is_active: true, content: "第二件半價", code: "A" }
 ]
 
 discount_method_list.each do |d_method|

@@ -8,6 +8,7 @@
 #  system_flag :string           default("N")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  note        :string
 #
 
 class HairType < ApplicationRecord
