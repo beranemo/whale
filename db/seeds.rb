@@ -127,13 +127,17 @@ puts "Country created!"
 Age.destroy_all
 
 age_list = [
-  { code: "25_35", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
-  { code: "35_45", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
-  { code: "45_up", system_flag: "Y", value: "", age_type: "45 歲以上" }
+  { note: "系統設置，無法刪除", code: "25_35", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
+  { note: "系統設置，無法刪除", code: "35_45", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
+  { note: "系統設置，無法刪除", code: "45_up", system_flag: "Y", value: "", age_type: "45 歲以上" }
 ]
 
 age_list.each do |age|
-  Age.create( age_type: age[:age_type] )
+  Age.create(
+    age_type: age[:age_type],    
+    note: age[:note],
+    system_flag: age[:system_flag]      
+    )
 end
 puts "Age created!"
 

@@ -6,6 +6,10 @@ class Cashier::AgesController < Cashier::BaseController
     @age = Age.new
   end
   
+  def edit
+    @age = Age.find(params[:id])
+  end
+  
   def update
     if @age.update(age_params)
       redirect_to cashier_ages_path
@@ -20,7 +24,7 @@ class Cashier::AgesController < Cashier::BaseController
     @age = Age.new(age_params)
     
     if @age.save
-      flash[:notice] = "年齡資料已更新"
+      flash[:notice] = "年齡資料已成功新增"
       redirect_to cashier_ages_path
     else
       @ages = Age.all

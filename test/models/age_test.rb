@@ -2,10 +2,12 @@
 #
 # Table name: ages
 #
-#  id         :integer          not null, primary key
-#  age_type   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  age_type    :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  note        :string
+#  system_flag :string
 #
 
 require 'test_helper'

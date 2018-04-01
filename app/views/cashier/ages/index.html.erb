@@ -7,7 +7,7 @@
   <div class="form-inline" >
     <%= form_for [:cashier, @age] do |f| %>
       <div class="form-group">
-        <%= f.text_field :age_type, placeholder: "請輸入年齡", class: "form-control" %>
+        <%= f.text_field :age_type, placeholder: "請輸入年齡內容", class: "form-control" %>
       </div>
       <%= f.submit "新增", class: "btn btn-primary" %>
       
@@ -25,6 +25,7 @@
         <th class="alncenter auto-no">編號</th>
         <th class="alncenter">內容</th>
         <th class="alncenter">功能</th>
+        <th class="alncenter">備註</th>
       </tr>
     </thead>
     <tbody>
@@ -34,9 +35,14 @@
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alnleft"><%= age.age_type %></td>
         <td>
-          <%= link_to '編輯', cashier_age_path(id: age.id) %> ｜
-          <%= link_to '刪除', cashier_age_path(age), method: :delete, data: {confirm:"確定刪除?"} %>
+          <%= link_to '編輯', edit_cashier_age_path(id: age.id) %> ｜
+          <% if age.system_flag == "Y" %>
+            <span style="color: gray;">刪除</span>
+          <% else %>
+            <%= link_to '刪除', cashier_age_path(age), method: :delete, data: {confirm:"確定刪除?"} %>
+          <% end %>
         </td>
+        <td class="alncenter"><%= age.note %></td>        
       </tr>
       <% i = i + 1 %>
     <% end %>
