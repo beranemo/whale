@@ -20,12 +20,16 @@ puts "Default cashier created!"
 GuestType.destroy_all
 
 guest_type_list = [
-  { code: "N", system_flag: "Y", value: "新客", guest_type: "新客" },
-  { code: "O", system_flag: "Y", value: "新客", guest_type: "舊客" }
+  { note: "系統設置，無法刪除", code: "N", system_flag: "Y", value: "新客", guest_type: "新客" },
+  { note: "系統設置，無法刪除", code: "O", system_flag: "Y", value: "新客", guest_type: "舊客" }
 ]
 
 guest_type_list.each do |guest_type|
-  GuestType.create( guest_type: guest_type[:guest_type] )
+  GuestType.create( 
+    note: guest_type[:note],
+    guest_type: guest_type[:guest_type],
+    system_flag: guest_type[:system_flag]    
+  )
 end
 puts "Guest_type created!"
 

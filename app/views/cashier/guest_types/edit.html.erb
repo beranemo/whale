@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <h3>髮質設定</h3>
-      <%= form_for [:cashier, @hair] do |f| %>
+      <h3>客戶類型設定</h3>
+      <%= form_for [:cashier, @guest] do |f| %>
         <div class="form-group">
          
-          <%= f.label :value, "名稱" %>
-          <%= f.text_field :value, class: "form-control"%>
+          <%= f.label :guest_type, "名稱" %>
+          <%= f.text_field :guest_type, class: "form-control"%>
           <br>
           
           <%= f.submit "確定", class: "btn btn-primary" %>
