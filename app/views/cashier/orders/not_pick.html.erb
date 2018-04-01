@@ -43,7 +43,7 @@
             未取貨
         </td>
         <td>
-          <%= link_to "編輯",edit_cashier_order_path(order.id)%>
+          <%= link_to "編輯",edit_cashier_order_path(order.id)%> ｜
           <%= link_to "取貨完成",pick_up_cashier_order_path(order.id), method: :post%>
         </td>
       </tr>
