@@ -14,7 +14,7 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def not_pick
-    @orders = Order.where('status ==?',false)
+    @orders = Order.where(status: false).order(created_at: :desc)
   end
 
   def pick_up
