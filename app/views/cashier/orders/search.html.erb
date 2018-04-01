@@ -99,6 +99,7 @@ $("#search-btn").click(function(){
             }
             else{
               $(order).find(".member_id").html(data["member_id"]);
+              $(order).find(".function").append("<span style='color: gray;'>訂單歸戶</span>｜");
             }
 
             if(data["guest_id"] == null){

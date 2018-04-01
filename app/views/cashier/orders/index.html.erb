@@ -51,7 +51,7 @@
           <% if order.member_id == -1 %>
             <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id) %>｜
           <% else %>
-            <span style="color: gray;">訂單歸戶</span>｜  
+            <span style="color: gray;">訂單歸戶</span>｜
           <% end %>
           <% if order.guest_id == nil %>
             <%= link_to "建立客情",new_guest_cashier_order_path(order.id) %>
