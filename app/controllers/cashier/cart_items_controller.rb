@@ -65,7 +65,7 @@ class Cashier::CartItemsController < Cashier::BaseController
     puts @o_price
     puts @l_price
     puts @d_price
-
+    puts params[:item_index]
     render :json => {:id => params[:id], :l_price => @l_price, :d_price => @d_price,
                     :v_price => (@o_price - @d_price ), :o_price => @o_price, discount_off: params[:discount],
                     :item_index => params[:item_index]}

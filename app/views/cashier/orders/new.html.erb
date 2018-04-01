@@ -694,30 +694,32 @@
     if (event.keyCode == 13) {
       var str = $(event.target).val();
       var id = event.target.parentNode.parentNode.id;
+      var index = id.indexOf("-");
+      var product_id = id.substring(0,index);
+      var item_index = id.substring(index+1,id.length);
+      
       console.log(id);
 
       console.log(str);
 
 
       $.ajax({
-        url: "/cashier/cart_items/"+ id +"/add_discount?method_code=B" + "&discount=" + str,
+        url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code=B" + "&discount=" + str+ "&item_index=" + item_index,
         method: "post",
         dataType: "json",
         success: function(data){
-          var total_price = $("#origin_amount");
-          var total_price_value = Number(total_price.val());
-          var l_price = Number(data["l_price"]);
-          var v_price = Number(data["v_price"]);
-          var d_price = Number(data["d_price"]);
-          var cart_item = $(".cart-item-list").find("#"+data["id"]);
-          var origin_amount = total_price_value+d_price-l_price;
-          var order_discount_off = Number($("#order_discount_off").val());
-          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+          setUpVariable(data);
+          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          origin_amount = total_price_value - l_price + d_price;
+          off_amount = Math.round(origin_amount*discount_off/100); //原始總金額打折
+          discount_amout = off_amount + coupon_discount;
 
           $(cart_item).find(".d-price").html(data["d_price"]);
-          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(cart_item).find(".v-price").html(v_price);
           $(total_price).val(origin_amount);
+          $("#origin_amount").val(origin_amount);
           $("#order_amount").val(discount_amout);
+          $("#off_amount").val(off_amount);
         } 
       });
     return false;
