@@ -1,7 +1,7 @@
 class Cashier::BlogsController < ApplicationController
   
   def index
-    @blogs = Blog.all
+    @blogs = Blog.all.order(published_at: :desc)
   end
   
   def new

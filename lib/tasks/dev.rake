@@ -179,6 +179,21 @@ namespace :dev do
     end
     puts "create fake order, have #{Order.count} orders with 3 order_items"
   end
+  
+  task fake_blogs: :environment do
+    Blog.destroy_all
+    
+    30.times do |i|
+      Blog.create!(
+        published_at: FFaker::IdentificationESCO::expedition_date,
+        weather: "晴",
+        content: "今天新加坡客戶3人，台灣4人，澳門5人",
+        user: User.all.sample
+      )
+    end
+    
+    puts "create fake blogs, have #{Blog.count} blogs data"
+  end
 
   task fake_all: :environment do
     Rake::Task['db:drop'].execute
