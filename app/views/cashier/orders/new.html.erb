@@ -71,14 +71,14 @@
   </table>  
   <br>
   
-  
+  <button class="btn-danger" id ="clear-cart">清空商品</button>
   <h2>購買內容</h2>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
   <br>
   <br>
   <table class="table">
-    <tbody class="cart-item-list">
+    <thead>
       <tr>
         <th>類型</th>
         <th>商品名稱</th>          
@@ -91,7 +91,9 @@
         <th>打折方式</th>
         <th>功能</th>
       </tr> 
-             
+    </thead>
+    <tbody class="cart-item-list">
+         
       <% @cart_items.each do |item|%>
 
         <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
@@ -159,7 +161,7 @@
 
           <%= f.label :address, "取貨方式:" %>
           <label class="my_radio">
-            <%= f.radio_button :address ,"local", class:"local-radio" %>
+            <%= f.radio_button :address ,"自取", class:"local-radio",:checked => true %>
           自取
           </label>
           <label class="my_radio">
@@ -170,7 +172,7 @@
 
           <%= f.label :payment_method, "付款方式:" %>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.radio_button :payment_method ,"付現",:checked => true %>
           付現
           </label>
           <label class="my_radio">
@@ -186,7 +188,7 @@
           <%= f.text_field :phone %><br>
           
           <%= f.label :address, "地址:" %>
-          <%= f.text_field :address ,class:"input-address form-control" %><br>
+          <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
 
           
           <br>
@@ -283,6 +285,7 @@
 
 
   
+  
 
   $("#search-btn").click(function(){
     event.preventDefault();
@@ -342,7 +345,7 @@
     $(".order-info").find(".input-address").removeAttr('disabled');
   });
   //設定取貨方式鎖定地址輸入框
-  $("#order_address_local").on("click", function(event){
+  $("#order_address_自取").on("click", function(event){
     
     $(".order-info").find(".input-address").attr('disabled','disabled');
   });
@@ -386,6 +389,22 @@
       }
     });
   }); 
+
+  //清空購物車
+  $("#clear-cart").on('click',function(event){
+    $.ajax({
+      url: "/cashier/cart_items/clear_cart",
+      method: "POST",
+      dataType: "json",
+      success: function(date){
+        $(".cart-item-list").html("");
+        $("#off_amount").val(0);
+        $("#order_amount").val(0);
+        $("#coupon_discount").val(0);
+        $(total_price).val(0);
+      }
+    })
+  });
 
   //將商品加入購物車
   $(".product-list").on("click", ".add_to_cart", function(event){
@@ -700,30 +719,32 @@
     if (event.keyCode == 13) {
       var str = $(event.target).val();
       var id = event.target.parentNode.parentNode.id;
+      var index = id.indexOf("-");
+      var product_id = id.substring(0,index);
+      var item_index = id.substring(index+1,id.length);
+      
       console.log(id);
 
       console.log(str);
 
 
       $.ajax({
-        url: "/cashier/cart_items/"+ id +"/add_discount?method_code=B" + "&discount=" + str,
+        url: "/cashier/cart_items/"+ product_id +"/add_discount?method_code=B" + "&discount=" + str+ "&item_index=" + item_index,
         method: "post",
         dataType: "json",
         success: function(data){
-          var total_price = $("#origin_amount");
-          var total_price_value = Number(total_price.val());
-          var l_price = Number(data["l_price"]);
-          var v_price = Number(data["v_price"]);
-          var d_price = Number(data["d_price"]);
-          var cart_item = $(".cart-item-list").find("#"+data["id"]);
-          var origin_amount = total_price_value+d_price-l_price;
-          var order_discount_off = Number($("#order_discount_off").val());
-          var discount_amout = Math.round(origin_amount*order_discount_off/100);
+          setUpVariable(data);
+          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+          origin_amount = total_price_value - l_price + d_price;
+          off_amount = Math.round(origin_amount*discount_off/100); //原始總金額打折
+          discount_amout = off_amount + coupon_discount;
 
           $(cart_item).find(".d-price").html(data["d_price"]);
-          $(cart_item).find(".v-price").html(data["v_price"]);
+          $(cart_item).find(".v-price").html(v_price);
           $(total_price).val(origin_amount);
+          $("#origin_amount").val(origin_amount);
           $("#order_amount").val(discount_amout);
+          $("#off_amount").val(off_amount);
         } 
       });
     return false;

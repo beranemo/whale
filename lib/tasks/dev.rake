@@ -9,15 +9,17 @@ namespace :dev do
     Time.at(rand_in_range(from.to_f, to.to_f))
   end
   
+  last_name = ["陳", "林", "黃", "張", "李", "王", "吳", "劉", "蔡", "楊"]
+  first_name = ["明", "玲", "珍", "怡", "欣", "天", "德", "華", "森", "天"]
+  
   task fake_members: :environment do
     Member.destroy_all
-    
     50.times do |i|
       phone_number = 10000000 + rand(80000000)
       phone_string = '09' + phone_number.to_s
       fax_string = '0' + phone_number.to_s.reverse
       member = Member.new(
-        name: FFaker::Name::first_name,
+        name: last_name.sample + "〇" + first_name.sample,
         gender: FFaker::GenderCN.random,
         phone: phone_string,
         fax: fax_string,
