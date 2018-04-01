@@ -145,14 +145,18 @@ puts "Age created!"
 InfoWay.destroy_all
 
 info_way_list = [
-  { code: "A", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
-  { code: "B", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
-  { code: "C", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
-  { code: "D", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
+  { note: "系統設置，無法刪除", code: "A", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
+  { note: "系統設置，無法刪除", code: "B", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
+  { note: "系統設置，無法刪除", code: "C", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
+  { note: "系統設置，無法刪除", code: "D", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
 ]
 
 info_way_list.each do |info_way|
-  InfoWay.create( news_channel: info_way[:news_channel] )
+  InfoWay.create( 
+    news_channel: info_way[:news_channel],
+    note: info_way[:note],
+    system_flag: info_way[:system_flag] 
+  )
 end
 puts "Info_way created!"
 

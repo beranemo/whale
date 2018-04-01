@@ -93,7 +93,7 @@ Rails.application.routes.draw do
     resources :guest_types, except: [:show]
     resources :countries
     resources :ages, except: [:show]
-    resources :info_ways
+    resources :info_ways, except: [:show]
     resources :discount_methods
     resources :blogs
     resources :users, only: [:index] do
