@@ -3,7 +3,48 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '成立訂單' } %>
       
   <br>
+  
+
+  
   <h2>會員訊息</h2>
+  <input type="text" id="key" placeholder="請輸入手機號碼或 email "/>
+  <!-- Trigger the modal with a button -->
+  <button id="search-member" type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#myModal">搜尋</button>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">會員清單</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tbody id="search-list">
+              
+              <tr>
+                <th>姓名</th>
+                <th>手機號碼</th>
+                <th>性別</th>
+                <th>信箱</th>
+                <th>生日</th>
+                <th>#</th>
+              </tr>     
+                
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <br>
   <table class="table">
     <tbody class="customer-info">
       <tr>
@@ -202,7 +243,6 @@
       
     </tbody>
   </table>  
-
 </div>
 
 <!-- Latest compiled and minified CSS -->
@@ -235,6 +275,60 @@
   var discount_amout;
   var exist_cart_item;
 
+
+  
+
+  $("#search-member").click(function(){
+    event.preventDefault();
+    $(".search-item").remove();//刪除原先的搜尋結果
+    
+    var search_word = $("#key").val();
+    if(search_word.length < 3)//至少要輸入3碼才能搜尋
+    {
+      //alert(phone2);
+      //alert(phone2.length);
+      
+      $("#search-list").append("錯誤!輸入長度不足3碼");
+    }else{
+      $.ajax({
+        url: "/cashier/members/search_outcome" ,
+        method: "POST",
+        dataType: "json",
+        data: {
+          phone: search_word,
+        },
+        success: function(datas){
+          if(datas.length == 0){
+            
+            alert("No data found");
+          }
+          else{
+            for( var i = 0 ; i < datas.length ; i++ ){
+              var member = document.createElement("tr");
+              var data = datas[i];
+              
+              member.id = data["id"];
+              $(member).attr("class","search-item");
+              $(member).html($("#member-template").html());
+              $(member).find(".name").html(data["name"]);
+              $(member).find(".phone").html(data["phone"]);
+              $(member).find(".gender").html(data["gender"]);
+              $(member).find(".email").html(data["email"]);
+              $(member).find(".birthday").html(data["birthday"]);
+            
+              var url_checkout = document.createElement("a");
+
+              url_checkout.href = "/cashier/orders/new?id=" +member.id;
+              $(url_checkout).html("成立訂單");              
+              $(member).find(".checkout").html(url_checkout);             
+
+              $("#search-list").append(member);
+            }
+          }
+        }
+      });
+    }
+  });
 
   //設定取貨方式解鎖地址輸入框
   $(".ship-radio").on("click", function(event){
@@ -745,5 +839,17 @@
   </td>  
   <td>
     <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
+  </td>
+</script>
+
+<script type="text/template" id="member-template">
+  
+  <td class="name"></td>
+  <td class="phone"></td>
+  <td class="gender"></td>
+  <td class="email"></td>
+  <td class="birthday"></td>
+  <td >
+    <button class="checkout btn-default" type="button"></button>
   </td>
 </script>
