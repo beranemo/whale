@@ -7,9 +7,15 @@
 
   
   <h2>會員訊息</h2>
-  <input type="text" id="key" placeholder="請輸入手機號碼或 email "/>
-  <!-- Trigger the modal with a button -->
-  <button id="search-member" type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#myModal">搜尋</button>
+  <form id="search-form">
+    <div class="input-group col-xs-3">
+      <input type="text" id="key" class="form-control" placeholder="請輸入手機號碼或 email "/>
+      <!-- Trigger the modal with a button -->
+      <div class="input-group-btn">
+      <button id="search-btn" type="button" class="btn btn-default " data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-search"></i></button>
+      </div>
+    </div>
+  </form>
   <!-- Modal -->
   <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -30,7 +36,7 @@
                 <th>性別</th>
                 <th>信箱</th>
                 <th>生日</th>
-                <th>#</th>
+                <th>功能</th>
               </tr>     
                 
             </tbody>
@@ -201,7 +207,7 @@
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
             <br>
-            <%= f.submit "結帳完成並成立訂單",class: "btn btn-success" %>
+            <%= f.submit "結帳完成並成立訂單",class: "btn btn-success form-control" %>
           </div>
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
@@ -278,7 +284,7 @@
 
   
 
-  $("#search-member").click(function(){
+  $("#search-btn").click(function(){
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果
     
