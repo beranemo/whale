@@ -35,8 +35,7 @@
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alnleft"><%= hair.value %></td>
         <td>
-          <%= link_to '編輯', edit_cashier_hair_type_path(id: hair.id) %> ｜
-          
+          <%= link_to '編輯', edit_cashier_hair_type_path(id: hair.id) %> ｜          
           <% if hair.system_flag == "Y" %>
             <span style="color: gray;">刪除</span>
           <% else %>

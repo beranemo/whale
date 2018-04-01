@@ -88,7 +88,7 @@ Rails.application.routes.draw do
     resources :bulletins 
     resources :discounts
     resources :hair_types, only: [:index, :new, :edit, :destroy, :update, :create]
-    resources :skin_types
+    resources :skin_types, except: [:show]
     resources :member_types
     resources :guest_types
     resources :countries
