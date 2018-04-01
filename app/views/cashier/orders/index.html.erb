@@ -22,14 +22,14 @@
       
       <% @orders.each do |order|%>
       <tr>
-        <td><%= order.created_at.localtime.to_s(:db)%></td>
-        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn%><% end %></td>
+        <td><%= order.created_at.localtime.to_s(:db)[0..15] %></td>
+        <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn %><% end %></td>
         <td><%= order.user.name %></td>
         <td>
           <% if order.member_id == -1%>
             非會員
           <% else%>
-            <%= order.member_id%>
+            <%= order.member_id %>
             <% if @orders.where(member_id: order.member_id).count >= 2 %>
               <span class="label label-success">回購</span>
             <% else%>
@@ -37,23 +37,25 @@
             <% end%>
           <% end%>
         </td>
-        <td><%= order.payment_method%></td>
-        <td><%= order.address%></td>
-        <td><%= number_to_currency(order.amount, precision: 0)%></td>
+        <td><%= order.payment_method %></td>
+        <td><%= order.address %></td>
+        <td><%= number_to_currency(order.amount, precision: 0) %></td>
         <td>
-          <% if order.status%>
+          <% if order.status %>
             已取貨
           <% else %>
             未取貨
           <% end%>
         </td>
         <td>
-          <%= link_to "編輯訂單",edit_cashier_order_path(order.id)%>｜
+          <%= link_to "編輯訂單",edit_cashier_order_path(order.id) %>｜
           <% if order.member_id == -1 %>
-            <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id)%>｜
+            <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id) %>｜
           <% end %>
           <% if order.guest_id == nil %>
-            <%= link_to "建立客情",new_guest_cashier_order_path(order.id)%>
+            <%= link_to "建立客情",new_guest_cashier_order_path(order.id) %>
+          <% else %>
+            <span style="color: gray;">建立客情</span>
           <% end %>
         </td>
       </tr>
