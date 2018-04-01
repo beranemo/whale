@@ -6,6 +6,10 @@ class Cashier::InfoWaysController < Cashier::BaseController
     @info_way = InfoWay.new
   end
   
+  def edit
+    @info_way = InfoWay.find(params[:id])
+  end
+  
   def update
     if @info_way.update(info_way_params)
       redirect_to cashier_info_ways_path
@@ -20,7 +24,7 @@ class Cashier::InfoWaysController < Cashier::BaseController
     @info_way = InfoWay.new(info_way_params)
     
     if @info_way.save
-      flash[:notice] = "消息來源資料已更新"
+      flash[:notice] = "消息來源資料已成功新增"
       redirect_to cashier_info_ways_path
     else
       @info_ways = InfoWay.all

@@ -6,7 +6,7 @@
   <div class="form-inline" >
     <%= form_for [:cashier, @guest] do |f| %>
       <div class="form-group">
-        <%= f.text_field :guest_type, placeholder: "請輸入欲新增客戶類型內容", class: "form-control" %>
+        <%= f.text_field :guest_type, placeholder: "請輸入欲新增客戶類型", class: "form-control" %>
       </div>
       <%= f.submit "新增", class: "btn btn-primary" %>
       
@@ -24,6 +24,7 @@
         <th class="alncenter auto-no">編號</th>
         <th class="alncenter">內容</th>
         <th class="alncenter">功能</th>
+        <th class="alncenter">備註</th>
       </tr>
     </thead>
     <tbody>
@@ -33,9 +34,14 @@
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alnleft"><%= guest.guest_type %></td>
         <td>
-          <%= link_to '編輯', cashier_guest_type_path(id: guest.id) %> ｜
-          <%= link_to '刪除', cashier_guest_type_path(guest), method: :delete, data: {confirm:"確定刪除?"} %>
+          <%= link_to '編輯', edit_cashier_guest_type_path(id: guest.id) %> ｜
+          <% if guest.system_flag == "Y" %>
+            <span style="color: gray;">刪除</span>
+          <% else %>
+            <%= link_to '刪除', cashier_guest_type_path(guest), method: :delete, data: {confirm:"確定刪除?"} %>
+          <% end %>
         </td>
+        <td class="alncenter"><%= guest.note %></td>
       </tr>
       <% i = i + 1 %>
     <% end %>

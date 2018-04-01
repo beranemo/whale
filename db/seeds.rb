@@ -20,12 +20,16 @@ puts "Default cashier created!"
 GuestType.destroy_all
 
 guest_type_list = [
-  { code: "N", system_flag: "Y", value: "新客", guest_type: "新客" },
-  { code: "O", system_flag: "Y", value: "新客", guest_type: "舊客" }
+  { note: "系統設置，無法刪除", code: "N", system_flag: "Y", value: "新客", guest_type: "新客" },
+  { note: "系統設置，無法刪除", code: "O", system_flag: "Y", value: "新客", guest_type: "舊客" }
 ]
 
 guest_type_list.each do |guest_type|
-  GuestType.create( guest_type: guest_type[:guest_type] )
+  GuestType.create( 
+    note: guest_type[:note],
+    guest_type: guest_type[:guest_type],
+    system_flag: guest_type[:system_flag]    
+  )
 end
 puts "Guest_type created!"
 
@@ -33,16 +37,16 @@ puts "Guest_type created!"
 SkinType.destroy_all
 
 skin_type_list = [
-  { code: "A", system_flag: "Y", value: "中性膚質（一般膚質）", skin_type: "中性膚質（一般膚質）" },
-  { code: "B", system_flag: "Y", value: "油性膚質", skin_type: "油性膚質" },
-  { code: "C", system_flag: "Y", value: "乾性膚質", skin_type: "乾性膚質" },
-  { code: "D", system_flag: "Y", value: "混合性膚質", skin_type: "混合性膚質" },
-  { code: "E", system_flag: "Y", value: "敏感膚質", skin_type: "敏感膚質" }
+  { note: "系統設置，無法刪除", code: "A", system_flag: "Y", value: "中性膚質（一般膚質）" },
+  { note: "系統設置，無法刪除", code: "B", system_flag: "Y", value: "油性膚質" },
+  { note: "系統設置，無法刪除", code: "C", system_flag: "Y", value: "乾性膚質" },
+  { note: "系統設置，無法刪除", code: "D", system_flag: "Y", value: "混合性膚質" },
+  { note: "系統設置，無法刪除", code: "E", system_flag: "Y", value: "敏感膚質" }
 ]
 
 skin_type_list.each do |skin_type|
   SkinType.create( 
-    code: skin_type[:code],
+    note: skin_type[:note],
     value: skin_type[:value],
     system_flag: skin_type[:system_flag]
     )
@@ -53,16 +57,17 @@ puts "Skin_type created!"
 HairType.destroy_all
 
 hair_type_list = [
-  { code: "A", system_flag: "Y", value: "中性髮質" },
-  { code: "B", system_flag: "Y", value: "油性髮質" },
-  { code: "C", system_flag: "Y", value: "染燙受損髮質" },
-  { code: "D", system_flag: "Y", value: "乾性髮質" },
-  { code: "E", system_flag: "Y", value: "毛躁髮質" },
-  { code: "F", system_flag: "Y", value: "有頭皮屑困擾" }
+  { note: "系統設置，無法刪除", code: "A", system_flag: "Y", value: "中性髮質" },
+  { note: "系統設置，無法刪除", code: "B", system_flag: "Y", value: "油性髮質" },
+  { note: "系統設置，無法刪除", code: "C", system_flag: "Y", value: "染燙受損髮質" },
+  { note: "系統設置，無法刪除", code: "D", system_flag: "Y", value: "乾性髮質" },
+  { note: "系統設置，無法刪除", code: "E", system_flag: "Y", value: "毛躁髮質" },
+  { note: "系統設置，無法刪除", code: "F", system_flag: "Y", value: "有頭皮屑困擾" }
 ]
 
 hair_type_list.each do |hair_type|
   HairType.create( 
+    note: hair_type[:note],
     code: hair_type[:code],
     value: hair_type[:value], 
     system_flag: hair_type[:system_flag] 
@@ -74,12 +79,16 @@ puts "Hair_type created!"
 MemberType.destroy_all
 
 member_type_list = [
-  { code: "GENERAL", system_flag: "Y", value: "一般會員" },
-  { code: "VIP", system_flag: "Y", value: "VIP會員" }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "一般會員", code: "GENERAL" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "VIP會員", code: "VIP" }
 ]
 
 member_type_list.each do |member_type|
-  MemberType.create( value: member_type[:value], code: member_type[:code], system_flag: member_type[:system_flag] )
+  MemberType.create( 
+    note: member_type[:note],
+    value: member_type[:value], 
+    code: member_type[:code], 
+    system_flag: member_type[:system_flag] )
 end
 puts "Member_type created!"
 
@@ -118,13 +127,17 @@ puts "Country created!"
 Age.destroy_all
 
 age_list = [
-  { code: "25_35", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
-  { code: "35_45", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
-  { code: "45_up", system_flag: "Y", value: "", age_type: "45 歲以上" }
+  { note: "系統設置，無法刪除", code: "25_35", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
+  { note: "系統設置，無法刪除", code: "35_45", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
+  { note: "系統設置，無法刪除", code: "45_up", system_flag: "Y", value: "", age_type: "45 歲以上" }
 ]
 
 age_list.each do |age|
-  Age.create( age_type: age[:age_type] )
+  Age.create(
+    age_type: age[:age_type],    
+    note: age[:note],
+    system_flag: age[:system_flag]      
+    )
 end
 puts "Age created!"
 
@@ -132,14 +145,18 @@ puts "Age created!"
 InfoWay.destroy_all
 
 info_way_list = [
-  { code: "A", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
-  { code: "B", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
-  { code: "C", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
-  { code: "D", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
+  { note: "系統設置，無法刪除", code: "A", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
+  { note: "系統設置，無法刪除", code: "B", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
+  { note: "系統設置，無法刪除", code: "C", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
+  { note: "系統設置，無法刪除", code: "D", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
 ]
 
 info_way_list.each do |info_way|
-  InfoWay.create( news_channel: info_way[:news_channel] )
+  InfoWay.create( 
+    news_channel: info_way[:news_channel],
+    note: info_way[:note],
+    system_flag: info_way[:system_flag] 
+  )
 end
 puts "Info_way created!"
 
@@ -164,11 +181,11 @@ puts "Category created!"
 DiscountMethod.destroy_all
 
 discount_method_list = [
-  { note: "系統變數，不能刪除", is_active: true, content: "無", code: "E" },
-  { note: "系統變數，不能刪除", is_active: true, content: "優惠價", code: "D" },
-  { note: "系統變數，不能刪除", is_active: true, content: "贈品", code: "C" },
-  { note: "系統變數，不能刪除", is_active: true, content: "打折", code: "B" },
-  { note: "系統變數，不能刪除", is_active: true, content: "第二件半價", code: "A" }
+  { note: "系統設置，無法刪除", is_active: true, content: "無", code: "E" },
+  { note: "系統設置，無法刪除", is_active: true, content: "優惠價", code: "D" },
+  { note: "系統設置，無法刪除", is_active: true, content: "贈品", code: "C" },
+  { note: "系統設置，無法刪除", is_active: true, content: "打折", code: "B" },
+  { note: "系統設置，無法刪除", is_active: true, content: "第二件半價", code: "A" }
 ]
 
 discount_method_list.each do |d_method|

@@ -6,6 +6,8 @@
 #  news_channel :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  note         :string
+#  system_flag  :string
 #
 
 class InfoWay < ApplicationRecord

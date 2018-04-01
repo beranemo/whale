@@ -21,6 +21,10 @@ zh_TW:
         subject: "密碼重設步驟"
       unlock_instructions:
         subject: "帳號解鎖步驟"
+      email_changed:
+        subject: "信箱已改變"
+      password_change:
+        subject: "密碼已改變"
     omniauth_callbacks:
       failure: "無法從 %{kind} 驗證，因為 \"%{reason}\"。"
       success: "成功從 %{kind} 驗證。"
@@ -49,3 +53,10 @@ zh_TW:
   errors:
     messages:
       already_confirmed: "已經驗證，請直接登入。"
+      confirmation_period_expired: "需要在 %{period} 之內進行驗証, 請重新發送"
+      expired: "已到期，請重新發送"
+      not_found: "找不到資料"
+      not_locked: "未被鎖定"
+      not_saved:
+        one: "在儲存時因 %{resource} 發現一個錯誤禁止"
+        other: "禁止儲存！在儲存時發現 %{count} 個錯誤，來源：%{resource}"    

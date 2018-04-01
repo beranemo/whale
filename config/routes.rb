@@ -87,13 +87,13 @@ Rails.application.routes.draw do
 
     resources :bulletins 
     resources :discounts
-    resources :hair_types
-    resources :skin_types
-    resources :member_types
-    resources :guest_types
+    resources :hair_types, only: [:index, :new, :edit, :destroy, :update, :create]
+    resources :skin_types, except: [:show]
+    resources :member_types, except: [:show]
+    resources :guest_types, except: [:show]
     resources :countries
-    resources :ages
-    resources :info_ways
+    resources :ages, except: [:show]
+    resources :info_ways, except: [:show]
     resources :discount_methods
     resources :blogs
     resources :users, only: [:index] do

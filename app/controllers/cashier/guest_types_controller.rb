@@ -6,6 +6,10 @@ class Cashier::GuestTypesController < Cashier::BaseController
     @guest = GuestType.new
   end
   
+  def edit
+    @guest = GuestType.find(params[:id])
+  end
+  
   def update
     if @guest.update(guest_params)
       redirect_to cashier_guest_types_path

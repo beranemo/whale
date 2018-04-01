@@ -7,6 +7,10 @@ class Cashier::SkinTypesController < Cashier::BaseController
     @skin = SkinType.new
   end
   
+  def edit
+    @skin = SkinType.find(params[:id])
+  end  
+  
   def update
     if @skin.update(skin_params)
       redirect_to cashier_skin_types_path
