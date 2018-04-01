@@ -7,20 +7,58 @@
   <div class="container">
     <div class="col-xs-6 col-sm-4 chart">
       <canvas id="genderChart" width="70" height="50"></canvas>
+      <br>
+        <p style="font-size: 16px; text-align: center;">
+          男生：<%= @guests.where(gender: "男").count %><br>
+          女生：<%= @guests.where(gender: "女").count %>
+        </p>
     </div>
     <div class="col-xs-6 col-sm-4 chart">
     <canvas id="guesttypeChart" width="70" height="50"></canvas>
+    <br>
+      <p style="font-size: 16px; text-align: center;"">
+        <% GuestType.all.each do |guest_type| %>
+          <%= GuestType.find(guest_type.id).guest_type %>：<%= @guests.where(guest_type_id: guest_type.id).count %><br>
+        <% end %>
+      </p>
     </div>
     <div class="col-xs-6 col-sm-4 chart">
       <canvas id="countryChart" width="70" height="50"></canvas>
+      <br>
+        <p style="font-size: 16px; text-align: center;">
+          <% Country.all.each do |country| %>
+            <% country_num = @guests.where(country_id: country.id).count %>
+            <% if country_num != 0 %>
+              <%= Country.find(country.id).country_type %>：<%= @guests.where(country_id: country.id).count %><br>
+            <% end %> 
+          <% end %>
+        </p>
     </div>
   </div>
   <div class="container">
     <div class="col-xs-6 col-sm-4 chart">
       <canvas id="ageChart" width="70" height="50"></canvas>
+      <br>
+        <p style="font-size: 16px; text-align: center;">
+          <% Age.all.each do |age| %>
+            <% age_num = @guests.where(age_id: age.id).count %>
+            <% if age_num != 0 %>
+              <%= Age.find(age.id).age_type %>：<%= @guests.where(age_id: age.id).count %><br>
+            <% end %> 
+          <% end %>             
+        </p>
     </div>
     <div class="col-xs-6 col-sm-4 chart">
       <canvas id="infowayChart" width="70" height="50"></canvas>
+      <br>
+        <p style="font-size: 16px; text-align: center;">
+          <% InfoWay.all.each do |way| %>
+            <% way_num = @guests.where(info_way_id: way.id).count %>
+            <% if way_num != 0 %>
+              <%= InfoWay.find(way.id).news_channel %>：<%= @guests.where(info_way_id: way.id).count %><br>
+            <% end %> 
+          <% end %>
+        </p>
     </div>
     
     <div class="col-xs-6 col-sm-4 clearfix analysis">
