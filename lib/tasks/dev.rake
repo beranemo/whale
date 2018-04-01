@@ -150,16 +150,19 @@ namespace :dev do
         status: [0,1].sample
         )
       order.amount =0
+      origin_amount = 0
       3.times do 
         order_item = order.order_items.build(
           product_id:Product.where.not(id:1).sample.id,
           quantity: rand(1..5)
           )
         order_item.price = order_item.product.price * order_item.quantity
-        order.amount += order_item.price
+        origin_amount += order_item.price
+        order.discount_off = [10,20,30,40,50,60,70,80,90,100].sample
+        order.amount = Integer(origin_amount*order.discount_off/100)
         order_item.save! 
       end
-      order.discount_off = [10,20,30,40,50,60,70,80,90,100].sample
+      
 
       orders = Order.all
       
