@@ -2,6 +2,9 @@ class Cashier::OrdersController < Cashier::BaseController
   before_action :set_order, only: [:show, :pick_up, :edit, :set_member, :update,
                                    :new_guest, :create_guest, ]
 
+
+  Item_Data = Struct.new(:name, :quantity)#分析訂單商品時用來存的object type
+
   def index
     @orders = Order.all.order(:created_at)
   end
@@ -219,10 +222,11 @@ class Cashier::OrdersController < Cashier::BaseController
     
   end
 
+
   def sales_analysis_day
   end
 
-  Item_Data = Struct.new(:name, :quantity)
+  
   def search_outcome
     if params[:type] == "period"
       s_date = Date.parse(params[:s_date]).to_time
