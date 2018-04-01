@@ -42,7 +42,7 @@ namespace :dev do
         payment: 100+rand(50000),
         gender: FFaker::GenderCN.random,
         guest_type: GuestType.all.sample,
-        country: Country.all.sample,
+        country: Country.where(id:1..6).sample,
         age: Age.all.sample,
         info_way: InfoWay.all.sample,
         user: User.all.sample
