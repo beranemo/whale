@@ -153,7 +153,7 @@
 
           <%= f.label :address, "取貨方式:" %>
           <label class="my_radio">
-            <%= f.radio_button :address ,"local", class:"local-radio" %>
+            <%= f.radio_button :address ,"自取", class:"local-radio",:checked => true %>
           自取
           </label>
           <label class="my_radio">
@@ -164,7 +164,7 @@
 
           <%= f.label :payment_method, "付款方式:" %>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.radio_button :payment_method ,"付現",:checked => true %>
           付現
           </label>
           <label class="my_radio">
@@ -180,7 +180,7 @@
           <%= f.text_field :phone %><br>
           
           <%= f.label :address, "地址:" %>
-          <%= f.text_field :address ,class:"input-address form-control" %><br>
+          <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
 
           
           <br>
@@ -336,7 +336,7 @@
     $(".order-info").find(".input-address").removeAttr('disabled');
   });
   //設定取貨方式鎖定地址輸入框
-  $("#order_address_local").on("click", function(event){
+  $("#order_address_自取").on("click", function(event){
     
     $(".order-info").find(".input-address").attr('disabled','disabled');
   });
