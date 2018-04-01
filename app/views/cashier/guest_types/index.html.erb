@@ -6,7 +6,7 @@
   <div class="form-inline" >
     <%= form_for [:cashier, @guest] do |f| %>
       <div class="form-group">
-        <%= f.text_field :guest_type, placeholder: "請輸入欲新增客戶類型內容", class: "form-control" %>
+        <%= f.text_field :guest_type, placeholder: "請輸入欲新增客戶類型", class: "form-control" %>
       </div>
       <%= f.submit "新增", class: "btn btn-primary" %>
       
