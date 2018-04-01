@@ -65,14 +65,14 @@
   </table>  
   <br>
   
-  
+  <button class="btn-danger" id ="clear-cart">清空商品</button>
   <h2>購買內容</h2>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
   <br>
   <br>
   <table class="table">
-    <tbody class="cart-item-list">
+    <thead>
       <tr>
         <th>類型</th>
         <th>商品名稱</th>          
@@ -85,7 +85,9 @@
         <th>打折方式</th>
         <th>功能</th>
       </tr> 
-             
+    </thead>
+    <tbody class="cart-item-list">
+         
       <% @cart_items.each do |item|%>
 
         <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
@@ -277,7 +279,9 @@
 
 
   
+  
 
+  //搜尋會員
   $("#search-member").click(function(){
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果
@@ -380,6 +384,22 @@
       }
     });
   }); 
+
+  //清空購物車
+  $("#clear-cart").on('click',function(event){
+    $.ajax({
+      url: "/cashier/cart_items/clear_cart",
+      method: "POST",
+      dataType: "json",
+      success: function(date){
+        $(".cart-item-list").html("");
+        $("#off_amount").val(0);
+        $("#order_amount").val(0);
+        $("#coupon_discount").val(0);
+        $(total_price).val(0);
+      }
+    })
+  });
 
   //將商品加入購物車
   $(".product-list").on("click", ".add_to_cart", function(event){

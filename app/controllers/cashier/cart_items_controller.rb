@@ -43,6 +43,10 @@ class Cashier::CartItemsController < Cashier::BaseController
     render  :json => {:success => "0"}
   end
 
+  def clear_cart
+    current_cart.cart_items.destroy_all  
+  end
+
   def edit
     
     @cart_item = current_cart.cart_items.find_by(product_id: params[:id])

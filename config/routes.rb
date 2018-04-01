@@ -74,6 +74,7 @@ Rails.application.routes.draw do
 
       collection do
         post :clear_coupon
+        post :clear_cart
       end
     end
     
