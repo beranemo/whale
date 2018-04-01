@@ -59,7 +59,7 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   def removed_list
-    @products = Product.where.not(id:1)
+    @products = Product.where.not(id:1).order(created_at: :desc)
   end
   
   def remove
