@@ -16,7 +16,11 @@
         <th>增減數量</th>
       </tr>
       <% @products.each do |product| %>
-        <tr>
+        <% if product.quantity <= 5 %>
+          <tr class="danger">
+        <% else %>
+          <tr>
+        <% end %>
           <td><%= product.category %></td>
           <td>
             <%= link_to  edit_cashier_product_path(product) do %>
@@ -33,6 +37,6 @@
       <% end %>
     </tbody>
   </table>  
-  <input type="submit" class="btn btn-primary pull-right">批次修改數量</button>  
+  <input type="submit" class="btn btn-primary pull-right" value="批次修改數量"></button>  
   </form>
 </div>

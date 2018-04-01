@@ -51,7 +51,7 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   def index
-    @products = Product.all
+    @products = Product.where.not(id:1)
   end
   
   def new
@@ -59,7 +59,7 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   def removed_list
-    @products = Product.all
+    @products = Product.where.not(id:1)
   end
   
   def remove
@@ -79,7 +79,7 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   def manage
-    @products = Product.all
+    @products = Product.where.not(id:1)
   end
   
   def edit
