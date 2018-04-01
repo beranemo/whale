@@ -301,3 +301,34 @@ header {
 
 /* ============================== 12. search-modal =========================*/
 
+/* ============================== 13. cart-bill =========================*/
+.cart-bill {
+    overflow: hidden;
+    margin: 15px 0 15px 0;
+    padding-top: 10px;
+}
+
+.cart-bill ul {
+    float: right;
+    width: 250px;
+    padding-right: .3em;
+    text-align: right;
+}
+
+.cart-bill span {
+    display: inline-block;
+    min-width: 120px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.cart-bill li span:first-child {
+    min-width: 5em;
+}
+
+.cart-bill .last {
+    margin-top: 5px;
+    padding-top: 10px;
+    border-top: 1px solid #999;
+    font-weight: 700;
+}
