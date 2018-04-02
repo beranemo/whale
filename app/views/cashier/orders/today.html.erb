@@ -21,7 +21,7 @@
       
       <% @orders.each do |order|%>
       <tr>
-        <td><%= order.created_at.localtime.to_s(:db)[0..15] %></td>
+        <td><%= order.created_at.to_s[0..15] %></td>
         <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn %><% end %></td>
         <td><%= order.user.name %></td>
         <td>
@@ -39,13 +39,11 @@
         <td><%= order.payment_method %></td>
         <td><%= order.address %></td>
         <td class="alnright"><%= number_to_currency(order.amount, precision: 0)%></td>
-        <td>
-          <% if order.status %>
-            已取貨
-          <% else %>
-            未取貨
-          <% end%>
-        </td>
+        <% if order.status %>
+          <td>已取貨</td>
+        <% else %>
+          <td class="text-danger">未取貨</td>
+        <% end%>      
         <td>
           <%= link_to "編輯訂單",edit_cashier_order_path(order.id) %>｜
           <% if order.member_id == -1 %>

@@ -69,7 +69,12 @@
               $(member).find(".phone").html(data["phone"]);
               $(member).find(".gender").html(data["gender"]);
               $(member).find(".email").html(data["email"]);
-              $(member).find(".birthday").html(data["birthday"]);
+              if(data["birthday"].substring(5, 7) == new Date().getMonth()+1){
+                $(member).find(".birthday").append(data["birthday"] + " <i class=\"fa fa-birthday-cake\" aria-hidden=\"true\" style=\"color:#FF9900\"></i>");
+              }
+              else{
+                $(member).find(".birthday").html(data["birthday"]);
+              }
             
               var url_checkout = document.createElement("a");
               var url_info = document.createElement("a");

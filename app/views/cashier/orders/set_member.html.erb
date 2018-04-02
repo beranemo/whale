@@ -33,14 +33,16 @@
   </table>
 
   <form id="search-form">
-
-    <label>快速搜尋</label>
-
-    <input type="text" id="phone2" placeholder="請輸入手機號碼或 email "/>
-    <button id="phone-search2" class="btn btn-primary btn-sm">搜尋</button>
-    <br>
-    <br>
-  </form>
+    <div class="input-group col-xs-3">
+      <input type="text" id="phone2" class="form-control" placeholder="請輸入手機號碼或 email">
+      <div class="input-group-btn">
+        <button class="btn btn-default" type="submit" id="search-btn" >
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </div>
+    </div>
+  </form> 
+  <br>
   <table class="table">
     <tbody id="search-list">
       
@@ -50,7 +52,7 @@
         <th>性別</th>
         <th>信箱</th>
         <th>生日</th>
-        <th>#</th>
+        <th>功能</th>
       </tr>     
         
     </tbody>
@@ -60,7 +62,7 @@
 </div>
 
 <script type="text/javascript">
-  $("#phone-search2").click(function(){
+  $("#search-btn").click(function(){
     
     event.preventDefault();
     $(".search-item").remove();//刪除原先的搜尋結果
@@ -96,7 +98,12 @@
               $(member).find(".phone").html(data["phone"]);
               $(member).find(".gender").html(data["gender"]);
               $(member).find(".email").html(data["email"]);
-              $(member).find(".birthday").html(data["birthday"]);
+              if(data["birthday"].substring(5, 7) == new Date().getMonth()+1){
+                $(member).find(".birthday").append(data["birthday"] + " <i class=\"fa fa-birthday-cake\" aria-hidden=\"true\" style=\"color:#FF9900\"></i>");
+              }
+              else{
+                $(member).find(".birthday").html(data["birthday"]);
+              }
             
               var url = document.createElement("a");
               url.href = "/cashier/orders/"+order_id+"/edit?member_id=" +member.id;
