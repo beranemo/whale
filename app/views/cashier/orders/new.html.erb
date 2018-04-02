@@ -8,7 +8,7 @@
       <input type="text" id="key" class="form-control" placeholder="請輸入手機號碼或 email "/>
       <!-- Trigger the modal with a button -->
       <div class="input-group-btn">
-      <button id="search-btn" type="button" class="btn btn-default " data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-search"></i></button>
+      <button id="search-btn" type="submit" class="btn btn-default " data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-search"></i></button>
       </div>
     </div>
   </form>
@@ -24,8 +24,7 @@
         </div>
         <div class="modal-body">
           <table class="table">
-            <tbody id="search-list">
-              
+            <thead>
               <tr>
                 <th>姓名</th>
                 <th>手機號碼</th>
@@ -34,6 +33,9 @@
                 <th>生日</th>
                 <th>功能</th>
               </tr>     
+            </thead>
+            <tbody id="search-list">
+            
                 
             </tbody>
           </table>
@@ -283,17 +285,17 @@
   
   
 
-  $("#search-btn").click(function(){
+  $("#search-btn").click(function(event){
     event.preventDefault();
-    $(".search-item").remove();//刪除原先的搜尋結果
+    $("#search-list").html("");//刪除原先的搜尋結果
     
     var search_word = $("#key").val();
     if(search_word.length < 3)//至少要輸入3碼才能搜尋
     {
-      //alert(phone2);
-      //alert(phone2.length);
-      
+      alert("錯誤!輸入長度不足3碼");
       $("#search-list").append("錯誤!輸入長度不足3碼");
+      return false;
+
     }else{
       $.ajax({
         url: "/cashier/members/search_outcome" ,
@@ -305,7 +307,8 @@
         success: function(datas){
           if(datas.length == 0){
             
-            alert("No data found");
+            $("#search-list").html("No data found");
+
           }
           else{
             for( var i = 0 ; i < datas.length ; i++ ){
