@@ -104,6 +104,9 @@ $("#search-btn").click(function(){
             if(data["guest_id"] == null){
               $(order).find(".function").append("<a href=\"/cashier/orders/" + data["id"] + "/new_guest\">" + "建立客情" + "</a>");
             }
+            else{
+              $(order).find(".function").append("<span style='color: gray;'>建立客情</span>");
+            }
             $("#search-list").append(order);
         }
          
