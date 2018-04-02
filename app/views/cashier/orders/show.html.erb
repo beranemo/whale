@@ -64,6 +64,7 @@
         <th>購買人</th>
         <th>付款方式</th>
         <th>取貨方式</th>
+        <th>訂單狀態</th>
         <th>備註</th>
       </tr>
 
@@ -78,6 +79,11 @@
         </td>
         <td><%= @order.payment_method %></td>
         <td><%= @order.address %></td>
+        <% if @order.status %>
+          <td>已取貨</td>
+        <% else %>
+          <td class="text-danger">未取貨</td>
+        <% end%>   
         <td><%= @order.remark %></td>
       </tr>
     </tbody>
