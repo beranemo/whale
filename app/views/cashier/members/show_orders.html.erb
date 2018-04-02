@@ -40,13 +40,11 @@
         <td><%= order.payment_method%></td>
         <td><%= order.address%></td>
         <td><%= number_to_currency(order.amount, precision: 0)%></td>
-        <td>
-          <% if order.status%>
-            已取貨
-          <% else %>
-            未取貨
-          <% end%>
-        </td>
+        <% if order.status %>
+          <td>已取貨</td>
+        <% else %>
+          <td class="text-danger">未取貨</td>
+        <% end%>  
         <td>
           <%= link_to "編輯訂單",edit_cashier_order_path(order.id)%>
           <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id)%>
