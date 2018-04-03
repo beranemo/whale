@@ -68,10 +68,11 @@
   </table>  
   <br>
   
-  <button class="btn-danger" id ="clear-cart">清空商品</button>
+
   <h2>購買內容</h2>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
+  <button class="btn-clear" id ="clear-cart">清空商品</button>
   <br>
   <br>
   <table class="table">
@@ -207,7 +208,7 @@
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
             <br>
-            <%= f.submit "結帳完成並成立訂單",class: "btn btn-success form-control" %>
+            <%= f.submit "結帳完成並成立訂單",class: "btn-submit" %>
           </div>
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
