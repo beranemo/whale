@@ -1,7 +1,7 @@
 <div class="container">
 
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
-  <h1>編輯訂單</h1>
+  <h1>編輯訂單 <%= @order.sn %></h1>
   <br>
   <h2>會員訊息</h2>
    <form id="search-form">
@@ -130,9 +130,10 @@
   </table>
   <hr>
   <div class="text-right">
-    <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
-    <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
-    <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+    <span class="fa fa-dollar"></span>
+    <input class="discount-input" type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+    <button class="add-coupon my-btn" id="<%= @coupon.id%>">使用折價卷</button>
+    <button class="clear-coupon my-btn" id="<%= @coupon.id%>">清除折價卷</button>
   </div>
 
 
@@ -219,7 +220,7 @@
             <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
-            <%= f.submit "更新訂單",class: "btn btn-danger form-control" %>
+            <%= f.submit "更新訂單",class: "btn-danger" %>
             <br>
             
           </div>
@@ -259,7 +260,7 @@
         <td><%=product.price%></td>
         <td><%=product.upc%></td> 
     
-        <td><button class="add_to_cart">購買</button></td>
+        <td><button class="add_to_cart my-btn">購買</button></td>
       </tr>
       <% end %>
     <% end %>  
