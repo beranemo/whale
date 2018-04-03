@@ -37,6 +37,22 @@ class Cashier::MembersController < Cashier::BaseController
   def create_successfully
     @member = Member.find(params[:id])
   end
+  
+  
+  def edit
+    @member = Member.find(params[:id])
+  end
+  
+  def update
+    @member = Member.find(params[:id])
+    if @member.update(member_params)
+      flash[:notice] = "成功更新會員資料"
+      redirect_to cashier_member_path(@member)
+    else
+      flash.now[:alert] = @member.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
 
   def search
     
