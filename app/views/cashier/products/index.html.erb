@@ -2,7 +2,7 @@
  
   <%= render :partial => "shared/tabs2", :locals => { :selected_item => '所有商品' } %>
 
-  <table class="table">
+  <table class="table" style="display: block;overflow-x: auto;white-space: nowrap;">
     <tbody >
       <tr>
         <th>分類</th>
@@ -12,12 +12,11 @@
         <th>價錢</th>
         <th>國際條碼</th>
         <th>適用對象</th>
-        <th>使用方法</th>
-        <!--
         <th>中文主成份</th>
         <th>中文全成份</th>
         <th>英文全成份</th>
-        -->
+        <th>使用方法</th>
+        <th>功能</th>
       </tr>
       <% @products.each do |product| %>
         <tr>
@@ -27,13 +26,12 @@
           <td><%= product.capacity %></td>
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
-          <td title="<%= product.use_for %>"><%= truncate(product.use_for, length: 9) %></td>
-          <td title="<%= product.directions %>"><%= truncate(product.directions, length: 20) %></td>
-          <!--
-          <td><%= product.zh_m_ingredients %></td>
-          <td><%= product.zh_ingredients %></td>
-          <td><%= product.en_ingredients %></td>
-          -->
+          <td class="alnleft" title="<%= product.use_for %>"><%= truncate(product.use_for, length: 9) %></td>
+          <td class="alnleft"><%= truncate(product.zh_m_ingredients, length: 30) %></td>
+          <td class="alnleft"><%= truncate(product.zh_ingredients, length: 30) %></td>
+          <td class="alnleft"><%= truncate(product.en_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.directions %>"><%= truncate(product.directions, length: 30) %></td>
+          <td>詳細內容</td>
         </tr>
       <% end %>
     </tbody>
