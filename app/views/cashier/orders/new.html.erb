@@ -68,10 +68,11 @@
   </table>  
   <br>
   
-  <button class="btn-danger" id ="clear-cart">清空商品</button>
+
   <h2>購買內容</h2>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
+  <button class="btn-clear" id ="clear-cart">清空商品</button>
   <br>
   <br>
   <table class="table">
@@ -131,9 +132,10 @@
   </table>
   <hr>
   <div class="text-right">
-    <input type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
-    <button class="add-coupon" id="<%= @coupon.id%>">使用折價卷</button>
-    <button class="clear-coupon" id="<%= @coupon.id%>">清除折價卷</button>
+    <span class="fa fa-dollar"></span>
+    <input class="discount-input" type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
+    <button class="add-coupon my-btn" id="<%= @coupon.id%>">使用折價卷</button>
+    <button class="clear-coupon my-btn" id="<%= @coupon.id%>">清除折價卷</button>
   </div>
   
   <br>
@@ -206,7 +208,7 @@
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
             <br>
-            <%= f.submit "結帳完成並成立訂單",class: "btn btn-success form-control" %>
+            <%= f.submit "結帳完成並成立訂單",class: "btn-submit" %>
           </div>
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
@@ -240,7 +242,7 @@
         <td><%=product.price%></td>
         <td><%=product.upc%></td> 
     
-        <td><button class="add_to_cart">購買</button></td>
+        <td><button class="add_to_cart my-btn">購買</button></td>
       </tr>
       <% end %>
     <% end %>  
@@ -881,6 +883,6 @@
   <td class="email"></td>
   <td class="birthday"></td>
   <td >
-    <button class="checkout btn-default" type="button"></button>
+    <button class="checkout btn-default my-btn" type="button"></button>
   </td>
 </script>
