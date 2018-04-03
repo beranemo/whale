@@ -23,6 +23,7 @@ gem 'roo', '~> 2.7.0'
 gem "font-awesome-rails"
 gem 'bootstrap-modal-rails'
 
+
 group :production do
   gem 'pg', '~> 0.11'
 end

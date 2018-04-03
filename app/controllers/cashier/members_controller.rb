@@ -3,6 +3,11 @@ class Cashier::MembersController < Cashier::BaseController
 
   def index
     @members = Member.all.order(created_at: :desc)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data(@members.to_csv) }
+    end
   end
 
   def show
