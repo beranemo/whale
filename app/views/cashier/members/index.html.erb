@@ -3,7 +3,8 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '會員資料(測試用，暫時)' } %>
   <%= link_to 'CSV Download', cashier_members_path(:format => :csv) %>
   <br>
-  <table class="table" data-toggle="table">
+
+  <table class="data-table table" data-toggle="table">
     <thead>
       <tr>
         <th>姓名</th>
@@ -28,9 +29,9 @@
             <i class="fa fa-birthday-cake" aria-hidden="true" style="color:#FF9900"></i>
           <% end %></td>
           <td>
-            <button><%= link_to "成立訂單", new_cashier_order_path(id: member)%></button>
-            <button><%= link_to "詳細資料", cashier_member_path(id: member.id)  %></button>
-            <button><%= link_to "訂單記錄", show_orders_cashier_member_path(id: member.id)  %></button>
+            <%= link_to '<i class = "fa fa-edit" aria-hidden="true"></i>'.html_safe, new_cashier_order_path(id: member), onclick:"edit" , caption: "Checkout" %>
+            <%= link_to '<i class = "fa fa-user" aria-hidden="true"></i>'.html_safe, cashier_member_path(id: member.id), onclick:"edit" , caption: "User"  %>
+            <%= link_to '<i class = "fa fa-list-alt" aria-hidden="true"></i>'.html_safe, show_orders_cashier_member_path(id: member.id), onclick:"edit" , caption: "Orders"  %>
           </td>
         </tr>
       

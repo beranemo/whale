@@ -478,3 +478,71 @@ $orange: #F07B3F;
     weight:bold;
   }
 }
+
+
+/* ============================== 17. data-table =========================*/
+.data-table caption {
+  padding: 0.5em;
+}
+.data-table a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  color: #999;
+  line-height: 27px !important;
+  font-size: 20px !important;
+  text-align: center;
+  border: 2px solid currentColor;
+  border-radius: 100%;
+  position: relative;
+  underline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.data-table a:hover {
+  color: $orange;
+}
+
+.data-table a + a {
+  margin-left: 10px;
+}
+.data-table a:before {
+  content: "";
+  border: 5px solid transparent;
+  border-top-color: $orange;
+  position: absolute;
+  top: -7px;
+  left: calc(50% - 5px);
+}
+.data-table a:after {
+  content: attr(caption);
+  display: block;
+  width: auto;
+  padding: 5px 8px;
+  border-radius: 3px;
+  position: absolute;
+  top: -33px;
+  right: -10px;
+  font-size: 12pt;
+  line-height: 12pt;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  background: $orange;
+  box-shadow: inset rgba(0, 0, 0, 0.3) 0 0 1px,
+  inset rgba(255, 255, 255, 0.3) 0 1px 0, rgba(0, 0, 0, 0.1) 0 1px 2px;
+}
+.data-table a:before,
+.data-table a:after {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+}
+.data-table a:hover:before,
+.data-table a:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+
+
