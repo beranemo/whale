@@ -93,8 +93,6 @@ $("#search-btn").click(function(){
             
             if(data["member_id"] == "-1"){
               $(order).find(".member_id").html("非會員");
-              $(order).find(".function").append("<a href=\"/cashier/orders/" + data["id"] + "/set_member\">" + "訂單歸戶 " + "</a>");
-              $(order).find(".function").append("｜");
             }
             else{
               $(order).find(".member_id").html(data["member_id"]);
