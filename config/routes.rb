@@ -57,7 +57,6 @@ Rails.application.routes.draw do
       end
 
       member do 
-        get :set_member
         get :new_guest
         get :edit_products
         post :create_guest
