@@ -101,7 +101,7 @@ Rails.application.routes.draw do
     resources :info_ways, except: [:show]
     resources :discount_methods
     resources :blogs
-    resources :users, only: [:index] do
+    resources :users, only: [:index, :new, :create] do
       member do
         post :to_resigned
         post :to_in_service

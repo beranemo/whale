@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-6 col-md-offset-3">
+
+      <h3>新增門市人員帳號</h3>
+
+      <%= form_for [:cashier, @user] do |f| %>
+        <div class="form-group">
+          <%= f.label :email, "Email" %>
+          <%= f.text_field :email, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "新增", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+    </div>
+
+  </div>
+</div>
