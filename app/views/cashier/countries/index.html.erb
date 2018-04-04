@@ -32,7 +32,7 @@
     <% @countries.each do |country| %>       
       <tr>
         <th scope="row" class="alncenter"><%= i %></th>
-        <td class="alnleft"><%= country.country_type %></td>
+        <td class="alnleft"><%= country.name_zh_tw %></td>
         <td>
         <% if country.is_active %><span class="label label-success">啓用中</span><% end %>
         <% if !country.is_active %><span class="label label-danger">停用中</span><% end %>
