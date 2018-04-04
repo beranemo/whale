@@ -13,4 +13,6 @@
 
 class DiscountMethod < ApplicationRecord
   has_many :cart_items, foreign_key: "discount_method_code", primary_key: "code"
+  
+  scope :in_service, -> { where(is_active: true) }
 end

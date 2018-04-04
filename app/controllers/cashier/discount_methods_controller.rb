@@ -1,5 +1,5 @@
 class Cashier::DiscountMethodsController < ApplicationController
-  before_action :set_discount_methods, only: [:update, :destroy]
+  before_action :set_discount_methods, only: [:update, :destroy, :remove, :listing]
 
   def index
     @discount_methods = DiscountMethod.all
@@ -38,6 +38,22 @@ class Cashier::DiscountMethodsController < ApplicationController
       render :index
     end
   end
+  
+  def remove
+    @discount_method = DiscountMethod.find(params[:id])
+    @discount_method.is_active = false
+    @discount_method.save
+    flash[:notice] = "停用商品折扣成功"
+    redirect_back(fallback_location: root_path)  # 導回上一頁
+  end
+  
+  def listing
+    @discount_method = DiscountMethod.find(params[:id])
+    @discount_method.is_active = true
+    @discount_method.save
+    flash[:notice] = "商品折扣設定已啓用成功"
+    redirect_back(fallback_location: root_path)  # 導回上一頁
+  end  
   
   private
   def discount_method_params

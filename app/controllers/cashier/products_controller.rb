@@ -35,7 +35,7 @@ class Cashier::ProductsController < Cashier::BaseController
       discount_method = DiscountMethod.find_by(content: "無")
       @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
-      if @cart_item.product.discount !=nil
+      if @cart_item.product.discount != nil
         @bulletin = @cart_item.product.discount.bulletin
       else
         @bulletin = Bulletin.new

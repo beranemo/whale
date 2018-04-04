@@ -9,7 +9,7 @@
         <th class="alncenter auto-no">編號</th>
         <th class="alncenter">內容</th>
         <th>狀態</th>
-        <th class="alncenter">備註</th>
+        <th>功能</th>
       </tr>
     </thead>
     <tbody>
@@ -22,7 +22,13 @@
         <% if discount_method.is_active %><span class="label label-success">啓用中</span><% end %>
         <% if !discount_method.is_active %><span class="label label-danger">停用中</span><% end %>
         </td>
-        <td class="alncenter"><%= discount_method.note %></td>
+        <td class="alncenter">
+          <% if discount_method.is_active %>
+            <%= link_to "停用商品折扣", remove_cashier_discount_method_path(discount_method), method: :post %>
+          <% else %>
+            <%= link_to "商品折扣啓用", listing_cashier_discount_method_path(discount_method), method: :post %>
+          <% end %>         
+        </td>
       </tr>
       <% i = i + 1 %>
     <% end %>
