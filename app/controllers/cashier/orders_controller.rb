@@ -52,7 +52,7 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def edit
-    @order.member_id = params[:id]
+
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
     @order_items.each do |item|
