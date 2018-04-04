@@ -16,7 +16,7 @@
     <div class="col-xs-6 col-sm-4 chart">
     <canvas id="guesttypeChart" width="70" height="50"></canvas>
     <br>
-      <p style="font-size: 16px; text-align: center;"">
+      <p style="font-size: 16px; text-align: center;">
         <% GuestType.all.each do |guest_type| %>
           <%= GuestType.find(guest_type.id).guest_type %>：<%= @guests.where(guest_type_id: guest_type.id).count %><br>
         <% end %>
@@ -29,7 +29,7 @@
           <% Country.all.each do |country| %>
             <% country_num = @guests.where(country_id: country.id).count %>
             <% if country_num != 0 %>
-              <%= Country.find(country.id).country_type %>：<%= @guests.where(country_id: country.id).count %><br>
+              <%= Country.find(country.id).name_zh_tw %>：<%= @guests.where(country_id: country.id).count %><br>
             <% end %> 
           <% end %>
         </p>
