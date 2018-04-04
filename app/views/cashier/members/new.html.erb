@@ -41,7 +41,7 @@
       <br>
 
       <%= f.label :hair_id, "髮質" %>
-      <%= f.collection_select :hair_code, HairType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :hair_type_id, HairType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :skin_id, "膚質" %>
@@ -49,7 +49,7 @@
       <br>
       
       <%= f.label :member_code, "會員群組(內部人員註記用)" %>
-      <%= f.collection_select :member_code, MemberType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :member_type_id, MemberType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :remark, "備註(內部人員註記用)" %>
