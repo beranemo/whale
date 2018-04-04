@@ -100,7 +100,7 @@ Rails.application.routes.draw do
     end
     resources :ages, except: [:show]
     resources :info_ways, except: [:show]
-    resources :discount_methods
+    resources :discount_methods, only: [:index]
     resources :blogs
     resources :users, only: [:index, :new, :create] do
       member do
