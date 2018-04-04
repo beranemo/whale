@@ -95,7 +95,7 @@ Country.destroy_all
 
 # FIXME: DEMO
 country_list = [
-  { is_active: true, code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣",  },
+  { is_active: true, code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣" },
   { is_active: true, code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
   { is_active: true, code: "HK", system_flag: "Y", value: "香港", country_type: "香港" },
   { is_active: true, code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸" },
@@ -144,10 +144,16 @@ puts "Age created!"
 InfoWay.destroy_all
 
 info_way_list = [
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "網路平台", news_channel: "網路平台" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "臉書 Facebook", news_channel: "臉書 Facebook" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "誠品 EXPO 或其他通路買過", news_channel: "誠品 EXPO 或其他通路買過" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "集資計劃", news_channel: "集資計劃" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "路過逛到(松菸誠品)", news_channel: "路過逛到(松菸誠品)" },  
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "親友介紹", news_channel: "親友介紹" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "電視媒體", news_channel: "電視媒體" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "飯店民宿", news_channel: "飯店民宿" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "其他", news_channel: "其他"}
 ]
 
 info_way_list.each do |info_way|
