@@ -142,7 +142,7 @@
   <br>
  
   <div class="row">
-    <div class="ship-info ">
+    <div class="order-info ">
       <%= form_for [:cashier, @order] do |f|%>
         <div class="col-md-7">
           <%= f.label :created_at, "成立時間:" %>
@@ -160,24 +160,24 @@
           <br>
 
           <%= f.label :address, "取貨方式:" %>
-          <% if @order.address == "local"%>
-          <label class="my_radio">
-            <%= f.radio_button :address ,"local", class:"local-radio" %>
-          自取
-          </label>
-          <label class="my_radio">
+          <% if @order.address == "自取"%>
+            <label class="my_radio">
+            <%= f.radio_button :address ,"自取", class:"local-radio" %>
+            自取
+            </label>
+            <label class="my_radio">
             <%= f.radio_button :address ," ",class:"ship-radio" %>
            宅配
-          </label>
-          <br>
+            </label>
+            <br>
           <% else%>
-          <label class="my_radio">
-            <%= f.radio_button :address ,"local", class:"local-radio" %>
-          自取
-          </label>
-          <label class="my_radio">
+            <label class="my_radio">
+            <%= f.radio_button :address ,"自取", class:"local-radio" %>
+            自取
+            </label>
+            <label class="my_radio">
             <%= f.radio_button :address ," ",:checked => true,class:"ship-radio" %>
-          宅配
+            宅配
           </label>
           <br>
           <% end%>
@@ -199,9 +199,13 @@
           <%= f.label :phone, "電話:" %>
           <%= f.text_field :phone %><br>
           
-          <%= f.label :address, "地址:" %>
-          <%= f.text_field :address ,class:"input-address form-control" %><br>
 
+          <%= f.label :address, "地址:" %>
+          <% if @order.address == "自取"%>
+            <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
+          <% else%>
+            <%= f.text_field :address ,class:"input-address form-control" %><br>
+          <% end%>
           
           <br>
           
@@ -365,12 +369,12 @@
 
   //設定取貨方式解鎖地址輸入框
   $(".ship-radio").on("click", function(event){
-    
+    console.log("test2");
     $(".order-info").find(".input-address").removeAttr('disabled');
   });
   //設定取貨方式鎖定地址輸入框
   $("#order_address_自取").on("click", function(event){
-    
+    console.log("test1");
     $(".order-info").find(".input-address").attr('disabled','disabled');
   });
 

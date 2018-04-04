@@ -77,7 +77,7 @@ class Cashier::OrdersController < Cashier::BaseController
       @member = Member.find(params[:member_id])
       @order.name = @member.name
       @order.phone = @member.phone
-      @order.address = @member.address
+      
     elsif @order.member_id != -1
       @member = Member.find(@order.member_id)
     else
@@ -123,7 +123,7 @@ class Cashier::OrdersController < Cashier::BaseController
       @member = Member.find(params[:id])
       @order.name = @member.name
       @order.phone = @member.phone
-      @order.address = @member.address
+      
     else
       @member = Member.new(id: -1)
     end
