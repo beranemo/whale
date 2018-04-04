@@ -7,13 +7,13 @@
     <thead>
       <tr>
         <th data-sortable="true" data-field="created_at">訂購日期</th>
-        <th data-sortable="true" data-field="id">編號</th>
-        <th>結帳人員</th>
-        <th>顧客姓名</th>
+        <th data-sortable="true" data-field="id">訂單編號</th>
+        <th>會員姓名</th>
         <th>付款方式</th>
         <th>取貨方式</th>
-        <th data-sortable="true" data-field="amount">總金額</th>
+        <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>結帳人員</th>
         <th>功能</th>
       </tr>
     </thead>
@@ -23,7 +23,7 @@
       <tr>
         <td><%= order.created_at.localtime.to_s(:db)[0..15] %></td>
         <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn %><% end %></td>
-        <td><%= order.user.name %></td>
+
         <td>
           <% if order.member_id == -1%>
             非會員
@@ -43,7 +43,8 @@
           <td>已取貨</td>
         <% else %>
           <td class="text-danger">未取貨</td>
-        <% end%>   
+        <% end%>
+        <td><%= order.user.name %></td> 
         <td>
           <%= link_to "編輯訂單",edit_cashier_order_path(order.id) %>｜
           <% if order.guest_id == nil %>
