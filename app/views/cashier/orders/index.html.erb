@@ -28,7 +28,9 @@
           <% if order.member_id == -1%>
             非會員
           <% else%>
-            <%= order.member.name%>
+            <%= link_to (cashier_member_path(order.member_id)) do %>
+              <%= order.member.name%>
+            <% end %>
             <% if @orders.where(member_id: order.member_id).count >= 2 %>
               <span class="label label-success">回購</span>
             <% else%>

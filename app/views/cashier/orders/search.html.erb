@@ -95,7 +95,7 @@ $("#search-btn").click(function(){
               $(order).find(".member_id").html("非會員");
             }
             else{
-              $(order).find(".member_id").html(data["member_id"]);
+              $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + data["member_id"] + "</a>");
               $(order).find(".function").append("<span style='color: gray;'>訂單歸戶</span>｜");
             }
 
