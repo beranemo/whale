@@ -3,7 +3,6 @@
 # Table name: hair_types
 #
 #  id          :integer          not null, primary key
-#  code        :string
 #  value       :string
 #  system_flag :string           default("N")
 #  created_at  :datetime         not null

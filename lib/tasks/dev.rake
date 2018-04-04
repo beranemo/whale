@@ -26,8 +26,8 @@ namespace :dev do
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
         skin_type: SkinType.all.sample,
-        hair_code: HairType.all.sample.code,
-        member_code: MemberType.all.sample.code
+        hair_type: HairType.all.sample,
+        member_type: MemberType.all.sample
         )
       member.save!
     end

@@ -95,25 +95,25 @@ Country.destroy_all
 
 # FIXME: DEMO
 country_list = [
-  { is_active: true, code: "TW", system_flag: "Y", value: "台灣", country_type: "台灣",  },
-  { is_active: true, code: "JP", system_flag: "Y", value: "日本", country_type: "日本" },
-  { is_active: true, code: "HK", system_flag: "Y", value: "香港", country_type: "香港" },
-  { is_active: true, code: "CN", system_flag: "Y", value: "大陸", country_type: "大陸" },
-  { is_active: true, code: "MO", system_flag: "Y", value: "澳門", country_type: "澳門" },
-  { is_active: false, code: "MY", system_flag: "Y", value: "馬來西亞", country_type: "馬來西亞" },
-  { is_active: false, code: "AU", system_flag: "Y", value: "澳洲", country_type: "澳洲" },
-#  { is_active: false, code: "BR", system_flag: "Y", value: "巴西", country_type: "巴西" },
-#  { is_active: false, code: "NL", system_flag: "Y", value: "荷蘭", country_type: "荷蘭" },
-#  { is_active: false, code: "NZL", system_flag: "Y", value: "紐西蘭", country_type: "紐西蘭" },
-#  { is_active: false, code: "NO", system_flag: "Y", value: "挪威", country_type: "挪威" },
-#  { is_active: false, code: "PH", system_flag: "Y", value: "菲律賓", country_type: "菲律賓" },
-#  { is_active: false, code: "ZA", system_flag: "Y", value: "南非", country_type: "南非" },
-#  { is_active: false, code: "TH", system_flag: "Y", value: "泰國", country_type: "泰國" },
-#  { is_active: false, code: "UK", system_flag: "Y", value: "英國", country_type: "英國" },
-#  { is_active: false, code: "US", system_flag: "Y", value: "美國", country_type: "美國" },
-#  { is_active: false, code: "FR", system_flag: "Y", value: "法國", country_type: "法國" },
-#  { is_active: false, code: "DE", system_flag: "Y", value: "德國", country_type: "德國" },
-#  { is_active: false, code: "KR", system_flag: "Y", value: "韓國", country_type: "韓國" },
+  { is_active: true, code: "AD", system_flag: "Y", name_en_us: "Andorra", name_zh_tw: "安道爾" },
+  { is_active: true, code: "AE", system_flag: "Y", name_en_us: "United Arab Emirates", name_zh_tw: "阿拉伯聯合大公國" },
+  { is_active: true, code: "AF", system_flag: "Y", name_en_us: "Afghanistan", name_zh_tw: "阿富汗" },
+  { is_active: true, code: "AG", system_flag: "Y", name_en_us: "Antigua And Barbuda", name_zh_tw: "安提瓜和巴爾布達(加勒比海)" },
+  { is_active: true, code: "AI", system_flag: "Y", name_en_us: "Anguilla", name_zh_tw: "安圭拉島" },
+  { is_active: true, code: "AL", system_flag: "Y", name_en_us: "Albania", name_zh_tw: "阿爾巴尼亞" },
+  { is_active: true, code: "AM", system_flag: "Y", name_en_us: "Armenia", name_zh_tw: "亞美尼亞(西南亞)" },
+  { is_active: true, code: "AN", system_flag: "Y", name_en_us: "Netherlands Antilles", name_zh_tw: "荷屬西印度群島" },
+
+# { is_active: true, code: "", system_flag: "Y", name_en_us: "", name_zh_tw: "" },       
+# AO    Angola 安哥拉
+# AQ    Antarctica 南極洲
+# AR    Argentina 阿根廷
+# AS    American Samoa 美屬薩摩亞
+# AT    Austria 奧地利(中歐)
+# AU    Australia 澳大利亞
+# AW    Aruba 亞魯伯
+# AZ    Azerbaijan 亞塞拜然共和國(西南亞)
+  
   { is_active: true, code: "99", system_flag: "Y", value: "其他", country_type: "其他" }
 ]
 
@@ -144,10 +144,16 @@ puts "Age created!"
 InfoWay.destroy_all
 
 info_way_list = [
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "路過逛到", news_channel: "路過逛到" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "EXPO或其他通路買過", news_channel: "EXPO或其他通路買過" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "親友推薦", news_channel: "親友推薦"},
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"}
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "網路平台", news_channel: "網路平台" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "臉書 Facebook", news_channel: "臉書 Facebook" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "誠品 EXPO 或其他通路買過", news_channel: "誠品 EXPO 或其他通路買過" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "集資計劃", news_channel: "集資計劃" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "路過逛到(松菸誠品)", news_channel: "路過逛到(松菸誠品)" },  
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "親友介紹", news_channel: "親友介紹" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "電視媒體", news_channel: "電視媒體" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "飯店民宿", news_channel: "飯店民宿" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客"},
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "其他", news_channel: "其他"}
 ]
 
 info_way_list.each do |info_way|
