@@ -172,7 +172,7 @@ class Cashier::OrdersController < Cashier::BaseController
       
       @order.status =  (@order.status || @order.address != "自取")
       flash[:notice] = "成功更新訂單記錄"
-      redirect_to cashier_orders_path
+      redirect_to cashier_order_path(@order.id)
     else
       flash[:alert] = @guest.errors.full_messages.to_sentence
       
