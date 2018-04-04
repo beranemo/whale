@@ -1,4 +1,7 @@
-class Cashier::UsersController < ApplicationController
+class Cashier::UsersController < Cashier::BaseController
+  
+  before_action :authenticate_admin
+  
   def index
     @users = User.group_by_cashier
   end
@@ -10,6 +13,7 @@ class Cashier::UsersController < ApplicationController
   def create
     @user = User.new(users_params)
     @user.role = "cashier"
+    @user.name = "新進人員"
     @user.password = "000000"
     if @user.save
       flash[:notice] = "成功新增門市人員帳號"
