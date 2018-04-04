@@ -72,7 +72,7 @@
   <h2>購買內容</h2>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
-  <button class="btn-clear" id ="clear-cart">清空商品</button>
+  <button class="btn-clear pull-right" id ="clear-cart">清空商品</button>
   <br>
   <br>
   <table class="table">
@@ -96,7 +96,7 @@
 
         <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
           <td><%=item.product.category%></td>
-          <td><%=item.product.zh_name%></td>            
+          <td class="alnleft"><%=item.product.zh_name%></td>            
           <td><%=item.product.upc%></td> 
           <td class="price"><%= item.product.price %></td>
           <td>
@@ -239,7 +239,7 @@
       <% if product.status != "removed" %>
       <tr id="<%= product.id%>">
         <td><%=product.category%></td>
-        <td><%=product.zh_name%></td>
+        <td class="alnleft"><%=product.zh_name%></td>
         <td><%=product.price%></td>
         <td><%=product.upc%></td> 
     
@@ -815,7 +815,7 @@
 
 <script type="text/template" id="order-item-template">
   <td class="category"></td>
-  <td class="zh_name"></td>  
+  <td class="zh_name alnleft"></td>  
   <td class="upc"></td>
   <td class="price"></td> 
   <td>
@@ -846,7 +846,7 @@
 
 <script type="text/template" id="discount-template">
   <td class="category"></td>
-  <td class="zh_name"></td>  
+  <td class="zh_name alnleft"></td>  
   <td class="upc"></td>
   <td class="price"></td> 
   <td>

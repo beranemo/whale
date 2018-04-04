@@ -85,13 +85,17 @@
               url_info.href = "/cashier/members/" +member.id ;
               url_history.href = "/cashier/members/" +member.id + "/show_orders";
 
-              $(url_checkout).html("成立訂單");
-              $(url_info).html("詳細資料");
-              $(url_history).html("訂單記錄");
+              url_checkout.setAttribute("caption", "成立訂單");
+              url_info.setAttribute("caption", "會員資料");
+              url_history.setAttribute("caption", "訂單記錄");
+
+              $(url_checkout).html(" <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>");
+              $(url_info).html(" <i class=\"fa fa-user\" aria-hidden=\"true\"></i>");
+              $(url_history).html(" <i class=\"fa fa-list-alt\" aria-hidden=\"true\"></i>");
               
-              $(member).find(".checkout").html(url_checkout);
-              $(member).find(".info").html(url_info);
-              $(member).find(".history").html(url_history);
+              $(member).find(".function").append(url_checkout);
+              $(member).find(".function").append(url_info);
+              $(member).find(".function").append(url_history);
               
 
               $("#search-list").append(member);
@@ -110,9 +114,5 @@
   <td class="birthday"></td>
   <td class="phone"></td>
   <td class="email"></td>
-  <td >
-    <button class="checkout"></button>
-    <button class="info"></button>
-    <button class="history"></button>
-  </td>
+  <td class="function data-table"></td>
 </script>
