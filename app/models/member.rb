@@ -29,8 +29,8 @@
 
 class Member < ApplicationRecord
   belongs_to :skin_type
-  belongs_to :hair_type, foreign_key: "hair_code", primary_key: "code"
-  belongs_to :member_type, foreign_key: "member_code", primary_key: "code", optional: true
+  belongs_to :hair_type
+  belongs_to :member_type
   has_many :orders
 
   def self.to_csv

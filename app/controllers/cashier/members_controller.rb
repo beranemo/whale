@@ -98,10 +98,10 @@ class Cashier::MembersController < Cashier::BaseController
       :birthday,
       :phone,
       :fax,
-      :member_code,
+      :member_type_id,
       :email,
       :skin_type_id,
-      :hair_code,
+      :hair_type_id,
       :avatar,
       :remark
       )
