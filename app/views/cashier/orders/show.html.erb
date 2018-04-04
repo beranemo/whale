@@ -6,7 +6,7 @@
   <% if @order.member_id == -1%>
     顧客編號：非會員
   <% else%>
-    顧客編號：<%= @order.member_id%>
+    顧客編號：<%= @order.member_id%> <%= @order.member.name %>
   <% if @order_counts >= 2 %>
     <span class="label label-success">回購</span>
   <% else%>
@@ -74,7 +74,7 @@
           <% if @order.member_id == -1 %>
             路人 <%= @order.name %>
           <% else%>
-           會員 <%= @order.name %>
+           會員 <%= @order.member.name %>
           <% end%>
         </td>
         <td><%= @order.payment_method %></td>
