@@ -45,8 +45,10 @@
         </td>
         <td><%= order.user.name %></td>
         <td class="data-table">
+        <% if order.user == current_user %> 
           <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_order_path(order.id), onclick:"edit" , caption: "編輯訂單" %>
           <%= link_to '<i class = "fa fa-check" aria-hidden="true"></i>'.html_safe, pick_up_cashier_order_path(order.id), method: :post, onclick:"pickup" , caption: "取貨完成"%>
+        <% end %>  
         </td>
       </tr>
       
