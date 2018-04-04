@@ -27,11 +27,13 @@
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
           <td class="alnleft" title="<%= product.use_for %>"><%= truncate(product.use_for, length: 9) %></td>
-          <td class="alnleft"><%= truncate(product.zh_m_ingredients, length: 30) %></td>
-          <td class="alnleft"><%= truncate(product.zh_ingredients, length: 30) %></td>
-          <td class="alnleft"><%= truncate(product.en_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.zh_m_ingredients %>"><%= truncate(product.zh_m_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.zh_ingredients %>"><%= truncate(product.zh_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.en_ingredients %>"><%= truncate(product.en_ingredients, length: 30) %></td>
           <td class="alnleft" title="<%= product.directions %>"><%= truncate(product.directions, length: 30) %></td>
-          <td>詳細內容</td>
+          <td>
+            <%= link_to cashier_product_path(product) do %>詳細內容<% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

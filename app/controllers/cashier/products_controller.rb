@@ -20,8 +20,6 @@ class Cashier::ProductsController < Cashier::BaseController
                       :o_price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
                       }
     end
-
-      
   end
   
   def barcode_to_cart
@@ -80,6 +78,10 @@ class Cashier::ProductsController < Cashier::BaseController
   
   def manage
     @products = Product.where.not(id:1)
+  end
+  
+  def show
+    @product = Product.find(params[:id])
   end
   
   def edit
