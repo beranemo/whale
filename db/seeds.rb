@@ -93,7 +93,6 @@ puts "Member_type created!"
 # =======================  Country  =======================
 Country.destroy_all
 
-# FIXME: DEMO
 country_list = [
   { is_active: true, code: "AD", system_flag: "Y", name_en_us: "Andorra", name_zh_tw: "安道爾" },
   { is_active: true, code: "AE", system_flag: "Y", name_en_us: "United Arab Emirates", name_zh_tw: "阿拉伯聯合大公國" },
@@ -110,10 +109,29 @@ country_list = [
   { is_active: false, code: "AT", system_flag: "Y", name_en_us: "Austria", name_zh_tw: "奧地利(中歐)" }, 
   { is_active: false, code: "AU", system_flag: "Y", name_en_us: "Australia", name_zh_tw: "澳大利亞" }, 
   { is_active: false, code: "AW", system_flag: "Y", name_en_us: "Aruba", name_zh_tw: "亞魯伯" }, 
-  { is_active: false, code: "AZ", system_flag: "Y", name_en_us: "Azerbaijan", name_zh_tw: "亞塞拜然共和國(西南亞)" }, 
+  { is_active: false, code: "AZ", system_flag: "Y", name_en_us: "Azerbaijan", name_zh_tw: "亞塞拜然共和國(西南亞)" },
+  { is_active: false, code: "BA", system_flag: "Y", name_en_us: "Bosnia And Herzegowina", name_zh_tw: "波斯尼亞" },
+  { is_active: false, code: "BB", system_flag: "Y", name_en_us: "Barbados", name_zh_tw: "巴貝多(加勒比海)" },
+  { is_active: false, code: "BD", system_flag: "Y", name_en_us: "Bangladesh", name_zh_tw: "孟加拉" },
+  { is_active: false, code: "BE", system_flag: "Y", name_en_us: "Belgium", name_zh_tw: "比利時" },
+  { is_active: false, code: "BF", system_flag: "Y", name_en_us: "Burkina Faso", name_zh_tw: "布吉納法索(南非)" },
+  { is_active: false, code: "BG", system_flag: "Y", name_en_us: "Bulgaria", name_zh_tw: "保加利亞(東歐)" },
+  { is_active: false, code: "BH", system_flag: "Y", name_en_us: "Bahrain", name_zh_tw: "巴林(波斯灣)" },
+  { is_active: false, code: "BI", system_flag: "Y", name_en_us: "Burundi", name_zh_tw: "蒲隆地(中非)" },
+  { is_active: false, code: "BJ", system_flag: "Y", name_en_us: "Benin", name_zh_tw: "貝南(西非)" }, 
+  { is_active: false, code: "BM", system_flag: "Y", name_en_us: "Bermuda", name_zh_tw: "百慕達群島(大西洋西部)" }, 
+  { is_active: false, code: "BN", system_flag: "Y", name_en_us: "Brunei Darussalam", name_zh_tw: "汶萊(東亞)" }, 
+  { is_active: false, code: "BO", system_flag: "Y", name_en_us: "Bolivia", name_zh_tw: "玻利維亞(南美洲)" }, 
+  { is_active: false, code: "BR", system_flag: "Y", name_en_us: "Brazil", name_zh_tw: "巴西(南美)" }, 
+  { is_active: false, code: "BS", system_flag: "Y", name_en_us: "Bahamas", name_zh_tw: "巴哈馬群島" }, 
+  { is_active: false, code: "BT", system_flag: "Y", name_en_us: "Bhutan", name_zh_tw: "不丹(印度北部)" }, 
+  { is_active: false, code: "BV", system_flag: "Y", name_en_us: "Bouvet Island", name_zh_tw: "布干維爾島" }, 
+  { is_active: false, code: "BW", system_flag: "Y", name_en_us: "Botswana", name_zh_tw: "波札那(南非)" }, 
+  { is_active: false, code: "BY", system_flag: "Y", name_en_us: "Belarus", name_zh_tw: "柏勞斯" }, 
+  { is_active: false, code: "BZ", system_flag: "Y", name_en_us: "Belize", name_zh_tw: "貝里斯(加勒比海)" }, 
 
 # { is_active: false, code: "", system_flag: "Y", name_en_us: "", name_zh_tw: "" }, 
-  
+    
   { is_active: true, code: "99", system_flag: "Y", name_en_us: "Others", name_zh_tw: "其他" }
 ]
 
