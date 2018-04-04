@@ -52,6 +52,7 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def edit
+
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
     @order_items.each do |item|
@@ -97,8 +98,8 @@ class Cashier::OrdersController < Cashier::BaseController
 
 
   def set_member  
+    
 
-    @member = Member.new
   end
 
   def new

@@ -335,7 +335,7 @@
               var url_checkout = document.createElement("a");
 
               url_checkout.href = "/cashier/orders/new?id=" +member.id;
-              $(url_checkout).html("成立訂單");              
+              $(url_checkout).html("帶入會員");              
               $(member).find(".checkout").html(url_checkout);             
 
               $("#search-list").append(member);
@@ -577,7 +577,7 @@
 
     if(method_code == "B"){
       var str ;
-      if(str=prompt("請輸入0-100的數字","100"))
+      if(str=prompt("請輸入折扣%。例如：打9折請輸入90","100"))
       {
         console.log(str);
 
@@ -612,7 +612,7 @@
       }
     }
     else if(method_code == "D"){
-      if(str=prompt("請輸入修改金額",""))
+      if(str=prompt("請直接輸入折扣後金額",""))
       {
         console.log(str);
 
