@@ -2,6 +2,7 @@
 
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   <h1>編輯訂單 <%= @order.sn %></h1>
+  <input type="hidden" name="" value="<%= @order.id%>" id="order-id">
   <br>
   <h2>會員訊息</h2>
    <form id="search-form">
@@ -334,7 +335,8 @@
             for( var i = 0 ; i < datas.length ; i++ ){
               var member = document.createElement("tr");
               var data = datas[i];
-              
+              var order_id = $("#order-id").val();
+
               member.id = data["id"];
               $(member).attr("class","search-item");
               $(member).html($("#member-template").html());
@@ -351,7 +353,7 @@
 
               var url_checkout = document.createElement("a");
 
-              url_checkout.href = "/cashier/orders/new?id=" +member.id;
+              url_checkout.href = "/cashier/orders/"+ order_id+"/edit?member_id=" +member.id;
               $(url_checkout).html("成立訂單");              
               $(member).find(".checkout").html(url_checkout);             
 

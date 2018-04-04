@@ -61,6 +61,7 @@ Rails.application.routes.draw do
         get :edit_products
         post :create_guest
         post :pick_up
+        post :set_member
       end
     end
 
