@@ -92,7 +92,7 @@ Rails.application.routes.draw do
     resources :skin_types, except: [:show]
     resources :member_types, except: [:show]
     resources :guest_types, except: [:show]
-    resources :countries, except: [:show] do
+    resources :countries, only: [:index] do
       member do
         post :remove
         post :listing
