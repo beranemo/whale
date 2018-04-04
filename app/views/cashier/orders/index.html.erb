@@ -47,12 +47,10 @@
           <td class="text-danger">未取貨</td>
         <% end%>
         <td><%= order.user.name %></td> 
-        <td>
-          <%= link_to "編輯訂單",edit_cashier_order_path(order.id) %>｜
+        <td class="data-table">
+          <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe,edit_cashier_order_path(order.id), onclick:"checkout" , caption: "編輯訂單" %>
           <% if order.guest_id == nil %>
-            <%= link_to "建立客情",new_guest_cashier_order_path(order.id) %>
-          <% else %>
-            <span style="color: gray;">建立客情</span>
+            <%= link_to '<i class = "fa fa-handshake-o" aria-hidden="true"></i>'.html_safe,new_guest_cashier_order_path(order.id), onclick:"checkout" , caption: "建立客情" %>
           <% end %>
         </td>
       </tr>

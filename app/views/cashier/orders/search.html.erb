@@ -80,8 +80,8 @@ $("#search-btn").click(function(){
             $(order).find(".payment_method").html(data["payment_method"]);
             $(order).find(".address").html(data["address"]);
             $(order).find(".amount").html(data["amount"].toLocaleString('en-US', {minimumFractionDigits: 0}));
-            $(order).find(".function").append("<a href=\"/cashier/orders/" + data["id"] + "/edit\">" + "編輯訂單 " + "</a>");
-            $(order).find(".function").append("｜");
+            $(order).find(".function").append("<a caption=\"編輯訂單\" href=\"/cashier/orders/" + data["id"] + "/edit\">" + "<i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> " + "</a>");
+            $(order).find(".function").append("");
             if(data["status"] == true){
               $(order).find(".status").html("已取貨");
             }
@@ -89,21 +89,15 @@ $("#search-btn").click(function(){
               $(order).find(".status").html("未取貨").addClass('text-danger');
             }
             
-            
-            
             if(data["member_id"] == "-1"){
               $(order).find(".member_id").html("非會員");
             }
             else{
               $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + data["member_id"] + "</a>");
-              $(order).find(".function").append("<span style='color: gray;'>訂單歸戶</span>｜");
             }
 
             if(data["guest_id"] == null){
-              $(order).find(".function").append("<a href=\"/cashier/orders/" + data["id"] + "/new_guest\">" + "建立客情" + "</a>");
-            }
-            else{
-              $(order).find(".function").append("<span style='color: gray;'>建立客情</span>");
+              $(order).find(".function").append("<a caption=\"建立客情\" href=\"/cashier/orders/" + data["id"] + "/new_guest\">" + "<i class=\"fa fa-handshake-o\" aria-hidden=\"true\"></i> " + "</a>");
             }
             $("#search-list").append(order);
         }
@@ -125,5 +119,5 @@ $("#search-btn").click(function(){
   <td class="amount"></td>
   <td class="status"></td>
   <td class="user"></td>
-  <td class="function"></td>
+  <td class="function data-table"></td>
 </script>
