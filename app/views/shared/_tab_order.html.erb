@@ -8,10 +8,6 @@
     <%= link_to '今日訂單', today_cashier_orders_path %>
   </li>
   
-  <li role="presentation" class="<%= 'active' if selected_item == '所有訂單' %>">
-    <%= link_to '所有訂單', cashier_orders_path %>
-  </li>
-  
   <li role="presentation" class="<%= 'active' if selected_item == '訂單搜尋' %>">
     <%= link_to '訂單搜尋', search_cashier_orders_path %>
   </li>
