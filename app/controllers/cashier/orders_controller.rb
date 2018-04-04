@@ -37,7 +37,13 @@ class Cashier::OrdersController < Cashier::BaseController
 
   def new_guest
     @guest = Guest.new
-
+    if @order.member
+      @guest.gender = @order.member.gender
+      @guest.guest_type_id = GuestType.find_by(guest_type: "舊客").id
+    else
+      @guest.guest_type_id = GuestType.find_by(guest_type: "新客").id
+      @guest.gender = "男"
+    end
   end
 
   def create_guest
