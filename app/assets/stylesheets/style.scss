@@ -516,6 +516,7 @@ $orange: #F07B3F;
 }
 .data-table a:after {
   content: attr(caption);
+  white-space:nowrap;
   display: block;
   width: auto;
   padding: 5px 8px;

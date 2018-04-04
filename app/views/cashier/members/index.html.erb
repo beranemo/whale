@@ -29,9 +29,9 @@
             <i class="fa fa-birthday-cake" aria-hidden="true" style="color:#FF9900"></i>
           <% end %></td>
           <td>
-            <%= link_to '<i class = "fa fa-edit" aria-hidden="true"></i>'.html_safe, new_cashier_order_path(id: member), onclick:"edit" , caption: "Checkout" %>
-            <%= link_to '<i class = "fa fa-user" aria-hidden="true"></i>'.html_safe, cashier_member_path(id: member.id), onclick:"edit" , caption: "User"  %>
-            <%= link_to '<i class = "fa fa-list-alt" aria-hidden="true"></i>'.html_safe, show_orders_cashier_member_path(id: member.id), onclick:"edit" , caption: "Orders"  %>
+            <%= link_to '<i class = "fa fa-edit" aria-hidden="true"></i>'.html_safe, new_cashier_order_path(id: member), onclick:"checkout" , caption: "成立訂單" %>
+            <%= link_to '<i class = "fa fa-user" aria-hidden="true"></i>'.html_safe, cashier_member_path(id: member.id), onclick:"user" , caption: "會員資料"  %>
+            <%= link_to '<i class = "fa fa-list-alt" aria-hidden="true"></i>'.html_safe, show_orders_cashier_member_path(id: member.id), onclick:"orders" , caption: "訂單記錄"  %>
           </td>
         </tr>
       
