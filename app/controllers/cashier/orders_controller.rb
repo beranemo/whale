@@ -75,6 +75,9 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.amount -= @coupon_discount
     if params[:member_id] != nil
       @member = Member.find(params[:member_id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      
     elsif @order.member_id != -1
       @member = Member.find(@order.member_id)
     else
@@ -120,7 +123,7 @@ class Cashier::OrdersController < Cashier::BaseController
       @member = Member.find(params[:id])
       @order.name = @member.name
       @order.phone = @member.phone
-      @order.address = @member.address
+      
     else
       @member = Member.new(id: -1)
     end
@@ -169,7 +172,7 @@ class Cashier::OrdersController < Cashier::BaseController
       
       @order.status =  (@order.status || @order.address != "自取")
       flash[:notice] = "成功更新訂單記錄"
-      redirect_to cashier_orders_path
+      redirect_to cashier_order_path(@order.id)
     else
       flash[:alert] = @guest.errors.full_messages.to_sentence
       
