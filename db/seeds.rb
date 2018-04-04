@@ -128,10 +128,25 @@ country_list = [
   { is_active: false, code: "BV", system_flag: "Y", name_en_us: "Bouvet Island", name_zh_tw: "布干維爾島" }, 
   { is_active: false, code: "BW", system_flag: "Y", name_en_us: "Botswana", name_zh_tw: "波札那(南非)" }, 
   { is_active: false, code: "BY", system_flag: "Y", name_en_us: "Belarus", name_zh_tw: "柏勞斯" }, 
-  { is_active: false, code: "BZ", system_flag: "Y", name_en_us: "Belize", name_zh_tw: "貝里斯(加勒比海)" }, 
+  { is_active: false, code: "BZ", system_flag: "Y", name_en_us: "Belize", name_zh_tw: "貝里斯(加勒比海)" },
+  { is_active: false, code: "CA", system_flag: "Y", name_en_us: "Canada", name_zh_tw: "加拿大" },
+  { is_active: false, code: "CC", system_flag: "Y", name_en_us: "Cocos (Keeling) Islands", name_zh_tw: "可可斯群島(椰子島)" },
+  { is_active: false, code: "CF", system_flag: "Y", name_en_us: "Central African Republic", name_zh_tw: "中非共和國" },
+  { is_active: false, code: "CG", system_flag: "Y", name_en_us: "Congo", name_zh_tw: "剛果民主共和國" },
+  { is_active: false, code: "CH", system_flag: "Y", name_en_us: "Switzerland", name_zh_tw: "瑞士(中歐)" },
+  { is_active: false, code: "CK", system_flag: "Y", name_en_us: "Cook Islands ", name_zh_tw: "科克群島" },
+  { is_active: false, code: "CL", system_flag: "Y", name_en_us: "Chile", name_zh_tw: "智利(南美洲西南部)" },
+  { is_active: false, code: "CM", system_flag: "Y", name_en_us: "Cameroon", name_zh_tw: "喀麥隆(西非)" },
+  { is_active: false, code: "CN", system_flag: "Y", name_en_us: "China", name_zh_tw: "中國" },
+  { is_active: false, code: "CO", system_flag: "Y", name_en_us: "Colombia", name_zh_tw: "哥倫比亞" },
+  { is_active: false, code: "CR", system_flag: "Y", name_en_us: "Costa Rica", name_zh_tw: "哥斯大黎加(中美洲)" },
+  { is_active: false, code: "CU", system_flag: "Y", name_en_us: "Cuba", name_zh_tw: "古巴(加勒比海)" },
+  { is_active: false, code: "CV", system_flag: "Y", name_en_us: "Cape Verde", name_zh_tw: "維德角(大西洋東部)" },
+  { is_active: false, code: "CX", system_flag: "Y", name_en_us: "Christmas Island", name_zh_tw: "聖誕島嶼" },
+  { is_active: false, code: "CY", system_flag: "Y", name_en_us: "Cyprus", name_zh_tw: "賽普勒斯(土耳其西南方)" },
+  { is_active: false, code: "CZ", system_flag: "Y", name_en_us: "Czech Republic", name_zh_tw: "捷克(中歐)" },
 
-# { is_active: false, code: "", system_flag: "Y", name_en_us: "", name_zh_tw: "" }, 
-    
+# { is_active: false, code: "", system_flag: "Y", name_en_us: "", name_zh_tw: "" },
   { is_active: true, code: "99", system_flag: "Y", name_en_us: "Others", name_zh_tw: "其他" }
 ]
 
