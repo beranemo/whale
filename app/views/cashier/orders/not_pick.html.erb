@@ -9,7 +9,7 @@
         <th data-sortable="true" data-field="created_at">訂購日期</th>
         <th data-sortable="true" data-field="id">編號</th>
         <th>結帳人員</th>
-        <th>顧客編號</th>
+        <th>顧客姓名</th>
         <th>付款方式</th>
         <th>取貨方式</th>
         <th data-sortable="true" data-field="amount">總金額</th>
@@ -28,7 +28,7 @@
           <% if order.member_id == -1%>
             非會員
           <% else%>
-            <%= order.member_id%>
+            <%= order.member.name%>
             <% if @orders.where(member_id: order.member_id).count >= 2 %>
               <span class="label label-success">回購</span>
             <% else%>
