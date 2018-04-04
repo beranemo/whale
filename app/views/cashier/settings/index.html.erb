@@ -1,0 +1,20 @@
+<br>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>code</th>
+        <th>content</th>
+
+      </tr>
+    </thead>
+    <tbody>          
+      <% @settings.each do |setting| %>
+        <tr>         
+          <td><%= setting.code %></td>
+          <td><%= setting.content %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

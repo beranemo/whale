@@ -58,11 +58,11 @@
         <th>備註</th>
       </tr>
        <tr>
-        <td><%= @member.name%></td>
-        <td><%= @member.phone%></td>
-        <td><%= @member.email%></td>
-        <td class="address"><%= @member.address%></td>
-        <td class="remark"><%= @member.remark%></td>         
+        <td><%= @member.name %></td>
+        <td><%= @member.phone %></td>
+        <td><%= @member.email %></td>
+        <td class="address"><%= @member.address %></td>
+        <td class="remark"><%= @member.remark %></td>         
       </tr>
     </tbody>
   </table>  
@@ -94,19 +94,19 @@
          
       <% @cart_items.each do |item|%>
 
-        <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
-          <td><%=item.product.category%></td>
-          <td class="alnleft"><%=item.product.zh_name%></td>            
-          <td><%=item.product.upc%></td> 
+        <tr id="<%= item.product.id %>-<%= @index_hash[item.product.id] %>">
+          <td><%= item.product.category %></td>
+          <td class="alnleft"><%= item.product.zh_name %></td>            
+          <td><%= item.product.upc %></td> 
           <td class="price alnright"><%= item.product.price %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
-            <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
+            <input type="text" name="" size="3" class="quantity text-center" value="<%= item.quantity %>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>
           <td class="o-price alnright">
-            <%=item.origin_calculate%>
-            <% if  item.discount_method_code == "B"%> 
+            <%= item.origin_calculate %>
+            <% if item.discount_method_code == "B" %> 
             *
             <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setItemDiscount(event)">
             %
@@ -118,13 +118,13 @@
           <td class="d-price alnright"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
-            <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
-            <% end%>
+            <%= f.collection_select :discount_method_code, DiscountMethod.in_service, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
+            <% end %>
           </td>        
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
-          <% @index_hash[item.product.id] +=1%>
+          <% @index_hash[item.product.id] +=1 %>
           <% @order.amount += item.calculate %>
         </tr>
       <% end %>
@@ -134,8 +134,8 @@
   <div class="text-right">
     <span class="fa fa-dollar"></span>
     <input class="discount-input" type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
-    <button class="add-coupon my-btn" id="<%= @coupon.id%>">使用折價卷</button>
-    <button class="clear-coupon my-btn" id="<%= @coupon.id%>">清除折價卷</button>
+    <button class="add-coupon my-btn" id="<%= @coupon.id %>">使用折價卷</button>
+    <button class="clear-coupon my-btn" id="<%= @coupon.id %>">清除折價卷</button>
   </div>
   
   <br>
@@ -239,9 +239,9 @@
       <% if product.status != "removed" %>
       <tr id="<%= product.id%>">
         <td><%=product.category%></td>
-        <td class="alnleft"><%=product.zh_name%></td>
-        <td class="alnright"><%=product.price%></td>
-        <td><%=product.upc%></td> 
+        <td class="alnleft"><%= product.zh_name %></td>
+        <td class="alnright"><%= product.price %></td>
+        <td><%= product.upc %></td> 
     
         <td><button class="add_to_cart my-btn">購買</button></td>
       </tr>

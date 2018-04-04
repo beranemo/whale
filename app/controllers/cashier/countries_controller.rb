@@ -3,7 +3,7 @@ class Cashier::CountriesController < Cashier::BaseController
 
   def index
     @countries = Country.all.order(created_at: :desc)
-    @country = Country.new
+    #@country = Country.new
   end
   
   def update
