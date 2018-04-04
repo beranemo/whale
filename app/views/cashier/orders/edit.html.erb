@@ -97,13 +97,13 @@
           <td><%=item.product.category%></td>
           <td class="alnleft"><%=item.product.zh_name%></td>            
           <td><%=item.product.upc%></td> 
-          <td class="price"><%= item.product.price %></td>
+          <td class="price alnright"><%= item.product.price %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
             <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>
-          <td class="o-price">
+          <td class="o-price alnright">
             <%=item.origin_calculate%>
             <% if  item.discount_method_code == "B"%> 
             *
@@ -113,8 +113,8 @@
             <input type="hidden" name="" size="3" value="100" class="discount_off" onkeypress="return setDiscount(event)">
             <% end %>
           </td>           
-          <td class="v-price"><%= item.origin_calculate - item.calculate %></td>
-          <td class="d-price"><%= item.calculate %></td>  
+          <td class="v-price alnright"><%= item.origin_calculate - item.calculate %></td>
+          <td class="d-price alnright"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
             <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
@@ -213,20 +213,20 @@
           
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
-            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+            <%= f.text_field :discount_off  ,class:"form-control alnright", onkeypress:"return setOrderDiscount(event)"%>
             <label>優惠卷折扣</label>
-            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+            <input class="form-control alnright" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
             <%= f.label :user_id, "結帳人員" %>
             <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
           </div>
           <div class="col-md-6">
             <label>原始總金額</label>
-            <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+            <input class="form-control alnright" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
             <label>小計</label>
-            <input class="discount_amout form-control" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i if @order.discount_off %>"  id="off_amount" disabled="disabled">
+            <input class="discount_amout form-control alnright" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i if @order.discount_off %>"  id="off_amount" disabled="disabled">
             <% @order.amount += @coupon_discount %>
             <%= f.label :amount, "折扣後金額" %>
-            <%= f.text_field :amount  ,class:"discount_amout form-control", onkeypress:"return setDiscountAmount(event)"%>
+            <%= f.text_field :amount  ,class:"discount_amout form-control alnright", onkeypress:"return setDiscountAmount(event)"%>
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
             <%= f.submit "更新訂單",class: "btn-danger" %>
@@ -256,7 +256,7 @@
       <tr id="<%= product.id%>">
         <td><%=product.category%></td>
         <td class=" alnleft"><%=product.zh_name%></td>
-        <td><%=product.price%></td>
+        <td class="alnright"><%=product.price%></td>
         <td><%=product.upc%></td> 
     
         <td><button class="add_to_cart my-btn">購買</button></td>
@@ -836,15 +836,15 @@
   <td class="category"></td>
   <td class="zh_name alnleft"></td>  
   <td class="upc"></td>
-  <td class="price"></td> 
+  <td class="price alnright"></td> 
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>
-  <td class="o-price"></td> 
-  <td class="v-price"></td>  
-  <td class="d-price"></td>  
+  <td class="o-price alnright"></td> 
+  <td class="v-price alnright"></td>  
+  <td class="d-price alnright"></td>  
   <td class="discount_method">
     <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
       <input name="utf8" type="hidden" value="✓">
@@ -867,15 +867,15 @@
   <td class="category"></td>
   <td class="zh_name alnleft"></td>  
   <td class="upc"></td>
-  <td class="price"></td> 
+  <td class="price alnright"></td> 
   <td>
     <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
     <input type="text" name="" size="3" class="quantity text-center" value="1">
     <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
   </td>
-  <td class="o-price"></td> 
-  <td class="v-price"></td>  
-  <td class="d-price"></td>  
+  <td class="o-price alnright"></td> 
+  <td class="v-price alnright"></td>  
+  <td class="d-price alnright"></td>  
   <td class="discount_method">
     <form class="edit_cart_item" id="edit_cart_item_3" action="/cashier/cart_items/3" accept-charset="UTF-8" method="post">
       <input name="utf8" type="hidden" value="✓">

@@ -34,11 +34,11 @@
         <td class=" alnleft"><%= p.product.zh_name %></td>
         <td><%= p.product.upc %></td>
         <td><%= p.product.capacity %></td>
-        <td><%= p.product.price %></td>
+        <td class="alnright"><%= p.product.price %></td>
         <td><%= p.quantity %></td>
-        <td><%= p.product.price * p.quantity%></td>
-        <td><%= (p.product.price * p.quantity) -p.price %></td>
-        <td><%= p.price %></td>
+        <td class="alnright"><%= p.product.price * p.quantity%></td>
+        <td class="alnright"><%= (p.product.price * p.quantity) -p.price %></td>
+        <td class="alnright"><%= p.price %></td>
         <% @origin_amount += p.price%>
       </tr>
       <% end %>
