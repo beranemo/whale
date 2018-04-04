@@ -197,6 +197,13 @@
           <%= f.text_area :remark, class:"form-control" %>
         </div>
         <div class="col-md-5">
+
+          <div class="col-md-6">
+            <%= f.label :discount_off, "折扣%" %>
+            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
+            <label>優惠卷折扣</label>
+            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+          </div>  
           <div class="col-md-6">
             <label>原始總金額</label>
             <input class="form-control" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
@@ -210,12 +217,6 @@
             <br>
             <%= f.submit "結帳完成並成立訂單",class: "btn-submit" %>
           </div>
-          <div class="col-md-6">
-            <%= f.label :discount_off, "折扣%" %>
-            <%= f.text_field :discount_off  ,class:"form-control", onkeypress:"return setOrderDiscount(event)"%>
-            <label>優惠卷折扣</label>
-            <input class="form-control" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
-          </div>  
         </div>   
       <% end %>
     </div>
