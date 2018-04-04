@@ -114,11 +114,15 @@ country_list = [
 # AW    Aruba 亞魯伯
 # AZ    Azerbaijan 亞塞拜然共和國(西南亞)
   
-  { is_active: true, code: "99", system_flag: "Y", value: "其他", country_type: "其他" }
+  { is_active: true, code: "99", system_flag: "Y", name_en_us: "Others", name_zh_tw: "其他" }
 ]
 
 country_list.each do |country|
-  Country.create( country_type: country[:country_type], is_active: country[:is_active] )
+  Country.create( 
+    code: country[:code],
+    name_en_us: country[:name_en_us], 
+    name_zh_tw: country[:name_zh_tw], 
+    is_active: country[:is_active] )
 end
 puts "Country created!"
 
