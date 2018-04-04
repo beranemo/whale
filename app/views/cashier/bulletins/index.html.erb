@@ -28,9 +28,9 @@
             <td><%= bulletin.title %></td>
             <td class="alnleft"><%= bulletin.content %></td>
             <td><%= bulletin.user.name %></td>
-            <td>
-              <%= link_to "編輯", edit_cashier_bulletin_path(bulletin)%> ｜
-              <%= link_to '刪除', cashier_bulletin_path(bulletin), method: :delete, data: {confirm:"是否確認刪除?"} %>
+            <td class="data-table">
+              <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_bulletin_path(bulletin), onclick:"edit" , caption: "編輯活動"%>
+              <%= link_to '<i class = "fa fa-trash" aria-hidden="true"></i>'.html_safe, cashier_bulletin_path(bulletin), method: :delete, data: {confirm:"是否確認刪除?"}, onclick:"delete" , caption: "刪除活動" %>
             </td>
           </tr>
         <% end %>

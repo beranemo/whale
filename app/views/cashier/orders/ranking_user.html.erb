@@ -20,7 +20,7 @@
         <td><%= order.user.name %> <% if i == 0 %>
         <i class = "glyphicon glyphicon-fire" aria-hidden="true" style="color:red"></i>
         <% end %></td>
-        <td><%= number_to_currency(@user_amount[i], precision: 0)  %></td>
+        <td class="alnright"><%= number_to_currency(@user_amount[i], precision: 0)  %></td>
       </tr>
       <% i += 1 %>
       <% end %>
