@@ -45,9 +45,14 @@ $("#search-btn").click(function(){
   $(".search-item").remove();//刪除原先的搜尋結果
   var s_date = $("#s_date").val();
   var e_date = $("#e_date").val();
+  
+  var curt_user_id = <%= current_user.id.inspect.html_safe %>;
 
+  /*
+  console.log(curt_user_id);
   console.log(s_date);
   console.log(e_date);
+  */
 
   $.ajax({
     url: "/cashier/orders/search_outcome?type=period" ,
@@ -70,6 +75,7 @@ $("#search-btn").click(function(){
         for(var i=0; i < orders.length;i++){
           var data = orders[i];
           var order = document.createElement("tr");
+          var user_id = data["user_id"];
 
             order.id = data["id"];
             $(order).attr("class","search-item");
@@ -80,7 +86,9 @@ $("#search-btn").click(function(){
             $(order).find(".payment_method").html(data["payment_method"]);
             $(order).find(".address").html(data["address"]);
             $(order).find(".amount").html(data["amount"].toLocaleString('en-US', {minimumFractionDigits: 0}));
-            $(order).find(".function").append("<a caption=\"編輯訂單\" href=\"/cashier/orders/" + data["id"] + "/edit\">" + "<i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> " + "</a>");
+            if(user_id == curt_user_id){
+              $(order).find(".function").append("<a caption=\"編輯訂單\" href=\"/cashier/orders/" + data["id"] + "/edit\">" + "<i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> " + "</a>");
+            }
             $(order).find(".function").append("");
             if(data["status"] == true){
               $(order).find(".status").html("已取貨");
