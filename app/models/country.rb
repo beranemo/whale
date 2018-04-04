@@ -14,4 +14,6 @@
 
 class Country < ApplicationRecord
   has_many :guests
+  
+  scope :in_service, -> { where(is_active: true) }
 end

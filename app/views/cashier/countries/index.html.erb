@@ -38,8 +38,11 @@
         <% if !country.is_active %><span class="label label-danger">停用中</span><% end %>
         </td>
         <td>
-          <%= link_to '編輯', cashier_country_path(id: country.id) %> ｜
-          <%= link_to '刪除', cashier_country_path(country), method: :delete, data: {confirm:"確定刪除?"} %>
+          <% if country.is_active %>
+            <%= link_to "停用國家", remove_cashier_country_path(country), method: :post %>
+          <% else %>
+            <%= link_to "國家啓用", listing_cashier_country_path(country), method: :post %>
+          <% end %> 
         </td>
       </tr>
       <% i = i + 1 %>

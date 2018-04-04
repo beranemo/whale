@@ -100,19 +100,19 @@ country_list = [
   { is_active: true, code: "AF", system_flag: "Y", name_en_us: "Afghanistan", name_zh_tw: "阿富汗" },
   { is_active: true, code: "AG", system_flag: "Y", name_en_us: "Antigua And Barbuda", name_zh_tw: "安提瓜和巴爾布達(加勒比海)" },
   { is_active: true, code: "AI", system_flag: "Y", name_en_us: "Anguilla", name_zh_tw: "安圭拉島" },
-  { is_active: true, code: "AL", system_flag: "Y", name_en_us: "Albania", name_zh_tw: "阿爾巴尼亞" },
-  { is_active: true, code: "AM", system_flag: "Y", name_en_us: "Armenia", name_zh_tw: "亞美尼亞(西南亞)" },
-  { is_active: true, code: "AN", system_flag: "Y", name_en_us: "Netherlands Antilles", name_zh_tw: "荷屬西印度群島" },
+  { is_active: false, code: "AL", system_flag: "Y", name_en_us: "Albania", name_zh_tw: "阿爾巴尼亞" },
+  { is_active: false, code: "AM", system_flag: "Y", name_en_us: "Armenia", name_zh_tw: "亞美尼亞(西南亞)" },
+  { is_active: false, code: "AN", system_flag: "Y", name_en_us: "Netherlands Antilles", name_zh_tw: "荷屬西印度群島" },
+  { is_active: false, code: "AO", system_flag: "Y", name_en_us: "Angola", name_zh_tw: "安哥拉" }, 
+  { is_active: false, code: "AQ", system_flag: "Y", name_en_us: "Antarctica", name_zh_tw: "南極洲" }, 
+  { is_active: false, code: "AR", system_flag: "Y", name_en_us: "Argentina", name_zh_tw: "阿根廷" }, 
+  { is_active: false, code: "AS", system_flag: "Y", name_en_us: "American Samoa", name_zh_tw: "美屬薩摩亞" }, 
+  { is_active: false, code: "AT", system_flag: "Y", name_en_us: "Austria", name_zh_tw: "奧地利(中歐)" }, 
+  { is_active: false, code: "AU", system_flag: "Y", name_en_us: "Australia", name_zh_tw: "澳大利亞" }, 
+  { is_active: false, code: "AW", system_flag: "Y", name_en_us: "Aruba", name_zh_tw: "亞魯伯" }, 
+  { is_active: false, code: "AZ", system_flag: "Y", name_en_us: "Azerbaijan", name_zh_tw: "亞塞拜然共和國(西南亞)" }, 
 
-# { is_active: true, code: "", system_flag: "Y", name_en_us: "", name_zh_tw: "" },       
-# AO    Angola 安哥拉
-# AQ    Antarctica 南極洲
-# AR    Argentina 阿根廷
-# AS    American Samoa 美屬薩摩亞
-# AT    Austria 奧地利(中歐)
-# AU    Australia 澳大利亞
-# AW    Aruba 亞魯伯
-# AZ    Azerbaijan 亞塞拜然共和國(西南亞)
+# { is_active: false, code: "", system_flag: "Y", name_en_us: "", name_zh_tw: "" }, 
   
   { is_active: true, code: "99", system_flag: "Y", name_en_us: "Others", name_zh_tw: "其他" }
 ]

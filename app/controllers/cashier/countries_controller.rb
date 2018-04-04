@@ -2,7 +2,7 @@ class Cashier::CountriesController < Cashier::BaseController
   before_action :set_country, only: [:update, :destroy]
 
   def index
-    @countries = Country.all
+    @countries = Country.all.order(created_at: :desc)
     @country = Country.new
   end
   
@@ -14,6 +14,22 @@ class Cashier::CountriesController < Cashier::BaseController
       @countries = Country.all
       render :index
     end
+  end
+  
+  def remove
+    @country = Country.find(params[:id])
+    @country.is_active = false
+    @country.save
+    flash[:notice] = "停用國家成功"
+    redirect_back(fallback_location: root_path)  # 導回上一頁
+  end
+  
+  def listing
+    @country = Country.find(params[:id])
+    @country.is_active = true
+    @country.save
+    flash[:notice] = "國家已啓用成功"
+    redirect_back(fallback_location: root_path)  # 導回上一頁
   end
   
   def create
