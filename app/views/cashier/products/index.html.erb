@@ -6,10 +6,10 @@
     <tbody >
       <tr>
         <th>分類</th>
-        <th>中文名稱</th>
-        <th>英文名稱</th>
+        <th class="alnleft">中文名稱</th>
+        <th class="alnleft">英文名稱</th>
         <th>規格</th>
-        <th>價錢</th>
+        <th class="alnright">價錢</th>
         <th>國際條碼</th>
         <th>適用對象</th>
         <th>中文主成份</th>
@@ -24,14 +24,16 @@
           <td class="alnleft"><%= product.zh_name %></td>
           <td class="alnleft" title="<%= product.en_name %>"><%= truncate(product.en_name, length: 20) %></td>
           <td><%= product.capacity %></td>
-          <td><%= product.price %></td>
+          <td class="alnright"><%= product.price %></td>
           <td><%= product.upc %></td>
           <td class="alnleft" title="<%= product.use_for %>"><%= truncate(product.use_for, length: 9) %></td>
-          <td class="alnleft"><%= truncate(product.zh_m_ingredients, length: 30) %></td>
-          <td class="alnleft"><%= truncate(product.zh_ingredients, length: 30) %></td>
-          <td class="alnleft"><%= truncate(product.en_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.zh_m_ingredients %>"><%= truncate(product.zh_m_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.zh_ingredients %>"><%= truncate(product.zh_ingredients, length: 30) %></td>
+          <td class="alnleft" title="<%= product.en_ingredients %>"><%= truncate(product.en_ingredients, length: 30) %></td>
           <td class="alnleft" title="<%= product.directions %>"><%= truncate(product.directions, length: 30) %></td>
-          <td>詳細內容</td>
+          <td>
+            <%= link_to cashier_product_path(product) do %>詳細內容<% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

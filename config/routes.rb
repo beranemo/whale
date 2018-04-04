@@ -27,17 +27,17 @@ Rails.application.routes.draw do
       end
       
     end
-    resources :products, only: [:new, :index, :edit, :update] do
+    resources :products, only: [:new, :index, :edit, :update, :show] do
       member do
         post :add_to_cart
         post :remove
         post :listing
       end
       collection do
-        post :barcode_to_cart
-        post :import
         get :manage
         get :removed_list
+        post :barcode_to_cart
+        post :import
         post :update_all
       end
     end

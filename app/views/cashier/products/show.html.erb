@@ -1,0 +1,44 @@
+<div class="container">
+ 
+  <%= render :partial => "shared/tabs2", :locals => { :selected_item => '所有商品' } %>
+  <br>
+  <div class="col-md-12">
+   
+    <label>分類:</label>    
+    <%= @product.category %><br><br>
+    
+    <label>中文名稱:</label>
+    <%= @product.zh_name %><br><br>
+    
+    <label>英文名稱:</label>
+    <%= @product.en_name %><br><br>
+    
+    <label>規格:</label>
+    <%= @product.capacity %><br><br>
+    
+    <label>價錢:</label>
+    <%= @product.price %><br><br>
+    
+    <label>國際條碼:</label>
+    <%= @product.upc %><br><br>  
+    
+    <label>適用對象:</label>
+    <%= @product.use_for %><br><br>
+    
+    <label>中文主成份:</label>
+    <%= @product.zh_m_ingredients %><br><br>
+    
+    <label>中文全成份:</label>
+    <%= @product.zh_ingredients %><br><br>
+    
+    <label>英文全成份:</label>
+    <%= @product.directions %><br><br>
+    
+    <label>使用方法:</label>
+    <%= @product.directions %><br><br>
+    
+  </div>
+  
+</div>
+<br>
+<br>
