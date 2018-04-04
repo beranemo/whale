@@ -34,7 +34,7 @@ class Member < ApplicationRecord
   belongs_to :hair_type
   belongs_to :member_type
   has_many :orders
-
+  
   def self.to_csv
     zh_attr = %w{姓名 生日 性別 email 電話 傳真 會員群組 郵遞區號 居住縣市 居住地址 紅利點數  膚質 髮質}
     attributes = %w{name birthday gender email phone fax member_code zip county address bonus }
