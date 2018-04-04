@@ -25,7 +25,7 @@
             <td class="alnleft"><%= product.zh_name %></td>
             <td class="alnleft"><%= product.en_name %></td>
             <td><%= product.capacity %></td>
-            <td><%= product.price %></td>
+            <td class="alnright"><%= product.price %></td>
             <td><%= product.upc %></td>
             <td><%= product.quantity %></td>
             <td><input type="number" name="products[<%=product.id%>][quantity]" min="-100" max="100" value="0" class="alnright"></td>

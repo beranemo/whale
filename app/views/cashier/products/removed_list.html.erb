@@ -21,7 +21,7 @@
           <td class="alnleft"><%= product.zh_name %></td>
           <td class="alnleft"><%= product.en_name %></td>
           <td><%= product.capacity %></td>
-          <td><%= product.price %></td>
+          <td class="alnright"><%= product.price %></td>
           <td><%= product.upc %></td>
           <td><% if product.status == "removed" %><span class="label label-danger">停用中</span><% end %></td>
           <td>

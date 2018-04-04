@@ -24,7 +24,7 @@
           <td class="alnleft"><%= product.zh_name %></td>
           <td class="alnleft" title="<%= product.en_name %>"><%= truncate(product.en_name, length: 20) %></td>
           <td><%= product.capacity %></td>
-          <td><%= product.price %></td>
+          <td class="alnright"><%= product.price %></td>
           <td><%= product.upc %></td>
           <td class="alnleft" title="<%= product.use_for %>"><%= truncate(product.use_for, length: 9) %></td>
           <td class="alnleft"><%= truncate(product.zh_m_ingredients, length: 30) %></td>
