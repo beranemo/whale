@@ -75,6 +75,9 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.amount -= @coupon_discount
     if params[:member_id] != nil
       @member = Member.find(params[:member_id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      @order.address = @member.address
     elsif @order.member_id != -1
       @member = Member.find(@order.member_id)
     else
