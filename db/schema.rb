@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404005427) do
+ActiveRecord::Schema.define(version: 20180404011623) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -108,7 +108,6 @@ ActiveRecord::Schema.define(version: 20180404005427) do
   end
 
   create_table "hair_types", force: :cascade do |t|
-    t.string "code"
     t.string "value"
     t.string "system_flag", default: "N"
     t.datetime "created_at", null: false
@@ -125,7 +124,6 @@ ActiveRecord::Schema.define(version: 20180404005427) do
   end
 
   create_table "member_types", force: :cascade do |t|
-    t.string "code"
     t.string "value"
     t.string "system_flag", default: "N"
     t.datetime "created_at", null: false
