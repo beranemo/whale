@@ -21,8 +21,8 @@
       <% @products.each do |product| %>
         <tr>
           <td><%= product.category %></td>
-          <td><%= product.zh_name %></td>
-          <td title="<%= product.en_name %>"><%= truncate(product.en_name, length: 20) %></td>
+          <td class="alnleft"><%= product.zh_name %></td>
+          <td class="alnleft" title="<%= product.en_name %>"><%= truncate(product.en_name, length: 20) %></td>
           <td><%= product.capacity %></td>
           <td><%= product.price %></td>
           <td><%= product.upc %></td>
