@@ -20,10 +20,10 @@
       
       <tr>
         <th>姓名</th>
-        <th>手機號碼</th>
         <th>性別</th>
-        <th>信箱</th>
         <th>生日</th>
+        <th>手機號碼</th>
+        <th>信箱</th>
         <th>功能</th>
       </tr>     
         
@@ -66,15 +66,16 @@
               $(member).attr("class","search-item");
               $(member).html($("#member-template").html());
               $(member).find(".name").html(data["name"]);
-              $(member).find(".phone").html(data["phone"]);
               $(member).find(".gender").html(data["gender"]);
-              $(member).find(".email").html(data["email"]);
               if(data["birthday"].substring(5, 7) == new Date().getMonth()+1){
                 $(member).find(".birthday").append(data["birthday"] + " <i class=\"fa fa-birthday-cake\" aria-hidden=\"true\" style=\"color:#FF9900\"></i>");
               }
               else{
                 $(member).find(".birthday").html(data["birthday"]);
               }
+              $(member).find(".phone").html(data["phone"]);
+              $(member).find(".email").html(data["email"]);
+              
             
               var url_checkout = document.createElement("a");
               var url_info = document.createElement("a");
@@ -105,10 +106,10 @@
 <script type="text/template" id="member-template">
   
   <td class="name"></td>
-  <td class="phone"></td>
   <td class="gender"></td>
-  <td class="email"></td>
   <td class="birthday"></td>
+  <td class="phone"></td>
+  <td class="email"></td>
   <td >
     <button class="checkout"></button>
     <button class="info"></button>

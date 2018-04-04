@@ -10,7 +10,7 @@
         <th class="alncenter">姓名</th>
         <th class="alncenter">性別</th>
         <th class="alncenter">生日</th>
-        <th class="alncenter">電話</th>
+        <th class="alncenter">手機號碼</th>
         <th class="alncenter">信箱</th>
       </tr>
     </thead>
@@ -20,10 +20,10 @@
       <tr>
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alncenter"><%= member.name %></td>
-        <td class="alncenter"><%= member.gender%></td>
+        <td class="alncenter"><%= member.gender %></td>
+        <td class="alncenter"><%= member.birthday %></td>
         <td class="alncenter"><%= member.phone %></td>
         <td class="alncenter"><%= member.email %></td>
-        <td class="alncenter"><%= member.birthday %></td>
       </tr>
       <% i = i + 1 %>
     <% end %>
