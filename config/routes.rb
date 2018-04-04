@@ -46,7 +46,6 @@ Rails.application.routes.draw do
       collection do
         get :sales_analysis_day
         get :sales_analysis_statement
-        post :search_outcome
         get :ranking_product
         get :ranking_user
         get :ranking_day
@@ -54,6 +53,7 @@ Rails.application.routes.draw do
         get :not_pick
         get :today
         get :search
+        post :search_outcome
       end
 
       member do 
@@ -81,8 +81,8 @@ Rails.application.routes.draw do
     resources :guests do
       collection do
         get :guest_today
-        post :search_outcome
         get :guest_analysis
+        post :search_outcome
       end
     end
 
@@ -108,11 +108,11 @@ Rails.application.routes.draw do
         post :to_in_service
       end
     end
+    resources :settings, only: [:index, :edit, :update]
     
   end
   
   resources :users, only: [:edit, :update]
-
-#  root "members#index"
+  
   resources :members, only: [:index, :new, :create, :show]
 end
