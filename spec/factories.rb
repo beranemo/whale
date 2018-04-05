@@ -20,7 +20,7 @@ FactoryBot.define do
     member 
     payment_method ["付現","刷卡"].sample
     address ["宅配","自取"].sample
-
+    status false
   end
 
 
@@ -46,7 +46,7 @@ FactoryBot.define do
   factory :member_type do
 
   end
-  
+
   factory :product do
     zh_name "洗髮露"
     price 350..1000

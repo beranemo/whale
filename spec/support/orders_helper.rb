@@ -15,12 +15,12 @@ module OrdersHelper
 
   def create_orders
     User.first.orders.create!(
-      [{member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, created_at: 5.days.ago },
-      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 4.days.ago },
-      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, created_at: 3.days.ago },
-      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 2.days.ago },
-      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 1.days.ago },
-      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 0.days.ago  }]
+      [{member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, status: true, created_at: 5.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, status: true,  created_at: 4.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, status: true, created_at: 3.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, status: true,  created_at: 2.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, status: true,  created_at: 1.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, status: true,  created_at: 0.days.ago  }]
     )
   end
 

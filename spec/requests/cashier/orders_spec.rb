@@ -14,7 +14,7 @@ RSpec.describe 'Cashier::Order', type: :request do
       end
     end
 
-    describe 'if cashier user log in' do
+    describe 'if cashier user log in and then go to orders about page' do
       before do 
         create_user_list
         create_orders
@@ -28,6 +28,14 @@ RSpec.describe 'Cashier::Order', type: :request do
         get today_cashier_orders_path
         expect(response).to have_http_status 200
         expect(assigns(:orders).count).to eq 2
+        expect(Order.all.count).to eq 7
+      end
+
+      it 'Go today not pick orders page should show orders not picked up' do
+        
+        get not_pick_cashier_orders_path
+        expect(response).to have_http_status 200
+        expect(assigns(:orders).count).to eq 1
         expect(Order.all.count).to eq 7
       end
     end
