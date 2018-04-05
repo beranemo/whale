@@ -599,4 +599,19 @@ $orange: #F07B3F;
   border: none;
 }
 
+/* ============================== 21. order-message =========================*/
 
+.col-horizontal {
+  padding-top: 16px;
+  border-top: 1px solid $blue;
+}
+
+.col-horizontal:last-child {
+  border-bottom: 0;
+}
+
+.col-horizontal .col-item {
+  float: left;
+  width: 50%;
+  padding: 0 15px;
+}

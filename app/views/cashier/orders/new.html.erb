@@ -139,14 +139,14 @@
   </div>
   
   <br>
-  <br>
- 
+ <p>訂單訊息</p>
   <div class="row">
     <div class="order-info ">
       <%= form_for [:cashier, @order] do |f|%>
         <div class="col-md-7">
-          
-          <%= f.label :status, "訂單狀態:" %>
+          <div class="col-horizontal clearfix">
+            <div class="col-item">
+          <%= f.label :status, "訂單狀態：" %>
 
           <label class="my_radio">
             <%= f.radio_button :status , true ,:checked => true %>
@@ -158,7 +158,7 @@
           </label>
           <br>
 
-          <%= f.label :address, "取貨方式:" %>
+          <%= f.label :address, "取貨方式：" %>
           <label class="my_radio">
             <%= f.radio_button :address ,"自取", class:"local-radio",:checked => true %>
           自取
@@ -169,7 +169,7 @@
           </label>
           <br>
 
-          <%= f.label :payment_method, "付款方式:" %>
+          <%= f.label :payment_method, "付款方式：" %>
           <label class="my_radio">
           <%= f.radio_button :payment_method ,"付現",:checked => true %>
           付現
@@ -178,22 +178,24 @@
           <%= f.radio_button :payment_method ,"刷卡" %>
           刷卡
           </label>
-          <br>
-          
-          <%= f.label :name, "姓名:" %>
+        </div>
+
+        <div class="col-item">
+          <%= f.label :name, "姓名：" %>
           <%= f.text_field :name %><br>
           
-          <%= f.label :phone, "電話:" %>
+          <%= f.label :phone, "電話：" %>
           <%= f.text_field :phone %><br>
           
-          <%= f.label :address, "地址:" %>
+          <%= f.label :address, "地址：" %>
           <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
+        </div>
+      </div>
+          
 
           
-          <br>
           
-          
-          <%= f.label :remark ,"備註"%>
+          <%= f.label :remark ,"備註："%>
           <%= f.text_area :remark, class:"form-control" %>
         </div>
         <div class="col-md-5">
@@ -213,7 +215,6 @@
             <%= f.label :amount, "折扣後金額" %>
             <%= f.text_field :amount  ,class:"discount_amout form-control alnright", onkeypress:"return setDiscountAmount(event)"%>
             <%= f.hidden_field :member_id, :value => @member.id %>
-            <br>
             <br>
             <%= f.submit "結帳完成並成立訂單",class: "btn-submit" %>
           </div>
