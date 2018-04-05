@@ -2,7 +2,7 @@
   <%= render :partial => "shared/tabs2", :locals => { :selected_item => '停用管理' } %>
 
 
-  <table class="table">
+  <table class="table function-table">
     <tbody >
       <tr>
         <th>分類</th>
@@ -24,11 +24,11 @@
           <td class="alnright"><%= product.price %></td>
           <td><%= product.upc %></td>
           <td><% if product.status == "removed" %><span class="label label-danger">停用中</span><% end %></td>
-          <td>
+          <td class="data-table">
           <% if product.status == "removed" %>
-            <%= link_to "取消停用", listing_cashier_product_path(product), method: :post %>
+            <%= link_to '<i class = "fa fa-check" aria-hidden="true"></i>'.html_safe, listing_cashier_product_path(product), method: :post, onclick:"unremove" , caption: "取消停用" %>
           <% else %>
-            <%= link_to "停用", remove_cashier_product_path(product), method: :post %>
+            <%= link_to '<i class = "fa fa-times" aria-hidden="true"></i>'.html_safe, remove_cashier_product_path(product), method: :post, onclick:"remove" , caption: "停用" %>
           <% end %>  
           </td>
         </tr>
