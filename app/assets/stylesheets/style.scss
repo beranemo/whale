@@ -569,3 +569,20 @@ $orange: #F07B3F;
 .cart-table tr:hover:not(th) {
   background-color: rgba(0, 61, 122,.1);
 }
+
+/* ============================== 19. member-table =========================*/
+
+.member-table {
+  color: #333;
+  border-collapse: separate;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.16);
+
+  border-radius: 2px;
+}
+
+.member-table th {
+  background: rgba(0, 61, 122,1);
+  color: #fff;
+  border: none;
+}
+
