@@ -66,6 +66,8 @@ $("#search-btn").click(function(){
 
       var orders = datas.orders;
       var users = datas.users;
+      var members = datas.members;
+      console.log(members);
       if(orders.length == 0){
             alert("No data found");
       }
@@ -101,7 +103,7 @@ $("#search-btn").click(function(){
               $(order).find(".member_id").html("非會員");
             }
             else{
-              $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + data["member_id"] + "</a>");
+              $(order).find(".member_id").append("<a href=\"/cashier/members/" +data["member_id"]+ "\">" + members[data["id"]] + "</a>");
             }
 
             if(data["guest_id"] == null){
