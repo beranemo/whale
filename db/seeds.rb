@@ -246,7 +246,7 @@ puts "Default_Coupon created!"
 
 # =======================  Setting  =======================
 Setting.destroy_all
-Setting.create(label: "倉庫信箱", code:: "STOREHOUSE", content: "sp831031@gmail.com", note: "倉庫信箱")
+Setting.create(label: "倉庫信箱", code: "STOREHOUSE", content: "sp831031@gmail.com", note: "倉庫信箱")
 
 
 
