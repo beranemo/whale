@@ -299,7 +299,7 @@ class Cashier::OrdersController < Cashier::BaseController
       
       
       @orders_hash ={}
-      
+      @members = {}
       @orders.each do |order|
         
         order_items_hash = {}
@@ -309,6 +309,9 @@ class Cashier::OrdersController < Cashier::BaseController
             order_items_hash[item.product.id].quantity += item.quantity
           else
             order_items_hash[item.product.id] =  Item_Data.new(item.product.zh_name, item.quantity)
+          end
+          if order.member
+            @members[order.id] = order.member.name
           end
         end
         @orders_hash[order.id] = order_items_hash
@@ -327,7 +330,7 @@ class Cashier::OrdersController < Cashier::BaseController
       end
       @total_amount = order_amount_arr.inject(0){|order_amount_arr,x| order_amount_arr + x }
       
-      render :json => {:orders => @orders, :orders_hash => @orders_hash, :users =>@users, :total_amount => @total_amount}
+      render :json => {:orders => @orders, :orders_hash => @orders_hash, :members => @members, :users =>@users, :total_amount => @total_amount}
     end
   end
       
