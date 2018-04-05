@@ -27,7 +27,7 @@ FactoryBot.define do
   factory :member do
     name FFaker::Name.html_safe_last_name
     gender FFaker::GenderCN.random
-    birthday FFaker::IdentificationESCO::expedition_date
+    birthday Date.current
     email FFaker::Internet::email
     phone FFaker::PhoneNumberFR::mobile_phone_number
     skin_type 
