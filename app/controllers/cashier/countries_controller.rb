@@ -2,7 +2,7 @@ class Cashier::CountriesController < Cashier::BaseController
   before_action :set_country, only: [:update, :destroy]
 
   def index
-    @countries = Country.all.order(created_at: :desc)
+    @countries = Country.all.order(system_flag: :asc)
     #@country = Country.new
   end
   
