@@ -1,7 +1,8 @@
 RSpec.describe 'Cashier::Order', type: :request do
-  let(:cashier_user) { create(:user, email: FFaker::Internet.email, name: 'cashier1') }
-   let(:user_with_orders) { create(:user_with_orders) }
+  include OrdersHelper
+  let(:cashier_user) { create(:user, email: FFaker::Internet.email, name: 'cashier1',role: "cashier") }
   let(:user_with_orders) { create(:user_with_orders) }
+
 
 
   context 'go to cashier order page' do
@@ -14,15 +15,20 @@ RSpec.describe 'Cashier::Order', type: :request do
     end
 
     describe 'if cashier user log in' do
-      
-
-      it 'should show today orders' do
-        sign_in(cashier_user)
-        
+      before do 
+        create_user_list
+        create_orders
         user_with_orders
-        get cashier_orders_path
+
+        sign_in(cashier_user)
+      end
+
+      it 'Go today orders page should show only today orders' do
+        
+        get today_cashier_orders_path
         expect(response).to have_http_status 200
-        expect(assigns(:orders).count).to eq 1
+        expect(assigns(:orders).count).to eq 2
+        expect(Order.all.count).to eq 7
       end
     end
   end

@@ -32,7 +32,7 @@ FactoryBot.define do
     phone FFaker::PhoneNumberFR::mobile_phone_number
     skin_type 
     hair_type
-    member_code ["GENERAL","VIP"].sample
+    member_type
   end
 
   factory :skin_type do
@@ -43,6 +43,10 @@ FactoryBot.define do
 
   end
 
+  factory :member_type do
+
+  end
+  
   factory :product do
     zh_name "洗髮露"
     price 350..1000

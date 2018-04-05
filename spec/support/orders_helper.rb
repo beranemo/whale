@@ -1,11 +1,11 @@
 module OrdersHelper
 
   def create_user_list
-    user1 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user1')
-    user2 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user2')
-    user3 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user3')
-    user4 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user4')
-    user5 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user5')
+    user1 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user1',role: 'cashier')
+    user2 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user2',role: 'cashier')
+    user3 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user3',role: 'cashier')
+    user4 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user4',role: 'cashier')
+    user5 = FactoryBot.create(:user, email: FFaker::Internet.email, name: 'user5',role: 'cashier')
 
   end
 
@@ -14,12 +14,13 @@ module OrdersHelper
   end
 
   def create_orders
-    User.first.orders.create(
-      [{ name: 'first order', created_at: 5.days.ago },
-      { name: 'second order', created_at: 4.days.ago },
-      { name: 'third order', created_at: 3.days.ago },
-      { name: 'forth order', created_at: 2.days.ago },
-      { name: 'fifth order', created_at: 1.days.ago }]
+    User.first.orders.create!(
+      [{member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, created_at: 5.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 4.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample, created_at: 3.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 2.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 1.days.ago },
+      {member_id: -1,address: ["宅配","自取"].sample, payment_method: ["付現","刷卡"].sample,  created_at: 0.days.ago  }]
     )
   end
 
