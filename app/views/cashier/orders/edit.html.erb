@@ -77,7 +77,7 @@
   <br>
   <br>
   <table class="table cart-table">
-    <tbody class="cart-item-list">
+    <thead>
       <tr>
         <th>類型</th>
         <th>商品名稱</th>          
@@ -90,7 +90,8 @@
         <th>打折方式</th>
         <th>功能</th>
       </tr> 
-             
+    </thead>
+    <tbody class="cart-item-list">      
       <% @cart_items.each do |item|%>
 
         <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
