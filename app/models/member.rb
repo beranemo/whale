@@ -30,6 +30,8 @@
 #
 
 class Member < ApplicationRecord
+  mount_uploader :avatar, PhotoUploader
+  
   belongs_to :skin_type
   belongs_to :hair_type
   belongs_to :member_type

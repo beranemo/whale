@@ -24,3 +24,4 @@
 
 # Ignore the email info
 config/email.yml
+public/uploads/

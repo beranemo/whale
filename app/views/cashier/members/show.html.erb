@@ -5,8 +5,11 @@
   <br>
 
   <div class="col-md-6">
-    <%= image_tag @member.avatar, class: "img-responsive center-block" if @member.avatar?%>
-      <%= image_tag ("avatar.png"), class: "img-responsive center-block img-rounded"  unless @member.avatar?%> 
+    <% if @member.avatar? %>
+      <%= image_tag @member.avatar, class: "img-responsive center-block" %>
+    <% else %>
+      <%= image_tag ("avatar.png"), class: "img-responsive center-block img-rounded"%> 
+    <% end %>
   </div>
   <div class="col-md-6">
     
@@ -22,7 +25,7 @@
     <% if @member.member_type == nil %>
       (尚未分群組)
     <% else %>
-      <%= @member.member_type.value%>
+      <%= @member.member_type.value %>
     <% end %>
     <br>
     <label>姓名:</label>
