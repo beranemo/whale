@@ -10,6 +10,7 @@
 #  name_zh_tw   :string
 #  name_en_us   :string
 #  code         :string
+#  system_flag  :string
 #
 
 require 'test_helper'
