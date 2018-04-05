@@ -119,5 +119,5 @@ Rails.application.routes.draw do
   
   resources :users, only: [:edit, :update]
   
-  resources :members, only: [:index, :new, :create, :show]
+  resources :members, only: [:new, :create, :show]
 end

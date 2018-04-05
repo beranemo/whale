@@ -1,63 +1,9 @@
 <div class="container avatar">
-  <div class="col-md-6">
-    <%= image_tag @member.avatar, class: "img-responsive center-block" if @member.avatar?%>
-      <%= image_tag ("avatar.png"), class: "img-responsive center-block img-rounded"  unless @member.avatar?%> 
-  </div>
-  <div class="col-md-6">
-   
-    <% if Date.today.month == @member.birthday.month %>
-      *～當月壽星～*
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h3 class="alncenter">會員資料建檔成功</h3>
       <br>
-    <% end %>
-    <br>
-   
-    <label>會員群組</label>    
-    <% if @member.member_type == nil %>
-      (尚未分群組)
-    <% else %>
-      <%= @member.member_type.value%>
-    <% end %>
-    <br>
-    <label>姓名:</label>
-    <%= @member.name%><br>
-    
-    <label>性別:</label>
-    <%= @member.gender%><br>
-    
-    <label>生日:</label>
-    <%= @member.birthday%>
-    <% if @member.birthday.month == Date.current.month %>
-      <span class="label label-warning">當月壽星</span>
-    <% end %>
-    <br>
-    
-    <label>手機:</label>
-    <%= @member.phone%><br>
-    
-    <label>傳真:</label>
-    <%= @member.fax%><br>    
-    
-    <label>信箱:</label>
-    <%= @member.email%><br>    
-    
-    <label>髮質:</label>
-    <%= @member.hair_type.value%><br>
-    
-    <label>膚質:</label>
-    <%= @member.skin_type.value%><br>
-    
-    <!--
-    <label>地址:</label>
-    <%= @member.county%>
-    <%= @member.address%><br>
-    
-    <label>紅利點數:</label>
-    <%= @member.bonus%><br>
-    -->
-    
-    <label>備註:</label>
-    <%= @member.remark%><br>
+      <h4 class="alncenter">請門市人員登入CRM系統確認是否有此資料</h4>
+    </div>
   </div>
-  
-    
 </div>
