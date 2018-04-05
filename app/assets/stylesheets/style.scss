@@ -576,7 +576,6 @@ $orange: #F07B3F;
   color: #333;
   border-collapse: separate;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,.16);
-
   border-radius: 2px;
 }
 
@@ -585,4 +584,19 @@ $orange: #F07B3F;
   color: #fff;
   border: none;
 }
+
+/* ============================== 20. product-table =========================*/
+
+.product-table {
+  color: #333;
+  border: 2px solid $gray;
+  border-radius: 2px;
+}
+
+.product-table th {
+  background: $gray;
+  color: black;
+  border: none;
+}
+
 
