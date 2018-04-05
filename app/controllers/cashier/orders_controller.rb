@@ -258,16 +258,22 @@ class Cashier::OrdersController < Cashier::BaseController
       @orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
 
       order_amount_arr = []
+      @members = {}
       @orders.each do |order|
-      order_amount = order.amount
-      order_amount_arr.push(order_amount)
-      # puts order_amount_arr # 有需要再打開
+        order_amount = order.amount
+        order_amount_arr.push(order_amount)
+        if order.member
+          @members[order.id] = order.member.name
+        end
+        # puts order_amount_arr # 有需要再打開
       end
       @total_amount = order_amount_arr.inject(0){|order_amount_arr,x| order_amount_arr + x }
 
-      @users = Array.new()
+      @users = []
+      
       @orders.each do |order|
       @users  << order.user.name
+
       end
 
       # ranking_day 銷售排行 - 日期銷售
@@ -284,7 +290,7 @@ class Cashier::OrdersController < Cashier::BaseController
       day_order_arr.each {|key, value| day_order_hash[key.to_s[5..9]] += 1 }
       @arr_y2 = day_order_hash.values
 
-      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y, :arr_y2 => @arr_y2}
+      render :json => {:orders => @orders, :total_amount => @total_amount,:members => @members, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y, :arr_y2 => @arr_y2}
 
     else
       date = Date.parse(params[:created_at]).to_time
