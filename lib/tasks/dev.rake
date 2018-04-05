@@ -202,7 +202,6 @@ namespace :dev do
   end
   
   task fake_settings: :environment do
-    Setting.destroy_all
     
     30.times do |i|
       Setting.create!(
