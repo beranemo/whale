@@ -25,8 +25,8 @@ gem 'bootstrap-modal-rails'
 
 
 group :production do
-  # gem 'pg', '~> 0.11'
-  gem 'mysql2'
+  gem 'pg', '~> 0.11'
+#  gem 'mysql2'
 end
 
 group :development, :test do
@@ -37,7 +37,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'mysql2'
+#  gem 'mysql2'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
