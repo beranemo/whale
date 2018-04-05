@@ -243,3 +243,10 @@ puts "Discount_Method created!"
 # =======================  Default_Coupon  =======================
 Product.create(zh_name: "折價卷", price: 0)
 puts "Default_Coupon created!"
+
+# =======================  Setting  =======================
+Setting.destroy_all
+Setting.create(label: "倉庫信箱", code:: "STOREHOUSE", content: "sp831031@gmail.com", note: "倉庫信箱")
+
+
+
