@@ -48,7 +48,7 @@
     </div>
   </div>
   <br>
-  <table class="table">
+  <table class="table member-table">
     <tbody class="customer-info">
       <tr>
         <th>姓名</th>
@@ -72,10 +72,10 @@
   <h2>購買內容</h2>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
-  <button class="btn-clear pull-right" id ="clear-cart">清空商品</button>
+  <button class="btn-danger pull-right" id ="clear-cart" style="height: 30px; width: 90px;">清空商品</button>
   <br>
   <br>
-  <table class="table">
+  <table class="table cart-table">
     <thead>
       <tr>
         <th>類型</th>
@@ -130,7 +130,7 @@
       <% end %>
     </tbody>
   </table>
-  <hr>
+  <br>
   <div class="text-right">
     <span class="fa fa-dollar"></span>
     <input class="discount-input" type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
@@ -224,7 +224,7 @@
     
   <br>
   <h2>商品列表</h2>
-  <table class="table" data-toggle="table">
+  <table class="table product-table" data-toggle="table">
     <thead>
       <tr>
         <th>類型</th>
