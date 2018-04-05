@@ -2,7 +2,7 @@
  
   <%= render :partial => "shared/tabs2", :locals => { :selected_item => '所有商品' } %>
 
-  <table class="table" style="display: block;overflow-x: auto;white-space: nowrap;">
+  <table class="table function-table" style="display: block;overflow-x: auto;white-space: nowrap;">
     <tbody >
       <tr>
         <th>分類</th>
@@ -31,8 +31,8 @@
           <td class="alnleft" title="<%= product.zh_ingredients %>"><%= truncate(product.zh_ingredients, length: 30) %></td>
           <td class="alnleft" title="<%= product.en_ingredients %>"><%= truncate(product.en_ingredients, length: 30) %></td>
           <td class="alnleft" title="<%= product.directions %>"><%= truncate(product.directions, length: 30) %></td>
-          <td>
-            <%= link_to cashier_product_path(product) do %>詳細內容<% end %>
+          <td class="data-table">
+            <%= link_to '<i class = "fa fa-info-circle" aria-hidden="true"></i>'.html_safe, cashier_product_path(product), onclick:"product" , caption: "詳細內容"%>
           </td>
         </tr>
       <% end %>

@@ -23,7 +23,7 @@
           <h4 class="modal-title">會員清單</h4>
         </div>
         <div class="modal-body">
-          <table class="table">
+          <table class="table function-table">
             <thead>
               <tr>
                 <th>姓名</th>
@@ -335,8 +335,9 @@
               var url_checkout = document.createElement("a");
 
               url_checkout.href = "/cashier/orders/new?id=" +member.id;
-              $(url_checkout).html("帶入會員");              
-              $(member).find(".checkout").html(url_checkout);             
+              url_checkout.setAttribute("caption", "帶入會員");
+              $(url_checkout).html(" <i class=\"fa fa-user-plus\" aria-hidden=\"true\"></i>");              
+              $(member).find(".function").append(url_checkout);             
 
               $("#search-list").append(member);
             }
@@ -883,7 +884,7 @@
   <td class="gender"></td>
   <td class="email"></td>
   <td class="birthday"></td>
-  <td >
-    <button class="checkout btn-default my-btn" type="button"></button>
+  <td class="function data-table">
+    
   </td>
 </script>
