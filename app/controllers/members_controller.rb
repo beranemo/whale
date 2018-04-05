@@ -13,6 +13,7 @@ class MembersController < ApplicationController
 
   def create
     @member = Member.new(member_params)
+    @member.member_type_id = MemberType.first.id
     if @member.save!
       flash[:notice] = "已成功建立會員資料"
       redirect_to member_path(@member)
@@ -33,7 +34,7 @@ class MembersController < ApplicationController
       :fax,
       :phone,
       :email,
-      :hair_code,
+      :hair_type_id,
       :skin_type_id,
       :avatar)
   end
