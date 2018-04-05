@@ -549,3 +549,23 @@ $orange: #F07B3F;
 .function-table > tbody > tr > td {
   line-height: 1.8;
 }
+
+/* ============================== 18. cart-table =========================*/
+
+.cart-table {
+  color: #333;
+  border-collapse: separate;
+  border: 2px solid $blue;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.16);
+  border-radius: 2px;
+}
+
+.cart-table th {
+  background: $blue;
+  color: #fff;
+  border: none;
+}
+
+.cart-table tr:hover:not(th) {
+  background-color: rgba(0, 61, 122,.1);
+}
