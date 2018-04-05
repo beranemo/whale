@@ -3,18 +3,23 @@
   <table class="table">
     <thead>
       <tr>
-        <th>code</th>
-        <th>content</th>
-
+        <th>設置</th>
+        <th>設定內容</th>
+        <th>功能</th>
       </tr>
     </thead>
     <tbody>          
       <% @settings.each do |setting| %>
         <tr>         
-          <td><%= setting.code %></td>
+          <td><%= setting.note %></td>
           <td><%= setting.content %></td>
+          <td>
+            <%= link_to '編輯', edit_cashier_setting_path(id: setting.id) %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
+
