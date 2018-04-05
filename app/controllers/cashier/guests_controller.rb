@@ -58,7 +58,7 @@ class Cashier::GuestsController < Cashier::BaseController
     @guests = Guest.where("created_at >= ?", Time.zone.now.beginning_of_day)
     @gender_hash = @guests.group_by{|h| h[:gender]}.map{|k,v| [k, v.size]}.to_h
     @guest_type_hash = @guests.group_by{|h| h.guest_type.guest_type}.map{|k,v| [k, v.size]}.to_h
-    @country_hash = @guests.group_by{|h| h.country.country_type}.map{|k,v| [k, v.size]}.to_h
+    @country_hash = @guests.group_by{|h| h.country.name_zh_tw}.map{|k,v| [k, v.size]}.to_h
     @age_hash = @guests.group_by{|h| h.age.age_type}.map{|k,v| [k, v.size]}.to_h
     @info_way_hash = @guests.group_by{|h| h.info_way.news_channel}.map{|k,v| [k, v.size]}.to_h
 

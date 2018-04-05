@@ -1,4 +1,5 @@
-<div class="container col-md-4 col-md-offset-4">
+<br>
+ <div class="container col-md-4 col-md-offset-4">
   <div class="panel panel-default">
     <div class="panel-heading">
     <h3 class="panel-title text-center">CRM平台</h3>
@@ -43,10 +44,6 @@
           <%= f.submit "確定修改資料", class: "btn btn-primary btn-block" %>
         </div>
       <% end %>
-      <hr>
-      <h3 class="alncenter">註銷帳號</h3>
-
-      <p class="alncenter"><%= button_to "註銷帳號", registration_path(resource_name), data: { confirm: "確定註銷此帳號?" }, method: :delete , class: "btn btn-warning btn-block" %></p>
 
       <%= link_to "Back", :back %>
 

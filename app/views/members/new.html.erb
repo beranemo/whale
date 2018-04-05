@@ -24,7 +24,7 @@
       <br>
 
       <%= f.label :birthday, "生日" %>
-      <%= f.date_select :birthday, class: "form-control" %>
+      <%= f.date_select :birthday, class: "form-control", start_year: 1920 %>
       <br>
       <br>
 
@@ -41,7 +41,7 @@
       <br>      
 
       <%= f.label :hair_id, "髮質" %>
-      <%= f.collection_select :hair_code, HairType.all, :code, :value, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :hair_type_id, HairType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :skin_id, "膚質" %>
@@ -52,7 +52,7 @@
       <%= f.file_field :avatar %>
       <br>
 
-      <%= f.submit "確定加入會員", class: "btn btn-primary form-control" %>
+      <%= f.submit "確定加入會員", class: "btn-submit" %>
     </div>
   <% end %>
   </div>

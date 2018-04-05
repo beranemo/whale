@@ -18,14 +18,14 @@
     <thead id="search-list">
       <tr>
         <th data-sortable="true" data-field="created_at">訂購日期</th>
-        <th data-sortable="true" data-field="id">編號</th>
-        <th>訂單狀態</th>
-        <th>結帳人員</th>
-        <th>顧客編號</th>
+        <th data-sortable="true" data-field="id">訂單編號</th>
+        <th>會員姓名</th>
         <th>購買商品</th>
         <th>付款方式</th>
         <th>取貨方式</th>
-        <th data-sortable="true" data-field="amount">總金額</th>
+        <th data-sortable="true" data-field="amount">訂單金額</th>
+        <th>狀態</th>
+        <th>結帳人員</th>
       </tr>
     </thead>
     <tbody>
@@ -58,6 +58,7 @@ $("#search-btn").click(function(){
       var orders_hash = datas.orders_hash;
       var orders = datas.orders;
       var users = datas.users;
+      var members = datas.members;
 
       var total_amount = document.createElement("p");
       total_amount.className = "alnright";
@@ -91,7 +92,7 @@ $("#search-btn").click(function(){
             $(order).find(".member_id").html("非會員");
           }
           else{
-            $(order).find(".member_id").html(data["member_id"]);
+            $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + members[data["id"]] + "</a>");
           }
           for(var key in item_datas){
             $(order).find(".order_item").append(item_datas[key]["name"]+"*"+item_datas[key]["quantity"]+",");
@@ -116,12 +117,12 @@ $("#search-btn").click(function(){
 
   <td class="date"></td>
   <td class="sn"></td>
-  <td class="status"></td>
-  <td class="user"></td>
   <td class="member_id"></td>
-  <td class="order_item"></td>
+  <td class="order_item alnleft"></td>
   <td class="payment_method"></td>
   <td class="address"></td>
   <td class="amount" style="text-align: right"></td>
+  <td class="status"></td>
+  <td class="user"></td>
 
 </script>

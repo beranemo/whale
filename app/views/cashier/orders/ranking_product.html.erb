@@ -10,8 +10,9 @@
       <tr>
         <th>分類</th>
         <th>中文名稱</th>
-        <th>國際通用碼</th>
+        <th>國際條碼</th>
         <th>規格</th>
+        <th>定價</th>
         <th>數量</th>
       </tr>
     </tbody>  
@@ -20,12 +21,13 @@
       <% @product_ranking.each do |item| %> 
       <tr>
         <td><%= item.product.category %></td>
-        <td><%= item.product.zh_name %>
+        <td class="alnleft"><%= item.product.zh_name %>
         <% if i == 0 %>
         <i class = "glyphicon glyphicon-fire" aria-hidden="true" style="color:red"></i>
         <% end %></td>
         <td><%= item.product.upc %></td>
         <td><%= item.product.capacity %></td>
+        <td class="alnright"><%= item.product.price %></td>   
         <td><%= @product_quantity[i]  %></td>
       </tr>
       <% i += 1 %>

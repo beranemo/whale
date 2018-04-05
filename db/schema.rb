@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180401103811) do
+ActiveRecord::Schema.define(version: 20180405082743) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -66,6 +66,10 @@ ActiveRecord::Schema.define(version: 20180401103811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_active", default: true
+    t.string "name_zh_tw"
+    t.string "name_en_us"
+    t.string "code"
+    t.string "system_flag"
   end
 
   create_table "discount_methods", force: :cascade do |t|
@@ -108,7 +112,6 @@ ActiveRecord::Schema.define(version: 20180401103811) do
   end
 
   create_table "hair_types", force: :cascade do |t|
-    t.string "code"
     t.string "value"
     t.string "system_flag", default: "N"
     t.datetime "created_at", null: false
@@ -125,7 +128,6 @@ ActiveRecord::Schema.define(version: 20180401103811) do
   end
 
   create_table "member_types", force: :cascade do |t|
-    t.string "code"
     t.string "value"
     t.string "system_flag", default: "N"
     t.datetime "created_at", null: false
@@ -156,6 +158,8 @@ ActiveRecord::Schema.define(version: 20180401103811) do
     t.integer "skin_type_id"
     t.integer "hair_id"
     t.string "hair_code"
+    t.integer "hair_type_id"
+    t.integer "member_type_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -201,6 +205,15 @@ ActiveRecord::Schema.define(version: 20180401103811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "code"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "note"
+    t.string "label"
   end
 
   create_table "skin_types", force: :cascade do |t|

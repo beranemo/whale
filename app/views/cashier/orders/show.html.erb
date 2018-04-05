@@ -6,7 +6,7 @@
   <% if @order.member_id == -1%>
     顧客編號：非會員
   <% else%>
-    顧客編號：<%= @order.member_id%>
+    顧客編號：<%= @order.member_id%> <%= @order.member.name %>
   <% if @order_counts >= 2 %>
     <span class="label label-success">回購</span>
   <% else%>
@@ -20,25 +20,25 @@
     <tbody>
 
       <tr>
-        <th>商品名稱</th>
+        <th class=" alnleft">商品名稱</th>
         <th>國際條碼</th>
         <th>規格</th>
-        <th>單價</th>
+        <th class="alnright">單價</th>
         <th>數量</th>
-        <th>小計</th>
-        <th>折扣金額</th>
-        <th>售價</th>
+        <th class="alnright">小計</th>
+        <th class="alnright">折扣金額</th>
+        <th class="alnright">售價</th>
       </tr>
       <% @order_items.each do |p| %>
       <tr>
-        <td><%= p.product.zh_name %></td>
+        <td class=" alnleft"><%= p.product.zh_name %></td>
         <td><%= p.product.upc %></td>
         <td><%= p.product.capacity %></td>
-        <td><%= p.product.price %></td>
+        <td class="alnright"><%= p.product.price %></td>
         <td><%= p.quantity %></td>
-        <td><%= p.product.price * p.quantity%></td>
-        <td><%= (p.product.price * p.quantity) -p.price %></td>
-        <td><%= p.price %></td>
+        <td class="alnright"><%= p.product.price * p.quantity%></td>
+        <td class="alnright"><%= (p.product.price * p.quantity) -p.price %></td>
+        <td class="alnright"><%= p.price %></td>
         <% @origin_amount += p.price%>
       </tr>
       <% end %>
@@ -74,7 +74,7 @@
           <% if @order.member_id == -1 %>
             路人 <%= @order.name %>
           <% else%>
-           會員 <%= @order.name %>
+           會員 <%= @order.member.name %>
           <% end%>
         </td>
         <td><%= @order.payment_method %></td>

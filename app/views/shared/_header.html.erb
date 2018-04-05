@@ -16,11 +16,12 @@
           <% if current_user.cashier? or current_user.admin? %>
             <li><%= link_to("每日日誌", cashier_blogs_path) %></li>
             <li><%= link_to("更改名稱", edit_user_path(current_user)) %></li>
-            <li><%= link_to("密碼變更", edit_user_registration_path) %></li>
-            <li><%= link_to("所有會員資料", cashier_members_path) %></li>
-            <li><%= link_to("所有訂單資料", cashier_orders_path) %></li>
-            <li><%= link_to("門市人員資料", cashier_users_path) %></li>            
+            <li><%= link_to("密碼變更", edit_user_registration_path) %></li>                      
             <% if current_user.admin? %>
+              <li><%= link_to("進階設定", cashier_settings_path) %></li>
+              <li><%= link_to("所有會員資料", cashier_members_path) %></li>
+              <li><%= link_to("所有訂單資料", cashier_orders_path) %></li>
+              <li><%= link_to("門市人員資料", cashier_users_path) %></li> 
             <% end %>
             <li><%= link_to('<i class = "glyphicon glyphicon-log-out" aria-hidden="true"></i> Log out'.html_safe, destroy_user_session_path, method: :delete)%></li>
           <% end %>  

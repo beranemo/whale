@@ -1,9 +1,7 @@
 <div class="container">
- 
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '新增會員' } %>
-  
+   
   <br>
-  <h4>新增會員</h4>
+  <h4>會員資料修改</h4>
   <%= form_for [:cashier, @member] do |f| %>
     <div class="form-group">
 
@@ -40,15 +38,15 @@
       <%= f.email_field :email , class: "form-control"%>
       <br>
 
-      <%= f.label :hair_id, "髮質" %>
+      <%= f.label :hair_type_id, "髮質" %>
       <%= f.collection_select :hair_type_id, HairType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
-      <%= f.label :skin_id, "膚質" %>
+      <%= f.label :skin_type_id, "膚質" %>
       <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
       
-      <%= f.label :member_code, "會員群組(內部人員註記用)" %>
+      <%= f.label :member_type_id, "會員群組(內部人員註記用)" %>
       <%= f.collection_select :member_type_id, MemberType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
       <br>
 
@@ -61,7 +59,7 @@
       <br>
       
       
-      <%= f.submit "確定新增會員",class: "btn-submit" %>
+      <%= f.submit "送出", class: "btn btn-primary" %>
     </div>
   <% end %>           
 </div>

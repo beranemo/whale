@@ -2,22 +2,7 @@
 
   <%= render :partial => "shared/tabs_setting", :locals => { :selected_item => '國籍設定' } %>
   <br>
- 
-  <div class="form-inline" >
-    <%= form_for [:cashier, @country] do |f| %>
-      <div class="form-group">
-        <%= f.text_field :country_type, placeholder: "請輸入國家", class: "form-control" %>
-      </div>
-      <%= f.submit "新增", class: "btn btn-primary" %>
-      
-      <% if @country.errors.any? %>
-        <%= @country.errors.full_messages.to_sentence %>
-      <% end %>
-      
-    <% end %>
-  </div> 
- 
-  <br>
+
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -32,14 +17,17 @@
     <% @countries.each do |country| %>       
       <tr>
         <th scope="row" class="alncenter"><%= i %></th>
-        <td class="alnleft"><%= country.country_type %></td>
+        <td class="alnleft"><%= country.name_zh_tw %></td>
         <td>
         <% if country.is_active %><span class="label label-success">啓用中</span><% end %>
         <% if !country.is_active %><span class="label label-danger">停用中</span><% end %>
         </td>
         <td>
-          <%= link_to '編輯', cashier_country_path(id: country.id) %> ｜
-          <%= link_to '刪除', cashier_country_path(country), method: :delete, data: {confirm:"確定刪除?"} %>
+          <% if country.is_active %>
+            <%= link_to "停用國家", remove_cashier_country_path(country), method: :post %>
+          <% else %>
+            <%= link_to "國家啓用", listing_cashier_country_path(country), method: :post %>
+          <% end %> 
         </td>
       </tr>
       <% i = i + 1 %>

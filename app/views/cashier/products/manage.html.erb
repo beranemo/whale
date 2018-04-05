@@ -7,10 +7,10 @@
       <tbody >
         <tr>
           <th>分類</th>
-          <th>中文名稱</th>
-          <th>英文名稱</th>
+          <th class="alnleft">中文名稱</th>
+          <th class="alnleft">英文名稱</th>
           <th>規格</th>
-          <th>價錢</th>
+          <th class="alnright">價錢</th>
           <th>國際條碼</th>
           <th>數量</th>
           <th>增減數量</th>
@@ -22,10 +22,10 @@
             <tr>
           <% end %>
             <td><%= product.category %></td>
-            <td><%= product.zh_name %></td>
-            <td><%= product.en_name %></td>
+            <td class="alnleft"><%= product.zh_name %></td>
+            <td class="alnleft"><%= product.en_name %></td>
             <td><%= product.capacity %></td>
-            <td><%= product.price %></td>
+            <td class="alnright"><%= product.price %></td>
             <td><%= product.upc %></td>
             <td><%= product.quantity %></td>
             <td><input type="number" name="products[<%=product.id%>][quantity]" min="-100" max="100" value="0" class="alnright"></td>

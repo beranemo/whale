@@ -1,15 +1,15 @@
 <div class="container">
 
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '最新活動' } %>
-  
-  <br />
+
+    <br />
   
   <%= link_to "新增活動內容" , new_cashier_bulletin_path , class: "btn btn-primary center-block" %>
     
   <br />
   
   <div class="col-md-12">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered function-table">
       <thead>
         <tr>
           <th>起始日期</th>
@@ -28,9 +28,11 @@
             <td><%= bulletin.title %></td>
             <td class="alnleft"><%= bulletin.content %></td>
             <td><%= bulletin.user.name %></td>
-            <td>
-              <%= link_to "編輯", edit_cashier_bulletin_path(bulletin)%> ｜
-              <%= link_to '刪除', cashier_bulletin_path(bulletin), method: :delete, data: {confirm:"是否確認刪除?"} %>
+            <td class="data-table">
+            <% if bulletin.user == current_user %>
+              <%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_bulletin_path(bulletin), onclick:"edit" , caption: "編輯活動" %>
+              <%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, cashier_bulletin_path(bulletin), method: :delete, data: {confirm:"是否確認刪除?"}, onclick:"delete" , caption: "刪除活動" %>
+            <% end %>  
             </td>
           </tr>
         <% end %>

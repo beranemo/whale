@@ -3,9 +3,8 @@ class UserMailer < ApplicationMailer
 
   def notify_order_deliver(order)
     @order = order
-   
-
-    mail to: User.find_by(role: "storehouse").email,
+    
+    mail to: Setting.find_by(code: "STOREHOUSE").content,
     subject: "茶籽堂 | 訂單成立: #{@order.id}"
   end
 end

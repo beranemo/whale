@@ -12,4 +12,16 @@ class Cashier::BaseController < ApplicationController
       redirect_to root_path
     end
   end
+  
+  def authenticate_admin
+    if current_user.admin?
+    elsif current_user.cashier?
+      flash[:alert] = "You are not admin!"
+      redirect_to root_path
+    else
+      flash[:alert] = "You are not admin!"
+      redirect_to root_path
+    end
+  end
+  
 end

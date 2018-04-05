@@ -1,6 +1,8 @@
 class Cashier::OrdersController < Cashier::BaseController
   before_action :set_order, only: [:show, :pick_up, :edit, :set_member, :update,
-                                   :new_guest, :create_guest, ]
+                                   :new_guest, :create_guest]
+  
+  before_action :authenticate_admin, only: [:index]
 
 
   Item_Data = Struct.new(:name, :quantity)#分析訂單商品時用來存的object type
@@ -23,7 +25,7 @@ class Cashier::OrdersController < Cashier::BaseController
       product = item.product
       product.quantity -= item.quantity
       if product.quantity <= 0
-        flash[:alert] = "商品庫存數量錯誤."
+        flash[:alert] = "商品庫存數量錯誤"
       end
 
       stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
@@ -37,7 +39,13 @@ class Cashier::OrdersController < Cashier::BaseController
 
   def new_guest
     @guest = Guest.new
-
+    if @order.member
+      @guest.gender = @order.member.gender
+      @guest.guest_type_id = GuestType.find_by(guest_type: "舊客").id
+    else
+      @guest.guest_type_id = GuestType.find_by(guest_type: "新客").id
+      @guest.gender = "男"
+    end
   end
 
   def create_guest
@@ -52,6 +60,7 @@ class Cashier::OrdersController < Cashier::BaseController
   end
 
   def edit
+
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
     @order_items.each do |item|
@@ -64,8 +73,8 @@ class Cashier::OrdersController < Cashier::BaseController
 
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")
-    @cart_coupons = current_cart.cart_items.where('product_id = ?',@coupon.id)
-    @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
+    @cart_coupons = current_cart.cart_items.where('product_id = ?', @coupon.id)
+    @cart_items = current_cart.cart_items.where('product_id != ?', @coupon.id)
     @products = Product.where('id != ?',@coupon.id) 
     @coupon_discount = 0
     @cart_coupons.each do |c|
@@ -74,6 +83,9 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.amount -= @coupon_discount
     if params[:member_id] != nil
       @member = Member.find(params[:member_id])
+      @order.name = @member.name
+      @order.phone = @member.phone
+      
     elsif @order.member_id != -1
       @member = Member.find(@order.member_id)
     else
@@ -97,8 +109,8 @@ class Cashier::OrdersController < Cashier::BaseController
 
 
   def set_member  
+    
 
-    @member = Member.new
   end
 
   def new
@@ -108,8 +120,8 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.amount = 0
     @order.discount_off = 100
     @products = Product.where('id != ?',@coupon.id) 
-    @cart_items = current_cart.cart_items.where('product_id != ?',@coupon.id)
-    @cart_coupons = current_cart.cart_items.where('product_id = ?',@coupon.id)
+    @cart_items = current_cart.cart_items.where('product_id != ?', @coupon.id)
+    @cart_coupons = current_cart.cart_items.where('product_id = ?', @coupon.id)
     @coupon_discount = 0
     @cart_coupons.each do |c|
       @coupon_discount += c.discount_off
@@ -119,7 +131,7 @@ class Cashier::OrdersController < Cashier::BaseController
       @member = Member.find(params[:id])
       @order.name = @member.name
       @order.phone = @member.phone
-      @order.address = @member.address
+      
     else
       @member = Member.new(id: -1)
     end
@@ -168,7 +180,7 @@ class Cashier::OrdersController < Cashier::BaseController
       
       @order.status =  (@order.status || @order.address != "自取")
       flash[:notice] = "成功更新訂單記錄"
-      redirect_to cashier_orders_path
+      redirect_to cashier_order_path(@order.id)
     else
       flash[:alert] = @guest.errors.full_messages.to_sentence
       
@@ -188,7 +200,8 @@ class Cashier::OrdersController < Cashier::BaseController
       @order = current_user.orders.build(order_params)
       today = Date.today.to_s
       today.slice!("2")
-      @order.sn = today.tr('-','').to_i * 1000 + current_cart.id
+      today_order_count = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+      @order.sn = today.tr('-','').to_i * 1000 + today_order_count + 1
       current_cart.cart_items.each do |item|
         product = item.product
         if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
@@ -240,21 +253,27 @@ class Cashier::OrdersController < Cashier::BaseController
     if params[:type] == "period"
       s_date = Date.parse(params[:s_date]).to_time
       e_date = Date.parse(params[:e_date]).to_time
-      puts s_date
-      puts e_date
+      # puts s_date # 有需要再打開
+      # puts e_date # 有需要再打開
       @orders = Order.where(created_at: s_date.beginning_of_day..e_date.end_of_day).order(created_at: :asc)
 
       order_amount_arr = []
+      @members = {}
       @orders.each do |order|
-      order_amount = order.amount
-      order_amount_arr.push(order_amount)
-      puts order_amount_arr
+        order_amount = order.amount
+        order_amount_arr.push(order_amount)
+        if order.member
+          @members[order.id] = order.member.name
+        end
+        # puts order_amount_arr # 有需要再打開
       end
       @total_amount = order_amount_arr.inject(0){|order_amount_arr,x| order_amount_arr + x }
 
-      @users = Array.new()
+      @users = []
+      
       @orders.each do |order|
       @users  << order.user.name
+
       end
 
       # ranking_day 銷售排行 - 日期銷售
@@ -271,16 +290,16 @@ class Cashier::OrdersController < Cashier::BaseController
       day_order_arr.each {|key, value| day_order_hash[key.to_s[5..9]] += 1 }
       @arr_y2 = day_order_hash.values
 
-      render :json => {:orders => @orders, :total_amount => @total_amount, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y, :arr_y2 => @arr_y2}
+      render :json => {:orders => @orders, :total_amount => @total_amount,:members => @members, :users => @users, :arr_x => @arr_x, :arr_y => @arr_y, :arr_y2 => @arr_y2}
 
     else
       date = Date.parse(params[:created_at]).to_time
-      puts date
+      # puts date # 有需要再打開
       @orders = Order.where(created_at: date.beginning_of_day..date.end_of_day)
       
       
       @orders_hash ={}
-      
+      @members = {}
       @orders.each do |order|
         
         order_items_hash = {}
@@ -290,6 +309,9 @@ class Cashier::OrdersController < Cashier::BaseController
             order_items_hash[item.product.id].quantity += item.quantity
           else
             order_items_hash[item.product.id] =  Item_Data.new(item.product.zh_name, item.quantity)
+          end
+          if order.member
+            @members[order.id] = order.member.name
           end
         end
         @orders_hash[order.id] = order_items_hash
@@ -304,11 +326,11 @@ class Cashier::OrdersController < Cashier::BaseController
       @orders.each do |order|
       order_amount = order.amount
       order_amount_arr.push(order_amount)
-      puts order_amount_arr
+      # puts order_amount_arr # 有需要再打開
       end
       @total_amount = order_amount_arr.inject(0){|order_amount_arr,x| order_amount_arr + x }
       
-      render :json => {:orders => @orders, :orders_hash => @orders_hash, :users =>@users, :total_amount => @total_amount}
+      render :json => {:orders => @orders, :orders_hash => @orders_hash, :members => @members, :users =>@users, :total_amount => @total_amount}
     end
   end
       
@@ -326,7 +348,7 @@ class Cashier::OrdersController < Cashier::BaseController
       order_items = order.order_items
 
       order_item_arr.concat(order_items)
-      puts order_item_arr
+      # puts order_item_arr # 有需要再打開
     end
     total = order_item_arr.delete_if {|k| k.product_id == 1 }.sort_by { |k| k["product_id"] }
     total_uni = total.uniq{|t| t["product_id"]}
@@ -335,7 +357,7 @@ class Cashier::OrdersController < Cashier::BaseController
     order_item_hash = Hash.new(0)
     product_quantity_arr.each {|key, value| order_item_hash[key] += value}
 
-    puts order_item_hash
+    # puts order_item_hash # 有需要再打開
 
     product_id_ranking_arr = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @product_quantity = order_item_hash.sort_by{ |k, v| v }.reverse.transpose.last
@@ -346,7 +368,8 @@ class Cashier::OrdersController < Cashier::BaseController
     total_uni.each do |order|
     @products  << order.product.zh_name
     @products.delete_if {|k| k.to_s == "折價卷" } 
-    puts @products
+    
+    # puts @products # 有需要再打開
     end
 
     @y = order_item_hash.sort_by{ |k, v| k }.transpose.last
@@ -362,7 +385,7 @@ class Cashier::OrdersController < Cashier::BaseController
     user_amount_arr = total.pluck(:user_id, :amount).sort!
     order_user_hash = Hash.new(0)
     user_amount_arr.each {|key, value| order_user_hash[key] += value}
-    puts @order_user_hash
+    # puts @order_user_hash # 有需要再打開
 
     user_id_ranking_arr = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.first
     @user_amount = order_user_hash.sort_by{ |k, v| v }.reverse.transpose.last
@@ -373,7 +396,7 @@ class Cashier::OrdersController < Cashier::BaseController
     total_uni.each do |order|
     @users  << order.user.name
 
-    puts @users
+    # puts @users # 有需要再打開
     end
 
     @y = order_user_hash.sort_by{ |k, v| k }.transpose.last
@@ -386,7 +409,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
     @hour_amount_hash = Hash.new(0)
     hour_amount_arr.each {|key, value| @hour_amount_hash[key.hour] += value}
-    puts @hour_amount_hash
+    # puts @hour_amount_hash # 有需要再打開
 
     @arr_x = [10,11,12,13,14,15,16,17,18,19,20,21,22]
     @arr_y = [0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -400,14 +423,32 @@ class Cashier::OrdersController < Cashier::BaseController
   private
 
   def order_params
-    params.require(:order).permit(:member_id, :payment_method, :address,
-                                  :phone, :name, :remark,
-                                  :amount, :discount_off, :status,
-                                  :user_id, :created_at)
+    params.require(:order).permit(
+      :member_id, 
+      :payment_method, 
+      :address,
+      :phone, 
+      :name, 
+      :remark,
+      :amount, 
+      :discount_off, 
+      :status,
+      :user_id, 
+      :created_at
+      )
   end
   
   def guest_params
-    params.require(:guest).permit(:payment, :gender, :guest_type_id, :country_id, :age_id, :info_way_id, :user_id, :remark)
+    params.require(:guest).permit(
+      :payment, 
+      :gender, 
+      :guest_type_id, 
+      :country_id, 
+      :age_id, 
+      :info_way_id, 
+      :user_id, 
+      :remark
+      )
   end
 
   def set_order

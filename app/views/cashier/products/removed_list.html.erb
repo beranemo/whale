@@ -2,14 +2,14 @@
   <%= render :partial => "shared/tabs2", :locals => { :selected_item => '停用管理' } %>
 
 
-  <table class="table">
+  <table class="table function-table">
     <tbody >
       <tr>
         <th>分類</th>
-        <th>中文名稱</th>
-        <th>英文名稱</th>
+        <th class="alnleft">中文名稱</th>
+        <th class="alnleft">英文名稱</th>
         <th>規格</th>
-        <th>價錢</th>
+        <th class="alnright">價錢</th>
         <th>國際條碼</th>
         <th>狀態</th>
         <th>功能</th>
@@ -18,17 +18,17 @@
       <% @products.each do |product| %>
         <tr>
           <td><%= product.category %></td>
-          <td><%= product.zh_name %></td>
-          <td><%= product.en_name %></td>
+          <td class="alnleft"><%= product.zh_name %></td>
+          <td class="alnleft"><%= product.en_name %></td>
           <td><%= product.capacity %></td>
-          <td><%= product.price %></td>
+          <td class="alnright"><%= product.price %></td>
           <td><%= product.upc %></td>
           <td><% if product.status == "removed" %><span class="label label-danger">停用中</span><% end %></td>
-          <td>
+          <td class="data-table">
           <% if product.status == "removed" %>
-            <%= link_to "取消停用", listing_cashier_product_path(product), method: :post %>
+            <%= link_to '<i class = "fa fa-check" aria-hidden="true"></i>'.html_safe, listing_cashier_product_path(product), method: :post, onclick:"unremove" , caption: "取消停用" %>
           <% else %>
-            <%= link_to "停用", remove_cashier_product_path(product), method: :post %>
+            <%= link_to '<i class = "fa fa-times" aria-hidden="true"></i>'.html_safe, remove_cashier_product_path(product), method: :post, onclick:"remove" , caption: "停用" %>
           <% end %>  
           </td>
         </tr>

@@ -3,17 +3,17 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   <%= render :partial => "shared/tab_order", :locals => { :selected_item => '未領取訂單' } %>
 
-  <table class="table table-hover" data-toggle="table" id="table" >
+  <table class="table table-hover function-table" data-toggle="table" id="table" >
     <thead>
       <tr>
         <th data-sortable="true" data-field="created_at">訂購日期</th>
-        <th data-sortable="true" data-field="id">編號</th>
-        <th>結帳人員</th>
-        <th>顧客編號</th>
+        <th data-sortable="true" data-field="id">訂單編號</th>
+        <th>會員姓名</th>
         <th>付款方式</th>
         <th>取貨方式</th>
-        <th data-sortable="true" data-field="amount">總金額</th>
+        <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>結帳人員</th>
         <th>功能</th>
       </tr>
     </thead>
@@ -23,12 +23,13 @@
       <tr>
         <td><%= order.created_at.localtime.to_s(:db)[0..15] %></td>
         <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn %><% end %></td>
-        <td><%= order.user.name %></td>
         <td>
           <% if order.member_id == -1%>
             非會員
           <% else%>
-            <%= order.member_id%>
+            <%= link_to (cashier_member_path(order.member_id)) do %>
+              <%= order.member.name%>
+            <% end %>
             <% if @orders.where(member_id: order.member_id).count >= 2 %>
               <span class="label label-success">回購</span>
             <% else%>
@@ -42,9 +43,12 @@
         <td class="text-danger">
             未取貨
         </td>
-        <td>
-          <%= link_to "編輯",edit_cashier_order_path(order.id) %> ｜
-          <%= link_to "取貨完成",pick_up_cashier_order_path(order.id), method: :post%>
+        <td><%= order.user.name %></td>
+        <td class="data-table">
+        <% if order.user == current_user %> 
+          <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_order_path(order.id), onclick:"edit" , caption: "編輯訂單" %>
+          <%= link_to '<i class = "fa fa-check" aria-hidden="true"></i>'.html_safe, pick_up_cashier_order_path(order.id), method: :post, onclick:"pickup" , caption: "取貨完成"%>
+        <% end %>  
         </td>
       </tr>
       

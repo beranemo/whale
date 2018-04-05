@@ -26,8 +26,8 @@ namespace :dev do
         birthday: FFaker::IdentificationESCO::expedition_date,
         email: FFaker::Internet::email,
         skin_type: SkinType.all.sample,
-        hair_code: HairType.all.sample.code,
-        member_code: MemberType.all.sample.code
+        hair_type: HairType.all.sample,
+        member_type: MemberType.all.sample
         )
       member.save!
     end
@@ -45,7 +45,7 @@ namespace :dev do
         country: Country.where(id:1..6).sample,
         age: Age.all.sample,
         info_way: InfoWay.all.sample,
-        user: User.all.sample
+        user: User.in_service.sample
       )
     end
     
@@ -73,7 +73,7 @@ namespace :dev do
       end_date: Date.today,
       title: "洗手露半價活動",
       content: "髮身系列任兩件，享洗手露(330mL)半價優惠",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -81,7 +81,7 @@ namespace :dev do
       end_date: Date.today,
       title: "青蜜乳液活動",
       content: "330mL青蜜滋養乳液＋髮或身系列330mL任選，贈50mL荷葉沐浴露（價值130元）",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -89,7 +89,7 @@ namespace :dev do
       end_date: Date.today,
       title: "碗盤人促銷組合",
       content: "碗盤優惠組（1瓶550mL+2包補充包）",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -97,7 +97,7 @@ namespace :dev do
       end_date: Date.today,
       title: "護手唇系列優惠",
       content: "手唇系列買2件贈50mL洗髮露（價值130元，桑白皮洗髮露）",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -105,7 +105,7 @@ namespace :dev do
       end_date: Date.today,
       title: "護手唇系列優惠",
       content: "手唇系列買4贈1（價值350元）（擇價低者贈，不適用滿額禮）",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -113,7 +113,7 @@ namespace :dev do
       end_date: Date.today,
       title: "隨單贈",
       content: "贈品牌季刊乙本",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -121,7 +121,7 @@ namespace :dev do
       end_date: Date.today,
       title: "滿額禮",
       content: "滿1500, 贈禮輕情重體驗組",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     Bulletin.create!(
@@ -129,7 +129,7 @@ namespace :dev do
       end_date: Date.today,
       title: "滿額禮",
       content: "滿2500, 贈小鹿版畫禮盒",
-      user: User.all.sample
+      user: User.in_service.sample
     )
     
     puts "create fake bulletins, have #{Bulletin.count} bulletins data"
@@ -194,12 +194,23 @@ namespace :dev do
         published_at: FFaker::IdentificationESCO::expedition_date,
         weather: "晴",
         content: "今天新加坡客戶3人，台灣4人，澳門5人",
-        user: User.all.sample
+        user: User.in_service.sample
       )
     end
     
     puts "create fake blogs, have #{Blog.count} blogs data"
   end
+  
+  task fake_settings: :environment do
+    
+    30.times do |i|
+      Setting.create!(
+        code: "A" + i.to_s,
+        content: "123"
+      )
+    end
+  end
+
 
   task fake_all: :environment do
     Rake::Task['db:drop'].execute

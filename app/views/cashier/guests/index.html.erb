@@ -81,7 +81,7 @@ $("#search-btn").click(function(){
             $(guest).find(".payment").html(data["payment"].replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $(guest).find(".gender").html(data["gender"]);
             $(guest).find(".guest_type").html(data["guest_type"]["guest_type"]);
-            $(guest).find(".country").html(data["country"]["country_type"]);
+            $(guest).find(".country").html(data["country"]["name_zh_tw"]);
             $(guest).find(".age").html(data["age"]["age_type"]);
             $(guest).find(".info_way").html(data["info_way"]["news_channel"]);
             $(guest).find(".remark").html(data["remark"]);

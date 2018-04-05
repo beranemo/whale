@@ -21,13 +21,13 @@
     <thead id="search-list">
       <tr>
         <th data-sortable="true" data-field="created_at">訂購日期</th>
-        <th data-sortable="true" data-field="id">編號</th>
-        <th>訂單狀態</th>
-        <th>結帳人員</th>
-        <th>顧客編號</th>
+        <th data-sortable="true" data-field="id">訂單編號</th>
+        <th>會員姓名</th>
         <th>付款方式</th>
         <th>取貨方式</th>
-        <th data-sortable="true" data-field="amount">總金額</th>
+        <th data-sortable="true" data-field="amount">訂單金額</th>
+        <th>狀態</th>
+        <th>結帳人員</th>
       </tr>
     </thead>
     <tbody>
@@ -62,6 +62,8 @@ $("#search-btn").click(function(){
       var total_amount_value = datas.total_amount;
       var orders = datas.orders;
       var users = datas.users;
+      var members = datas.members;
+      
       if(orders.length == 0){
             alert("No data found");
       }
@@ -88,7 +90,7 @@ $("#search-btn").click(function(){
               $(order).find(".member_id").html("非會員");
             }
             else{
-              $(order).find(".member_id").html(data["member_id"]);
+              $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + members[data["id"]] + "</a>");
             }
             $(order).find(".payment_method").html(data["payment_method"]);
             $(order).find(".address").html(data["address"]);
@@ -108,11 +110,11 @@ $("#search-btn").click(function(){
 
   <td class="date"></td>
   <td class="sn"></td>
-  <td class="status"></td>
-  <td class="user"></td>
   <td class="member_id"></td>
   <td class="payment_method"></td>
   <td class="address"></td>
   <td class="amount" style="text-align: right"></td>
+  <td class="status"></td>
+  <td class="user"></td>
 
 </script>

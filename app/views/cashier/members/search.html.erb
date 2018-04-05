@@ -15,15 +15,15 @@
   </form> 
   <br>
  
-  <table class="table">
+  <table class="table function-table">
     <tbody id="search-list">
       
       <tr>
         <th>姓名</th>
-        <th>手機號碼</th>
         <th>性別</th>
-        <th>信箱</th>
         <th>生日</th>
+        <th>手機號碼</th>
+        <th>信箱</th>
         <th>功能</th>
       </tr>     
         
@@ -66,15 +66,16 @@
               $(member).attr("class","search-item");
               $(member).html($("#member-template").html());
               $(member).find(".name").html(data["name"]);
-              $(member).find(".phone").html(data["phone"]);
               $(member).find(".gender").html(data["gender"]);
-              $(member).find(".email").html(data["email"]);
               if(data["birthday"].substring(5, 7) == new Date().getMonth()+1){
                 $(member).find(".birthday").append(data["birthday"] + " <i class=\"fa fa-birthday-cake\" aria-hidden=\"true\" style=\"color:#FF9900\"></i>");
               }
               else{
                 $(member).find(".birthday").html(data["birthday"]);
               }
+              $(member).find(".phone").html(data["phone"]);
+              $(member).find(".email").html(data["email"]);
+              
             
               var url_checkout = document.createElement("a");
               var url_info = document.createElement("a");
@@ -84,13 +85,17 @@
               url_info.href = "/cashier/members/" +member.id ;
               url_history.href = "/cashier/members/" +member.id + "/show_orders";
 
-              $(url_checkout).html("成立訂單");
-              $(url_info).html("詳細資料");
-              $(url_history).html("訂單記錄");
+              url_checkout.setAttribute("caption", "成立訂單");
+              url_info.setAttribute("caption", "會員資料");
+              url_history.setAttribute("caption", "訂單記錄");
+
+              $(url_checkout).html(" <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>");
+              $(url_info).html(" <i class=\"fa fa-user\" aria-hidden=\"true\"></i>");
+              $(url_history).html(" <i class=\"fa fa-list-alt\" aria-hidden=\"true\"></i>");
               
-              $(member).find(".checkout").html(url_checkout);
-              $(member).find(".info").html(url_info);
-              $(member).find(".history").html(url_history);
+              $(member).find(".function").append(url_checkout);
+              $(member).find(".function").append(url_info);
+              $(member).find(".function").append(url_history);
               
 
               $("#search-list").append(member);
@@ -105,13 +110,9 @@
 <script type="text/template" id="member-template">
   
   <td class="name"></td>
-  <td class="phone"></td>
   <td class="gender"></td>
-  <td class="email"></td>
   <td class="birthday"></td>
-  <td >
-    <button class="checkout"></button>
-    <button class="info"></button>
-    <button class="history"></button>
-  </td>
+  <td class="phone"></td>
+  <td class="email"></td>
+  <td class="function data-table"></td>
 </script>

@@ -4,17 +4,17 @@
   <%= render :partial => "shared/tab_member", :locals => { :selected_item => '訂單記錄' } %>
   
   <br>
-  <table class="table table-hover" data-toggle="table" id="table" >
+  <table class="table table-hover function-table" data-toggle="table" id="table" >
     <thead>
       <tr>
         <th data-sortable="true" data-field="created_at">訂購日期</th>
-        <th data-sortable="true" data-field="id">編號</th>
-        <th>結帳人員</th>
-        <th>顧客編號</th>
+        <th data-sortable="true" data-field="id">訂單編號</th>
+        <th>會員姓名</th>
         <th>付款方式</th>
         <th>取貨方式</th>
-        <th data-sortable="true" data-field="amount">總金額</th>
+        <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>結帳人員</th>
         <th>功能</th>
       </tr>
     </thead>
@@ -24,12 +24,11 @@
       <tr>
         <td><%= order.created_at.localtime.to_s(:db)%></td>
         <td><%= link_to (cashier_order_path(order.id)) do %><%= order.sn%><% end %></td>
-        <td><%= order.user.name %></td>
         <td>
           <% if order.member_id == -1%>
             非會員
           <% else%>
-            <%= order.member_id%>
+            <%= order.member.name%>
             <% if @orders.where(member_id: order.member_id).count >= 2 %>
               <span class="label label-success">回購</span>
             <% else%>
@@ -39,17 +38,17 @@
         </td>
         <td><%= order.payment_method%></td>
         <td><%= order.address%></td>
-        <td><%= number_to_currency(order.amount, precision: 0)%></td>
+        <td class="alnright"><%= number_to_currency(order.amount, precision: 0)%></td>
         <% if order.status %>
           <td>已取貨</td>
         <% else %>
           <td class="text-danger">未取貨</td>
-        <% end%>  
-        <td>
-          <%= link_to "編輯訂單",edit_cashier_order_path(order.id)%>
-          <%= link_to "訂單歸戶",set_member_cashier_order_path(order.id)%>
+        <% end%>
+        <td><%= order.user.name %></td>
+        <td class="data-table">
+          <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe,edit_cashier_order_path(order.id), onclick:"checkout" , caption: "編輯訂單" %>
           <% if order.guest_id == nil %>
-            <%= link_to "建立客情",new_guest_cashier_order_path(order.id)%>
+            <%= link_to '<i class = "fa fa-handshake-o" aria-hidden="true"></i>'.html_safe,new_guest_cashier_order_path(order.id), onclick:"checkout" , caption: "建立客情" %>
           <% end %>
         </td>
       </tr>

@@ -3,14 +3,16 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '搜尋會員' } %>
   <%= render :partial => "shared/tabs_query_members", :locals => { :selected_item => '下月壽星清單' }  %>
 
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered function-table">
     <thead>
       <tr>
         <th class="alncenter">編號</th>
         <th class="alncenter">姓名</th>
         <th class="alncenter">性別</th>
-        <th class="alncenter">電話</th>
         <th class="alncenter">生日</th>
+        <th class="alncenter">手機號碼</th>
+        <th class="alncenter">信箱</th>
+        <th class="alncenter">功能</th>
       </tr>
     </thead>
     <tbody>
@@ -19,9 +21,14 @@
       <tr>
         <th scope="row" class="alncenter"><%= i %></th>
         <td class="alncenter"><%= member.name %></td>
-        <td class="alncenter"><%= member.gender%></td>
-        <td class="alncenter"><%= member.phone %></td>
+        <td class="alncenter"><%= member.gender %></td>
         <td class="alncenter"><%= member.birthday %></td>
+        <td class="alncenter"><%= member.phone %></td>
+        <td class="alncenter"><%= member.email %></td>
+        <td class="data-table">
+          <%= link_to '<i class = "fa fa-user" aria-hidden="true"></i>'.html_safe, cashier_member_path(id: member.id), onclick:"user" , caption: "會員資料"  %>
+          <%= link_to '<i class = "fa fa-list-alt" aria-hidden="true"></i>'.html_safe, show_orders_cashier_member_path(id: member.id), onclick:"orders" , caption: "訂單記錄"  %>
+        </td>
       </tr>
       <% i = i + 1 %>
     <% end %>

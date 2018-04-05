@@ -25,4 +25,5 @@ class Order < ApplicationRecord
   validates_presence_of :member_id, :payment_method, :address
   has_many :order_products, through: :order_items, source: :product
   belongs_to :guest, optional: true
+  belongs_to :member, optional: true
 end

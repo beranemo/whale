@@ -27,17 +27,17 @@ Rails.application.routes.draw do
       end
       
     end
-    resources :products, only: [:new, :index, :edit, :update] do
+    resources :products, only: [:new, :index, :edit, :update, :show] do
       member do
         post :add_to_cart
         post :remove
         post :listing
       end
       collection do
-        post :barcode_to_cart
-        post :import
         get :manage
         get :removed_list
+        post :barcode_to_cart
+        post :import
         post :update_all
       end
     end
@@ -46,7 +46,6 @@ Rails.application.routes.draw do
       collection do
         get :sales_analysis_day
         get :sales_analysis_statement
-        post :search_outcome
         get :ranking_product
         get :ranking_user
         get :ranking_day
@@ -54,6 +53,7 @@ Rails.application.routes.draw do
         get :not_pick
         get :today
         get :search
+        post :search_outcome
       end
 
       member do 
@@ -61,6 +61,7 @@ Rails.application.routes.draw do
         get :edit_products
         post :create_guest
         post :pick_up
+        post :set_member
       end
     end
 
@@ -80,8 +81,8 @@ Rails.application.routes.draw do
     resources :guests do
       collection do
         get :guest_today
-        post :search_outcome
         get :guest_analysis
+        post :search_outcome
       end
     end
 
@@ -91,22 +92,32 @@ Rails.application.routes.draw do
     resources :skin_types, except: [:show]
     resources :member_types, except: [:show]
     resources :guest_types, except: [:show]
-    resources :countries
+    resources :countries, only: [:index] do
+      member do
+        post :remove
+        post :listing
+      end
+    end
     resources :ages, except: [:show]
     resources :info_ways, except: [:show]
-    resources :discount_methods
+    resources :discount_methods, only: [:index] do
+      member do
+        post :remove
+        post :listing
+      end
+    end
     resources :blogs
-    resources :users, only: [:index] do
+    resources :users, only: [:index, :new, :create] do
       member do
         post :to_resigned
         post :to_in_service
       end
     end
+    resources :settings, only: [:index, :edit, :update]
     
   end
   
   resources :users, only: [:edit, :update]
-
-#  root "members#index"
+  
   resources :members, only: [:index, :new, :create, :show]
 end

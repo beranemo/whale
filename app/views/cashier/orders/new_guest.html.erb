@@ -3,7 +3,7 @@
   <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
   <%= render :partial => "shared/tab_order", :locals => { :selected_item => '今日訂單' } %>
   
-  <h4>建立客情</h4>
+  <h4>訂單編號<%= @order.sn %>  建立客情  </h4>
   <%= form_for [:cashier, @guest], :url => create_guest_cashier_order_path(id: @order,guest: @guest) do |f| %>
     <div class="form-group">
 
@@ -29,7 +29,7 @@
       <br>
 
       <%= f.label :country_id, "國籍" %>
-      <%= f.collection_select :country_id, Country.all, :id, :country_type, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :country_id, Country.in_service, :id, :name_zh_tw, {prompt: true}, {class: "form-control"} %>
       <br>
 
       <%= f.label :age_id, "年齡結構" %>
@@ -44,7 +44,7 @@
       <%= f.text_area :remark, class: "form-control" %>
       <br>
 
-      <%= f.submit "新增紀錄",class: "btn btn-primary" %>
+      <%= f.submit "新增紀錄",class: "btn-submit" %>
 
     </div>
   <% end %>
