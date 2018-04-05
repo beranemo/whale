@@ -3,7 +3,7 @@
 
     <% if @blog.id != nil %>
       <%= f.label :published_at, "日期" %>
-      <%= f.text_field :published_at, class: "form-control" %>
+      <%= f.datetime_select :published_at, class: "form-control" %>
       <br>
     <% end %>
     

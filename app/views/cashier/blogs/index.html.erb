@@ -5,13 +5,14 @@
   <br>
   <div class="col-md-12">
 
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered function-table">
       <thead>
         <tr>
           <th class="alncenter">日期</th>
           <th class="alncenter">天氣</th>
           <th class="alncenter">內容</th>
           <th class="alncenter">門市人員</th>
+          <th class="alncenter">功能</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,12 @@
             <td><%= blog.weather %></td>
             <td><%= blog.content %></td>
             <td><%= blog.user.name %></td>
+            <td class="data-table">
+            <% if blog.user == current_user  %>
+              <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_blog_path(blog), onclick:"edit" , caption: "編輯日誌" %>
+              <%= link_to '<i class = "fa fa-trash" aria-hidden="true"></i>'.html_safe, cashier_blog_path(blog), method: :delete, data: {confirm:"確定刪除?"}, onclick:"delete" , caption: "刪除日誌" %>
+            <% end %>  
+            </td>
           </tr>
         <% end %>
       </tbody>

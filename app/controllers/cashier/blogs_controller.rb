@@ -6,14 +6,6 @@ class Cashier::BlogsController < ApplicationController
   
   def new
     @blog = Blog.new
-    puts "================="
-    puts @blog
-    puts @blog == nil
-    puts @blog.id
-    puts @blog.id == nil
-    puts @blog.weather
-    puts @blog.weather == nil
-    puts "=========="
   end
 
   def create
@@ -26,6 +18,32 @@ class Cashier::BlogsController < ApplicationController
     else
       flash.now[:alert] = @blog.errors.full_messages.to_sentence
       render :new
+    end
+  end
+  
+  def edit
+    @blog = Blog.find(params[:id])
+  end
+
+  def update
+    @blog = Blog.find(params[:id])
+    if @blog.update(blog_params)
+      flash[:notice] = "成功更新日誌"
+      redirect_to cashier_blogs_path
+    else
+      flash.now[:alert] = @blog.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+  
+  def destroy
+    @blog = Blog.find(params[:id])
+    if @blog.destroy
+      flash[:notice] = "日誌已成功刪除"
+      redirect_to cashier_blogs_path
+    else
+      @blogs = Blog.all
+      render :index
     end
   end
   
