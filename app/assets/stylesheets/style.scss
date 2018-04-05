@@ -486,11 +486,11 @@ $orange: #F07B3F;
 }
 .data-table a {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 27px;
+  height: 27px;
   color: #999;
-  line-height: 19px !important;
-  font-size: 8px !important;
+  line-height: 23px !important;
+  font-size: 18px !important;
   text-align: center;
   border: 2px solid currentColor;
   border-radius: 100%;
@@ -546,4 +546,6 @@ $orange: #F07B3F;
   opacity: 1;
 }
 
-
+.function-table > tbody > tr > td {
+  line-height: 1.8;
+}
