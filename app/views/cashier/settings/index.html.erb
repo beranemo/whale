@@ -1,5 +1,7 @@
-<br>
+
 <div class="container">
+    <%= render :partial => "shared/tabs_admin", :locals => { :selected_item => '進階設定' } %>
+
   <table class="table">
     <thead>
       <tr>
@@ -13,8 +15,8 @@
         <tr>         
           <td><%= setting.note %></td>
           <td><%= setting.content %></td>
-          <td>
-            <%= link_to '編輯', edit_cashier_setting_path(id: setting.id) %>
+          <td class="data-table">
+            <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_setting_path(id: setting.id), onclick:"edit" , caption: "編輯" %>
           </td>
         </tr>
       <% end %>

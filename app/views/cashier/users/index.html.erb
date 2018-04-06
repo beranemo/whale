@@ -1,6 +1,7 @@
 <div class="container">
- 
-  <br>
+
+  <%= render :partial => "shared/tabs_admin", :locals => { :selected_item => '門市人員資料' } %>
+
   <%= link_to "新增門市人員帳號", new_cashier_user_path, class: "btn btn-primary center-block" %>
   <br>
   <table class="table" data-toggle="table">
@@ -23,11 +24,11 @@
               <span class="label label-success">在職中</span>
             <% end %>
           </td>
-          <td>
+          <td class="data-table">
             <% if user.resigned %>
-              <%= link_to "恢復成在職", to_in_service_cashier_user_path(user), method: :post %>
+              <%= link_to '<i class = "fa fa-check" aria-hidden="true"></i>'.html_safe, to_in_service_cashier_user_path(user), method: :post, onclick:"unremove" , caption: "恢復成在職"  %>
             <% else %>
-              <%= link_to "轉換為離職", to_resigned_cashier_user_path(user), method: :post %>
+              <%= link_to '<i class = "fa fa-times" aria-hidden="true"></i>'.html_safe, to_resigned_cashier_user_path(user), method: :post, onclick:"remove" , caption: "轉換為離職" %>
             <% end %>
           </td>
         </tr>

@@ -11,63 +11,70 @@
       <%= image_tag ("avatar.png"), class: "img-responsive center-block img-rounded"%> 
     <% end %>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6 member-show data-table">
     
-    <%= link_to "編輯", edit_cashier_member_path(@member) %>
+      <ul>
+        <li>
+          <span>會員群組：</span>
+          <% if @member.member_type == nil %>
+            <span>(尚未分群組)</span>
+          <% else %>
+            <span><%= @member.member_type.value %></span>
+          <% end %>
+        </li>
+        <li>
+          <span>姓名：</span>
+          <span><%= @member.name%></span>
+        </li>
+        <li>
+          <span>性別：</span>
+          <span><%= @member.gender%></span>
+        </li>
+        <li>
+            <span>生日：</span>
+            <span><%= @member.birthday%></span>
+            <% if @member.birthday.month == Date.current.month %>
+              <i class="fa fa-birthday-cake" aria-hidden="true" style="color:#FF9900"></i>
+            <% end %>
+        </li>
+        <li>
+          <span>手機：</span>
+          <span><%= @member.phone%></span>
+        </li>
+        <li>
+          <span>傳真：</span>
+          <span><%= @member.fax%></span>
+        </li>
+        <li>
+          <span>信箱：</span>
+          <span><%= @member.email%></span>
+        </li>
+        <li>
+          <span>髮質：</span>
+          <span><%= @member.hair_type.value%></span>
+        </li>
+        <li>
+          <span>膚質：</span>
+          <span><%= @member.skin_type.value%></span>
+        </li>
+<!--         <li>
+          <span>地址：</span>
+          <span><%= @member.county%><%= @member.address%></span>
+        </li>
+        <li>
+          <span>紅利點數：</span>
+          <span><%= @member.bonus%></span>
+        </li> -->
+        <li>
+          <span>備註：</span>
+          <span><%= @member.remark%></span>
+        </li>
+      </ul>
+      <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_member_path(@member), onclick:"edit" , caption: "編輯會員資料", class:'pull-right' %>
+    </div>
     
-    <% if Date.today.month == @member.birthday.month %>
-      *～當月壽星～*
-      <br>
-    <% end %>
-    <br>
-   
-    <label>會員群組</label>    
-    <% if @member.member_type == nil %>
-      (尚未分群組)
-    <% else %>
-      <%= @member.member_type.value %>
-    <% end %>
-    <br>
-    <label>姓名:</label>
-    <%= @member.name%><br>
-    
-    <label>性別:</label>
-    <%= @member.gender%><br>
-    
-    <label>生日:</label>
-    <%= @member.birthday%>
-    <% if @member.birthday.month == Date.current.month %>
-      <i class="fa fa-birthday-cake" aria-hidden="true" style="color:#FF9900"></i>
-    <% end %>
-    <br>
-    
-    <label>手機:</label>
-    <%= @member.phone%><br>
-    
-    <label>傳真:</label>
-    <%= @member.fax%><br>    
-    
-    <label>信箱:</label>
-    <%= @member.email%><br>    
-    
-    <label>髮質:</label>
-    <%= @member.hair_type.value%><br>
-    
-    <label>膚質:</label>
-    <%= @member.skin_type.value%><br>
-    
-    <!--
-    <label>地址:</label>
-    <%= @member.county%>
-    <%= @member.address%><br>
-    
-    <label>紅利點數:</label>
-    <%= @member.bonus%><br>
-    -->
-    
-    <label>備註:</label>
-    <%= @member.remark%><br>
-  </div>
+
+</div>
   
 </div>
 <br>
