@@ -37,11 +37,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 3.1'
-   gem 'rails-controller-testing'
+  gem 'rails-controller-testing'
 end
 
 group :development do
-#  gem 'mysql2'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
