@@ -1,6 +1,6 @@
 <div class="container">
  
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '會員資料(測試用，暫時)' } %>
+  <%= render :partial => "shared/tabs_admin", :locals => { :selected_item => '所有會員資料' } %>
   <%= link_to 'CSV Download', cashier_members_path(:format => :csv) %>
   <br>
 

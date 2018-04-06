@@ -638,3 +638,33 @@ $orange: #F07B3F;
     min-width: 5em;
     text-align: right;
 }
+
+/* ============================== 23. tab-admin =========================*/
+.admin-tab{
+  margin: 35px 0;
+  text-align: center;
+}
+
+.admin-tab li{
+  float: none;
+  display: inline-block;
+}
+
+.admin-tab li a{
+  margin: 0;
+  padding: 10px 30px;
+  border-radius: 0px;
+  border-bottom: 1px solid;
+  border-color: #EEDDDD;
+  color: #696969;
+}
+
+.admin-tab > li.active > a,
+.admin-tab > li.active > a:hover,
+.admin-tab > li.active > a:focus{
+  color: #000;
+  background-color: white;  
+  border-bottom: 5px solid;
+  border-color: #984b4b;
+  font-weight: bold;
+}
