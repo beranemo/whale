@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_cart
 
+  layout :layout
+
   private
 
   def current_cart
@@ -21,5 +23,10 @@ class ApplicationController < ActionController::Base
 
     session[:cart_id] = @cart.id
     @cart
+  end
+
+  def layout
+  # 登入畫面關閉layout顯示
+  is_a?(Devise::SessionsController) ? false : "application"
   end
 end

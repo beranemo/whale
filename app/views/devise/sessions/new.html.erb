@@ -1,34 +1,58 @@
-<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<div class="container col-md-4 col-md-offset-4">
-  <div class="login-form">
-    <div class="panel-heading">
-    <h2 class="panel-title text-center">歡迎使用CRM平台</h2>
-    </div>
-    <div class="panel-body">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field form-group">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, class: "form-control" %>
-      </div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Whale</title>
+    <%= csrf_meta_tags %>
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  
+  <body style="background-color: #f0f0f0">
+    <div class="content">
+      <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 
-      <div class="field form-group">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-      </div>
+      <div class="login">
+        <div class="login-container">
+          <div class="login-pic">
+            <%= image_tag("login.png", :calss => 'login-product')  %>
+          </div>
+          <div class="login-content">
+            <h2 style="text-align: center;">歡迎使用CRM平台</h2>
+            <br>
+            <br>
 
-      <% if devise_mapping.rememberable? -%>
-        <div class="field" form-group>
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <ul>
+                <li class="form-row">
+                  <label>Email</label>
+                  <%= f.email_field :email, autofocus: true %>
+                </li>
+                <li class="form-row">
+                  <label>Password</label>
+                  <%= f.password_field :password, autocomplete: "off"%>
+                </li>
+                  <% if devise_mapping.rememberable? -%>
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                  <% end -%>
+                  <br>
+                  <br>
+                <li class="form-row">
+                  <div class="actions">
+                    <%= f.submit "登入", class: "btn-clear" %>
+                  </div>
+                </li>
+                <li>
+                  <%= link_to '<i class = "glyphicon glyphicon-play" aria-hidden="true"></i> 前往會員申請畫面'.html_safe,new_member_path %>
+                </li>
+              </ul>
+            <% end %>
+
+          </div>
         </div>
-      <% end -%>
-
-      <div class="actions form-group">
-        <%= f.submit "登入", class: "btn btn-primary btn-block" %>
       </div>
-    <% end %>
 
     </div>
-  </div>
-    <%= link_to '<i class = "glyphicon glyphicon-play" aria-hidden="true"></i> 前往會員申請畫面'.html_safe,new_member_path %>
-</div>
+  </body>
+</html>
