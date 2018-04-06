@@ -47,6 +47,14 @@ ul, ol {
   outline: none;
 }
 
+// 去除input 自動填入後黃框
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* ============================== 01. footer - bottom method =========================*/
 html {
 height: 100%;
