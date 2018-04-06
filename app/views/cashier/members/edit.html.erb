@@ -4,7 +4,7 @@
   <h4>會員資料修改</h4>
   <%= form_for [:cashier, @member] do |f| %>
     <div class="form-group">
-
+      
       <%= f.label :name, "姓名" %>
       <%= f.text_field :name , class: "form-control"%>
       <br>   
@@ -58,7 +58,7 @@
       <%= f.file_field :avatar %>
       <br>
       
-      <%= f.submit "送出", class: "btn btn-primary" %>
+      <%= f.submit "送出", class: "btn-submit" %>
     </div>
   <% end %>           
 </div>
