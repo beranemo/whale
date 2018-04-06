@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405082743) do
+ActiveRecord::Schema.define(version: 20180406045837) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -197,9 +197,9 @@ ActiveRecord::Schema.define(version: 20180405082743) do
     t.string "upc"
     t.string "use_for"
     t.text "directions"
-    t.string "zh_m_ingredients"
-    t.string "zh_ingredients"
-    t.string "en_ingredients"
+    t.text "zh_m_ingredients"
+    t.text "zh_ingredients"
+    t.text "en_ingredients"
     t.integer "quantity", default: 0
     t.string "status"
     t.datetime "created_at", null: false
