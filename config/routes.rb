@@ -19,6 +19,8 @@ Rails.application.routes.draw do
         get :birthday_this_month
         get :birthday_next_month
         post :search_outcome
+        get :file_new
+        post :import
       end
       
       member do

@@ -1,0 +1,37 @@
+<div class="container">
+  <%= render :partial => "shared/tabs_admin", :locals => { :selected_item => '匯入會員資料' } %>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4" style="text-align: center">
+    <%= form_tag import_cashier_products_path, multipart: true do %>
+      <%= image_tag ("xlsx.png") , style:'height:150px' %>
+      <%= file_field_tag :file %>
+      <br>
+      <%= submit_tag "更新" , class:'btn btn-success form-control'%>
+    <% end %>
+    
+    </div>
+  </div>
+  <div class="row text-center" style="margin: 30px">
+    <div class="text-danger">
+      <h5><i class="fa fa-exclamation-circle" aria-hidden="true"></i> 注意：上傳內容會根據「 電話號碼 」更新原會員資料</h5>
+      <br>
+      <h4>Excel 文件第一列欄位格式應符合以下文字：</h4>
+    </div>
+    <br>
+    <table class="table">
+      <thead>
+        <th>中文品名</th>
+        <th>英文品名</th>
+        <th>規格</th>
+        <th>定價</th>
+        <th>國際條碼</th>
+        <th>適用對象</th>
+        <th>使用方法</th>
+        <th>中文主成分</th>
+        <th>中文全成分</th>
+        <th>英文全成分</th>
+        <th>數量</th>
+      </thead>
+    </table>
+  </div>
+</div>
