@@ -82,6 +82,6 @@ class Member < ApplicationRecord
       member.status = "listing" 
       member.save!
     end
-  end
+
   end
 end
