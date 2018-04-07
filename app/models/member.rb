@@ -50,4 +50,38 @@ class Member < ApplicationRecord
       end
     end
   end
+
+  def self.update_by_file(file)
+    attribute = Hash["姓名" => "name" ,
+                    "電話" => "phone",
+                    "性別" => "gender",
+                    "email" => "email",
+                    "生日" => "birthday",
+                    "傳真" => "fax",
+                    "會員群組" => "member_code",
+                    "郵遞區號" => "zip",
+                    "居住縣市" => "county",
+                    "居住地址" => "address",
+                    "紅利點數" => "bonus",
+                    "請問您是如何認識茶籽堂" => "info_way_id",
+                    "您的膚質為何" => "skin_type",
+                    "您的髮質為何" => "hair_type"                    
+                    ]
+    sheet = Roo::Spreadsheet.open(file.path)
+    header = sheet.row(1)
+    header.each_with_index do |val, index|
+      header[index] = attribute[val]
+    end
+
+    for i in 2..sheet.last_row()
+      row = Hash[[header,sheet.row(i)].transpose]
+      member = find_by(phone: row["phone"]) || new
+      
+      member.attributes = row.to_hash
+      
+      member.status = "listing" 
+      member.save!
+    end
+  end
+  end
 end

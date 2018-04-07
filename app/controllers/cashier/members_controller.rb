@@ -19,6 +19,10 @@ class Cashier::MembersController < Cashier::BaseController
     @orders =@member.orders
   end
 
+  def import
+    
+  end
+
   def new
     @member = Member.new
   end
