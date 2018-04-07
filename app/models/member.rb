@@ -50,4 +50,46 @@ class Member < ApplicationRecord
       end
     end
   end
+
+  def self.update_by_file(file)
+    attribute = Hash["姓名" => "name" ,
+                    "電話" => "phone",
+                    "性別" => "gender",
+                    "email" => "email",
+                    "生日" => "birthday",
+                    "傳真" => "fax",
+                    "會員群組" => "member_type_id",
+                    "郵遞區號" => "zip",
+                    "居住縣市" => "county",
+                    "居住地址" => "address",
+                    "紅利點數" => "bonus",
+                    "請問您是如何認識茶籽堂" => "info_way_id",
+                    "您的膚質為何" => "skin_type_id",
+                    "您的髮質為何" => "hair_type_id"                    
+                    ]
+    sheet = Roo::Spreadsheet.open(file.path)
+    header = sheet.row(1)
+    header.each_with_index do |val, index|
+      header[index] = attribute[val]
+    end
+
+    for i in 2..sheet.last_row()
+      row = Hash[[header,sheet.row(i)].transpose]
+      row.delete(nil)
+      member = find_by(phone: row["phone"]) || new
+      
+      skin_type_id = SkinType.find_by(value: row["skin_type_id"]).id
+      hair_type_id = HairType.find_by(value: row["hair_type_id"]).id
+      member_type_id = MemberType.find_by(value: row["member_type_id"]).id
+      info_way_id = InfoWay.find_by(news_channel: row["info_way_id"]).id
+      row["skin_type_id"] = skin_type_id
+      row["hair_type_id"] = hair_type_id
+      row["member_type_id"] = member_type_id
+      row["info_way_id"] = info_way_id
+      member.attributes = row.to_hash
+
+      member.save!
+    end
+
+  end
 end

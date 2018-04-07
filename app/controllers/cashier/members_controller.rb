@@ -1,5 +1,5 @@
 class Cashier::MembersController < Cashier::BaseController
-  before_action :authenticate_user!
+
 
   def index
     @members = Member.all.order(created_at: :desc)
@@ -17,6 +17,12 @@ class Cashier::MembersController < Cashier::BaseController
   def show_orders
     @member = Member.find(params[:id])
     @orders =@member.orders
+  end
+
+  def import
+    Member.update_by_file(params[:file])
+    flash[:notice] = "成功匯入會員資料"
+    redirect_to cashier_members_path
   end
 
   def new

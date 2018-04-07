@@ -33,10 +33,10 @@ puts "Guest_type created!"
 SkinType.destroy_all
 
 skin_type_list = [
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "中性膚質（一般膚質）" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "中性膚質(一般膚質)" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "油性膚質" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "乾性膚質" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "混合性膚質" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "混和性膚質" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "敏感膚質" }
 ]
 
@@ -53,11 +53,11 @@ puts "Skin_type created!"
 HairType.destroy_all
 
 hair_type_list = [
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "中性髮質" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "油性髮質" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "中性髮質(一般髮質)" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "油性頭皮" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "染燙受損髮質" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "乾性髮質" },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "毛躁髮質" },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "毛躁髮" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "有頭皮屑困擾" }
 ]
 
