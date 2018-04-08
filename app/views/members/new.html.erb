@@ -37,7 +37,11 @@
 
       <%= f.label :email, "電子信箱" %>
       <%= f.email_field :email, class: "form-control"%>
-      <br>      
+      <br>  
+      
+      <%= f.label :address, "地址" %>
+      <%= f.text_field :address , class: "form-control"%>
+      <br>          
 
       <%= f.label :hair_id, "髮質" %>
       <%= f.collection_select :hair_type_id, HairType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
