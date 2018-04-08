@@ -26,19 +26,19 @@
       <br>
 
       <%= f.label :guest_type_id, "客戶類型" %>
-      <%= f.collection_select :guest_type_id, GuestType.all, :id, :guest_type, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :guest_type_id, GuestType.all, :id, :guest_type, {prompt: false}, {class: "form-control"} %>
       <br>
 
       <%= f.label :country_id, "國籍" %>
-      <%= f.collection_select :country_id, Country.in_service, :id, :name_zh_tw, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :country_id, Country.in_service, :id, :name_zh_tw, {prompt: false}, {class: "form-control"} %>
       <br>
 
       <%= f.label :age_id, "年齡結構" %>
-      <%= f.collection_select :age_id, Age.all, :id, :age_type, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :age_id, Age.all, :id, :age_type, {prompt: false}, {class: "form-control"} %>
       <br>
 
       <%= f.label :info_way_id, "如何得知茶籽堂？" %>
-      <%= f.collection_select :info_way_id, InfoWay.all, :id, :news_channel, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :info_way_id, InfoWay.all, :id, :news_channel, {prompt: false}, {class: "form-control"} %>
       <br>
 
       <%= f.label :remark, "備註" %>

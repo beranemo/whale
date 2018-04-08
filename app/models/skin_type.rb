@@ -12,4 +12,5 @@
 
 class SkinType < ApplicationRecord
   has_many :members
+  scope :display, -> { where(is_display: true).order(system_flag: :asc) }
 end

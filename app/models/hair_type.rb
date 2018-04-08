@@ -11,5 +11,6 @@
 #
 
 class HairType < ApplicationRecord
-  has_many :members, foreign_key: "hair_code", primary_key: "code"
+  has_many :members
+  scope :display, -> { where(is_display: true).order(system_flag: :asc) }
 end

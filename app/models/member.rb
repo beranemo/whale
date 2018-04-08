@@ -105,4 +105,5 @@ class Member < ApplicationRecord
       Age.find_by(age_type: "45 歲以上").id
     end
   end
+  scope :display, -> { where(is_display: true).order(system_flag: :asc) }
 end

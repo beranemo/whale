@@ -44,11 +44,11 @@
       <br>          
 
       <%= f.label :hair_id, "髮質" %>
-      <%= f.collection_select :hair_type_id, HairType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :hair_type_id, HairType.all, :id, :value, {prompt: false}, {class: "form-control"} %>
       <br>
 
       <%= f.label :skin_id, "膚質" %>
-      <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: true}, {class: "form-control"} %>
+      <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: false}, {class: "form-control"} %>
       <br>
 
       <%= f.label :avatar, "個人照片" %>

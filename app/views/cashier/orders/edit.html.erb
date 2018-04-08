@@ -7,7 +7,7 @@
   <h2>會員訊息</h2>
    <form id="search-form">
     <div class="input-group col-xs-3">
-      <input type="text" id="key" class="form-control" placeholder="請輸入手機號碼或 email "/>
+      <input type="text" id="key" class="form-control" placeholder="請輸入姓名或手機或 email"/>
       <!-- Trigger the modal with a button -->
       <div class="input-group-btn">
       <button id="search-btn" type="submit" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-search"></i></button>
@@ -118,7 +118,7 @@
           <td class="d-price alnright"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
-            <%= f.collection_select :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
+            <%= f.collection_select :discount_method_code, DiscountMethod.all, :code, :content, {prompt: false}, {class: "discount-list form-control"} %>
             <% end%>
           </td>        
           <td>
@@ -230,7 +230,7 @@
             <label>優惠卷折扣</label>
             <input class="form-control alnright" type="text" value="<%= @coupon_discount %>" id="coupon_discount" disabled="disabled">
             <%= f.label :user_id, "結帳人員" %>
-            <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
+            <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: false}, {class: "form-control"} %>
           </div>
           <div class="col-md-6">
             <label>原始總金額</label>
