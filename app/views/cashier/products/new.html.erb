@@ -1,43 +1,56 @@
 <div class="container">
-  
-  <%= render :partial => "shared/tabs_product_management", :locals => { :selected_item => '上傳商品' } %>
-  
-  
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4" style="text-align: center">
-    <%= form_tag import_cashier_products_path, multipart: true do %>
-      <%= image_tag ("xlsx.png") , style:'height:150px' %>
-      <%= file_field_tag :file %>
-      <br>
-      <%= submit_tag "更新" , class:'btn btn-success form-control'%>
-    <% end %>
-    
-    </div>
-  </div>
-    
-  <div class="row text-center" style="margin: 30px">
-    <div class="text-danger">
-      <h5><i class="fa fa-exclamation-circle" aria-hidden="true"></i> 注意：上傳內容會根據「 國際條碼 」覆蓋原商品內容，但數量會進行累加</h5>
-      <br>
-      <h4>Excel 文件第一列欄位格式應符合以下文字：</h4>
-    </div>
-    <br>
-    <table class="table">
-      <thead>
-        <th>中文品名</th>
-        <th>英文品名</th>
-        <th>規格</th>
-        <th>定價</th>
-        <th>國際條碼</th>
-        <th>適用對象</th>
-        <th>使用方法</th>
-        <th>中文主成分</th>
-        <th>中文全成分</th>
-        <th>英文全成分</th>
-        <th>數量</th>
-      </thead>
-    </table>
-  </div>
-</div>
+  <%= form_for [:cashier, @product] do |f| %>
+    <div class="form-group">
 
-  
+      <%= f.label :category, "類型" %>
+      <%= f.text_field :category, class: "form-control"%>
+      <br>
+
+      <%= f.label :zh_name, "中文品名" %>
+      <%= f.text_field :zh_name, class: "form-control"%>
+      <br>
+
+      <%= f.label :en_name, "英文品名" %>
+      <%= f.text_field :en_name, class: "form-control"%>
+      <br>
+
+      <%= f.label :capacity, "規格" %>
+      <%= f.text_field :capacity, class: "form-control"%>
+      <br>
+
+      <%= f.label :price, "定價" %>
+      <%= f.text_field :price, class: "form-control"%>
+      <br>
+
+      <%= f.label :upc, "國際條碼" %>
+      <%= f.text_field :upc, class: "form-control"%>
+      <br>
+
+      <%= f.label :use_for, "適用對象" %>
+      <%= f.text_field :use_for, class: "form-control"%>
+      <br>
+
+      <%= f.label :directions, "使用方法" %>
+      <%= f.text_area :directions, class: "form-control" %>
+      <br>
+
+      <%= f.label :zh_m_ingredients, "中文主成分" %>
+      <%= f.text_area :zh_m_ingredients, class: "form-control" %>
+      <br>
+
+      <%= f.label :zh_ingredients, "中文全成分" %>
+      <%= f.text_area :zh_ingredients, class: "form-control" %>
+      <br>
+
+      <%= f.label :en_ingredients, "英文全成分" %>
+      <%= f.text_area :en_ingredients, class: "form-control" %>
+      <br>
+
+      <%= f.label :quantity, "數量" %>
+      <%= f.text_field :quantity, class: "form-control"%>
+      <br>
+
+      <%= f.submit "新增商品", class: "btn-submit" %>
+    </div>
+  <% end %>
+</div>

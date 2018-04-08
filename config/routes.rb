@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       end
       
     end
-    resources :products, only: [:new, :index, :edit, :update, :show] do
+    resources :products, only: [:new, :create, :index, :edit, :update, :show] do
       member do
         post :add_to_cart
         post :remove
