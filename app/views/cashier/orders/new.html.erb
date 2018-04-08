@@ -171,12 +171,16 @@
 
           <%= f.label :payment_method, "付款方式：" %>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"付現",:checked => true %>
-          付現
+            <%= f.radio_button :payment_method ,"付現",:checked => true %>
+            付現
           </label>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"刷卡" %>
-          刷卡
+            <%= f.radio_button :payment_method ,"刷卡" %>
+            刷卡
+          </label>
+          <label class="my_radio">
+            <%= f.radio_button :payment_method ,"其他" %>
+            其他
           </label>
         </div>
 
