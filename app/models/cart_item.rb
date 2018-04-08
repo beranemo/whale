@@ -19,19 +19,19 @@ class CartItem < ApplicationRecord
 
   def calculate
     if discount_method.content == "第二件半價"
-      product.price*(quantity/2)*1.5+product.price*(quantity%2)
+      product.price * (quantity / 2) * 1.5 + product.price * (quantity % 2)
     elsif discount_method.content == "打折"
-      product.price*quantity* discount_off/100
+      product.price * quantity * discount_off / 100
     elsif discount_method.content == "贈品"
       0
     elsif discount_method.content == "優惠價"
       discount_off
     else
-      product.price*quantity
+      product.price * quantity
     end
   end
 
   def origin_calculate
-    product.price*quantity
+    product.price * quantity
   end
 end
