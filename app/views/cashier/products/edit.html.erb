@@ -1,19 +1,62 @@
 <div class="container">
+  <%= render :partial => "shared/tabs_product_management", :locals => { :selected_item => '所有商品' } %>
+
+  <div class="col-md-8 col-md-offset-2">
+  <h4>編輯商品</h4>
 
   <%= form_for [:cashier, @product] do |f| %>
     <div class="form-group">
 
-      <%= f.label :zh_name, "名稱" %>
+      <%= f.label :category, "類型" %>
+      <%= f.text_field :category, class: "form-control"%>
+      <br>
+
+      <%= f.label :zh_name, "中文品名" %>
       <%= f.text_field :zh_name, class: "form-control"%>
+      <br>
+
+      <%= f.label :en_name, "英文品名" %>
+      <%= f.text_field :en_name, class: "form-control"%>
+      <br>
+
+      <%= f.label :capacity, "規格" %>
+      <%= f.text_field :capacity, class: "form-control"%>
+      <br>
+
+      <%= f.label :price, "定價" %>
+      <%= f.text_field :price, class: "form-control"%>
+      <br>
+
+      <%= f.label :upc, "國際條碼" %>
+      <%= f.text_field :upc, class: "form-control"%>
+      <br>
+
+      <%= f.label :use_for, "適用對象" %>
+      <%= f.text_field :use_for, class: "form-control"%>
+      <br>
+
+      <%= f.label :directions, "使用方法" %>
+      <%= f.text_area :directions, class: "form-control" %>
+      <br>
+
+      <%= f.label :zh_m_ingredients, "中文主成分" %>
+      <%= f.text_area :zh_m_ingredients, class: "form-control", rows: "4" %>
+      <br>
+
+      <%= f.label :zh_ingredients, "中文全成分" %>
+      <%= f.text_area :zh_ingredients, class: "form-control", rows: "5" %>
+      <br>
+
+      <%= f.label :en_ingredients, "英文全成分" %>
+      <%= f.text_area :en_ingredients, class: "form-control", rows: "5" %>
       <br>
 
       <%= f.label :quantity, "數量" %>
       <%= f.text_field :quantity, class: "form-control"%>
       <br>
 
-      <%= f.submit "新增紀錄",class: "btn btn-primary" %>
-
+      <%= f.submit "新增商品", class: "btn-submit", style:"width:100%" %>
     </div>
   <% end %>
-
+  </div>
 </div>
