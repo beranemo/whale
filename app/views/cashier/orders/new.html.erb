@@ -118,7 +118,7 @@
           <td class="d-price alnright"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
-            <%= f.collection_select :discount_method_code, DiscountMethod.in_service, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
+            <%= f.collection_select :discount_method_code, DiscountMethod.in_service, :code, :content, {prompt: false}, {class: "discount-list form-control"} %>
             <% end %>
           </td>        
           <td>

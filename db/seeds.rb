@@ -16,9 +16,9 @@ puts "Default cashier created!"
 GuestType.destroy_all
 
 guest_type_list = [
+  { note: "尚未填寫選項", system_flag: "Y", guest_type: "尚未填寫", is_display: false },  
   { note: "系統設置，無法刪除", system_flag: "Y", guest_type: "新客", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", guest_type: "舊客", is_display: true },
-  { note: "尚未填寫選項", system_flag: "Y", guest_type: "尚未填寫", is_display: false }
+  { note: "系統設置，無法刪除", system_flag: "Y", guest_type: "舊客", is_display: true }
 ]
 
 guest_type_list.each do |guest_type|
@@ -35,12 +35,12 @@ puts "Guest_type created!"
 SkinType.destroy_all
 
 skin_type_list = [
+  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", is_display: false },  
   { note: "系統設置，無法刪除", system_flag: "Y", value: "中性膚質(一般膚質)", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "油性膚質", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "乾性膚質", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "混和性膚質", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "敏感膚質", is_display: true },
-  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", is_display: false }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "敏感膚質", is_display: true }
 
 ]
 
@@ -58,13 +58,13 @@ puts "Skin_type created!"
 HairType.destroy_all
 
 hair_type_list = [
+  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", is_display: false },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "中性髮質(一般髮質)", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "油性頭皮", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "染燙受損髮質", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "乾性髮質", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "毛躁髮", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "有頭皮屑困擾", is_display: true },
-  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", is_display: false }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "有頭皮屑困擾", is_display: true }
 ]
 
 hair_type_list.each do |hair_type|
@@ -81,9 +81,9 @@ puts "Hair_type created!"
 MemberType.destroy_all
 
 member_type_list = [
+  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", is_display: false },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "一般會員", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "VIP會員", is_display: true },
-  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", is_display: false }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "VIP會員", is_display: true }
 ]
 
 member_type_list.each do |member_type|
@@ -100,12 +100,12 @@ puts "Member_type created!"
 Age.destroy_all
 
 age_list = [
+  { note: "尚未填寫選項", system_flag: "Y", value: "", age_type: "尚未填寫", is_display: false },  
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "18 ~ 25歲", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "25 ~ 35歲", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "35 ~ 45歲", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上", is_display: true },
-  { note: "尚未填寫選項", system_flag: "Y", value: "", age_type: "尚未填寫", is_display: false }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上", is_display: true }
 ]
 
 age_list.each do |age|
@@ -122,6 +122,7 @@ puts "Age created!"
 InfoWay.destroy_all
 
 info_way_list = [
+  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", news_channel: "尚未填寫", is_display: false },  
   { note: "系統設置，無法刪除", system_flag: "Y", value: "網路平台", news_channel: "網路平台", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "臉書 Facebook", news_channel: "臉書 Facebook", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "誠品 EXPO 或其他通路買過", news_channel: "誠品 EXPO 或其他通路買過", is_display: true },
@@ -132,7 +133,6 @@ info_way_list = [
   { note: "系統設置，無法刪除", system_flag: "Y", value: "飯店民宿", news_channel: "飯店民宿", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "其他", news_channel: "其他", is_display: true },
-  { note: "尚未填寫選項", system_flag: "Y", value: "尚未填寫", news_channel: "尚未填寫", is_display: false }
 ]
 
 info_way_list.each do |info_way|
@@ -149,6 +149,8 @@ puts "Info_way created!"
 Country.destroy_all
 
 country_list = [
+  { is_active: true, code: "00", system_flag: "AA", name_en_us: "NO DATA", name_zh_tw: "尚未填寫" },  
+  { is_active: true, code: "99", system_flag: "ZZ", name_en_us: "Others", name_zh_tw: "其他" },
   { is_active: false, code: "AD", system_flag: "Y", name_en_us: "Andorra", name_zh_tw: "安道爾" },
   { is_active: false, code: "AE", system_flag: "Y", name_en_us: "United Arab Emirates", name_zh_tw: "阿拉伯聯合大公國" },
   { is_active: false, code: "AF", system_flag: "Y", name_en_us: "Afghanistan", name_zh_tw: "阿富汗" },
@@ -192,7 +194,7 @@ country_list = [
   { is_active: false, code: "CK", system_flag: "Y", name_en_us: "Cook Islands ", name_zh_tw: "科克群島" },
   { is_active: false, code: "CL", system_flag: "Y", name_en_us: "Chile", name_zh_tw: "智利(南美洲西南部)" },
   { is_active: false, code: "CM", system_flag: "Y", name_en_us: "Cameroon", name_zh_tw: "喀麥隆(西非)" },
-  { is_active: true, code: "CN", system_flag: "AB", name_en_us: "China", name_zh_tw: "中國" },
+  { is_active: true, code: "CN", system_flag: "AC", name_en_us: "China", name_zh_tw: "中國" },
   { is_active: false, code: "CO", system_flag: "Y", name_en_us: "Colombia", name_zh_tw: "哥倫比亞" },
   { is_active: false, code: "CR", system_flag: "Y", name_en_us: "Costa Rica", name_zh_tw: "哥斯大黎加(中美洲)" },
   { is_active: false, code: "CU", system_flag: "Y", name_en_us: "Cuba", name_zh_tw: "古巴(加勒比海)" },
@@ -352,7 +354,7 @@ country_list = [
   { is_active: false, code: "TR", system_flag: "Y", name_en_us: "Turkey", name_zh_tw: "土耳其" },
   { is_active: false, code: "TT", system_flag: "Y", name_en_us: "Trinidad And Tobago ", name_zh_tw: "千理達和托貝哥共和國" },
   { is_active: false, code: "TV", system_flag: "Y", name_en_us: "Tuvalu", name_zh_tw: "吐瓦魯(西南太平洋)" },
-  { is_active: true, code: "TW", system_flag: "AA", name_en_us: "Taiwan", name_zh_tw: "臺灣" },
+  { is_active: true, code: "TW", system_flag: "AB", name_en_us: "Taiwan", name_zh_tw: "臺灣" },
   { is_active: false, code: "TZ", system_flag: "Y", name_en_us: "Tanzania", name_zh_tw: "坦尚尼亞" },
   { is_active: false, code: "UA", system_flag: "Y", name_en_us: "Ukraine", name_zh_tw: "烏克蘭" },
   { is_active: false, code: "UG", system_flag: "Y", name_en_us: "Uganda", name_zh_tw: "烏干達" },
@@ -375,8 +377,7 @@ country_list = [
   { is_active: false, code: "ZA", system_flag: "Y", name_en_us: "South Africa", name_zh_tw: "南非" },
   { is_active: false, code: "ZM", system_flag: "Y", name_en_us: "Zambia", name_zh_tw: "尚比亞" },
   { is_active: false, code: "ZR", system_flag: "Y", name_en_us: "Zaire", name_zh_tw: "扎伊爾" },
-  { is_active: false, code: "ZW", system_flag: "Y", name_en_us: "Zimbabwe", name_zh_tw: "辛巴威(南非)" },
-  { is_active: true, code: "99", system_flag: "Y", name_en_us: "Others", name_zh_tw: "其他" }
+  { is_active: false, code: "ZW", system_flag: "Y", name_en_us: "Zimbabwe", name_zh_tw: "辛巴威(南非)" }
 ]
 
 country_list.each do |country|

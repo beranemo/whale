@@ -12,4 +12,5 @@
 
 class Age < ApplicationRecord
   has_many :guests
+  scope :display, -> { where(is_display: true).order(system_flag: :asc) }
 end
