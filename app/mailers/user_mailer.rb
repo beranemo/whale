@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
     @order = order
     
     mail(
-      to: Setting.find_by(code: "STOREHOUSE").content,
+      to: Setting.find_by(code: "EMAIL01").content,
       subject: "[茶籽堂] 訂單成立: #{@order.sn}"
       )
   end
