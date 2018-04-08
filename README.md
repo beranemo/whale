@@ -53,6 +53,10 @@
 
 [GitHub Branch](https://github.com/beranemo/whale/network)
 
+## 撰碼風格
+
+參照此[連結](https://github.com/github/rubocop-github/blob/master/STYLEGUIDE.md)
+
 ## 作者
 
 - 雜七雜八打雜XXX
