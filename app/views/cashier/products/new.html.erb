@@ -1,4 +1,9 @@
 <div class="container">
+  <%= render :partial => "shared/tabs_product_management", :locals => { :selected_item => '所有商品' } %>
+
+  <br>
+  <h4>新增商品</h4>
+
   <%= form_for [:cashier, @product] do |f| %>
     <div class="form-group">
 
