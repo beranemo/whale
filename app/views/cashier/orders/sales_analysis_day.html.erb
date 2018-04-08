@@ -1,6 +1,6 @@
 <div class="container">
  
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '銷售報表' } %>
+  <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '銷售報表' } %>
   <%= render :partial => "shared/tabs_analysis", :locals => { :selected_item => '每日銷售明細' } %>
 
  <form id="search-form">
@@ -44,7 +44,7 @@ $("#search-btn").click(function(){
 
 
   $.ajax({
-    url: "/cashier/orders/search_outcome?type=day" ,
+    url: "/cashier/orders/search_outcome?type=day",
     method: "POST",
     dataType: "json",
     data: {
@@ -95,7 +95,7 @@ $("#search-btn").click(function(){
             $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + members[data["id"]] + "</a>");
           }
           for(var key in item_datas){
-            $(order).find(".order_item").append(item_datas[key]["name"]+"*"+item_datas[key]["quantity"]+",");
+            $(order).find(".order_item").append(item_datas[key]["name"] + "*" + item_datas[key]["quantity"] + ",");
             console.log(item_datas[key]["name"]);
           }
        
@@ -105,7 +105,7 @@ $("#search-btn").click(function(){
           
           $("#search-list").append(order);
         }
-          $(total_amount).html(date + " 總銷售金額： "+ total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          $(total_amount).html(date + " 總銷售金額： " + total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
           $("#search-form").append(total_amount);
       }
     }

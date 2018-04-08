@@ -1,6 +1,6 @@
 <div class="container">
  
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+  <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '訂單資訊' } %>
   <%= render :partial => "shared/tab_order", :locals => { :selected_item => '訂單搜尋' } %>
   
   <form id="search-form">
@@ -55,7 +55,7 @@ $("#search-btn").click(function(){
   */
 
   $.ajax({
-    url: "/cashier/orders/search_outcome?type=period" ,
+    url: "/cashier/orders/search_outcome?type=period",
     method: "POST",
     dataType: "json",
     data: {
@@ -103,7 +103,7 @@ $("#search-btn").click(function(){
               $(order).find(".member_id").html("非會員");
             }
             else{
-              $(order).find(".member_id").append("<a href=\"/cashier/members/" +data["member_id"]+ "\">" + members[data["id"]] + "</a>");
+              $(order).find(".member_id").append("<a href=\"/cashier/members/" + data["member_id"] + "\">" + members[data["id"]] + "</a>");
             }
 
             if(data["guest_id"] == null){

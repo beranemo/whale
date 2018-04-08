@@ -1,8 +1,8 @@
 <div class="container">
 
-  <%= render :partial => "shared/tabs1", :locals => { :selected_item => '訂單資訊' } %>
+  <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '訂單資訊' } %>
   <h1>編輯訂單 <%= @order.sn %></h1>
-  <input type="hidden" name="" value="<%= @order.id%>" id="order-id">
+  <input type="hidden" name="" value="<%= @order.id %>" id="order-id">
   <br>
   <h2>會員訊息</h2>
    <form id="search-form">
@@ -10,7 +10,7 @@
       <input type="text" id="key" class="form-control" placeholder="請輸入手機號碼或 email "/>
       <!-- Trigger the modal with a button -->
       <div class="input-group-btn">
-      <button id="search-btn" type="submit" class="btn btn-default " data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-search"></i></button>
+      <button id="search-btn" type="submit" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-search"></i></button>
       </div>
     </div>
   </form>
@@ -60,11 +60,11 @@
         <th>備註</th>
       </tr>
        <tr>
-        <td><%= @member.name%></td>
-        <td><%= @member.phone%></td>
-        <td><%= @member.email%></td>
-        <td class="address"><%= @member.address%></td>
-        <td class="remark"><%= @member.remark%></td>         
+        <td><%= @member.name %></td>
+        <td><%= @member.phone %></td>
+        <td><%= @member.email %></td>
+        <td class="address"><%= @member.address %></td>
+        <td class="remark"><%= @member.remark %></td>         
       </tr>
     </tbody>
   </table>  
@@ -92,21 +92,21 @@
       </tr> 
     </thead>
     <tbody class="cart-item-list">      
-      <% @cart_items.each do |item|%>
+      <% @cart_items.each do |item| %>
 
-        <tr id="<%= item.product.id%>-<%=@index_hash[item.product.id]%>">
-          <td><%=item.product.category%></td>
-          <td class="alnleft"><%=item.product.zh_name%></td>            
-          <td><%=item.product.upc%></td> 
+        <tr id="<%= item.product.id %>-<%=@index_hash[item.product.id] %>">
+          <td><%= item.product.category %></td>
+          <td class="alnleft"><%= item.product.zh_name %></td>            
+          <td><%= item.product.upc %></td> 
           <td class="price alnright"><%= item.product.price %></td>
           <td>
             <span class="minus-item text-muted glyphicon glyphicon-minus"></span>
-            <input type="text" name="" size="3" class="quantity text-center" value="<%=item.quantity%>">
+            <input type="text" name="" size="3" class="quantity text-center" value="<%= item.quantity %>">
             <span class="plus-item text-muted glyphicon glyphicon-plus"></span>
           </td>
           <td class="o-price alnright">
-            <%=item.origin_calculate%>
-            <% if  item.discount_method_code == "B"%> 
+            <%= item.origin_calculate %>
+            <% if item.discount_method_code == "B" %> 
             *
             <input type="text" name="" size="3" value="<%= item.discount_off %>" class="discount_off" onkeypress="return setItemDiscount(event)">
             %
@@ -118,13 +118,13 @@
           <td class="d-price alnright"><%= item.calculate %></td>  
           <td>
             <%= form_for [:cashier, item] do |f| %>
-            <%= f.collection_select  :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
+            <%= f.collection_select :discount_method_code, DiscountMethod.all, :code, :content, {prompt: true}, {class: "discount-list form-control"} %>
             <% end%>
           </td>        
           <td>
             <span class="delete-item text-danger glyphicon glyphicon-trash"></span>
           </td>
-          <% @index_hash[item.product.id] +=1%>
+          <% @index_hash[item.product.id] +=1 %>
 
         </tr>
       <% end %>
@@ -134,8 +134,8 @@
   <div class="text-right">
     <span class="fa fa-dollar"></span>
     <input class="discount-input" type="text" name="" placeholder="請輸入折扣金額" id="coupon-price">
-    <button class="add-coupon my-btn" id="<%= @coupon.id%>">使用折價卷</button>
-    <button class="clear-coupon my-btn" id="<%= @coupon.id%>">清除折價卷</button>
+    <button class="add-coupon my-btn" id="<%= @coupon.id %>">使用折價卷</button>
+    <button class="clear-coupon my-btn" id="<%= @coupon.id %>">清除折價卷</button>
   </div>
 
 
@@ -144,7 +144,7 @@
   
   <div class="row">
     <div class="order-info ">
-      <%= form_for [:cashier, @order] do |f|%>
+      <%= form_for [:cashier, @order] do |f| %>
         <div class="col-md-7">
           <%= f.label :created_at, "成立時間：" %>
           <%= f.datetime_select :created_at, class:"form-control"%>  
@@ -154,11 +154,11 @@
           <%= f.label :status, "訂單狀態：" %>
 
           <label class="my_radio">
-          <%= f.radio_button :status , true  %>
+          <%= f.radio_button :status, true %>
           現貨
           </label>
           <label class="my_radio">
-          <%= f.radio_button :status , false %>
+          <%= f.radio_button :status, false %>
           預購
           </label>
           <br>
@@ -166,21 +166,21 @@
           <%= f.label :address, "取貨方式：" %>
           <% if @order.address == "自取"%>
             <label class="my_radio">
-            <%= f.radio_button :address ,"自取", class:"local-radio" %>
+            <%= f.radio_button :address, "自取", class:"local-radio" %>
             自取
             </label>
             <label class="my_radio">
-            <%= f.radio_button :address ," ",class:"ship-radio" %>
+            <%= f.radio_button :address, " ", class:"ship-radio" %>
            宅配
             </label>
             <br>
           <% else%>
             <label class="my_radio">
-            <%= f.radio_button :address ,"自取", class:"local-radio" %>
+            <%= f.radio_button :address, "自取", class:"local-radio" %>
             自取
             </label>
             <label class="my_radio">
-            <%= f.radio_button :address ," ",:checked => true,class:"ship-radio" %>
+            <%= f.radio_button :address, " ", :checked => true, class:"ship-radio" %>
             宅配
           </label>
           <br>
@@ -188,11 +188,11 @@
            
           <%= f.label :payment_method, "付款方式：" %>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"付現" %>
+          <%= f.radio_button :payment_method, "付現" %>
           付現
           </label>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"刷卡" %>
+          <%= f.radio_button :payment_method, "刷卡" %>
           刷卡
           </label>
           </div>
@@ -218,23 +218,23 @@
 
           
           
-          <%= f.label :remark ,"備註："%>
-          <%= f.text_area :remark, class:"form-control" %>
+          <%= f.label :remark, "備註：" %>
+          <%= f.text_area :remark, class: "form-control" %>
         </div>
         <br>
         <div class="col-md-5">
           
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
-            <%= f.text_field :discount_off  ,class:"form-control alnright", onkeypress:"return setOrderDiscount(event)"%>
+            <%= f.text_field :discount_off, class:"form-control alnright", onkeypress:"return setOrderDiscount(event)"%>
             <label>優惠卷折扣</label>
-            <input class="form-control alnright" type="text" value="<%= @coupon_discount%>" id="coupon_discount" disabled="disabled">
+            <input class="form-control alnright" type="text" value="<%= @coupon_discount %>" id="coupon_discount" disabled="disabled">
             <%= f.label :user_id, "結帳人員" %>
             <%= f.collection_select  :user_id, User.all, :id, :name, {prompt: true}, {class: "form-control"} %>
           </div>
           <div class="col-md-6">
             <label>原始總金額</label>
-            <input class="form-control alnright" type="text" value="<%= @order.amount%>" id="origin_amount" disabled="disabled">
+            <input class="form-control alnright" type="text" value="<%= @order.amount %>" id="origin_amount" disabled="disabled">
             <label>小計</label>
             <input class="discount_amout form-control alnright" onkeypress="return setDiscountAmount(event)" type="text" value="<%= (@order.amount * @order.discount_off * 0.01).to_i if @order.discount_off %>"  id="off_amount" disabled="disabled">
             <% @order.amount += @coupon_discount %>
@@ -242,7 +242,7 @@
             <%= f.text_field :amount  ,class:"discount_amout form-control alnright", onkeypress:"return setDiscountAmount(event)"%>
             <%= f.hidden_field :member_id, :value => @member.id %>
             <br>
-            <%= f.submit "更新訂單",class: "btn-danger" %>
+            <%= f.submit "更新訂單", class: "btn-danger" %>
             <br>
           </div>
           
@@ -266,11 +266,11 @@
     <tbody class="product-list">    
     <% @products.each do |product| %>
       <% if product.status != "removed" %>
-      <tr id="<%= product.id%>">
-        <td><%=product.category%></td>
-        <td class=" alnleft"><%=product.zh_name%></td>
-        <td class="alnright"><%=product.price%></td>
-        <td><%=product.upc%></td> 
+      <tr id="<%= product.id %>">
+        <td><%= product.category %></td>
+        <td class=" alnleft"><%= product.zh_name %></td>
+        <td class="alnright"><%= product.price %></td>
+        <td><%= product.upc %></td> 
     
         <td><button class="add_to_cart my-btn">購買</button></td>
       </tr>
