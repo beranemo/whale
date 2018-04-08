@@ -53,7 +53,18 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   def new
+    @product = Product.new
+  end
+  
+  def create
+    @product = Product.new(product_params)
     
+    if @product.save
+      flash[:notice] = "商品資料已成功更新"
+      redirect_to cashier_products_path
+    else
+      render :index
+    end
   end
   
   def removed_list
@@ -126,6 +137,23 @@ class Cashier::ProductsController < Cashier::BaseController
   private
   def product2_params
     params.require(:product).permit(:quantity)
+  end
+  
+  def product_params
+    params.require(:product).permit(
+      :category,
+      :zh_name,
+      :en_name,
+      :capacity,
+      :price,
+      :upc,
+      :use_for,
+      :directions,
+      :zh_m_ingredients,
+      :zh_ingredients,
+      :en_ingredients,
+      :quantity
+      )
   end
   
 end
