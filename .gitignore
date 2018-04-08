@@ -22,8 +22,11 @@
 
 .byebug_history
 
+/public/uploads/
+
 # Ignore the email info
+/config/email.yml
 config/email.yml
-public/uploads/
+
 # Ignore application configuration
 /config/application.yml
