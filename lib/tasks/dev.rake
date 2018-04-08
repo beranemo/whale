@@ -232,7 +232,7 @@ namespace :dev do
     Rake::Task['dev:fake_bulletins'].execute
   end
   
-    task fake_all_3: :environment do
+  task fake_all_3: :environment do
     Rake::Task['db:drop'].execute
     Rake::Task['db:create'].execute
     Rake::Task['db:migrate'].execute

@@ -3,7 +3,7 @@
     <%= link_to "所有商品", cashier_products_path %>
   </li>
   <li role="presentation" class="<%= 'active' if selected_item == '上傳商品' %>">
-    <%= link_to "上傳商品", new_cashier_product_path %>
+    <%= link_to "上傳商品", import_xlsx_new_cashier_products_path %>
   </li>
   <li role="presentation" class="<%= 'active' if selected_item == '數量管理' %>">
     <%= link_to "數量管理", manage_cashier_products_path %>

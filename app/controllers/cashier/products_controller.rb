@@ -113,8 +113,11 @@ class Cashier::ProductsController < Cashier::BaseController
       render :edit
     end
   end
+  
+  def import_xlsx_new
+  end
 
-  def import
+  def import_xlsx
     Product.update_by_file(params[:file])
     flash[:notice] = "成功匯入商品資訊"
     redirect_to cashier_products_path
