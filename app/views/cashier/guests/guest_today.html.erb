@@ -36,8 +36,8 @@
           <td><%= guest.remark %></td>
           <td><%= guest.user.name %></td>
           <td class="data-table">
-            <% if guest.user == current_user  %>
-              <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_guest_path(guest), onclick:"edit" , caption: "編輯客情" %>
+            <% if guest.user == current_user %>
+              <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_guest_path(guest), onclick:"edit", caption: "編輯客情" %>
               <%= link_to '<i class = "fa fa-trash" aria-hidden="true"></i>'.html_safe, cashier_guest_path(guest), method: :delete, data: {confirm:"確定刪除?"}, onclick:"delete" , caption: "刪除客情" %>
             <% end %>
           </td>
