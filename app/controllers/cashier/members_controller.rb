@@ -81,7 +81,7 @@ class Cashier::MembersController < Cashier::BaseController
     key_word = ''
     if params[:phone] != nil
       key_word = params[:phone]
-      @members = Member.where("phone like ? OR email LIKE ?", "%"+key_word+"%", "%"+key_word+"%")      
+      @members = Member.where("phone like ? OR email LIKE ? OR name LIKE ?", "%"+key_word+"%", "%"+key_word+"%", "%"+key_word+"%")      
 #    elsif params[:email] != nil
 #      key_word = params[:email]
 #      @members = Member.where("email like ?", "%"+key_word+"%")
