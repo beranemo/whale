@@ -171,13 +171,19 @@
 
           <%= f.label :payment_method, "付款方式：" %>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"付現",:checked => true %>
-          付現
+            <%= f.radio_button :payment_method ,"付現",:checked => true %>
+            付現
           </label>
           <label class="my_radio">
-          <%= f.radio_button :payment_method ,"刷卡" %>
-          刷卡
+            <%= f.radio_button :payment_method ,"刷卡" %>
+            刷卡
           </label>
+          <label class="my_radio">
+            <%= f.radio_button :payment_method ," ",class:"other-radio"%>
+            其他
+          </label>
+          <br>
+          <%= f.text_field :payment_method, class:"other-payment form-control", :disabled => "disabled"  %><br>
         </div>
 
         <div class="col-item">
@@ -189,6 +195,7 @@
           
           <%= f.label :address, "地址：" %>
           <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
+
         </div>
       </div>
           
@@ -346,6 +353,19 @@
         }
       });
     }
+  });
+
+  //設定付款方式解鎖地址輸入框
+  $(".other-radio").on("click", function(event){
+    
+    $(".order-info").find(".other-payment").removeAttr('disabled');
+  });
+  //設定付款方式鎖定地址輸入框
+  $("#order_payment_method_付現").on("click", function(event){
+    $(".order-info").find(".other-payment").attr('disabled','disabled');
+  });
+  $("#order_payment_method_刷卡").on("click", function(event){
+    $(".order-info").find(".other-payment").attr('disabled','disabled');
   });
 
   //設定取貨方式解鎖地址輸入框
@@ -532,35 +552,34 @@
       method: "POST",
       dataType: "json",
       success: function(data){
-        if(data["success"] == "1"){
-          setUpVariable(data);
-          cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
-          origin_amount = total_price_value+d_price-l_price;
-          off_amount = Math.round(origin_amount*discount_off/100);
-          discount_amout = off_amount + coupon_discount;
-          var item_discount_off = $(cart_item).find(".discount_off");
-          
-          $("#off_amount").val(off_amount);
-          $("#order_amount").val(discount_amout);
-          $(total_price).val(origin_amount);
+        setUpVariable(data);
+        cart_item = $(".cart-item-list").find("#"+data["id"]+"-"+data["item_index"]);
+        origin_amount = total_price_value+d_price-l_price;
+        off_amount = Math.round(origin_amount*discount_off/100);
+        discount_amout = off_amount + coupon_discount;
+        var item_discount_off = $(cart_item).find(".discount_off");
+        
+        $("#off_amount").val(off_amount);
+        $("#order_amount").val(discount_amout);
+        $(total_price).val(origin_amount);
 
-          
-          $(cart_item).find(".quantity").val(data["quantity"]);
-          $(cart_item).find(".o-price").html(data["o_price"]);
-          if(item_discount_off.val() != "100")
-          {
-            $(cart_item).find(".o-price").append("*");
-            $(cart_item).find(".o-price").append(item_discount_off);
-            $(cart_item).find(".o-price").append("%");
-          }
-          else
-          {
-            $(cart_item).find(".o-price").append(item_discount_off);
-          }     
-          $(cart_item).find(".d-price").html(data["d_price"]);
-          $(cart_item).find(".v-price").html(data["v_price"]);
+        
+        $(cart_item).find(".quantity").val(data["quantity"]);
+        $(cart_item).find(".o-price").html(data["o_price"]);
+        if(item_discount_off.val() != "100")
+        {
+          $(cart_item).find(".o-price").append("*");
+          $(cart_item).find(".o-price").append(item_discount_off);
+          $(cart_item).find(".o-price").append("%");
+        }
+        else
+        {
+          $(cart_item).find(".o-price").append(item_discount_off);
+        }     
+        $(cart_item).find(".d-price").html(data["d_price"]);
+        $(cart_item).find(".v-price").html(data["v_price"]);
 
-        }        
+              
       }
     })
   });
