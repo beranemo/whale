@@ -49,7 +49,7 @@
 - Bootstrap3
 
 
-## 分支圖
+## 分支協作圖
 
 [GitHub Branch](https://github.com/beranemo/whale/network)
 
