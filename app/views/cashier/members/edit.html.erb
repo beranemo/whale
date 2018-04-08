@@ -1,6 +1,8 @@
 <div class="container">
-   
-  <br>
+  <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '無' } %>
+  <%= render :partial => "shared/tab_member", :locals => { :selected_item => '詳細資料' } %>
+
+<div class="col-md-8 col-md-offset-2">
   <h4>會員資料修改</h4>
   <%= form_for [:cashier, @member] do |f| %>
     <div class="form-group">
@@ -58,7 +60,8 @@
       <%= f.file_field :avatar %>
       <br>
       
-      <%= f.submit "送出", class: "btn-submit" %>
+      <%= f.submit "送出", class: "btn-submit", style:"width:100%" %>
     </div>
   <% end %>           
+</div>
 </div>
