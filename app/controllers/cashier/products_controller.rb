@@ -94,11 +94,7 @@ class Cashier::ProductsController < Cashier::BaseController
   def show
     @product = Product.find(params[:id])
   end
-  
-  def edit
-    @product = Product.find(params[:id])
-  end
-  
+    
   def update_all
     @products = Product.all
     datas = params[:products]
@@ -113,12 +109,16 @@ class Cashier::ProductsController < Cashier::BaseController
     flash[:notice] = "商品數量批次更新成功"
     redirect_to manage_cashier_products_path
   end
+  
+  def edit
+    @product = Product.find(params[:id])
+  end
 
   def update
     @product = Product.find(params[:id])
-    if @product.update(product2_params)
-      flash[:notice] = "商品數量更新成功"
-      redirect_to manage_cashier_products_path
+    if @product.update(product_params)
+      flash[:notice] = "商品資料更新成功"
+      redirect_to cashier_products_path
     else
       flash.now[:alert] = @guest.errors.full_messages.to_sentence
       render :edit
@@ -135,7 +135,7 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   private
-  def product2_params
+  def product_quantity_params
     params.require(:product).permit(:quantity)
   end
   

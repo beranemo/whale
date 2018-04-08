@@ -334,6 +334,7 @@ puts "Country created!"
 Age.destroy_all
 
 age_list = [
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "18 ~ 25歲" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上" }
@@ -417,7 +418,10 @@ puts "Default_Coupon created!"
 
 # =======================  Setting  =======================
 Setting.destroy_all
-Setting.create(label: "倉庫信箱", code: "STOREHOUSE", content: "sp831031@gmail.com", note: "倉庫信箱")
+Setting.create(label: "第1寄信信箱", code: "EMAIL01", content: "xxx1@gmail.com", note: "第1寄信信箱", is_active: true)
+Setting.create(label: "第2寄信信箱", code: "EMAIL02", content: "xxx2@gmail.com", note: "第2寄信信箱", is_active: false)
+Setting.create(label: "第3寄信信箱", code: "EMAIL03", content: "xxx3@gmail.com", note: "第3寄信信箱", is_active: false)
+
 
 
 

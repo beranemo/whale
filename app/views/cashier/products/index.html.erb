@@ -34,6 +34,7 @@
           <td class="alnleft" title="<%= product.en_ingredients %>"><%= truncate(product.en_ingredients, length: 30) %></td>
           <td class="alnleft" title="<%= product.directions %>"><%= truncate(product.directions, length: 30) %></td>
           <td class="data-table">
+            <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cashier_product_path(product), onclick:"edit", caption: "編輯商品" %>
             <%= link_to '<i class = "fa fa-info-circle" aria-hidden="true"></i>'.html_safe, cashier_product_path(product), onclick:"product" , caption: "詳細內容"%>
           </td>
         </tr>
