@@ -334,6 +334,7 @@ puts "Country created!"
 Age.destroy_all
 
 age_list = [
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "18 ~ 25歲" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "25 ~ 35歲" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "35 ~ 45歲" },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上" }
