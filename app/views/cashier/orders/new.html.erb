@@ -179,9 +179,11 @@
             刷卡
           </label>
           <label class="my_radio">
-            <%= f.radio_button :payment_method ,"其他" %>
+            <%= f.radio_button :payment_method ," ",class:"other-radio"%>
             其他
           </label>
+          <br>
+          <%= f.text_field :payment_method, class:"other-payment form-control", :disabled => "disabled"  %><br>
         </div>
 
         <div class="col-item">
@@ -193,6 +195,7 @@
           
           <%= f.label :address, "地址：" %>
           <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
+
         </div>
       </div>
           
@@ -350,6 +353,19 @@
         }
       });
     }
+  });
+
+  //設定付款方式解鎖地址輸入框
+  $(".other-radio").on("click", function(event){
+    
+    $(".order-info").find(".other-payment").removeAttr('disabled');
+  });
+  //設定付款方式鎖定地址輸入框
+  $("#order_payment_method_付現").on("click", function(event){
+    $(".order-info").find(".other-payment").attr('disabled','disabled');
+  });
+  $("#order_payment_method_刷卡").on("click", function(event){
+    $(".order-info").find(".other-payment").attr('disabled','disabled');
   });
 
   //設定取貨方式解鎖地址輸入框
