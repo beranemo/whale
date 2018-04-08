@@ -22,6 +22,8 @@ gem 'carrierwave'
 gem 'roo', '~> 2.7.0'
 gem "font-awesome-rails"
 gem 'bootstrap-modal-rails'
+gem 'figaro'
+
 
 
 group :production do
@@ -38,6 +40,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rails-controller-testing'
+  gem 'letter_opener'
 end
 
 group :development do

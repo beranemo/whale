@@ -25,3 +25,5 @@
 # Ignore the email info
 config/email.yml
 public/uploads/
+# Ignore application configuration
+/config/application.yml
