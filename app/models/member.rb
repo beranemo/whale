@@ -92,4 +92,17 @@ class Member < ApplicationRecord
     end
 
   end
+
+  def find_age_type
+    age = Date.current.year - birthday.year
+    if age <= 25
+      Age.find_by(age_type: "18 ~ 25歲").id
+    elsif age <=35
+      Age.find_by(age_type: "25 ~ 35歲").id
+    elsif age <=45
+      Age.find_by(age_type: "35 ~ 45歲").id
+    else
+      Age.find_by(age_type: "45 歲以上").id
+    end
+  end
 end
