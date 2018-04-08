@@ -28,7 +28,7 @@
             <td class="alnright"><%= product.price %></td>
             <td><%= product.upc %></td>
             <td><%= product.quantity %></td>
-            <td><input type="number" name="products[<%=product.id%>][quantity]" min="-100" max="100" value="0" class="alnright"></td>
+            <td><input type="number" name="products[<%= product.id %>][quantity]" min="-100" max="100" value="0" class="alnright"></td>
           </tr>
         <% end %>
       </tbody>
