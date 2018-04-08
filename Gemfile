@@ -22,6 +22,8 @@ gem 'carrierwave'
 gem 'roo', '~> 2.7.0'
 gem "font-awesome-rails"
 gem 'bootstrap-modal-rails'
+gem 'figaro'
+
 
 
 group :production do

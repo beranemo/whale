@@ -3,6 +3,6 @@ development:
   port: 587
   domain: "gmail.com"
   authentication: "plain"
-  user_name: "xxx"
-  password: "xxx"
+  user_name: "ooo"
+  password: "ooo"
   enable_starttls_auto: true

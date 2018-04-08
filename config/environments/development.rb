@@ -28,8 +28,8 @@ Rails.application.configure do
   require 'resolv-replace'
   config.action_mailer.raise_delivery_errors = true 
   config.action_mailer.default_url_options = { host: "http://localhost:3000" }
-  #config.action_mailer.smtp_settings = config_for(:email).symbolize_keys
-  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.smtp_settings = config_for(:email).symbolize_keys
+  #config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
