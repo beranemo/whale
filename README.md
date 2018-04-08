@@ -49,8 +49,12 @@
 - Bootstrap3
 
 
+## 分支圖
+
+[GitHub Branch](https://github.com/beranemo/whale/network)
+
 ## 作者
 
-- 迷死人不償命小蘋果  
-- 武力高強XXX
+- 雜七雜八打雜XXX
+- 酷酷酷酷酷酷XXX
 - 只會出一張嘴XXX
