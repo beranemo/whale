@@ -4,7 +4,8 @@
   <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '客情資料' } %>
   <%= render :partial => "shared/tabs_guest", :locals => { :selected_item => '今日客情' } %>
   
-  <br>
-  <h4>編輯客情</h4>
-  <%= render partial: "form" %>
+  <div class="col-md-8 col-md-offset-2">
+    <h4>編輯客情</h4>
+    <%= render partial: "form" %>
+  </div>
 </div>

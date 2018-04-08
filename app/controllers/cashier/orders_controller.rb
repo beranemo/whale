@@ -40,12 +40,18 @@ class Cashier::OrdersController < Cashier::BaseController
   def new_guest
     @guest = Guest.new
     if @order.member
+      
+      
+      @guest.age_id = @order.member.find_age_type
       @guest.gender = @order.member.gender
       @guest.guest_type_id = GuestType.find_by(guest_type: "舊客").id
+      @guest.info_way_id = @order.member.info_way_id
+      
     else
       @guest.guest_type_id = GuestType.find_by(guest_type: "新客").id
       @guest.gender = "男"
     end
+    @guest.country_id = Country.find_by(code: "TW").id
   end
 
   def create_guest
@@ -233,7 +239,23 @@ class Cashier::OrdersController < Cashier::BaseController
           UserMailer.notify_order_deliver(@order).deliver_now!
         end
         flash[:notice] = "成功成立訂單"
-        redirect_to new_guest_cashier_order_path(@order)
+        if @order.member
+          @guest = Guest.new
+          @guest.age_id = @order.member.find_age_type
+          @guest.gender = @order.member.gender
+          @guest.guest_type_id = GuestType.find_by(guest_type: "舊客").id
+          @guest.info_way_id = @order.member.info_way_id
+          @guest.country_id = Country.find_by(code: "TW").id
+          @guest.user_id = current_user.id
+          @guest.payment = @order.amount
+          @guest.save!
+          @order.guest_id = @guest.id
+          @order.save!
+          flash[:notice] += ",成功成立客情"
+          redirect_to today_cashier_orders_path
+        else
+          redirect_to new_guest_cashier_order_path(@order)
+        end
       else
         flash[:alert] = @order.errors.full_messages.to_sentence
         redirect_to new_cashier_order_path(id: order_params[:member_id])

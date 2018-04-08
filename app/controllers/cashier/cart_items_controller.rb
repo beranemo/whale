@@ -19,21 +19,19 @@ class Cashier::CartItemsController < Cashier::BaseController
   def minus_quantity
     @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     
-    if @cart_item.quantity>0
-      @l_price = @cart_item.calculate.round#上次金額
-      @cart_item.quantity -=1
-      @o_price = @cart_item.origin_calculate.round#小計金額
-      @d_price = @cart_item.calculate.round
 
-      @cart_item.save!
-      
+    @l_price = @cart_item.calculate.round#上次金額
+    @cart_item.quantity -=1
+    @o_price = @cart_item.origin_calculate.round#小計金額
+    @d_price = @cart_item.calculate.round
 
-      render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
-                    :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price,
-                    :item_index => params[:item_index], :success => "1"}
-    else
-      render :json => {:success => "0"}
-    end
+    @cart_item.save!
+    
+
+    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
+                  :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price,
+                  :item_index => params[:item_index]}
+
   end
 
   def clear_coupon
