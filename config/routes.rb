@@ -90,7 +90,6 @@ Rails.application.routes.draw do
     end
 
     resources :bulletins 
-    resources :discounts
     resources :hair_types, only: [:index, :new, :edit, :destroy, :update, :create]
     resources :skin_types, except: [:show]
     resources :member_types, except: [:show]
