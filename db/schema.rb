@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409151811) do
+ActiveRecord::Schema.define(version: 20180409152518) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -105,6 +105,12 @@ ActiveRecord::Schema.define(version: 20180409151811) do
     t.string "guest_type_id", default: "", null: false
     t.integer "user_id"
     t.string "remark"
+    t.index ["age_id"], name: "index_guests_on_age_id"
+    t.index ["country_id"], name: "index_guests_on_country_id"
+    t.index ["created_at"], name: "index_guests_on_created_at"
+    t.index ["guest_type_id"], name: "index_guests_on_guest_type_id"
+    t.index ["info_way_id"], name: "index_guests_on_info_way_id"
+    t.index ["user_id"], name: "index_guests_on_user_id"
   end
 
   create_table "hair_types", force: :cascade do |t|
