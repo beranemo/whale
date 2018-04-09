@@ -13,6 +13,7 @@
         <th>取貨方式</th>
         <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>備註</th>
         <th>結帳人員</th>
         <th>功能</th>
       </tr>
@@ -43,6 +44,7 @@
         <td class="text-danger">
             未取貨
         </td>
+        <td><%= order.remark %></td>
         <td><%= order.user.name %></td>
         <td class="data-table">
         <% if order.user == current_user %> 

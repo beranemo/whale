@@ -14,6 +14,7 @@
         <th>取貨方式</th>
         <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>備註</th>
         <th>結帳人員</th>
         <th>功能</th>
       </tr>
@@ -44,6 +45,7 @@
         <% else %>
           <td class="text-danger">未取貨</td>
         <% end%>
+        <td><%= order.remark %></td>
         <td><%= order.user.name %></td>
         <td class="data-table">
           <%= link_to '<i class = "fa fa-pencil" aria-hidden="true"></i>'.html_safe,edit_cashier_order_path(order.id), onclick:"checkout" , caption: "編輯訂單" %>

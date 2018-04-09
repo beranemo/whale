@@ -4,7 +4,7 @@
   <%= render :partial => "shared/tab_order", :locals => { :selected_item => '今日訂單' } %>
   
   <div class="col-md-8 col-md-offset-2">
-  <h4>訂單編號<%= @order.sn %>  建立客情  </h4>
+  <h4 class="title table-title"><span class="title-main">建立客情 > 訂單編號：<%= @order.sn %></span></h4>
   <%= form_for [:cashier, @guest], :url => create_guest_cashier_order_path(id: @order,guest: @guest) do |f| %>
     <div class="form-group">
 

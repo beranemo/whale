@@ -3,7 +3,7 @@
   <%= render :partial => "shared/tab_member", :locals => { :selected_item => '詳細資料' } %>
 
 <div class="col-md-8 col-md-offset-2">
-  <h4>會員資料修改</h4>
+  <h4 class="title table-title"><span class="title-main">會員資料修改</span></h4>
   <%= form_for [:cashier, @member] do |f| %>
     <div class="form-group">
       
@@ -50,6 +50,10 @@
 
       <%= f.label :skin_type_id, "膚質" %>
       <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: false}, {class: "form-control"} %>
+      <br>
+
+      <%= f.label :info_way_id, "如何得知茶籽堂？" %>
+      <%= f.collection_select :info_way_id, InfoWay.all, :id, :news_channel, {prompt: false}, {class: "form-control"} %>
       <br>
       
       <%= f.label :member_type_id, "會員群組(內部人員註記用)" %>
