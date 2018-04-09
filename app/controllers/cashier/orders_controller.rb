@@ -204,10 +204,8 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-      today = Date.today.to_s
-      today.slice!("2")
-      today_order_count = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).count
-      @order.sn = today.tr('-','').to_i * 1000 + today_order_count + 1
+      
+      @order.setup_sn! 
       current_cart.cart_items.each do |item|
         product = item.product
         if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
