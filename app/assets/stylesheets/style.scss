@@ -748,3 +748,14 @@ $orange: #F07B3F;
   letter-spacing: .5px;
   color: #939393;
 }
+
+/* ============================== 25. title =========================*/
+
+.title {
+  max-width: 100%;
+  margin: 5px 0 20px 0;
+  color: $blue;
+  font-family: Microsoft JhengHei;
+  border-left: 6px solid $blue;
+  padding-left: 10px;
+}

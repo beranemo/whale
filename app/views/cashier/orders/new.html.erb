@@ -2,7 +2,7 @@
 
   <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '成立訂單' } %>
     
-  <h2>會員訊息</h2>
+  <h4 class="title table-title"><span class="title-main">會員訊息</span></h4>
   <form id="search-form">
     <div class="input-group col-xs-3">
       <input type="text" id="key" class="form-control" placeholder="請輸入姓名或手機或 email"/>
@@ -69,7 +69,7 @@
   <br>
   
 
-  <h2>購買內容</h2>
+  <h4 class="title table-title"><span class="title-main">購買內容</span></h4>
   <label>商品條碼:</label>
   <input type="text" name="" id="bar-code" onkeypress="return searchProduct(event)">
   <button class="btn-danger pull-right" id ="clear-cart" style="height: 30px; width: 90px;">清空商品</button>
@@ -229,9 +229,9 @@
       <% end %>
     </div>
   </div>
-    
   <br>
-  <h2>商品列表</h2>
+  <br>
+  <h4 class="title table-title"><span class="title-main">商品列表</span></h4>
   <table class="table product-table" data-toggle="table">
     <thead>
       <tr>
