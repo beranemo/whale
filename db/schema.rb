@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409152518) do
+ActiveRecord::Schema.define(version: 20180409152917) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -160,6 +160,11 @@ ActiveRecord::Schema.define(version: 20180409152518) do
     t.integer "hair_type_id"
     t.integer "member_type_id"
     t.integer "info_way_id"
+    t.index ["hair_type_id"], name: "index_members_on_hair_type_id"
+    t.index ["info_way_id"], name: "index_members_on_info_way_id"
+    t.index ["member_type_id"], name: "index_members_on_member_type_id"
+    t.index ["phone"], name: "index_members_on_phone"
+    t.index ["skin_type_id"], name: "index_members_on_skin_type_id"
   end
 
   create_table "order_items", force: :cascade do |t|
