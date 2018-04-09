@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409150108) do
+ActiveRecord::Schema.define(version: 20180409151041) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -49,6 +49,9 @@ ActiveRecord::Schema.define(version: 20180409150108) do
     t.datetime "updated_at", null: false
     t.integer "discount_off"
     t.string "discount_method_code"
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["discount_method_code"], name: "index_cart_items_on_discount_method_code"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
   create_table "carts", force: :cascade do |t|
