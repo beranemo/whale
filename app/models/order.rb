@@ -47,5 +47,17 @@ class Order < ApplicationRecord
     end
   end
 
+  def generate_guest(user)
+    @guest = Guest.create(age_id: self.member.find_age_type,
+                          gender: self.member.gender,
+                          guest_type_id: GuestType.find_by(guest_type: "舊客").id,
+                          info_way_id: self.member.info_way_id,
+                          country_id: Country.find_by(code: "TW").id,
+                          user_id: user.id,
+                          payment: self.amount,
+                          )
 
+    self.guest_id = @guest.id
+    self.save!
+  end
 end
