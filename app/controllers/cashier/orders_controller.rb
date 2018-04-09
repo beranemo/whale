@@ -206,28 +206,7 @@ class Cashier::OrdersController < Cashier::BaseController
       @order = current_user.orders.build(order_params)
       
       @order.setup_sn! 
-      current_cart.cart_items.each do |item|
-        product = item.product
-        if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
-          product.quantity -= item.quantity
-          if product.quantity <= 0
-            flash[:alert] = "商品庫存數量錯誤."
-          end
-
-          stock_record = product.stock_records.find_by(order_id: @order.id)
-          if stock_record == nil
-            stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
-          else
-            stock_record.quantity -= item.quantity
-          end
-          stock_record.save!
-        end
-
-
-        order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
-        order_item.save!
-        product.save!
-      end
+      @order.setup_order_items!(current_cart)
       
       @order.status =  (@order.status || @order.address != "自取")
       if @order.save

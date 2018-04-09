@@ -33,4 +33,28 @@ class Order < ApplicationRecord
     today_order_count = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).count
     self.sn = today.tr('-','').to_i * 1000 + today_order_count + 1
   end
+
+  def setup_order_items!(current_cart)
+    current_cart.cart_items.each do |item|
+      product = item.product
+      if product.zh_name != "折價卷" && self.status && self.address == "自取"
+        product.quantity -= item.quantity
+        if product.quantity <= 0
+          flash[:alert] = "商品庫存數量錯誤."
+        end
+
+        stock_record = product.stock_records.find_by(order_id: self.id)
+        if stock_record == nil
+          stock_record = product.stock_records.build(quantity: -item.quantity, order_id: self.id)
+        else
+          stock_record.quantity -= item.quantity
+        end
+        stock_record.save!
+      end
+
+      order_item = self.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
+      order_item.save!
+      product.save!
+    end
+  end
 end
