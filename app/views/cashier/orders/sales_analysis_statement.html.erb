@@ -27,6 +27,7 @@
         <th>取貨方式</th>
         <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>備註</th>
         <th>結帳人員</th>
       </tr>
     </thead>
@@ -85,6 +86,7 @@ $("#search-btn").click(function(){
             else{
               $(order).find(".status").html("未取貨").addClass('text-danger');
             }
+            $(order).find(".remark").html(data["remark"]);
             $(order).find(".user").html(users[i]);
             if (data["member_id"] == -1 ){
               $(order).find(".member_id").html("非會員");
@@ -115,6 +117,7 @@ $("#search-btn").click(function(){
   <td class="address"></td>
   <td class="amount" style="text-align: right"></td>
   <td class="status"></td>
+  <td class="remark"></td>
   <td class="user"></td>
 
 </script>

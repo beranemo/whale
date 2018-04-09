@@ -25,6 +25,7 @@
         <th>取貨方式</th>
         <th data-sortable="true" data-field="amount">訂單金額</th>
         <th>狀態</th>
+        <th>備註</th>
         <th>結帳人員</th>
       </tr>
     </thead>
@@ -101,6 +102,7 @@ $("#search-btn").click(function(){
        
           $(order).find(".payment_method").html(data["payment_method"]);
           $(order).find(".address").html(data["address"]);
+          $(order).find(".remark").html(data["remark"]);
           $(order).find(".amount").html(data["amount"].toLocaleString('en-US', {minimumFractionDigits: 0}));
           
           $("#search-list").append(order);
@@ -123,6 +125,7 @@ $("#search-btn").click(function(){
   <td class="address"></td>
   <td class="amount" style="text-align: right"></td>
   <td class="status"></td>
+  <td class="remark"></td>
   <td class="user"></td>
 
 </script>
