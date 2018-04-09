@@ -68,25 +68,15 @@ class Cashier::OrdersController < Cashier::BaseController
   def edit
 
     @order_items = @order.order_items
-    current_cart.cart_items.destroy_all
-    @order_items.each do |item|
-      @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
-      @cart_item.discount_off = item.price
-      discount_method = DiscountMethod.find_by(content: "優惠價")
-      @cart_item.discount_method_code = discount_method.code
-      @cart_item.save!
-    end
-
+    
+    @order.set_cart_items(current_cart)
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")
-    @cart_coupons = current_cart.cart_items.where('product_id = ?', @coupon.id)
     @cart_items = current_cart.cart_items.where('product_id != ?', @coupon.id)
     @products = Product.where('id != ?',@coupon.id) 
-    @coupon_discount = 0
-    @cart_coupons.each do |c|
-      @coupon_discount += c.discount_off
-    end
+    @coupon_discount = current_cart.get_coupons(@coupon)
     @order.amount -= @coupon_discount
+    
     if params[:member_id] != nil
       @member = Member.find(params[:member_id])
       @order.name = @member.name
@@ -127,11 +117,8 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.discount_off = 100
     @products = Product.where('id != ?',@coupon.id) 
     @cart_items = current_cart.cart_items.where('product_id != ?', @coupon.id)
-    @cart_coupons = current_cart.cart_items.where('product_id = ?', @coupon.id)
-    @coupon_discount = 0
-    @cart_coupons.each do |c|
-      @coupon_discount += c.discount_off
-    end
+    @coupon_discount = current_cart.get_coupons(@coupon)
+    
 
     if params[:id] != "-1"
       @member = Member.find(params[:id])
@@ -156,35 +143,7 @@ class Cashier::OrdersController < Cashier::BaseController
     end
 
     if @order.update(order_params)
-      current_cart.cart_items.each do |item|
-        product = item.product
-        if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
-          product.quantity -= item.quantity
-          if product.quantity <= 0
-            flash[:alert] = "商品庫存數量錯誤."
-          end
-
-          stock_record = product.stock_records.find_by(order_id: @order.id)
-          if stock_record == nil
-            stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
-          else
-            stock_record.quantity -= item.quantity
-          end
-          stock_record.save!
-        end
-        
-        order_item = @order.order_items.find_by(product_id: item.product.id)
-        if order_item == nil
-          order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
-        else
-          order_item.update(price: item.calculate, quantity: item.quantity)
-        end
-        
-        order_item.save!
-        product.save!
-      end
-      
-      @order.status =  (@order.status || @order.address != "自取")
+      @order.update_order_items(current_cart)
       flash[:notice] = "成功更新訂單記錄"
       redirect_to cashier_order_path(@order.id)
     else
@@ -204,32 +163,8 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-      today = Date.today.to_s
-      today.slice!("2")
-      today_order_count = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).count
-      @order.sn = today.tr('-','').to_i * 1000 + today_order_count + 1
-      current_cart.cart_items.each do |item|
-        product = item.product
-        if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
-          product.quantity -= item.quantity
-          if product.quantity <= 0
-            flash[:alert] = "商品庫存數量錯誤."
-          end
-
-          stock_record = product.stock_records.find_by(order_id: @order.id)
-          if stock_record == nil
-            stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
-          else
-            stock_record.quantity -= item.quantity
-          end
-          stock_record.save!
-        end
-
-
-        order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
-        order_item.save!
-        product.save!
-      end
+      @order.setup_sn! 
+      @order.setup_order_items!(current_cart)
       
       @order.status =  (@order.status || @order.address != "自取")
       if @order.save
@@ -240,17 +175,7 @@ class Cashier::OrdersController < Cashier::BaseController
         end
         flash[:notice] = "成功成立訂單"
         if @order.member
-          @guest = Guest.new
-          @guest.age_id = @order.member.find_age_type
-          @guest.gender = @order.member.gender
-          @guest.guest_type_id = GuestType.find_by(guest_type: "舊客").id
-          @guest.info_way_id = @order.member.info_way_id
-          @guest.country_id = Country.find_by(code: "TW").id
-          @guest.user_id = current_user.id
-          @guest.payment = @order.amount
-          @guest.save!
-          @order.guest_id = @guest.id
-          @order.save!
+          @order.generate_guest(current_user)
           flash[:notice] += ",成功成立客情"
           redirect_to today_cashier_orders_path
         else

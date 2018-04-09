@@ -26,4 +26,67 @@ class Order < ApplicationRecord
   has_many :order_products, through: :order_items, source: :product
   belongs_to :guest, optional: true
   belongs_to :member, optional: true
+
+  def setup_sn!
+    today = Date.today.to_s
+    today.slice!("2")
+    today_order_count = Order.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+    self.sn = today.tr('-','').to_i * 1000 + today_order_count + 1
+  end
+
+  def setup_order_items!(current_cart)
+    current_cart.cart_items.each do |item|
+      product = item.product
+      if product.zh_name != "折價卷" && self.status && self.address == "自取"
+        product.minus_by_order(self,item.quantity)
+      end
+
+      order_item = self.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
+      order_item.save!
+      product.save!
+    end
+  end
+
+  def update_order_items(current_cart)
+    current_cart.cart_items.each do |item|
+      product = item.product
+      if product.zh_name != "折價卷" && self.status && self.address == "自取"
+        product.minus_by_order(self,item.quantity)
+      end
+
+      order_item = self.order_items.find_by(product_id: item.product.id)
+      if order_item == nil
+        order_item = self.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
+      else
+        order_item.update(price: item.calculate, quantity: item.quantity)
+      end
+      order_item.save!
+      product.save!
+    end
+  end
+
+  def set_cart_items(cart)
+    cart.cart_items.destroy_all
+    order_items.each do |item|
+      @cart_item = cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
+      @cart_item.discount_off = item.price
+      discount_method = DiscountMethod.find_by(content: "優惠價")
+      @cart_item.discount_method_code = discount_method.code
+      @cart_item.save!
+    end
+  end
+
+  def generate_guest(user)
+    @guest = Guest.create(age_id: self.member.find_age_type,
+                          gender: self.member.gender,
+                          guest_type_id: GuestType.find_by(guest_type: "舊客").id,
+                          info_way_id: self.member.info_way_id,
+                          country_id: Country.find_by(code: "TW").id,
+                          user_id: user.id,
+                          payment: self.amount,
+                          )
+
+    self.guest_id = @guest.id
+    self.save!
+  end
 end

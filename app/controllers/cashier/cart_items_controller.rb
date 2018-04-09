@@ -2,34 +2,33 @@ class Cashier::CartItemsController < Cashier::BaseController
   
   def plus_quantity
     @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
-    @l_price = @cart_item.calculate.round#上次金額
+    @prev_price = @cart_item.calculate.round
+    
     @cart_item.quantity+=1
-    @o_price = @cart_item.origin_calculate.round#小計金額
+    @origin_price = @cart_item.origin_calculate.round
+    @discounted_price = @cart_item.calculate.round
+    @varied_price = @origin_price - @discounted_price
+
     @cart_item.save!
-    @d_price = @cart_item.calculate.round
-    puts @o_price
-    puts @l_price
-    puts @d_price
-    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
-                    :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price,
+    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @prev_price,
+                    :v_price => @varied_price, :o_price => @origin_price, :d_price => @discounted_price,
                     :item_index => params[:item_index]}
   end
 
 
   def minus_quantity
     @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
+    @prev_price = @cart_item.calculate.round
     
-
-    @l_price = @cart_item.calculate.round#上次金額
     @cart_item.quantity -=1
-    @o_price = @cart_item.origin_calculate.round#小計金額
-    @d_price = @cart_item.calculate.round
-
+    @origin_price = @cart_item.origin_calculate.round
+    @discounted_price = @cart_item.calculate.round
+    @varied_price = @origin_price - @discounted_price
     @cart_item.save!
     
 
-    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @l_price,
-                  :v_price => @o_price - @d_price, :o_price => @o_price, :d_price => @d_price,
+    render :json => {:id =>params[:id] , :quantity => @cart_item.quantity, :l_price => @prev_price,
+                  :v_price => @varied_price, :o_price => @origin_price, :d_price => @discounted_price,
                   :item_index => params[:item_index]}
 
   end
@@ -54,22 +53,16 @@ class Cashier::CartItemsController < Cashier::BaseController
   def add_discount
     @cart_item = current_cart.cart_items.where(product_id: params[:id])[params[:item_index].to_i]
     quantity = @cart_item.quantity
-    @o_price = @cart_item.origin_calculate.round#小計金額
-    @l_price = @cart_item.calculate.round#上次金額
+    @prev_price = @cart_item.calculate.round
+    @origin_price = @cart_item.origin_calculate.round
     @cart_item.discount_method_code = params[:method_code]
     @cart_item.discount_off = params[:discount]
-
-    @d_price = @cart_item.calculate.round#計算打折後金額
+    @discounted_price = @cart_item.calculate.round
+    @varied_price = @origin_price - @discounted_price
     @cart_item.save!
     
-
-    puts @cart_item.discount_method.content
-    puts @o_price
-    puts @l_price
-    puts @d_price
-    puts params[:item_index]
-    render :json => {:id => params[:id], :l_price => @l_price, :d_price => @d_price,
-                    :v_price => (@o_price - @d_price ), :o_price => @o_price, discount_off: params[:discount],
+    render :json => {:id => params[:id], :l_price => @prev_price, :d_price => @discounted_price,
+                    :v_price => @varied_price, :o_price => @origin_price, discount_off: params[:discount],
                     :item_index => params[:item_index]}
   end
 
