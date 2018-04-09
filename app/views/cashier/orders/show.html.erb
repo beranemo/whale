@@ -2,7 +2,7 @@
   <%= render :partial => "shared/tabs_general_function", :locals => { :selected_item => '訂單資訊' } %>
   
   <br>
-  <h4>訂單編號：<%= @order.sn %></h4>
+  <h4 class="title table-title"><span class="title-main">訂單編號：<%= @order.sn %></span></h4>
   <% if @order.member_id == -1%>
     顧客編號：非會員
   <% else%>
