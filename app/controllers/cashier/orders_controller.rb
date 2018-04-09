@@ -69,13 +69,7 @@ class Cashier::OrdersController < Cashier::BaseController
 
     @order_items = @order.order_items
     current_cart.cart_items.destroy_all
-    @order_items.each do |item|
-      @cart_item = current_cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
-      @cart_item.discount_off = item.price
-      discount_method = DiscountMethod.find_by(content: "優惠價")
-      @cart_item.discount_method_code = discount_method.code
-      @cart_item.save!
-    end
+    @order.set_cart_items(current_cart)
 
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")

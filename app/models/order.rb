@@ -47,6 +47,17 @@ class Order < ApplicationRecord
     end
   end
 
+  def set_cart_items(cart)
+    cart.cart_items.destroy_all
+    order_items.each do |item|
+      @cart_item = cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
+      @cart_item.discount_off = item.price
+      discount_method = DiscountMethod.find_by(content: "優惠價")
+      @cart_item.discount_method_code = discount_method.code
+      @cart_item.save!
+    end
+  end
+
   def generate_guest(user)
     @guest = Guest.create(age_id: self.member.find_age_type,
                           gender: self.member.gender,
