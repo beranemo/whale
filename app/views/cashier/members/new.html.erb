@@ -51,6 +51,10 @@
         <%= f.label :skin_id, "膚質" %>
         <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: false}, {class: "form-control"} %>
         <br>
+
+        <%= f.label :info_way_id, "如何得知茶籽堂？" %>
+        <%= f.collection_select :info_way_id, InfoWay.all, :id, :news_channel, {prompt: false}, {class: "form-control"} %>
+        <br>
         
         <%= f.label :member_code, "會員群組(內部人員註記用)" %>
         <%= f.collection_select :member_type_id, MemberType.all, :id, :value, {prompt: false}, {class: "form-control"} %>

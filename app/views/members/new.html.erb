@@ -51,6 +51,10 @@
       <%= f.collection_select :skin_type_id, SkinType.all, :id, :value, {prompt: false}, {class: "form-control"} %>
       <br>
 
+      <%= f.label :info_way_id, "如何得知茶籽堂？" %>
+      <%= f.collection_select :info_way_id, InfoWay.all, :id, :news_channel, {prompt: false}, {class: "form-control"} %>
+      <br>
+
       <%= f.label :avatar, "個人照片" %>
       <%= f.file_field :avatar %>
       <br>

@@ -108,6 +108,7 @@ class Cashier::MembersController < Cashier::BaseController
       :email,
       :skin_type_id,
       :hair_type_id,
+      :info_way_id,
       :avatar,
       :remark
       )

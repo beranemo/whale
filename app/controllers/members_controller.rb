@@ -36,6 +36,7 @@ class MembersController < ApplicationController
       :email,
       :hair_type_id,
       :skin_type_id,
+      :info_way_id,
       :avatar)
   end
 end
