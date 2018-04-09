@@ -59,8 +59,114 @@
       <%= f.file_field :avatar %>
       <br>
 
-      <%= f.submit "確定加入會員", class: "btn-submit" %>
+      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="gridSystemModalLabel">隱私權聲明</h4>
+            </div>
+             <div class="modal-body">
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                <p>
+                  <strong>茶籽堂</strong>非常重視用戶的隱私權，因此制訂了隱私權保護政策，請您詳閱以下內容。
+                  <ul style="list-style-type: square;">
+                    <li>
+                      隱私權保護政策內容包括本網站如何處理由用戶使用網站服務時所收集到的身份識別資料，也包括本網站如何處理在商業伙伴與本網站合作時分享的任何身份識別資料。
+                    </li>
+                    <li>
+                      隱私權保護政策並不適用於<strong>茶籽堂</strong>以外的公司、非<strong>茶籽堂</strong>所僱用或管理的人員。
+                    </li>
+                    <li>
+                      當您註冊帳號、使用本網站的產品或服務、瀏覽本網站網頁、參加活動或贈獎時，<strong>茶籽堂</strong>會收集您的個人識別資料，為保障您的隱私及安全，您的帳號資料會用密碼保護。
+                    </li>
+                    <li>
+                      本網站也可以從商業夥伴處取得個人資料。
+                    </li>
+                    <li>
+                      <strong>茶籽堂</strong>會自動接收並紀錄您瀏覽器上的伺服器數值（包括 IP Address 、<strong>茶籽堂</strong> cookie 中的資料及您要求取用的網頁紀錄）。
+                    </li>
+                    <li>
+                      您有隨時修改帳號資料的權利，其中並包括接受<strong>茶籽堂</strong>通知您特別活動或新產品的決定權。
+                    </li>
+                    <li>
+                      您的資料本網站將會作以下用途使用：
+                      <ul style="list-style-type: decimal; padding-left: 30px">
+                        <li>
+                          改進為您提供的廣告及網頁內容。
+                        </li>
+                        <li>
+                          完成您對某項產品的要求及通知特別活動或新產品。
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>茶籽堂</strong>不會向任何人出售或出借您的個人識別資料。
+                    </li>
+                    <li>
+                      在以下的情況下，<strong>茶籽堂</strong>會向政府機關、合作伙伴或公司提供您的個人識別資料：
+                      <ul style="list-style-type: decimal; padding-left: 30px">
+                        <li>
+                          需要與合作伙伴或公司共用您的資料，才能夠提供您要求的產品或服務時。
+                        </li>
+                        <li>
+                          向代表<strong>茶籽堂</strong>提供服務或產品的公司提供資料，以便向您提供產品或服務 （若未經事先通知，這些公司均無權使用本網站所提供的個人資料，作提供產品或服務以外的其他用途）。
+                        </li>
+                        <li>
+                          依照法令規定或政府機關的正式函文要求。
+                        </li> 
+                        <li>
+                          <strong>茶籽堂</strong>發覺您在網站上的行為違反<strong>茶籽堂</strong>服務條款或產品、服務的特定使用指南。
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      為了保護使用者個人隱私， 我們無法為您查詢其他使用者的帳號資料，請您見諒！若您有相關法律上問題需查閱他人資料時，請務必向警政單位提出告訴，我們將全力配合警政單位調查並提供所有相關資料以協助調查。
+                    </li>
+                    <li>
+                      <strong>茶籽堂</strong>會到您的電腦設定並取用<strong>茶籽堂</strong> cookie。
+                    </li>
+                    <li>
+                      <strong>茶籽堂</strong>容許在我們網頁上擺放廣告的廠商到您的電腦設定並取用 cookie，其他公司將根據其自訂的隱私權保護政策，而並非本政策使用其 cookie，其他廣告商或公司不能提取<strong>茶籽堂</strong>的 cookie。
+                    </li>
+                    <li>
+                      當<strong>茶籽堂</strong>進行與其產品及服務有關的工作時，會進入我們的網站網絡，提取cookie使用。
+                    </li>
+                    <li>
+                      在部分情況下<strong>茶籽堂</strong>使用通行標準的SSL加密機制，以保障資料傳送的安全。
+                    </li>
+                  </ul>
+                  <br>
+                  <strong>茶籽堂</strong>得隨時修訂本政策，當我們在使用個人資料的規定上作出大幅度修改時，我們會在網頁上張貼告示，通知您相關事項。</p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        <label>
+          <input type="checkbox" name="agree" value="1" checked="checked" id="agree" " >&nbsp;我已經閱讀並同意條款 
+          <button type="button" class="btn-link" style="outline: none;" data-toggle="modal" data-target=".bs-example-modal-lg">隱私權聲明</button>
+        </label>
+      </p> 
+      <%= f.submit "確定加入會員", class: "btn-submit", style:"width:100%" , onclick: "checkAgree()", id: "submitCheck" %>
     </div>
   <% end %>
   </div>
 </div>
+
+<script>
+  function checkAgree(){
+    var checkbox = document.getElementById('agree');
+  if (checkbox.checked != true){
+    alert("需勾選同意條款 隱私權聲明");
+    document.getElementById("submitCheck").disabled = true;
+}
+}
+</script>
