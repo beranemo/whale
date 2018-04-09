@@ -38,18 +38,7 @@ class Order < ApplicationRecord
     current_cart.cart_items.each do |item|
       product = item.product
       if product.zh_name != "折價卷" && self.status && self.address == "自取"
-        product.quantity -= item.quantity
-        if product.quantity <= 0
-          flash[:alert] = "商品庫存數量錯誤."
-        end
-
-        stock_record = product.stock_records.find_by(order_id: self.id)
-        if stock_record == nil
-          stock_record = product.stock_records.build(quantity: -item.quantity, order_id: self.id)
-        else
-          stock_record.quantity -= item.quantity
-        end
-        stock_record.save!
+        product.minus_by_order(self,item.quantity)
       end
 
       order_item = self.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
@@ -57,4 +46,6 @@ class Order < ApplicationRecord
       product.save!
     end
   end
+
+
 end
