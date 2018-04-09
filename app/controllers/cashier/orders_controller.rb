@@ -68,19 +68,15 @@ class Cashier::OrdersController < Cashier::BaseController
   def edit
 
     @order_items = @order.order_items
-    current_cart.cart_items.destroy_all
+    
     @order.set_cart_items(current_cart)
-
     @index_hash = Hash.new(0)
     @coupon = Product.find_by(zh_name: "折價卷")
-    @cart_coupons = current_cart.cart_items.where('product_id = ?', @coupon.id)
     @cart_items = current_cart.cart_items.where('product_id != ?', @coupon.id)
     @products = Product.where('id != ?',@coupon.id) 
-    @coupon_discount = 0
-    @cart_coupons.each do |c|
-      @coupon_discount += c.discount_off
-    end
+    @coupon_discount = current_cart.get_coupons(@coupon)
     @order.amount -= @coupon_discount
+    
     if params[:member_id] != nil
       @member = Member.find(params[:member_id])
       @order.name = @member.name
@@ -121,11 +117,8 @@ class Cashier::OrdersController < Cashier::BaseController
     @order.discount_off = 100
     @products = Product.where('id != ?',@coupon.id) 
     @cart_items = current_cart.cart_items.where('product_id != ?', @coupon.id)
-    @cart_coupons = current_cart.cart_items.where('product_id = ?', @coupon.id)
-    @coupon_discount = 0
-    @cart_coupons.each do |c|
-      @coupon_discount += c.discount_off
-    end
+    @coupon_discount = current_cart.get_coupons(@coupon)
+    
 
     if params[:id] != "-1"
       @member = Member.find(params[:id])

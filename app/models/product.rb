@@ -73,4 +73,5 @@ class Product < ApplicationRecord
     end
     stock_record.save!
   end
+
 end
