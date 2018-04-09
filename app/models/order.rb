@@ -47,6 +47,24 @@ class Order < ApplicationRecord
     end
   end
 
+  def update_order_items(current_cart)
+    current_cart.cart_items.each do |item|
+      product = item.product
+      if product.zh_name != "折價卷" && self.status && self.address == "自取"
+        product.minus_by_order(self,item.quantity)
+      end
+
+      order_item = self.order_items.find_by(product_id: item.product.id)
+      if order_item == nil
+        order_item = self.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
+      else
+        order_item.update(price: item.calculate, quantity: item.quantity)
+      end
+      order_item.save!
+      product.save!
+    end
+  end
+
   def set_cart_items(cart)
     cart.cart_items.destroy_all
     order_items.each do |item|

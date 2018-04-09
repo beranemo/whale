@@ -143,35 +143,7 @@ class Cashier::OrdersController < Cashier::BaseController
     end
 
     if @order.update(order_params)
-      current_cart.cart_items.each do |item|
-        product = item.product
-        if product.zh_name != "折價卷" && @order.status && @order.address == "自取"
-          product.quantity -= item.quantity
-          if product.quantity <= 0
-            flash[:alert] = "商品庫存數量錯誤."
-          end
-
-          stock_record = product.stock_records.find_by(order_id: @order.id)
-          if stock_record == nil
-            stock_record = product.stock_records.build(quantity: -item.quantity,order_id: @order.id)
-          else
-            stock_record.quantity -= item.quantity
-          end
-          stock_record.save!
-        end
-        
-        order_item = @order.order_items.find_by(product_id: item.product.id)
-        if order_item == nil
-          order_item = @order.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
-        else
-          order_item.update(price: item.calculate, quantity: item.quantity)
-        end
-        
-        order_item.save!
-        product.save!
-      end
-      
-      @order.status =  (@order.status || @order.address != "自取")
+      @order.update_order_items(current_cart)
       flash[:notice] = "成功更新訂單記錄"
       redirect_to cashier_order_path(@order.id)
     else
@@ -191,7 +163,6 @@ class Cashier::OrdersController < Cashier::BaseController
       redirect_to new_cashier_order_path(id: -1)
     else
       @order = current_user.orders.build(order_params)
-      
       @order.setup_sn! 
       @order.setup_order_items!(current_cart)
       
