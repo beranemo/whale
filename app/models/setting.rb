@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  note       :string
 #  label      :string
+#  is_active  :boolean          default(FALSE)
 #
 
 class Setting < ApplicationRecord

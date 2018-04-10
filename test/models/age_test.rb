@@ -8,6 +8,7 @@
 #  updated_at  :datetime         not null
 #  note        :string
 #  system_flag :string
+#  is_display  :boolean          default(TRUE)
 #
 
 require 'test_helper'

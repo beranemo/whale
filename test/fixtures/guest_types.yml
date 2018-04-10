@@ -8,6 +8,8 @@
 #  updated_at  :datetime         not null
 #  note        :string
 #  system_flag :string
+#  is_display  :boolean          default(TRUE)
+#  code        :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

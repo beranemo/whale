@@ -11,9 +11,9 @@
 #  upc              :string
 #  use_for          :string
 #  directions       :text
-#  zh_m_ingredients :string
-#  zh_ingredients   :string
-#  en_ingredients   :string
+#  zh_m_ingredients :text
+#  zh_ingredients   :text
+#  en_ingredients   :text
 #  quantity         :integer          default(0)
 #  status           :string
 #  created_at       :datetime         not null

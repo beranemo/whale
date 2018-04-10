@@ -8,6 +8,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  note        :string
+#  is_display  :boolean          default(TRUE)
 #
 
 class MemberType < ApplicationRecord

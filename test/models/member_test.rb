@@ -7,26 +7,21 @@
 #  birthday       :date             not null
 #  gender         :string           default(""), not null
 #  phone          :string           default(""), not null
-#  skin           :string
-#  hair           :string
 #  avatar         :string
 #  remark         :string
-#  member_code    :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  email          :string           default(""), not null
 #  fax            :string
 #  password       :string
-#  group          :string
 #  zip            :string
 #  county         :string
 #  address        :string
 #  bonus          :integer          default(0)
 #  skin_type_id   :integer
-#  hair_id        :integer
-#  hair_code      :string
 #  hair_type_id   :integer
 #  member_type_id :integer
+#  info_way_id    :integer
 #
 
 #  id           :integer          not null, primary key
