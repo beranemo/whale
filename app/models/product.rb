@@ -61,9 +61,6 @@ class Product < ApplicationRecord
 
   def minus_by_order(order,num)
     self.quantity -= num
-    if self.quantity <= 0
-      flash[:alert] = "商品庫存數量錯誤."
-    end
 
     stock_record = self.stock_records.find_by(order_id: order.id)
     if stock_record == nil
