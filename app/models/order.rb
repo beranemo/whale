@@ -20,10 +20,11 @@
 #
 
 class Order < ApplicationRecord
-  has_many :order_items, dependent: :destroy
-  belongs_to :user
   validates_presence_of :member_id, :payment_method, :address
+  validates :sn, uniqueness: true
+  has_many :order_items, dependent: :destroy
   has_many :order_products, through: :order_items, source: :product
+  belongs_to :user
   belongs_to :guest, optional: true
   belongs_to :member, optional: true
 
