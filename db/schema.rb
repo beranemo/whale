@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410033931) do
+ActiveRecord::Schema.define(version: 20180410084550) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -176,6 +176,8 @@ ActiveRecord::Schema.define(version: 20180410033931) do
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "discount_off"
+    t.string "discount_method_code"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end

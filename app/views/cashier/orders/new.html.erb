@@ -146,67 +146,63 @@
         <div class="col-md-7">
           <div class="col-horizontal clearfix">
             <div class="col-item">
-          <%= f.label :status, "訂單狀態：" %>
+              <%= f.label :status, "訂單狀態：" %>
 
-          <label class="my_radio">
-            <%= f.radio_button :status , true ,:checked => true %>
-            現貨
-          </label>
-          <label class="my_radio">
-            <%= f.radio_button :status , false %>
-            預購
-          </label>
-          <br>
+              <label class="my_radio">
+                <%= f.radio_button :status , true ,:checked => true %>
+                現貨
+              </label>
+              <label class="my_radio">
+                <%= f.radio_button :status , false %>
+                預購
+              </label>
+              <br>
 
-          <%= f.label :address, "取貨方式：" %>
-          <label class="my_radio">
-            <%= f.radio_button :address ,"自取", class:"local-radio",:checked => true %>
-          自取
-          </label>
-          <label class="my_radio">
-            <%= f.radio_button :address ," ",class:"ship-radio" %>
-          宅配
-          </label>
-          <br>
+              <%= f.label :address, "取貨方式：" %>
+              <label class="my_radio">
+                <%= f.radio_button :address ,"自取", class:"local-radio",:checked => true %>
+              自取
+              </label>
+              <label class="my_radio">
+                <%= f.radio_button :address ," ",class:"ship-radio" %>
+              宅配
+              </label>
+              <br>
 
-          <%= f.label :payment_method, "付款方式：" %>
-          <label class="my_radio">
-            <%= f.radio_button :payment_method ,"付現",:checked => true %>
-            付現
-          </label>
-          <label class="my_radio">
-            <%= f.radio_button :payment_method ,"刷卡" %>
-            刷卡
-          </label>
-          <label class="my_radio">
-            <%= f.radio_button :payment_method ," ",class:"other-radio"%>
-            其他
-          </label>
-          <br>
-          <%= f.text_field :payment_method, class:"other-payment form-control", :disabled => "disabled"  %><br>
-        </div>
+              <%= f.label :payment_method, "付款方式：" %>
+              <label class="my_radio">
+                <%= f.radio_button :payment_method ,"付現",:checked => true %>
+                付現
+              </label>
+              <label class="my_radio">
+                <%= f.radio_button :payment_method ,"刷卡" %>
+                刷卡
+              </label>
+              <label class="my_radio">
+                <%= f.radio_button :payment_method ," ",class:"other-radio"%>
+                其他
+              </label>
+              <br>
+              <%= f.text_field :payment_method, class:"other-payment form-control", :disabled => "disabled"  %><br>
+            </div>
 
-        <div class="col-item">
-          <%= f.label :name, "姓名：" %>
-          <%= f.text_field :name %><br>
-          
-          <%= f.label :phone, "電話：" %>
-          <%= f.text_field :phone %><br>
-          
-          <%= f.label :address, "地址：" %>
-          <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
+            <div class="col-item">
+              <%= f.label :name, "姓名：" %>
+              <%= f.text_field :name %><br>
+              
+              <%= f.label :phone, "電話：" %>
+              <%= f.text_field :phone %><br>
+              
+              <%= f.label :address, "地址：" %>
+              <%= f.text_field :address ,class:"input-address form-control", :disabled => "disabled" %><br>
 
-        </div>
-      </div>
-          
-
-          
-          
+            </div>
+          </div>
+                
           <%= f.label :remark ,"備註："%>
           <%= f.text_area :remark, class:"form-control" %>
         </div>
         <div class="col-md-5">
-
           <div class="col-md-6">
             <%= f.label :discount_off, "折扣%" %>
             <%= f.text_field :discount_off  ,class:"form-control alnright", onkeypress:"return setOrderDiscount(event)"%>

@@ -143,7 +143,8 @@ class Cashier::OrdersController < Cashier::BaseController
     end
 
     if @order.update(order_params)
-      @order.update_order_items(current_cart)
+      @order.order_items.destroy_all
+      @order.setup_order_items!(current_cart)
       flash[:notice] = "成功更新訂單記錄"
       redirect_to cashier_order_path(@order.id)
     else
@@ -173,6 +174,16 @@ class Cashier::OrdersController < Cashier::BaseController
         if @order.address != "自取"
           UserMailer.notify_order_deliver(@order).deliver_now!
         end
+
+        out_of_stock = Product.where("quantity <= ? AND id != ?",0,1)
+        if out_of_stock
+          flash[:alert] = ""
+          out_of_stock.each do |p|
+            flash[:alert] += "#{p.zh_name},"
+          end
+          flash[:alert] += "商品數量<=0"
+        end
+
         flash[:notice] = "成功成立訂單"
         if @order.member
           @order.generate_guest(current_user)
