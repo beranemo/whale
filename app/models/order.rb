@@ -42,7 +42,11 @@ class Order < ApplicationRecord
         product.minus_by_order(self,item.quantity)
       end
 
-      order_item = self.order_items.build(product_id: item.product.id, price: item.calculate, quantity: item.quantity)
+      order_item = self.order_items.build(product_id: item.product.id,
+                                          price: item.calculate,
+                                          quantity: item.quantity,
+                                          discount_off: item.discount_off,
+                                          discount_method_code: item.discount_method_code)
       order_item.save!
       product.save!
     end
@@ -54,9 +58,8 @@ class Order < ApplicationRecord
     cart.cart_items.destroy_all
     order_items.each do |item|
       @cart_item = cart.cart_items.build(product_id: item.product.id, quantity: item.quantity)
-      @cart_item.discount_off = item.price
-      discount_method = DiscountMethod.find_by(content: "優惠價")
-      @cart_item.discount_method_code = discount_method.code
+      @cart_item.discount_off = item.discount_off
+      @cart_item.discount_method_code = item.discount_method_code
       @cart_item.save!
     end
   end
