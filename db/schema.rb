@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409153451) do
+ActiveRecord::Schema.define(version: 20180410033931) do
 
   create_table "ages", force: :cascade do |t|
     t.string "age_type"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 20180409153451) do
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["guest_id"], name: "index_orders_on_guest_id"
     t.index ["member_id"], name: "index_orders_on_member_id"
+    t.index ["sn"], name: "index_orders_on_sn", unique: true
     t.index ["status"], name: "index_orders_on_status"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

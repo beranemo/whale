@@ -20,10 +20,11 @@
 #
 
 class Order < ApplicationRecord
-  has_many :order_items, dependent: :destroy
-  belongs_to :user
   validates_presence_of :member_id, :payment_method, :address
+  validates :sn, uniqueness: true
+  has_many :order_items, dependent: :destroy
   has_many :order_products, through: :order_items, source: :product
+  belongs_to :user
   belongs_to :guest, optional: true
   belongs_to :member, optional: true
 
@@ -79,7 +80,7 @@ class Order < ApplicationRecord
   def generate_guest(user)
     @guest = Guest.create(age_id: self.member.find_age_type,
                           gender: self.member.gender,
-                          guest_type_id: GuestType.find_by(code: "OLD").id,
+                          guest_type_id: GuestType.find_by(guest_type: "舊客").id,
                           info_way_id: self.member.info_way_id,
                           country_id: Country.find_by(code: "TW").id,
                           user_id: user.id,
