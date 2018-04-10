@@ -1,3 +1,4 @@
+
 # WHALE DONE
 
 人性化 CRM 平台
@@ -59,6 +60,6 @@
 
 ## 作者
 
-- 雜七雜八打雜XXX
-- 酷酷酷酷酷酷XXX
-- 只會出一張嘴XXX
+- 雜七雜八打雜 Yipeechen
+- 酷酷酷酷酷酷 spy1031
+- 只會出一張嘴 beranemo
