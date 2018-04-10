@@ -6,13 +6,13 @@
 <br>
 <div class="col-md-6 col-md-offset-3">
   <p style="text-align: right">統計時間：<%= Date.today.all_month %></p> 
- <table class="table">
-    <tbody>
+ <table class="table product-table">
+    <thead>
       <tr>
         <th>門市人員</th>
         <th>銷售金額</th>
       </tr>
-    </tbody>  
+    </thead>  
     <tbody>
       <% i = 0 %>
       <% @user_ranking.each do |order| %> 
@@ -27,9 +27,12 @@
     </tbody>
   </table>  
 </div>
+
+<div class="col-md-12 page-margin">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 <canvas id="userChart" width="200" height="80"></canvas>
+</div>
 </div>
 
 
