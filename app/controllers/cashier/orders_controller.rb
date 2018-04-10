@@ -143,7 +143,8 @@ class Cashier::OrdersController < Cashier::BaseController
     end
 
     if @order.update(order_params)
-      @order.update_order_items(current_cart)
+      @order.order_items.destroy_all
+      @order.setup_order_items!(current_cart)
       flash[:notice] = "成功更新訂單記錄"
       redirect_to cashier_order_path(@order.id)
     else
