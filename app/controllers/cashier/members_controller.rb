@@ -110,7 +110,8 @@ class Cashier::MembersController < Cashier::BaseController
       :hair_type_id,
       :info_way_id,
       :avatar,
-      :remark
+      :remark,
+      :address
       )
   end
 end
