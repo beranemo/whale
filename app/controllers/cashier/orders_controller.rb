@@ -176,18 +176,18 @@ class Cashier::OrdersController < Cashier::BaseController
         end
 
         out_of_stock = Product.where("quantity <= ? AND id != ?",0,1)
-        if out_of_stock
+        if out_of_stock.count != 0
           flash[:alert] = ""
           out_of_stock.each do |p|
-            flash[:alert] += "#{p.zh_name},"
+            flash[:alert] += "#{p.zh_name}，"
           end
-          flash[:alert] += "商品數量<=0"
+          flash[:alert] += "商品數量不足"
         end
 
         flash[:notice] = "成功成立訂單"
         if @order.member
           @order.generate_guest(current_user)
-          flash[:notice] += ",成功成立客情"
+          flash[:notice] += "，成功成立客情"
           redirect_to today_cashier_orders_path
         else
           redirect_to new_guest_cashier_order_path(@order)
