@@ -101,11 +101,11 @@ Age.destroy_all
 
 age_list = [
   { note: "尚未填寫選項", system_flag: "Y", value: "", age_type: "尚未填寫", is_display: false },  
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "18 ~ 25歲", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "25 ~ 35歲", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "35 ~ 45歲", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 歲以上", is_display: true }
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "18 ~ 24歲", is_display: true },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "25 ~ 34歲", is_display: true },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "35 ~ 44歲", is_display: true },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "45 ~ 54歲", is_display: true },
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "", age_type: "55 歲以上", is_display: true }
 ]
 
 age_list.each do |age|
@@ -127,11 +127,11 @@ info_way_list = [
   { note: "系統設置，無法刪除", system_flag: "Y", value: "臉書 Facebook", news_channel: "臉書 Facebook", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "誠品 EXPO 或其他通路買過", news_channel: "誠品 EXPO 或其他通路買過", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "集資計劃", news_channel: "集資計劃", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "路過逛到(松菸誠品)", news_channel: "路過逛到(松菸誠品)", is_display: true },  
+  { note: "系統設置，無法刪除", system_flag: "Y", value: "路過門市逛到(松菸誠品)", news_channel: "路過逛到(松菸誠品)", is_display: true },  
   { note: "系統設置，無法刪除", system_flag: "Y", value: "親友介紹", news_channel: "親友介紹", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "電視媒體", news_channel: "電視媒體", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "飯店民宿", news_channel: "飯店民宿", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客", is_display: true },
+  #{ note: "系統設置，無法刪除", system_flag: "Y", value: "廁所洗手露來客", news_channel: "廁所洗手露來客", is_display: true },
   { note: "系統設置，無法刪除", system_flag: "Y", value: "其他", news_channel: "其他", is_display: true },
 ]
 
@@ -255,12 +255,12 @@ country_list = [
   { is_active: false, code: "IT", system_flag: "Y", name_en_us: "Italy", name_zh_tw: "義大利" },
   { is_active: false, code: "JM", system_flag: "Y", name_en_us: "Jamaica", name_zh_tw: "牙買加" },
   { is_active: false, code: "JO", system_flag: "Y", name_en_us: "Jordan", name_zh_tw: "約旦" },
-  { is_active: true, code: "JP", system_flag: "AE", name_en_us: "Japan", name_zh_tw: "日本" },
+  { is_active: true, code: "JP", system_flag: "AF", name_en_us: "Japan", name_zh_tw: "日本" },
   { is_active: false, code: "KE", system_flag: "Y", name_en_us: "Kenya", name_zh_tw: "肯亞" },
   { is_active: false, code: "KH", system_flag: "Y", name_en_us: "Cambodia", name_zh_tw: "高棉(柬埔寨)" },
   { is_active: false, code: "KI", system_flag: "Y", name_en_us: "Kiribati", name_zh_tw: "吉里巴斯" },
   { is_active: false, code: "KM", system_flag: "Y", name_en_us: "Comoros", name_zh_tw: "葛摩伊斯蘭聯邦共和國(印度洋西部)" },
-  { is_active: true, code: "KP", system_flag: "AD", name_en_us: "Korea, Democratic People's Rep. Of ", name_zh_tw: "南韓" },
+  { is_active: true, code: "KP", system_flag: "AG", name_en_us: "Korea, Democratic People's Rep. Of ", name_zh_tw: "南韓" },
   { is_active: false, code: "KR", system_flag: "Y", name_en_us: "Korea, Republic Of", name_zh_tw: "北韓" },
   { is_active: false, code: "KW", system_flag: "Y", name_en_us: "Kuwait", name_zh_tw: "科威特" },
   { is_active: false, code: "KY", system_flag: "Y", name_en_us: "Cayman Islands", name_zh_tw: "開曼群島" },
@@ -283,7 +283,7 @@ country_list = [
   { is_active: false, code: "MK", system_flag: "Y", name_en_us: "M acedonia, The Former Yugoslav Rep. Of", name_zh_tw: "馬其頓" },
   { is_active: false, code: "ML", system_flag: "Y", name_en_us: "Mali", name_zh_tw: "馬利" },
   { is_active: false, code: "MN", system_flag: "Y", name_en_us: "Mongolia", name_zh_tw: "蒙古" },
-  { is_active: true, code: "MO", system_flag: "AC", name_en_us: "Macau", name_zh_tw: "澳門" },
+  { is_active: true, code: "MO", system_flag: "AE", name_en_us: "Macau", name_zh_tw: "澳門" },
   { is_active: false, code: "MP", system_flag: "Y", name_en_us: "Northern Mariana Islands", name_zh_tw: "馬里亞納群島" },
   { is_active: false, code: "MQ", system_flag: "Y", name_en_us: "Martinique", name_zh_tw: "聖馬丁節" },
   { is_active: false, code: "MR", system_flag: "Y", name_en_us: "Mauritania", name_zh_tw: "茅利塔尼亞" },
@@ -400,7 +400,9 @@ category_list = [
   { code: "BODY", system_flag: "Y", value: "身", name: "身" },
   { code: "HOME", system_flag: "Y", value: "家", name: "家" },
   { code: "GIFT", system_flag: "Y", value: "禮", name: "禮" },
-  { code: "REFILL", system_flag: "Y", value: "補", name: "補" }
+  { code: "REFILL", system_flag: "Y", value: "補", name: "補" },
+  { code: "NEW", system_flag: "Y", value: "補", name: "新品" },
+  { code: "OTHERS", system_flag: "Y", value: "補", name: "其他" }
 ]
 
 category_list.each do |category|
