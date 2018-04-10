@@ -64,6 +64,9 @@ $("#search-btn").click(function(){
       var total_amount = document.createElement("p");
       total_amount.className = "alnright";
       var total_amount_value = datas.total_amount;
+      var pct_value = 0;  
+      var total_orders = datas.orders.length;
+
       if(orders.length == 0){
             alert("No data found");
       }
@@ -107,7 +110,9 @@ $("#search-btn").click(function(){
           
           $("#search-list").append(order);
         }
-          $(total_amount).html(date + " 總銷售金額： " + total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}));
+          pct_value = (total_amount_value/total_orders).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+          $(total_amount).html(date + "&nbsp; &nbsp; 總銷售金額： " + total_amount_value.toLocaleString('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0}) + "&nbsp; /&nbsp; 客單價： $" + pct_value );
           $("#search-form").append(total_amount);
       }
     }
