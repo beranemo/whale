@@ -91,13 +91,15 @@ class Member < ApplicationRecord
   def find_age_type
     age = Date.current.year - birthday.year
     if age <= 25
-      Age.find_by(age_type: "18 ~ 25歲").id
+      Age.find_by(age_type: "18 ~ 24歲").id
     elsif age <=35
-      Age.find_by(age_type: "25 ~ 35歲").id
+      Age.find_by(age_type: "25 ~ 34歲").id
     elsif age <=45
-      Age.find_by(age_type: "35 ~ 45歲").id
+      Age.find_by(age_type: "35 ~ 44歲").id
+    elsif
+      Age.find_by(age_type: "45 ~ 54歲").id
     else
-      Age.find_by(age_type: "45 歲以上").id
+      Age.find_by(age_type: "55 歲以上").id
     end
   end
   scope :display, -> { where(is_display: true).order(system_flag: :asc) }
