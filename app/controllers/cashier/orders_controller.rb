@@ -44,11 +44,11 @@ class Cashier::OrdersController < Cashier::BaseController
       
       @guest.age_id = @order.member.find_age_type
       @guest.gender = @order.member.gender
-      @guest.guest_type_id = GuestType.find_by(code: "OLD").id
+      @guest.guest_type_id = GuestType.find_by(guest_type: "舊客").id
       @guest.info_way_id = @order.member.info_way_id
       
     else
-      @guest.guest_type_id = GuestType.find_by(code: "NEW").id
+      @guest.guest_type_id = GuestType.find_by(guest_type: "新客").id
       @guest.gender = "男"
     end
     @guest.country_id = Country.find_by(code: "TW").id
