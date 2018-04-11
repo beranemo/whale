@@ -28,7 +28,7 @@
 
 ## 螢幕截圖
 
-
+<img src="https://github.com/beranemo/whale/blob/master/app/assets/images/readme.png" width="100%">
 
 ## 如何開始
 
