@@ -25,12 +25,20 @@
 * Ruby
 * Rails
 
-
-## 螢幕截圖
-
-<img src="https://github.com/beranemo/whale/blob/master/app/assets/images/readme.png" width="100%">
-
 ## 如何開始
+
+下載後, 需要在 config/email.yml 設置
+```
+development:
+  address: "smtp.gmail.com"
+  port: 587
+  domain: "gmail.com"
+  authentication: "plain"
+  user_name: "your_user_name"
+  password: "your_password"
+  enable_starttls_auto: true
+```
+然後
 
 1. Run `bundle install`
 2. Run `rails db:migrate`
@@ -51,6 +59,10 @@
 
 參照此[連結](https://github.com/github/rubocop-github/blob/master/STYLEGUIDE.md)
 
+
+## 螢幕截圖
+
+<img src="https://github.com/beranemo/whale/blob/master/app/assets/images/readme.png" width="100%">
 
 ## 核心使用者故事
 
