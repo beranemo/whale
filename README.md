@@ -27,15 +27,15 @@
 
 ## 如何開始
 
-下載後, 需要在 config/email.yml 設置
+下載後，需要在 config/email.yml 設置
 ```
 development:
   address: "smtp.gmail.com"
   port: 587
   domain: "gmail.com"
   authentication: "plain"
-  user_name: "your_user_name"
-  password: "your_password"
+  user_name: "your_gmail_account"
+  password: "your_gmail_password"
   enable_starttls_auto: true
 ```
 然後
@@ -201,6 +201,7 @@ development:
   - 消息得知途徑維護檔
   - 國家維護檔（系統既定，無法新增項目）
   - 商品類型維護（系統既定，無法新增項目）
+
 備註：所有維護檔資料一旦建立不建議刪除及編輯，以免資料無法關連
 
 
@@ -240,4 +241,4 @@ development:
 
 - 雜七雜八打雜 Yipeechen
 - 等我打完爐石 spy1031
-- 只會出一張嘴 beranemo
+- 安安天使寶寶 beranemo
