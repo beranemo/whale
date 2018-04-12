@@ -17,8 +17,8 @@ GuestType.destroy_all
 
 guest_type_list = [
   { note: "尚未填寫選項", system_flag: "Y", guest_type: "尚未填寫", is_display: false },  
-  { note: "系統設置，無法刪除", system_flag: "Y", guest_type: "新客", is_display: true },
-  { note: "系統設置，無法刪除", system_flag: "Y", guest_type: "舊客", is_display: true }
+  { note: "系統設置，無法編輯及刪除", system_flag: "Y", guest_type: "新客", is_display: true },
+  { note: "系統設置，無法編輯及刪除", system_flag: "Y", guest_type: "舊客", is_display: true }
 ]
 
 guest_type_list.each do |guest_type|
@@ -438,8 +438,10 @@ puts "Default_Coupon created!"
 # =======================  Setting  =======================
 Setting.destroy_all
 Setting.create(label: "第1寄信信箱", code: "EMAIL01", content: "xxx1@gmail.com", note: "第1寄信信箱", is_active: true)
-Setting.create(label: "第2寄信信箱", code: "EMAIL02", content: "xxx2@gmail.com", note: "第2寄信信箱", is_active: false)
-Setting.create(label: "第3寄信信箱", code: "EMAIL03", content: "xxx3@gmail.com", note: "第3寄信信箱", is_active: false)
+#Setting.create(label: "第2寄信信箱", code: "EMAIL02", content: "xxx2@gmail.com", note: "第2寄信信箱", is_active: false)
+#Setting.create(label: "第3寄信信箱", code: "EMAIL03", content: "xxx3@gmail.com", note: "第3寄信信箱", is_active: false)
+Setting.create(label: "存量提醒值", code: "SOTCK_WARNING", content: "5", note: "5", is_active: true)
+
 
 
 
