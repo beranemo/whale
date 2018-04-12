@@ -2,7 +2,7 @@
   <%= render :partial => "shared/tabs_product_management", :locals => { :selected_item => '所有商品' } %>
 
   <div class="col-md-8 col-md-offset-2">
-  <h4>編輯商品</h4>
+  <h4 class="title table-title"><span class="title-main">編輯商品</span></h4>
 
   <%= form_for [:cashier, @product] do |f| %>
     <div class="form-group">

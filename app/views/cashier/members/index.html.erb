@@ -1,10 +1,9 @@
 <div class="container">
  
   <%= render :partial => "shared/tabs_admin", :locals => { :selected_item => '所有會員資料' } %>
-  <%= link_to 'CSV Download', cashier_members_path(:format => :csv) %>
+  <%= link_to '匯出會員資料', cashier_members_path(:format => :csv), class:"btn-normal btn", style:"width:100%" %>
   
   <br>
-
   <table class="data-table table" data-toggle="table">
     <thead>
       <tr>
@@ -14,12 +13,10 @@
         <th>信箱</th>
         <th data-sortable="true" data-field="birthday">生日</th>
         <th>功能</th>
-
       </tr>
     </thead>
     <tbody id="origin-list" >          
-      <% @members.each do |member| %>
-         
+      <% @members.each do |member| %>      
         <tr>         
           <td><%= member.name%></td>
           <td><%= member.phone%></td>
@@ -35,11 +32,9 @@
             <%= link_to '<i class = "fa fa-list-alt" aria-hidden="true"></i>'.html_safe, show_orders_cashier_member_path(id: member.id), onclick:"orders" , caption: "訂單記錄"  %>
           </td>
         </tr>
-      
       <% end %>
     </tbody>
   </table>  
-    
 </div>
 
 

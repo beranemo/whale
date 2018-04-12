@@ -1,17 +1,17 @@
-
 <div class="container">
+  <%= render :partial => "shared/tabs_setting", :locals => { :selected_item => '膚質設定' } %>
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h3>膚質設定</h3>
+    <div class="col-md-4 col-md-offset-4">
+      <h4 class="title table-title"><span class="title-main">編輯膚質設定</span></h4>
       <%= form_for [:cashier, @skin] do |f| %>
         <div class="form-group">
          
           <%= f.label :value, "名稱" %>
           <%= f.text_field :value, class: "form-control"%>
           <br>
-          
-          <%= f.submit "確定",class: "btn btn-primary" %>
-          
+          <div class="form-group" style="text-align:center;">
+            <%= f.submit "確定",class: "btn-submit", style: "width:50%;" %>
+          </div>
         </div>
       <% end %>
    </div>

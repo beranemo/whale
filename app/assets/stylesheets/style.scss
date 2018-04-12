@@ -401,16 +401,16 @@ $orange: #F07B3F;
   border-bottom: 2px solid $blue;
   outline: none;
 }
-/* ============================== 15. button-clear =========================*/
+/* ============================== 15. button-normal =========================*/
 
-.btn-clear{
+.btn-normal{
   outline:none;
   height: 30px;
   text-align: center;
   width: 100px;
-  border-radius:40px;
   letter-spacing:1px;
   background: $blue;
+  margin: 10px 0 10px 0;
   color:white;
     font:{
     size:12px;
@@ -419,9 +419,7 @@ $orange: #F07B3F;
   cursor: pointer;
   transition: all 0.25s ease;
   &:hover {
-    color: $blue;
-    background: white;
-    border: 2px solid $blue;
+    color: white;
   }
   &:active {
     letter-spacing: 2px ;
@@ -765,4 +763,31 @@ $orange: #F07B3F;
 .page-margin {
   margin-top:40px;
   margin-bottom: 20px;
+}
+
+/* ============================== 27. button-login =========================*/
+
+.btn-login{
+  outline:none;
+  height: 30px;
+  text-align: center;
+  width: 100px;
+  border-radius:40px;
+  letter-spacing:1px;
+  background: $blue;
+  color:white;
+    font:{
+    size:12px;
+    weight:bold;
+  }
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover {
+    color: $blue;
+    background: white;
+    border: 2px solid $blue;
+  }
+  &:active {
+    letter-spacing: 2px ;
+  }
 }
