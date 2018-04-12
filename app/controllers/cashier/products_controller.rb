@@ -44,7 +44,12 @@ class Cashier::ProductsController < Cashier::BaseController
   end
   
   def index
-    @products = Product.where.not(id:1)
+    @products = Product.where.not(id: 1)
+    
+    respond_to do |format|
+      format.html
+      format.csv { send_data(@products.to_csv) }
+    end
   end
   
   def new

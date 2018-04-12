@@ -27,6 +27,7 @@ class Product < ApplicationRecord
   has_many :stock_records
   has_one :discount
   has_many :product_orders, through: :order_items, source: :order
+  
   def self.update_by_file(file)
     attribute = Hash["類型" => "category" ,
                     "中文品名" => "zh_name",
@@ -69,6 +70,19 @@ class Product < ApplicationRecord
       stock_record.quantity -= num
     end
     stock_record.save!
+  end
+  
+  def self.to_csv
+    zh_attr = %w{類型 中文名稱 英文名稱 規格 價錢 國際條碼 適用對象 中文主成分 中文全成分 英文全成分 使用方法 數量}
+    attributes = %w{category zh_name en_name capacity price upc use_for zh_m_ingredients zh_ingredients en_ingredients directions quantity}
+    CSV.generate(headers: true) do |csv|
+      csv << zh_attr
+
+      all.each do |product|
+        data = product.attributes.values_at(*attributes)
+        csv << data
+      end
+    end
   end
 
 end
