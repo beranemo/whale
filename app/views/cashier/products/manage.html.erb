@@ -17,7 +17,7 @@
         </tr>
         <% total = 0 %>
         <% @products.each do |product| %>
-          <% if product.quantity <= 5 %>
+          <% if product.quantity <= Setting.find_by(code: "SOTCK_WARNING").content.to_i %>
             <tr class="danger">
           <% else %>
             <tr>

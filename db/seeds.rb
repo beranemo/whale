@@ -437,10 +437,10 @@ puts "Default_Coupon created!"
 
 # =======================  Setting  =======================
 Setting.destroy_all
-Setting.create(label: "第1寄信信箱", code: "EMAIL01", content: "xxx1@gmail.com", note: "第1寄信信箱", is_active: true)
+Setting.create(code: "EMAIL01", label: "倉庫人員信箱", content: "xxx1@gmail.com", note: "倉庫人員信箱", is_active: true)
 #Setting.create(label: "第2寄信信箱", code: "EMAIL02", content: "xxx2@gmail.com", note: "第2寄信信箱", is_active: false)
 #Setting.create(label: "第3寄信信箱", code: "EMAIL03", content: "xxx3@gmail.com", note: "第3寄信信箱", is_active: false)
-Setting.create(label: "存量提醒值", code: "SOTCK_WARNING", content: "5", note: "5", is_active: true)
+Setting.create(code: "SOTCK_WARNING", label: "存量提醒值", content: "5", note: "存量提醒值", is_active: true)
 
 
 
