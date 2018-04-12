@@ -35,15 +35,10 @@ class Cashier::ProductsController < Cashier::BaseController
       discount_method = DiscountMethod.find_by(content: "無")
       @cart_item.discount_method_code = discount_method.code
       @cart_item.save!
-      if @cart_item.product.discount != nil
-        @bulletin = @cart_item.product.discount.bulletin
-      else
-        @bulletin = Bulletin.new
-      end
 
       render :json => {:id => @product.id, :category => @product.category, :zh_name => @product.zh_name,
                       :o_price => @product.price, :upc => @product.upc, :quantity => @cart_item.quantity,
-                      :bulletin => @bulletin.title, :discount_method_code => discount_method.code}
+                      :discount_method_code => discount_method.code}
     end
       
   end
