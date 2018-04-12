@@ -334,10 +334,10 @@
     $("#search-list").html("");//刪除原先的搜尋結果
     
     var search_word = $("#key").val();
-    if(search_word.length < 3)//至少要輸入3碼才能搜尋
+    if(search_word.length < 2)//至少要輸入2碼才能搜尋
     {
-      alert("錯誤!輸入長度不足3碼");
-      $("#search-list").append("錯誤!輸入長度不足3碼");
+      alert("錯誤!輸入長度不足2碼");
+      $("#search-list").append("錯誤!輸入長度不足2碼");
       return false;
 
     }else{
