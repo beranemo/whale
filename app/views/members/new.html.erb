@@ -151,22 +151,28 @@
 
       <p>
         <label>
-          <input type="checkbox" name="agree" value="1" checked="checked" id="agree" " >&nbsp;我已經閱讀並同意條款 
+          <input type="checkbox" name="agree" value="1" checked="checked" id="agree">&nbsp;我已經閱讀並同意以下事項<br>
+          <p>我了解此個人資料僅茶籽堂提供後續訊息與活動通知，並訂閱電子報。<br>
+          備註：若欲取消電子報訂閱，只需在收到電子報後，於最下方取消訂閱即可。</p>
+          
+          
+          <!--
           <button type="button" class="btn-link" style="outline: none;" data-toggle="modal" data-target=".bs-example-modal-lg">隱私權聲明</button>
+          -->
         </label>
       </p> 
-      <%= f.submit "確定加入會員", class: "btn-submit", style:"width:100%" , onclick: "checkAgree()", id: "submitCheck" %>
+      <%= f.submit "確定加入會員", class: "btn-submit", style:"width:100%", onclick: "checkAgree()", id: "submitCheck" %>
     </div>
   <% end %>
-  </div>
+  <br>
 </div>
 
 <script>
-  function checkAgree(){
-    var checkbox = document.getElementById('agree');
-  if (checkbox.checked != true){
-    alert("需勾選同意條款 隱私權聲明");
+function checkAgree(){
+  var checkbox = document.getElementById('agree');
+  if(checkbox.checked != true){
+    alert("需勾選我已經閱讀並同意");
     document.getElementById("submitCheck").disabled = true;
-}
+  }
 }
 </script>

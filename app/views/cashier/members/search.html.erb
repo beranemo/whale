@@ -40,11 +40,11 @@
     $(".search-item").remove();//刪除原先的搜尋結果
     
     var search_word = $("#phone2").val();
-    if(search_word.length < 3)//至少要輸入3碼才能搜尋
+    if(search_word.length < 2)//至少要輸入2碼才能搜尋
     {
       //alert(phone2);
       //alert(phone2.length);
-      alert("錯誤!輸入長度不足3碼");
+      alert("錯誤!輸入長度不足2碼");
     }else{
       $.ajax({
         url: "/cashier/members/search_outcome" ,

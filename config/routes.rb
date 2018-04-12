@@ -93,7 +93,6 @@ Rails.application.routes.draw do
     resources :hair_types, only: [:index, :new, :edit, :destroy, :update, :create]
     resources :skin_types, except: [:show]
     resources :member_types, except: [:show]
-    resources :guest_types, except: [:show]
     resources :countries, only: [:index] do
       member do
         post :remove

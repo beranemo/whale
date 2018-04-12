@@ -3,10 +3,10 @@
   <%= render :partial => "shared/tabs_product_management", :locals => { :selected_item => '數量管理' } %>
   <form  accept-charset="UTF-8" action="/cashier/products/update_all" method="post" >
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <table class="table">
+    <table class="table" id="tableOne">
       <tbody >
         <tr>
-          <th>分類</th>
+          <th>類型</th>
           <th class="alnleft">中文名稱</th>
           <th class="alnleft">英文名稱</th>
           <th>規格</th>
@@ -17,7 +17,7 @@
         </tr>
         <% total = 0 %>
         <% @products.each do |product| %>
-          <% if product.quantity <= 5 %>
+          <% if product.quantity <= Setting.find_by(code: "SOTCK_WARNING").content.to_i %>
             <tr class="danger">
           <% else %>
             <tr>
@@ -29,15 +29,45 @@
             <td class="alnright"><%= product.price %></td>
             <td><%= product.upc %></td>
             <td><%= product.quantity %></td>
-            <td><input type="number" name="products[<%= product.id %>][quantity]" min="-100" max="100" value="0" class="alnright"></td>
+            <td><input type="number" name="products[<%= product.id %>][quantity]" min="-1000" max="1000" value="0" class="alnright" onclick="calculate()"></td>
           </tr>
           <% total = total + product.quantity %>
         <% end %>
       </tbody>
     </table>
-    <div class="alnright">小計：<%= total %>　<br><br></div>
+    <div class="alnright">
+    目前數量小計：<%= total %>　
+    增減數量小計：<lable id="lbl">0</lable>
+    <br><br>
+    </div>
     
     <input type="submit" class="btn btn-primary pull-right" value="批次修改數量"/>
   </form>
 </div>
 <br>
+<script>
+function calculate(){
+  
+  
+  
+}
+
+$(":input").bind('keyup mouseup', function(){
+  var total = 0;
+  $('#tableOne > tbody  > tr > td > input').each(function() {
+    var temp = 0;
+    if(isNaN(this.value)){
+      temp = 0;
+    }else{
+      if(this.value ==""){
+        temp = 0;
+      }else{
+        temp = parseInt(this.value);
+      }
+    }
+    total += temp;
+  });
+ 
+  document.getElementById("lbl").innerHTML = total;
+});
+</script>

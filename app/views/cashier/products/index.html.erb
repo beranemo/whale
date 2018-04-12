@@ -4,10 +4,11 @@
 
   <%= link_to "新增商品", new_cashier_product_path, class: "btn-normal btn", style:"width:100%" %>
   <br>
+  <%= link_to 'CSV Download', cashier_products_path(:format => :csv) %>
   <table class="table function-table" style="display: block;overflow-x: auto;white-space: nowrap;">
     <tbody >
       <tr>
-        <th>分類</th>
+        <th>類型</th>
         <th class="alnleft">中文名稱</th>
         <th class="alnleft">英文名稱</th>
         <th>規格</th>
