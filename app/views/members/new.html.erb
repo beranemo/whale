@@ -173,6 +173,8 @@ function checkAgree(){
   if(checkbox.checked != true){
     alert("需勾選我已經閱讀並同意");
     document.getElementById("submitCheck").disabled = true;
+  }else{
+    document.getElementById("submitCheck").disabled = false;
   }
 }
 </script>
