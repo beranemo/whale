@@ -1,10 +1,10 @@
 <div class="container">
  
   <%= render :partial => "shared/tabs_product_management", :locals => { :selected_item => '所有商品' } %>
-
-  <%= link_to "新增商品", new_cashier_product_path, class: "btn-normal btn", style:"width:100%" %>
-  <br>
-  <%= link_to 'CSV Download', cashier_products_path(:format => :csv) %>
+  <div style="text-align: center;">
+    <%= link_to "新增商品", new_cashier_product_path, class: "btn-normal btn", style:"width:49%" %>
+    <%= link_to '匯出庫存', cashier_products_path(:format => :csv), class: "btn-normal btn", style:"width:49%" %>
+  </div>
   <table class="table function-table" style="display: block;overflow-x: auto;white-space: nowrap;">
     <tbody >
       <tr>
