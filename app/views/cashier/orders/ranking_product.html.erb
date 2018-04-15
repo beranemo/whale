@@ -95,6 +95,11 @@ var userChart = new Chart(ctx, {
         },
         options: {
           scales: {
+            xAxes: [{
+              ticks: {
+              autoSkip: false
+              }
+            }],
             yAxes: [{
                 ticks: {
                     beginAtZero:true
