@@ -96,7 +96,7 @@ class Member < ApplicationRecord
       Age.find_by(age_type: "25 ~ 34歲").id
     elsif age <=45
       Age.find_by(age_type: "35 ~ 44歲").id
-    elsif
+    elsif age <=55
       Age.find_by(age_type: "45 ~ 54歲").id
     else
       Age.find_by(age_type: "55 歲以上").id
