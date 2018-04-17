@@ -137,13 +137,17 @@ function display() {
         ],
         borderWidth: 1
       }]
-          },
+    },
     options: { 
+      layout: {
+        padding: {
+            left: 10
+        }
+      },
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true,
-            stepSize: 1,
+            beginAtZero: true
           }
         }]
       }

@@ -145,12 +145,16 @@ function display() {
       }]
     },
     options: { 
+      layout: {
+        padding: {
+            left: 10
+        }
+      },
       scales: {
         yAxes: [{
           ticks: {
             min: 0,
-            beginAtZero: true,
-            stepSize: 1
+            beginAtZero: true
           }
         }]
       }
