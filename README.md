@@ -5,9 +5,9 @@
 
 ## 參訪網址
 
-http://whaledone.herokuapp.com/
-帳號:guest@welcome
-密碼:20180419
+* http://whaledone.herokuapp.com/
+* 帳號:guest@welcome
+* 密碼:20180419
 
 ## 說明
 
