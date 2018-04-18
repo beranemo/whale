@@ -211,6 +211,12 @@ namespace :dev do
     end
   end
 
+  task fake_users: :environment do
+    
+    User.create(email: "guest@welcome", password: "20180419", role: "admin", name: "guest")
+    
+  end
+  
 
   task fake_all: :environment do
     Rake::Task['db:drop'].execute
