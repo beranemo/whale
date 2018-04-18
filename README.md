@@ -1,7 +1,13 @@
 
-# WHALE DONE
+# Whale DONE
 
 人性化 CRM 平台
+
+## 參訪網址
+
+http://whaledone.herokuapp.com/
+帳號:guest@welcome
+密碼:20180419
 
 ## 說明
 
